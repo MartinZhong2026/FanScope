@@ -42,34 +42,25 @@ jobs:
       - run: python -m playwright install --with-deps chromium webkit
       - name: Mobile browser acceptance against isolated fixtures
         run: |
-          mkdir -p work
-          DATABASE_PATH="$PWD/work/mobile-ci.sqlite" node --experimental-sqlite api/test/mobile-browser-server.mjs > work/mobile-server.log 2>&1 &
-          echo $! > work/mobile-server.pid
+          scripts/ci-fixture-server.sh start mobile api/test/mobile-browser-server.mjs
           python scripts/bilingual-browser-acceptance.py --webkit --output work/bilingual-browser
           python scripts/mobile-browser-acceptance.py --webkit --output work/mobile-browser-results
           python scripts/dark-reference-acceptance.py --output work/dark-reference
       - name: Publication, evidence and batch browser acceptance
         run: |
-          # The prior fixture process is scoped to its step and may still own these ports.
           # Stop only this job's recorded fixture, then use a new isolated database.
-          kill "$(cat work/mobile-server.pid)" 2>/dev/null || true
-          for attempt in $(seq 1 50); do
-            if ! curl -sf http://127.0.0.1:4173 >/dev/null; then break; fi
-            sleep 0.1
-          done
-          DATABASE_PATH="$PWD/work/quality-ci.sqlite" node --experimental-sqlite api/test/quality-browser-server.mjs > work/quality-server.log 2>&1 &
-          echo $! > work/quality-server.pid
+          scripts/ci-fixture-server.sh stop mobile
+          scripts/ci-fixture-server.sh start quality api/test/quality-browser-server.mjs
           python scripts/quality-browser-acceptance.py --output work/quality-browser
           python scripts/quality-browser-acceptance.py --language en --output work/quality-browser-en
       - name: Real Chinese metadata and separate-market browser acceptance
         run: |
-          kill "$(cat work/quality-server.pid)" 2>/dev/null || true
-          for attempt in $(seq 1 50); do
-            if ! curl -sf http://127.0.0.1:4173 >/dev/null; then break; fi
-            sleep 0.1
-          done
-          DATABASE_PATH="$PWD/work/chinese-ci.sqlite" node --experimental-sqlite api/test/chinese-browser-server.mjs > work/chinese-server.log 2>&1 &
+          scripts/ci-fixture-server.sh stop quality
+          scripts/ci-fixture-server.sh start chinese api/test/chinese-browser-server.mjs
           python scripts/chinese-browser-acceptance.py --output work/chinese-browser
+      - name: Fixture server logs on failure
+        if: failure()
+        run: for f in work/*-server.log; do echo "::group::$f"; cat "$f"; echo "::endgroup::"; done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
