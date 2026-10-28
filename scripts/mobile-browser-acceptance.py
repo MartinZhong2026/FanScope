@@ -123,8 +123,11 @@ with sync_playwright() as p:
                 if mobile:
                     assert page.locator('.mobile-dock [aria-current=page]').get_attribute('data-page')=='feed'
                     page.locator('.discovery-chips [data-market=chinese]').click();settled(page)
-                    assert page.locator('.paper-card').count()>0
-                    assert all('国内 C 刊' in c.inner_text() for c in page.locator('.paper-card .tags').all())
+                    # Wait for the requested market render, then capture all tags
+                    # atomically: a refresh can replace indexed locators mid-loop.
+                    page.wait_for_function("document.querySelector('.discovery-chips [data-market=chinese].active') && !document.querySelector('.loading-note')")
+                    tags=page.locator('.paper-card .tags').all_inner_texts()
+                    assert tags and all('国内 C 刊' in text for text in tags),tags
                     page.locator('.discovery-chips [data-market=international]').click();settled(page)
                     page.locator('[data-open-literature-filters]').click()
                 page.locator('#q-search').fill('Caregiving')
@@ -259,7 +262,7 @@ with sync_playwright() as p:
                 assert page.locator('#upload-form input[type=file]').evaluate('(e)=>e.files[0].name')=='draft.md'
                 if width==390:screenshot(page,prefix+'-documents')
                 page.locator('[data-open="document:mobile-doc"]').first.click();settled(page)
-                assert page.locator('#review-form').is_visible()
+                page.locator('#review-form').wait_for(state='visible')
                 assert page.locator('.review-decisions').count()==2
                 page.locator('[data-sid=mobile-approve][data-k=summary]').fill('人工修改后的研究方案建议')
                 page.locator('[data-sid=mobile-approve][value=approve]').check()
