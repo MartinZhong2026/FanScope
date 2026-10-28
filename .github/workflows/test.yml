@@ -42,25 +42,29 @@ jobs:
       - run: python -m playwright install --with-deps chromium webkit
       - name: Mobile browser acceptance against isolated fixtures
         run: |
-          scripts/ci-fixture-server.sh start mobile api/test/mobile-browser-server.mjs
+          bash scripts/ci-fixture-server.sh start mobile api/test/mobile-browser-server.mjs
           python scripts/bilingual-browser-acceptance.py --webkit --output work/bilingual-browser
           python scripts/mobile-browser-acceptance.py --webkit --output work/mobile-browser-results
           python scripts/dark-reference-acceptance.py --output work/dark-reference
       - name: Publication, evidence and batch browser acceptance
         run: |
           # Stop only this job's recorded fixture, then use a new isolated database.
-          scripts/ci-fixture-server.sh stop mobile
-          scripts/ci-fixture-server.sh start quality api/test/quality-browser-server.mjs
+          bash scripts/ci-fixture-server.sh stop mobile
+          bash scripts/ci-fixture-server.sh start quality api/test/quality-browser-server.mjs
           python scripts/quality-browser-acceptance.py --output work/quality-browser
           python scripts/quality-browser-acceptance.py --language en --output work/quality-browser-en
       - name: Real Chinese metadata and separate-market browser acceptance
         run: |
-          scripts/ci-fixture-server.sh stop quality
-          scripts/ci-fixture-server.sh start chinese api/test/chinese-browser-server.mjs
+          bash scripts/ci-fixture-server.sh stop quality
+          bash scripts/ci-fixture-server.sh start chinese api/test/chinese-browser-server.mjs
           python scripts/chinese-browser-acceptance.py --output work/chinese-browser
       - name: Fixture server logs on failure
         if: failure()
-        run: for f in work/*-server.log; do echo "::group::$f"; cat "$f"; echo "::endgroup::"; done
+        run: |
+          shopt -s nullglob
+          logs=(work/*-server.log)
+          if [ "${#logs[@]}" -eq 0 ]; then echo "No fixture server logs were produced."; fi
+          for f in "${logs[@]}"; do echo "::group::$f"; cat "$f"; echo "::endgroup::"; done
       - uses: actions/upload-artifact@v4
         if: always()
         with:
