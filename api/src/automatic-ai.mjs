@@ -54,7 +54,7 @@ function recoverInterrupted(){
   if(i.analysis_status==='analyzing'){
    uncertain=true;
    db.prepare("UPDATE articles SET analysis_status='failed',analysis_error='DeepSeek request_uncertain',analysis_retry_at=NULL WHERE id=? AND analysis_status='analyzing'").run(i.article_id);
-   db.prepare("UPDATE analysis_usage_log SET error='DeepSeek request_uncertain',error_code='request_uncertain' WHERE id=(SELECT MAX(id) FROM analysis_usage_log WHERE article_id=?)").run(i.article_id);
+   db.prepare("UPDATE analysis_usage_log SET error='DeepSeek request_uncertain',error_code='request_uncertain' WHERE id=(SELECT MAX(id) FROM analysis_usage_log WHERE article_id=? AND batch_id=? AND status='uncertain')").run(i.article_id,automaticBatchId);
    db.prepare("UPDATE analysis_batch_items SET status='failed',error='DeepSeek request_uncertain',updated_at=? WHERE batch_id=? AND article_id=?").run(now(),automaticBatchId,i.article_id);
   }else db.prepare("UPDATE analysis_batch_items SET status=?,updated_at=? WHERE batch_id=? AND article_id=?").run(i.analysis_status==='failed'?'failed':'queued',now(),automaticBatchId,i.article_id);
  }

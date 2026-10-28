@@ -35,7 +35,8 @@ proof() {
   --entrypoint node "$IMAGE" --experimental-sqlite /release/tools/v14-protected-proof.mjs /data/fanscope.sqlite /release/chinese/chinese-data.json "$@"
 }
 health_check() {
- sudo -n docker exec fanscope-api node --input-type=module -e "const h=await(await fetch('http://127.0.0.1:8787/api/health')).json();if(h.status!=='ok'||h.emailConfigured)throw Error('Health/mail guard failed');console.log(JSON.stringify({health:h.status,aiConfigured:h.aiConfigured,emailConfigured:h.emailConfigured}));"
+ local expected_ai=${1:-false}
+ sudo -n docker exec fanscope-api node --input-type=module -e "const h=await(await fetch('http://127.0.0.1:8787/api/health')).json();if(h.status!=='ok'||h.emailConfigured||('$expected_ai'!=='any' && !!h.aiConfigured!==('$expected_ai'==='true')))throw Error('Health/AI/mail guard failed');console.log(JSON.stringify({health:h.status,aiConfigured:h.aiConfigured,emailConfigured:h.emailConfigured}));"
 }
 case "$ACTION" in
 validate)
@@ -147,7 +148,7 @@ enable-ai)
  sudo -n docker exec fanscope-api node --experimental-sqlite src/ai-auto-control.mjs --action=pause
  export FANSCOPE_RELEASE_IMAGE=$IMAGE FANSCOPE_AI_AUTO_ENABLED=true
  dc up -d --no-build --no-deps fanscope-api
- wait_health;health_check
+ wait_health;health_check true
  # This final resume starts real paid continuous analysis, without per-batch prompts.
  sudo -n docker exec fanscope-api node --experimental-sqlite src/ai-auto-control.mjs --action=resume
  ;;
@@ -166,7 +167,7 @@ rollback)
  wait_health;health_check
  ;;
 status)
- health_check
+ health_check any
  curl --fail --silent --show-error https://fanscope-api.adapttochina.com/api/ai-auto-status
  ;;
 *) echo 'Usage: v14-ops.sh validate|deploy|import|enable-ai|pause-ai|resume-ai|stop-ai|rollback|status';exit 1;;
