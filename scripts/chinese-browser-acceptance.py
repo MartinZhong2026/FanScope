@@ -25,7 +25,7 @@ with sync_playwright() as p:
   assert page.locator('.cn-diagnostics').count()==0
   assert 'market=international' in page.url
   page.goto('http://127.0.0.1:4173/?page=sources');page.wait_for_load_state('networkidle');assert page.locator('[data-cn-source]').count()==1
-  assert page.locator('[data-cn-import]').count()==1
+  assert page.locator('a[href="chinese-import.html"]').count()==1
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
   page.screenshot(path=str(out/f'{w}-sources.png'),animations='disabled')
   checks.append({'width':w,'passed':True});page.close()
