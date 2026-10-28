@@ -1,0 +1,28 @@
+{
+  "localOnly": true,
+  "checks": [
+    {
+      "width": 1440,
+      "localRealMetadata": 349,
+      "collectedJournals": 3,
+      "automaticConnections": 0,
+      "noDataJournalsNotCollected": true,
+      "legacyDiagnostic404KeepsFeed": true,
+      "workbench404": true,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "localRealMetadata": 349,
+      "collectedJournals": 3,
+      "automaticConnections": 0,
+      "noDataJournalsNotCollected": true,
+      "legacyDiagnostic404KeepsFeed": true,
+      "workbench404": true,
+      "overflow": false
+    }
+  ],
+  "pageErrors": [],
+  "writeRequests": [],
+  "externalRequests": []
+}

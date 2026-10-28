@@ -1,0 +1,18 @@
+✔ RSS title, link, dates, journal ownership and stable URL deduplication (15.68516ms)
+✔ Atom chooses alternate article link, relative URLs and original published date (0.792906ms)
+✔ DTD, malformed XML, foreign links and HTML pages fail closed (0.706916ms)
+✔ SSRF blocks private/reserved/mapped IPv4/IPv6 and unauthorized origins (0.798804ms)
+✔ transport pins validated DNS and never follows redirects; bounds streaming bytes (5.101693ms)
+✔ admin API rejects unauthenticated mutation; pause requires no network; failed enable leaves state intact (21.438025ms)
+✔ migration twice preserves 2549 synthetic papers and complete existing Lab rows (614.48979ms)
+✔ test/save/enable always validate, save pauses, failed enable preserves state and restart retains URL (42.849611ms)
+✔ legacy RSS identifiers are not reinserted after URL hashing changes (1.877811ms)
+✔ pause supersedes an in-flight enable verification (3.539607ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1033.080895

@@ -1,0 +1,33 @@
+{
+  "syntheticOnly": true,
+  "checks": [
+    {
+      "width": 1440,
+      "syntheticRows": 100,
+      "newSyntheticRecords": 100,
+      "replayNew": 0,
+      "replayDuplicates": 100,
+      "resumeAfterReload": false,
+      "duplicateAuditRows": 100,
+      "realPaperCount": 0,
+      "overflow": false,
+      "batchId": "42c643e7-b999-45d3-94f7-ba6cec16c806",
+      "replayBatchId": "bb9d9ef4-a504-4e5f-b975-1373d27ff608"
+    },
+    {
+      "width": 390,
+      "syntheticRows": 1000,
+      "newSyntheticRecords": 1000,
+      "replayNew": 0,
+      "replayDuplicates": 1000,
+      "resumeAfterReload": true,
+      "duplicateAuditRows": 1000,
+      "realPaperCount": 0,
+      "overflow": false,
+      "batchId": "611dd332-a7e6-49ab-b9a2-20bd9a511031",
+      "replayBatchId": "fde9e522-a892-4383-955c-50999596714b"
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": []
+}

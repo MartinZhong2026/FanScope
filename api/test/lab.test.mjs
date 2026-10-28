@@ -1,0 +1,61 @@
+import test,{after} from 'node:test';
+import assert from 'node:assert/strict';
+import path from 'node:path';
+import os from 'node:os';
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+process.env.DATABASE_PATH=path.join(os.tmpdir(),`fanscope-labtest-${process.pid}.sqlite`);
+process.env.SCAN_ON_START='false';
+process.env.ADMIN_KEY='test-admin-key-longer-than-24-chars';
+const {makeServer}=await import('../src/server.mjs');
+const {createUser,validateProposals}=await import('../src/lab.mjs');
+const {db}=await import('../src/db.mjs');
+let server;
+after(async()=>{if(server)await new Promise(r=>server.close(r));db.close();for(const x of ['','-wal','-shm'])try{fs.unlinkSync(process.env.DATABASE_PATH+x);}catch{};fs.rmSync(path.join(os.tmpdir(),'lab-documents'),{recursive:true,force:true});});
+const password='password-for-Lab-tests-2026';
+const mentor=createUser({name:'杨导师',email:'yang@example.edu',role:'mentor',password});
+const admin=createUser({name:'李组管',email:'admin@example.edu',role:'lab_admin',password});
+const student=createUser({name:'A 同学',email:'student@example.edu',role:'member',password});
+const outsider=createUser({name:'B 同学',email:'other@example.edu',role:'member',password});
+let base,tokens={};
+async function req(route,who,method='GET',body){const response=await fetch(base+route,{method,headers:{...(who?{Authorization:`Bearer ${tokens[who]}`}:{}) ,...(body!==undefined?{'Content-Type':'application/json'}:{})},body:body===undefined?undefined:JSON.stringify(body)});let data;try{data=await response.json()}catch{data={}}return {status:response.status,...data};}
+
+test('Lab auth / projects / manuscript public-private / document approval and audit',async()=>{
+ server=makeServer();await new Promise(r=>server.listen(0,'127.0.0.1',r));base=`http://127.0.0.1:${server.address().port}`;
+ assert.equal((await req('/api/lab/projects')).status,401);
+ for(const [key,email] of [['mentor',mentor.email],['admin',admin.email],['student',student.email],['outsider',outsider.email]]){const response=await req('/api/lab/login',null,'POST',{email,password});assert.equal(response.status,200);tokens[key]=response.token;}
+ const invalid=await req('/api/lab/login',null,'POST',{email:mentor.email,password:'nope'});assert.equal(invalid.status,401);
+ const created=await req('/api/lab/projects','mentor','POST',{title:'福寿康合作',summary:'护理员调研与合作'});assert.equal(created.status,201);
+ const projectId=created.id;
+ assert.equal((await req('/api/lab/projects/'+projectId,'outsider')).item.title,'福寿康合作');
+ assert.equal((await req('/api/lab/projects/'+projectId,'student','PATCH',{status:'active'})).status,403);
+ assert.equal((await req('/api/lab/projects/'+projectId+'/managers','admin','POST',{user_id:student.id})).status,200);
+ assert.equal((await req('/api/lab/projects/'+projectId,'student','PATCH',{status:'active',next_step:'完善报告'})).status,200);
+ const manuscript=await req('/api/lab/manuscripts','student','POST',{title:'照护者研究',project_id:projectId});assert.equal(manuscript.status,201);
+ const paperId=manuscript.id;
+ const update=await req('/api/lab/manuscripts/'+paperId,'student','PATCH',{status:'draft_done',next_step:'完善理论框架',target_journals:'Journal A; Journal B'});assert.equal(update.status,200);
+ for(const who of ['student','mentor','admin','outsider']){const r=await req('/api/lab/manuscripts/'+paperId,who);assert.equal(r.item.private_note,undefined);assert.equal(r.item.status,'draft_done');assert.equal(r.item.target_journals,'Journal A; Journal B');assert.equal(r.events,undefined);}
+ assert.equal((await req('/api/lab/manuscripts/'+paperId,'admin','PATCH',{status:'with_editor'})).status,200);
+ assert.equal((await req('/api/lab/manuscripts/'+paperId,'outsider','PATCH',{status:'published'})).status,403);
+ assert.equal((await req('/api/lab/manuscripts/'+paperId,'student','PATCH',{private_note:'forbidden'})).status,400);
+ assert.equal((await req('/api/lab/members/'+student.id+'/updates','student','POST',{status:'internship',note:'我近期主要做实习'})).status,200);
+ assert.equal((await req('/api/lab/members/'+student.id,'outsider')).private_update,null);
+ assert.equal((await req('/api/lab/members/'+student.id,'mentor')).private_update.note,'我近期主要做实习');
+ const transcript='这次组会：福寿康合作完成了本轮问卷整理，准备向合作机构汇报。';
+ const proposed=validateProposals({updates:[{entity_type:'project',entity_id:projectId,status:'waiting',summary:'本轮问卷整理完成',next_step:'向合作机构汇报',source_quote:'福寿康合作完成了本轮问卷整理'}, {entity_type:'manuscript',entity_id:paperId,status:'revising',summary:'私人反馈细节',source_quote:'假的证据'}]},transcript);
+ assert.equal(proposed.length,1);
+ const docId=crypto.randomUUID(),proposalId=crypto.randomUUID();
+ db.prepare('INSERT INTO lab_documents VALUES(?,?,?,?,?,?,?,?,?,?)').run(docId,'双周组会.docx','application/vnd.openxmlformats-officedocument.wordprocessingml.document','/tmp/placeholder-doc',student.id,new Date().toISOString(),transcript.length,'ready','',docId);
+ db.prepare("INSERT INTO lab_suggestions(id,document_id,entity_type,entity_id,status,summary,next_step,source_quote,review_state) VALUES(?,?,?,?,?,?,?,?, 'pending')").run(proposalId,docId,'project',projectId,'waiting','本轮问卷整理完成','向合作机构汇报','福寿康合作完成了本轮问卷整理');
+ const approved=await req('/api/lab/documents/'+docId+'/review','student','POST',{items:[{id:proposalId,decision:'approve'}]});assert.equal(approved.applied,1);
+ assert.equal((await req('/api/lab/projects/'+projectId,'outsider')).item.status,'waiting');
+ assert.equal((await req('/api/lab/documents/'+docId,'outsider')).status,403);
+ assert.equal((await req('/api/lab/documents/'+docId,'student')).suggestions.length,1);
+ assert.equal((await req('/api/lab/documents/'+docId+'/review','student','POST',{items:[{id:proposalId,decision:'approve'}]})).applied,0,'No double-application');
+ assert.equal((await req('/api/lab/projects/'+projectId,'outsider')).events.some(x=>x.source_document_id===docId),true);
+ const proposal2=crypto.randomUUID();db.prepare("INSERT INTO lab_suggestions(id,document_id,entity_type,entity_id,status,summary,next_step,source_quote,review_state) VALUES(?,?,?,?,?,?,?,?, 'pending')").run(proposal2,docId,'manuscript',paperId,'submitted','历史敏感内容','', '这次组会：福寿康合作完成了本轮问卷整理');
+ assert.equal((await req('/api/lab/documents/'+docId,'student')).suggestions.some(x=>x.id===proposal2),false);
+ assert.equal((await req('/api/lab/review-queue','mentor')).items.some(x=>x.id===proposal2),false);
+ assert.equal((await req('/api/lab/suggestions/'+proposal2+'/review','mentor','POST',{decision:'approve'})).status,403);
+ assert.equal((await req('/api/lab/projects/'+projectId,'outsider')).events.some(x=>x.source_quote),false,'public progress never reveals raw transcript quotes');
+});

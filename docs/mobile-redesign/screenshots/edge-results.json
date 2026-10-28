@@ -1,0 +1,16 @@
+{
+  "passed": 1,
+  "failed": 0,
+  "results": [
+    {
+      "name": "direct detail URLs: root back has no loop; theme controls and system ECharts contrast update",
+      "status": "pass"
+    }
+  ],
+  "pageErrors": [],
+  "unexpectedAdminMutations": [],
+  "notes": [
+    "Screenshots use labelled isolated test fixtures, never production data.",
+    "Safe area and virtual keyboard tested with emulated insets / visualViewport; physical iOS/Android devices remain outside headless coverage."
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-10-26T09:17:15.180Z",
+  "branch": "feat/chinese-journal-bulk-backfill",
+  "baseline": "f51b087",
+  "backupCheck": {
+    "rows": 349,
+    "integrity": "ok"
+  },
+  "artifacts": [
+    {
+      "file": "work/chinese-bulk/fanscope-chinese.sqlite",
+      "bytes": 1048576,
+      "sha256": "aacf357cf684647b04eebb4865ac9767ca4542e97531af4650498372bf0908ec"
+    },
+    {
+      "file": "work/chinese-bulk/final/fanscope-chinese-backup.sqlite",
+      "bytes": 1024000,
+      "sha256": "cc9ce25041ce78e27d15550c687f32c7858c368e2bd34448692b13f7d8808144"
+    },
+    {
+      "file": "work/chinese-bulk/final/records.json",
+      "bytes": 465853,
+      "sha256": "29ef8a58730efd418e0869ce50251d9edd78801de3640d671624a77fa1e23953"
+    },
+    {
+      "file": "docs/chinese-bulk-backfill/acceptance.json",
+      "bytes": 70630,
+      "sha256": "ec5cb0c26884b104ce1cba7920b0081a2a2fbd41d88d03618af9300c520e38a2"
+    }
+  ]
+}

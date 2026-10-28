@@ -1,0 +1,2332 @@
+{
+  "generatedAt": "2026-10-26T09:08:47.220Z",
+  "database": "work/chinese-bulk/fanscope-chinese.sqlite",
+  "databaseSha256": "aacf357cf684647b04eebb4865ac9767ca4542e97531af4650498372bf0908ec",
+  "targetCount": 22,
+  "originalTargetCount": 20,
+  "priorityCount": 4,
+  "connected": 3,
+  "priorityConnected": 0,
+  "totals": {
+    "total": 349,
+    "earliest": "2023-10-28",
+    "latest": "2026-09-29",
+    "doi": 58,
+    "doiPercent": 16.62,
+    "authors": 348,
+    "authorsPercent": 99.71,
+    "abstracts": 0,
+    "abstractPercent": 0,
+    "knownDates": 349,
+    "datePercent": 100,
+    "day": 291,
+    "month": 58,
+    "dayPercent": 83.38,
+    "verified": 349,
+    "analyzed": 0,
+    "aiResults": 0,
+    "windows": {
+      "30": {
+        "total": 8,
+        "exactDay": 8,
+        "coarse": 0
+      },
+      "90": {
+        "total": 23,
+        "exactDay": 23,
+        "coarse": 0
+      },
+      "180": {
+        "total": 60,
+        "exactDay": 48,
+        "coarse": 12
+      },
+      "365": {
+        "total": 132,
+        "exactDay": 98,
+        "coarse": 34
+      },
+      "1096": {
+        "total": 349,
+        "exactDay": 291,
+        "coarse": 58
+      }
+    }
+  },
+  "checks": {
+    "integrity": "ok",
+    "foreignKeyViolations": 0,
+    "invalidOwnership": 0,
+    "duplicateIdentities": 0,
+    "internationalRecords": 0,
+    "nonPaperEntriesQuarantined": 3
+  },
+  "exclusions": [
+    {
+      "id": "cn:200d6156ee41be7842bc8ed665fd196ae052b4e2e3e19c5cebceda59f895fc2c",
+      "title": "《社会》2025年总目录",
+      "url": "https://www.society.shu.edu.cn/CN/Y2025/V45/I6/239",
+      "reason": "journal annual table of contents, not a paper"
+    },
+    {
+      "id": "cn:527ae969a96a4f367e0d7713557be5594993cad17b1685c358d142557e1d3b85",
+      "title": "《社会》2024年总目录",
+      "url": "https://www.society.shu.edu.cn/CN/Y2025/V45/I1/234",
+      "reason": "journal annual table of contents, not a paper"
+    },
+    {
+      "id": "cn:eb93e7a08c0146d7d782b58ec1f42c0c92041347a94be576f538abc72caae9cf",
+      "title": "《社会》2023年总目录",
+      "url": "https://www.society.shu.edu.cn/CN/Y2024/V44/I1/235",
+      "reason": "journal annual table of contents, not a paper"
+    }
+  ],
+  "items": [
+    {
+      "id": "china-social-sciences",
+      "title": "中国社会科学",
+      "issn": "1002-4921",
+      "homepage": "https://sscp.cssn.cn/",
+      "priority": true,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://sscp.cssn.cn/kbw/zgshkx/",
+        "https://sem.tsinghua.edu.cn/info/1154/37673.htm"
+      ],
+      "publisher": "中国社会科学院；中国社会科学杂志社编辑出版",
+      "cn": null,
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": "Official catalogue access HTTP 403; no exact-ISSN recent API coverage",
+      "identityNote": "中文刊1002-4921；不以英文版或文摘替代。官网可确认办刊身份，但没有已获许可的批量元数据接口；文章转载使用受限。",
+      "probe": {
+        "id": "china-social-sciences",
+        "title": "中国社会科学",
+        "issn": "1002-4921",
+        "homepage": "https://sscp.cssn.cn/",
+        "priority": true,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/1002-4921",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": "Official catalogue access HTTP 403; no exact-ISSN recent API coverage",
+        "checkedAt": "2026-10-26T08:24:17.369Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "Official catalogue access HTTP 403; no exact-ISSN recent API coverage"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-6",
+      "title": "社会学研究",
+      "issn": "1002-5936",
+      "homepage": "https://shxyj.ajcass.com/",
+      "priority": true,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://zsyyb.cn/journal/browseissue.htm?journalid=10410",
+        "https://shxyj.ajcass.com/"
+      ],
+      "publisher": "中国社会科学院社会学研究所",
+      "cn": "11-1100/C",
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": "Article endpoint requires JavaScript verification; automated catalogue stopped",
+      "identityNote": "1002-5936；首页有2026年目录，文章详情出现JavaScript验证，停止自动采集。",
+      "probe": {
+        "id": "candidate-6",
+        "title": "社会学研究",
+        "issn": "1002-5936",
+        "homepage": "https://shxyj.ajcass.com/",
+        "priority": true,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/1002-5936",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": "Article endpoint requires JavaScript verification; automated catalogue stopped",
+        "checkedAt": "2026-10-26T08:24:23.298Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "Article endpoint requires JavaScript verification; automated catalogue stopped"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "id": "https://openalex.org/S2764911176",
+          "title": "Shehuixue yanjiu",
+          "issns": [
+            "1002-5936"
+          ],
+          "earliestYear": 1990,
+          "latestYear": 2021,
+          "count": 0,
+          "policy": "Anonymous first-page probe only; bulk cursor requires a free authorized API key"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "management-world",
+      "title": "管理世界",
+      "issn": "1002-5502",
+      "homepage": "https://www.mwm.net.cn/",
+      "priority": true,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://portal.issn.org/resource/ISSN/1002-5502",
+        "https://fms-journal.net/journals_cn"
+      ],
+      "publisher": "国务院发展研究中心",
+      "cn": null,
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": "Official host connection timeout; no recent exact-ISSN API coverage",
+      "identityNote": "ISSN登记和主办单位可核对；官网超时，不以第三方同名投稿站替代。CN本轮未由可访问的刊方证据复核。",
+      "probe": {
+        "id": "management-world",
+        "title": "管理世界",
+        "issn": "1002-5502",
+        "homepage": "https://www.mwm.net.cn/",
+        "priority": true,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/1002-5502",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": "Official host connection timeout; no recent exact-ISSN API coverage",
+        "checkedAt": "2026-10-26T08:24:28.398Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "Official host connection timeout; no recent exact-ISSN API coverage"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-14",
+      "title": "公共管理学报",
+      "issn": "1672-6162",
+      "homepage": "https://gggl.cbpt.cnki.net/",
+      "priority": true,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://cssrac.nju.edu.cn/xscb/lyqk/20200524/i83480.html",
+        "https://ncpssd.org/journal/details?gch=87267X"
+      ],
+      "publisher": "哈尔滨工业大学",
+      "cn": "23-1523/F",
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": "Official host returns invalid TOKEN; publisher metadata export/authorization needed",
+      "identityNote": "1672-6162；历史南大身份页与文献中心相符，不能据2020年页面确认2025-2026排名。官网接口返回TOKEN无效。",
+      "probe": {
+        "id": "candidate-14",
+        "title": "公共管理学报",
+        "issn": "1672-6162",
+        "homepage": "https://gggl.cbpt.cnki.net/",
+        "priority": true,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/1672-6162",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": "Official host returns invalid TOKEN; publisher metadata export/authorization needed",
+        "checkedAt": "2026-10-26T08:24:32.691Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "Official host returns invalid TOKEN; publisher metadata export/authorization needed"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "id": "https://openalex.org/S2764993020",
+          "title": "Gonggong guanli xuebao",
+          "issns": [
+            "1672-6162"
+          ],
+          "earliestYear": 1997,
+          "latestYear": 2020,
+          "count": 0,
+          "policy": "Anonymous first-page probe only; bulk cursor requires a free authorized API key"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-1",
+      "title": "人口研究",
+      "issn": "1000-6087",
+      "homepage": "https://rkyj.ruc.edu.cn/CN/1000-6087/home.shtml",
+      "priority": false,
+      "identityStatus": "reviewed publisher citation/ISSN evidence",
+      "identityEvidence": [
+        "https://rkyj.ruc.edu.cn/CN/1000-6087/home.shtml",
+        "https://rkyj.ruc.edu.cn/CN/Y2026/V50/I5/3"
+      ],
+      "publisher": "中国人民大学",
+      "cn": "11-1489/C",
+      "cssciStatus": "pending",
+      "permission": "Public citation metadata only; robots Allow: /; no full text, PDF or abstract republication",
+      "blocker": null,
+      "identityNote": "1000-6087及文章citation元数据精确匹配；仅提取书目事实，不保留全文。",
+      "probe": {
+        "id": "candidate-1",
+        "title": "人口研究",
+        "issn": "1000-6087",
+        "homepage": "https://rkyj.ruc.edu.cn/CN/1000-6087/home.shtml",
+        "priority": false,
+        "identityStatus": "reviewed publisher citation/ISSN evidence",
+        "identityEvidence": "https://rkyj.ruc.edu.cn/CN/1000-6087/home.shtml",
+        "publisher": "中国人民大学",
+        "cn": "11-1489/C",
+        "cssciStatus": "pending",
+        "permission": "Public citation metadata only; robots Allow: /; no full text, PDF or abstract republication",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:24:37.000Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": true,
+        "blockers": [],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "id": "https://openalex.org/S4306543072",
+          "title": "人口研究",
+          "issns": [
+            "1000-6087"
+          ],
+          "earliestYear": 1978,
+          "latestYear": 2021,
+          "count": 0,
+          "policy": "Anonymous first-page probe only; bulk cursor requires a free authorized API key"
+        },
+        "catalog": {
+          "url": "https://rkyj.ruc.edu.cn/CN/1000-6087/home.shtml",
+          "archive": [
+            "https://rkyj.ruc.edu.cn/CN/article/showOldVolumn.do"
+          ],
+          "permissionEvidence": "https://rkyj.ruc.edu.cn/robots.txt",
+          "robots": "Allow: /",
+          "sampleUrl": "https://rkyj.ruc.edu.cn/CN/Y2026/V50/I5/3",
+          "issns": [
+            "1000-6087"
+          ],
+          "metadataScope": "Public citation metadata only; robots Allow: /; no full text, PDF or abstract republication",
+          "transport": "operator-reviewed system HTTPS",
+          "estimatedArticles": 192,
+          "note": "Catalogue count is unknown before bounded enumeration; not an assertion of complete journal coverage",
+          "estimateKind": "upper bound from matching calendar-year issue directories; exact dates, identity and non-paper types still require validation",
+          "issuePages": 22,
+          "enumeratedIssuePages": 22,
+          "estimateTruncated": false
+        }
+      },
+      "total": 148,
+      "earliest": "2023-11-29",
+      "latest": "2026-09-29",
+      "doi": 0,
+      "doiPercent": 0,
+      "authors": 148,
+      "authorsPercent": 100,
+      "abstracts": 0,
+      "abstractPercent": 0,
+      "knownDates": 148,
+      "datePercent": 100,
+      "day": 148,
+      "month": 0,
+      "dayPercent": 100,
+      "verified": 148,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 8,
+          "exactDay": 8,
+          "coarse": 0
+        },
+        "90": {
+          "total": 16,
+          "exactDay": 16,
+          "coarse": 0
+        },
+        "180": {
+          "total": 24,
+          "exactDay": 24,
+          "coarse": 0
+        },
+        "365": {
+          "total": 50,
+          "exactDay": 50,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 148,
+          "exactDay": 148,
+          "coarse": 0
+        }
+      },
+      "jobs": [
+        {
+          "id": "341cbcf5-b7f1-44a0-a418-9eac10e7f520",
+          "days": 180,
+          "status": "completed",
+          "discovered": 40,
+          "valid": 24,
+          "added": 24,
+          "updated": 0,
+          "duplicates": 0,
+          "rejected": 0,
+          "outOfRange": 16,
+          "pages": 112,
+          "failures": 1,
+          "error": "同步失败；检查数据源、访问权限或日期后继续，检查点保留"
+        },
+        {
+          "id": "077ac27f-6bb9-4083-ac81-87fd3a3748af",
+          "days": 1096,
+          "status": "completed",
+          "discovered": 192,
+          "valid": 148,
+          "added": 124,
+          "updated": 0,
+          "duplicates": 24,
+          "rejected": 0,
+          "outOfRange": 44,
+          "pages": 216,
+          "failures": 1,
+          "error": ""
+        },
+        {
+          "id": "137eabf8-acf7-4abf-82fd-cf9e3261e6a3",
+          "days": 1096,
+          "status": "completed",
+          "discovered": 192,
+          "valid": 148,
+          "added": 0,
+          "updated": 0,
+          "duplicates": 148,
+          "rejected": 0,
+          "outOfRange": 44,
+          "pages": 216,
+          "failures": 0,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "id": "candidate-10",
+      "title": "社会建设",
+      "issn": "2095-8641",
+      "homepage": "https://shjs.ruc.edu.cn/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://shjs.ruc.edu.cn/CN/home",
+        "https://news.ruc.edu.cn/1959817134478696450.html"
+      ],
+      "publisher": "中国人民大学",
+      "cn": "10-1896/C",
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "cssciPublisherClaim": {
+        "kind": "source",
+        "year": "2025-2026",
+        "url": "https://news.ruc.edu.cn/1959817134478696450.html"
+      },
+      "identityNote": "纠正发现输入中的ISSN误写：正式ISSN为2095-8641。刊方有2025-2026来源期刊入选声明；系统仍等待南京大学年度原文人工审核。",
+      "probe": {
+        "id": "candidate-10",
+        "title": "社会建设",
+        "issn": "2095-8641",
+        "homepage": "https://shjs.ruc.edu.cn/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/2095-9249",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:24:51.078Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-11",
+      "title": "妇女研究论丛",
+      "issn": "1004-2563",
+      "homepage": "https://fnyj.ajcass.com/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://ci.nii.ac.jp/ncid/AA12854428"
+      ],
+      "publisher": null,
+      "cn": null,
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "书目目录存在；本轮未取得足够的现行刊方身份及批量元数据许可证据。",
+      "probe": {
+        "id": "candidate-11",
+        "title": "妇女研究论丛",
+        "issn": "1004-2563",
+        "homepage": "https://fnyj.ajcass.com/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/1004-2563",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:24:53.700Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "id": "https://openalex.org/S2764878821",
+          "title": "Funu yanjiu luncong",
+          "issns": [
+            "1004-2563"
+          ],
+          "earliestYear": 2002,
+          "latestYear": 2015,
+          "count": 0,
+          "policy": "Anonymous first-page probe only; bulk cursor requires a free authorized API key"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-12",
+      "title": "残疾人研究",
+      "issn": "2095-0810",
+      "homepage": "https://cjryj.ajcass.com/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [],
+      "publisher": null,
+      "cn": null,
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "2095-0810作为精确ISSN探测输入；无公开接口匹配来源，CN、主办与官网本轮待核。",
+      "probe": {
+        "id": "candidate-12",
+        "title": "残疾人研究",
+        "issn": "2095-0810",
+        "homepage": "https://cjryj.ajcass.com/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/2095-0810",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:24:58.371Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-16",
+      "title": "公共管理与政策评论",
+      "issn": "2095-4026",
+      "homepage": "https://ggglyzc.ruc.edu.cn/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://ggglyzc.ruc.edu.cn/CN/column/column1.shtml"
+      ],
+      "publisher": "中国人民大学",
+      "cn": "10-1062/D",
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "2095-4026；本机访问证书验证失败，不能自动采集。",
+      "probe": {
+        "id": "candidate-16",
+        "title": "公共管理与政策评论",
+        "issn": "2095-4026",
+        "homepage": "https://ggglyzc.ruc.edu.cn/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/2095-4026",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:00.648Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-17",
+      "title": "中国行政管理",
+      "issn": "1006-0863",
+      "homepage": "https://www.cpaj.com.cn/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://iat.ustc.edu.cn/u/cms/xjjs/202105/220349347x2f.pdf"
+      ],
+      "publisher": null,
+      "cn": "11-1145/D",
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "历史机构目录确认1006-0863，现官网证书过期；没有降级HTTP或忽略证书。",
+      "probe": {
+        "id": "candidate-17",
+        "title": "中国行政管理",
+        "issn": "1006-0863",
+        "homepage": "https://www.cpaj.com.cn/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/1006-0863",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:06.213Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-18",
+      "title": "治理研究",
+      "issn": "1007-9092",
+      "homepage": "https://zlyj.zjdx.gov.cn/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [],
+      "publisher": null,
+      "cn": null,
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "1007-9092为发现输入；候选官网证书主机名不匹配，近期身份与批量授权待刊方确认。",
+      "probe": {
+        "id": "candidate-18",
+        "title": "治理研究",
+        "issn": "1007-9092",
+        "homepage": "https://zlyj.zjdx.gov.cn/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/1007-9092",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:09.765Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-19",
+      "title": "电子政务",
+      "issn": "1672-7223",
+      "homepage": "https://www.egovernment.com.cn/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://www.las.cas.cn/qk/202112/t20211202_6286197.html"
+      ],
+      "publisher": "中国科学院文献情报中心",
+      "cn": null,
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "1672-7223；机构介绍可作身份线索，没有据此推断批量文章接口已开放。",
+      "probe": {
+        "id": "candidate-19",
+        "title": "电子政务",
+        "issn": "1672-7223",
+        "homepage": "https://www.egovernment.com.cn/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/1672-7223",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:12.703Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-2",
+      "title": "中国人口科学",
+      "issn": "1000-7881",
+      "homepage": "https://zgrkkx.ajcass.com/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://www.ncpssd.org/journal/details.aspx?gch=97725X&langType=1&nav=1"
+      ],
+      "publisher": null,
+      "cn": null,
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "文献中心确认1000-7881；候选官网域名未证实，不作为自动采集入口。",
+      "probe": {
+        "id": "candidate-2",
+        "title": "中国人口科学",
+        "issn": "1000-7881",
+        "homepage": "https://zgrkkx.ajcass.com/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/1000-7881",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:14.574Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-20",
+      "title": "中国软科学",
+      "issn": "1002-9753",
+      "homepage": "https://www.cssm.com.cn/zgrkx/home",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://cssrac.nju.edu.cn/xscb/lyqk/20200524/i83486.html",
+        "https://www.cssm.com.cn/zgrkx/home"
+      ],
+      "publisher": "中国软科学研究会",
+      "cn": null,
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "身份冲突须人工处理：南大历史页/机构目录为1002-9753，当前候选官网页脚却写1005-0566。两者不得自动视为同刊，未导入任何记录。",
+      "probe": {
+        "id": "candidate-20",
+        "title": "中国软科学",
+        "issn": "1002-9753",
+        "homepage": "https://www.cssm.com.cn/zgrkx/home",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/1002-9753",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:18.835Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-3",
+      "title": "人口与经济",
+      "issn": "1000-4149",
+      "homepage": "https://rkyjj.cueb.edu.cn/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://cssrac.nju.edu.cn/xscb/lyqk/20200524/i82868.html"
+      ],
+      "publisher": "首都经济贸易大学",
+      "cn": "11-1115/F",
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "1000-4149；南大历史刊物简介可核身份，不能核2025-2026年度资格或近期论文覆盖。",
+      "probe": {
+        "id": "candidate-3",
+        "title": "人口与经济",
+        "issn": "1000-4149",
+        "homepage": "https://rkyjj.cueb.edu.cn/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/1000-4149",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:20.766Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "id": "https://openalex.org/S2764741871",
+          "title": "Renkou yu jingji",
+          "issns": [
+            "1000-4149"
+          ],
+          "earliestYear": 1993,
+          "latestYear": 2020,
+          "count": 0,
+          "policy": "Anonymous first-page probe only; bulk cursor requires a free authorized API key"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-4",
+      "title": "人口学刊",
+      "issn": "1004-129X",
+      "homepage": "https://rkxk.jlu.edu.cn/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://nasa.jlu.edu.cn/info/1086/2323.htm",
+        "https://hssra.jlu.edu.cn/xsqk/rkxk.htm"
+      ],
+      "publisher": "吉林大学",
+      "cn": "22-1017/C",
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "历史办刊信息；近期自动来源和元数据批量许可未核实。",
+      "probe": {
+        "id": "candidate-4",
+        "title": "人口学刊",
+        "issn": "1004-129X",
+        "homepage": "https://rkxk.jlu.edu.cn/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/1004-129X",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:24.334Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "id": "https://openalex.org/S2764491234",
+          "title": "Renkou xuekan",
+          "issns": [
+            "1004-129X"
+          ],
+          "earliestYear": 2000,
+          "latestYear": 2016,
+          "count": 0,
+          "policy": "Anonymous first-page probe only; bulk cursor requires a free authorized API key"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-5",
+      "title": "人口与发展",
+      "issn": "1674-1668",
+      "homepage": "https://rkyfz.pku.edu.cn/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://ncpssd.org/journal/secure/details?params=WVh3R1E3NFRYcjNaQmxhcGNGc3RnZHJXZVFyWlgzQktXVFpOOUNEdTZzbkttMDlEam5yWEJORTBSZGQvTy9oNw"
+      ],
+      "publisher": null,
+      "cn": null,
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "文献中心确认1674-1668；不与英文China Population and Development Studies混淆。",
+      "probe": {
+        "id": "candidate-5",
+        "title": "人口与发展",
+        "issn": "1674-1668",
+        "homepage": "https://rkyfz.pku.edu.cn/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/1674-1668",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:32.652Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "id": "https://openalex.org/S2764657679",
+          "title": "Renkou yu fazhan",
+          "issns": [
+            "1674-1668"
+          ],
+          "earliestYear": 1997,
+          "latestYear": 2018,
+          "count": 0,
+          "policy": "Anonymous first-page probe only; bulk cursor requires a free authorized API key"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "candidate-7",
+      "title": "社会",
+      "issn": "1004-8804",
+      "homepage": "https://www.society.shu.edu.cn/CN/1004-8804/home.shtml",
+      "priority": false,
+      "identityStatus": "reviewed publisher citation/ISSN evidence",
+      "identityEvidence": [
+        "https://www.society.shu.edu.cn/CN/1004-8804/home.shtml"
+      ],
+      "publisher": "上海大学",
+      "cn": "31-1123/C",
+      "cssciStatus": "pending",
+      "permission": "Public citation metadata only; robots Allow: / and publisher RSS; respect noarchive by retaining hashes and extracted facts, not page HTML",
+      "blocker": null,
+      "identityNote": "1004-8804；官方citation_journal_title为社会杂志，登记为精确别名。遵守noarchive，不存整页HTML。",
+      "probe": {
+        "id": "candidate-7",
+        "title": "社会",
+        "issn": "1004-8804",
+        "homepage": "https://www.society.shu.edu.cn/CN/1004-8804/home.shtml",
+        "priority": false,
+        "identityStatus": "reviewed publisher citation/ISSN evidence",
+        "identityEvidence": "https://www.society.shu.edu.cn/CN/1004-8804/home.shtml",
+        "publisher": "上海大学",
+        "cn": "31-1123/C",
+        "cssciStatus": "pending",
+        "permission": "Public citation metadata only; robots Allow: / and publisher RSS; respect noarchive by retaining hashes and extracted facts, not page HTML",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:36.687Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": true,
+        "blockers": [],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        },
+        "catalog": {
+          "url": "https://www.society.shu.edu.cn/CN/1004-8804/home.shtml",
+          "archive": [
+            "https://www.society.shu.edu.cn/CN/article/showOldVolumn.do"
+          ],
+          "permissionEvidence": "https://www.society.shu.edu.cn/robots.txt",
+          "robots": "Allow: /",
+          "sampleUrl": "https://www.society.shu.edu.cn/CN/Y2026/V46/I4/1",
+          "issns": [
+            "1004-8804"
+          ],
+          "metadataScope": "Public citation metadata only; robots Allow: / and publisher RSS; respect noarchive by retaining hashes and extracted facts, not page HTML",
+          "transport": "operator-reviewed system HTTPS",
+          "estimatedArticles": 178,
+          "note": "Catalogue count is unknown before bounded enumeration; not an assertion of complete journal coverage",
+          "estimateKind": "upper bound from matching calendar-year issue directories; exact dates, identity and non-paper types still require validation",
+          "issuePages": 21,
+          "enumeratedIssuePages": 21,
+          "estimateTruncated": false
+        }
+      },
+      "total": 143,
+      "earliest": "2023-10-28",
+      "latest": "2026-09-18",
+      "doi": 0,
+      "doiPercent": 0,
+      "authors": 142,
+      "authorsPercent": 99.3,
+      "abstracts": 0,
+      "abstractPercent": 0,
+      "knownDates": 143,
+      "datePercent": 100,
+      "day": 143,
+      "month": 0,
+      "dayPercent": 100,
+      "verified": 143,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 7,
+          "exactDay": 7,
+          "coarse": 0
+        },
+        "180": {
+          "total": 24,
+          "exactDay": 24,
+          "coarse": 0
+        },
+        "365": {
+          "total": 48,
+          "exactDay": 48,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 143,
+          "exactDay": 143,
+          "coarse": 0
+        }
+      },
+      "jobs": [
+        {
+          "id": "8630ca96-4990-4b66-9c80-ffa318e74a25",
+          "days": 180,
+          "status": "completed",
+          "discovered": 31,
+          "valid": 24,
+          "added": 24,
+          "updated": 0,
+          "duplicates": 0,
+          "rejected": 0,
+          "outOfRange": 7,
+          "pages": 111,
+          "failures": 1,
+          "error": "同步失败；检查数据源、访问权限或日期后继续，检查点保留"
+        },
+        {
+          "id": "54ca02c1-90f5-4448-8ea7-f6fdbf057aee",
+          "days": 1096,
+          "status": "completed",
+          "discovered": 178,
+          "valid": 146,
+          "added": 122,
+          "updated": 0,
+          "duplicates": 24,
+          "rejected": 0,
+          "outOfRange": 32,
+          "pages": 201,
+          "failures": 1,
+          "error": ""
+        },
+        {
+          "id": "ff59ca5a-4f40-40b3-a51a-ea12c61be2e3",
+          "days": 1096,
+          "status": "completed",
+          "discovered": 178,
+          "valid": 146,
+          "added": 0,
+          "updated": 0,
+          "duplicates": 146,
+          "rejected": 0,
+          "outOfRange": 32,
+          "pages": 201,
+          "failures": 0,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "id": "candidate-9",
+      "title": "社会发展研究",
+      "issn": "2095-7580",
+      "homepage": "https://shfzyj.ajcass.com/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://cssrac.nju.edu.cn/xscb/lyqk/20200524/i82368.html"
+      ],
+      "publisher": "中国社会科学院社会发展战略研究院（2020年南大简介；现主办机构名称待更新核验）",
+      "cn": "10-1217/C",
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "2095-7580；历史身份与当前来源许可分开。",
+      "probe": {
+        "id": "candidate-9",
+        "title": "社会发展研究",
+        "issn": "2095-7580",
+        "homepage": "https://shfzyj.ajcass.com/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/2095-7580",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:44.823Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "public-admin-cn",
+      "title": "公共管理评论",
+      "issn": "2096-7713",
+      "homepage": "https://www.sciopen.com/journal/2096-7713",
+      "priority": false,
+      "identityStatus": "reviewed publisher citation/ISSN evidence",
+      "identityEvidence": [
+        "https://www.sciopen.com/journal/2096-7713"
+      ],
+      "publisher": "清华大学出版社",
+      "cn": "10-1653/D0",
+      "cssciStatus": "pending",
+      "permission": "Public Crossref bibliographic metadata; English titles as supplied; abstracts withheld without reuse licence",
+      "blocker": null,
+      "identityNote": "2096-7713对应China Public Administration Review，刊方标明Publishing Language: Chinese。Crossref题名为英文，保持供应商原始题名，不自行翻译成中文原题。",
+      "probe": {
+        "id": "public-admin-cn",
+        "title": "公共管理评论",
+        "issn": "2096-7713",
+        "homepage": "https://www.sciopen.com/journal/2096-7713",
+        "priority": false,
+        "identityStatus": "reviewed publisher citation/ISSN evidence",
+        "identityEvidence": "https://www.sciopen.com/journal/2096-7713",
+        "publisher": "清华大学出版社",
+        "cn": "10-1653/D0",
+        "cssciStatus": "pending",
+        "permission": "Public Crossref bibliographic metadata; English titles as supplied; abstracts withheld without reuse licence",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:47.915Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": true,
+        "blockers": [],
+        "crossref": {
+          "title": "China Public Administration Review",
+          "issns": [
+            "2096-7713"
+          ],
+          "publisher": "Tsinghua University Press",
+          "count": 58,
+          "sample": [
+            {
+              "title": [
+                "Without Deduction, the Story Always Seems Awkward"
+              ],
+              "issns": [
+                "2096-7713"
+              ],
+              "journal": [
+                "China Public Administration Review"
+              ],
+              "doi": "10.26599/cpar.2026.9680211",
+              "published": {
+                "date-parts": [
+                  [
+                    2026,
+                    6
+                  ]
+                ]
+              },
+              "issued": {
+                "date-parts": [
+                  [
+                    2026,
+                    6
+                  ]
+                ]
+              }
+            },
+            {
+              "title": [
+                "Hot Topics in Chinese Public Administration Research in 2025: An Analysis of Articles in International Journals"
+              ],
+              "issns": [
+                "2096-7713"
+              ],
+              "journal": [
+                "China Public Administration Review"
+              ],
+              "doi": "10.26599/cpar.2026.9680212",
+              "published": {
+                "date-parts": [
+                  [
+                    2026,
+                    6
+                  ]
+                ]
+              },
+              "issued": {
+                "date-parts": [
+                  [
+                    2026,
+                    6
+                  ]
+                ]
+              }
+            }
+          ]
+        },
+        "openalex": {
+          "id": "https://openalex.org/S7407056786",
+          "title": "China Public Administration Review",
+          "issns": [
+            "2096-7713"
+          ],
+          "earliestYear": null,
+          "latestYear": null,
+          "count": 58,
+          "policy": "Anonymous first-page probe only; bulk cursor requires a free authorized API key"
+        }
+      },
+      "total": 58,
+      "earliest": "2024-12",
+      "latest": "2026-06",
+      "doi": 58,
+      "doiPercent": 100,
+      "authors": 58,
+      "authorsPercent": 100,
+      "abstracts": 0,
+      "abstractPercent": 0,
+      "knownDates": 58,
+      "datePercent": 100,
+      "day": 0,
+      "month": 58,
+      "dayPercent": 0,
+      "verified": 58,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 12,
+          "exactDay": 0,
+          "coarse": 12
+        },
+        "365": {
+          "total": 34,
+          "exactDay": 0,
+          "coarse": 34
+        },
+        "1096": {
+          "total": 58,
+          "exactDay": 0,
+          "coarse": 58
+        }
+      },
+      "jobs": [
+        {
+          "id": "c24d583f-ca96-4f2f-8a10-c10572abca16",
+          "days": 180,
+          "status": "completed",
+          "discovered": 12,
+          "valid": 12,
+          "added": 12,
+          "updated": 0,
+          "duplicates": 0,
+          "rejected": 0,
+          "outOfRange": 0,
+          "pages": 2,
+          "failures": 0,
+          "error": ""
+        },
+        {
+          "id": "33f206f3-6d00-47a6-baea-f662a5ec4cd6",
+          "days": 1096,
+          "status": "completed",
+          "discovered": 58,
+          "valid": 58,
+          "added": 46,
+          "updated": 0,
+          "duplicates": 12,
+          "rejected": 0,
+          "outOfRange": 0,
+          "pages": 2,
+          "failures": 0,
+          "error": ""
+        },
+        {
+          "id": "c1cf676b-e828-47e5-98e9-0ff43cd2da50",
+          "days": 1096,
+          "status": "completed",
+          "discovered": 58,
+          "valid": 58,
+          "added": 0,
+          "updated": 58,
+          "duplicates": 58,
+          "rejected": 0,
+          "outOfRange": 0,
+          "pages": 2,
+          "failures": 0,
+          "error": ""
+        }
+      ]
+    },
+    {
+      "id": "soc-review-cn",
+      "title": "社会学评论",
+      "issn": "2095-5154",
+      "homepage": "https://src.ruc.edu.cn/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://src.ruc.edu.cn/CN/home",
+        "https://portal.issn.org/resource/ISSN/2095-5154"
+      ],
+      "publisher": "中国人民大学社会学理论与方法研究中心、中国人民大学书报资料中心",
+      "cn": "10-1098/C",
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "刊名、ISSN、CN可核对；本机HTTPS证书验证失败，未关闭证书校验。",
+      "probe": {
+        "id": "soc-review-cn",
+        "title": "社会学评论",
+        "issn": "2095-5154",
+        "homepage": "https://src.ruc.edu.cn/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/2095-5154",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:53.996Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    },
+    {
+      "id": "soc-security-cn",
+      "title": "社会保障评论",
+      "issn": "2096-3211",
+      "homepage": "https://sbpl.cbpt.cnki.net/",
+      "priority": false,
+      "identityStatus": "candidate ISSN/host; verify before automatic import",
+      "identityEvidence": [
+        "https://m.ncpssd.cn/journal/details?gch=83815X&langType=1&nav=1",
+        "https://www.caoss.org.cn/upload/file/26030515220553.pdf"
+      ],
+      "publisher": "中国社会保障学会",
+      "cn": "10-1472/C",
+      "cssciStatus": "pending",
+      "permission": "No bulk collection permission verified; public API probe only",
+      "blocker": null,
+      "identityNote": "ISSN2096-3211；刊方征稿材料不等于批量采集授权。",
+      "probe": {
+        "id": "soc-security-cn",
+        "title": "社会保障评论",
+        "issn": "2096-3211",
+        "homepage": "https://sbpl.cbpt.cnki.net/",
+        "priority": false,
+        "identityStatus": "candidate ISSN/host; verify before automatic import",
+        "identityEvidence": "https://portal.issn.org/resource/ISSN/2096-3211",
+        "publisher": null,
+        "cn": null,
+        "cssciStatus": "pending",
+        "permission": "No bulk collection permission verified; public API probe only",
+        "blocker": null,
+        "checkedAt": "2026-10-26T08:25:55.710Z",
+        "cssciEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+        "ready": false,
+        "blockers": [
+          "No verified permitted automatic source with recent matching records; obtain publisher/library metadata export"
+        ],
+        "crossref": {
+          "error": "HTTP 404"
+        },
+        "openalex": {
+          "error": "HTTP 404"
+        }
+      },
+      "total": 0,
+      "earliest": null,
+      "latest": null,
+      "doi": 0,
+      "doiPercent": null,
+      "authors": 0,
+      "authorsPercent": null,
+      "abstracts": 0,
+      "abstractPercent": null,
+      "knownDates": 0,
+      "datePercent": null,
+      "day": 0,
+      "month": 0,
+      "dayPercent": null,
+      "verified": 0,
+      "analyzed": 0,
+      "aiResults": 0,
+      "windows": {
+        "30": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "90": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "180": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "365": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        },
+        "1096": {
+          "total": 0,
+          "exactDay": 0,
+          "coarse": 0
+        }
+      },
+      "jobs": []
+    }
+  ]
+}

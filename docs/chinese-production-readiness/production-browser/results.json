@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "width": 1440,
+      "market": "international",
+      "status": 200,
+      "overflow": false,
+      "existingProductionOnly": true
+    },
+    {
+      "width": 1440,
+      "market": "chinese",
+      "status": 200,
+      "overflow": false,
+      "existingProductionOnly": true
+    },
+    {
+      "width": 390,
+      "market": "international",
+      "status": 200,
+      "overflow": false,
+      "existingProductionOnly": true
+    },
+    {
+      "width": 390,
+      "market": "chinese",
+      "status": 200,
+      "overflow": false,
+      "existingProductionOnly": true
+    }
+  ],
+  "pageErrors": [],
+  "blockedWrites": [],
+  "blockedOtherHosts": [],
+  "note": "Existing production UI only; not acceptance of a newly deployed candidate. First screenshot showed a transient backend warning; focused retry recovered. Stable page loading is not certified.",
+  "observedVisualWarning": {
+    "width": 390,
+    "market": "chinese",
+    "firstScreenshotBackendWarning": true,
+    "focusedRetryWarning": false,
+    "focusedRetryApi200": 8
+  }
+}

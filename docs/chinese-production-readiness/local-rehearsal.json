@@ -1,0 +1,38 @@
+{
+  "localOnly": true,
+  "syntheticEnglishFixture": true,
+  "productionBackupTested": false,
+  "before": {
+    "records": 11000,
+    "analyzed": 375,
+    "protectedDigest": "677247f2b2b1816729de110f40b9aae1aadc65af8b1ec0b76fe2d7a308ed3d7e",
+    "taskDigest": "39f45b5087a5a536e82bcfc8691f7fa0ba933ba268c032b0028964be1f3c76d5"
+  },
+  "after": {
+    "records": 11000,
+    "analyzed": 375,
+    "protectedDigest": "677247f2b2b1816729de110f40b9aae1aadc65af8b1ec0b76fe2d7a308ed3d7e",
+    "taskDigest": "39f45b5087a5a536e82bcfc8691f7fa0ba933ba268c032b0028964be1f3c76d5"
+  },
+  "migrations": 2,
+  "integrity": "ok",
+  "foreignKeyViolations": 0,
+  "chineseLocalReplay": {
+    "rounds": [
+      {
+        "added": 0,
+        "duplicates": 349,
+        "updated": 0,
+        "rejected": 0
+      },
+      {
+        "added": 0,
+        "duplicates": 349,
+        "updated": 0,
+        "rejected": 0
+      }
+    ],
+    "records": 349
+  },
+  "artifacts": "work/release-readiness/restore-ypKUhe"
+}

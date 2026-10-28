@@ -1,0 +1,20 @@
+{
+  "baseline": true,
+  "checks": [
+    "320 home / publication dates / no overflow",
+    "320 small sample bars / independent coverage / full labels",
+    "320 200/164 batches / accounting / failure reasons",
+    "390 home / publication dates / no overflow",
+    "390 small sample bars / independent coverage / full labels",
+    "390 200/164 batches / accounting / failure reasons",
+    "768 home / publication dates / no overflow",
+    "768 small sample bars / independent coverage / full labels",
+    "768 200/164 batches / accounting / failure reasons",
+    "1440 home / publication dates / no overflow",
+    "1440 small sample bars / independent coverage / full labels",
+    "1440 200/164 batches / accounting / failure reasons"
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "mutations": []
+}

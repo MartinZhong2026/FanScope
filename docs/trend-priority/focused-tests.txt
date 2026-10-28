@@ -1,0 +1,23 @@
+✔ historical backfill is operator-controlled and keeps independent cursor (24.030565ms)
+✔ bad scopes cannot silently activate unknown or unconfigured journals (0.837374ms)
+✔ failed fetch pauses but preserves operator resumability (1.779813ms)
+✔ explicit source types distinguish research/review/abstract/editorial/book review; generic labels and protocols stay unknown (1.63133ms)
+✔ 2026 default and 30/90/180-day windows, optional 2025, and 2027 rollover preserve the full corpus (16.112918ms)
+✔ all seven chart denominators share the selected type and show missing evidence without inventing methods (1.140468ms)
+✔ default AI candidate policy is current-year, relevant, abstract-backed, newest-first and capped at 200; never starts (2.9979ms)
+✔ queued candidates are revalidated before spending when source metadata later changes their type (1.349369ms)
+✔ candidate preparation needs no price or budget; setting an explicit budget still never starts analysis (1.631543ms)
+✔ public metadata fills absent abstracts, verifies DOI+ISSN and preserves existing AI/cache; mismatch fails closed (3.187985ms)
+✔ metadata failures are recorded and protected from immediate repeated requests; no paid tasks are created (1.033823ms)
+✔ normalization reuses analyzed 2026 results across formatting and into 2027; substantive content changes invalidate cache (2.012539ms)
+✔ comparison uses the same month/day cutoff, common journals and types; excludes coarse dates and never reports annual growth (1.819641ms)
+✔ backfill defaults to 2026 and supports recent windows without deleting optional 2025 data (3.247047ms)
+✔ current-year backfill runs before optional 2025 work and keeps independent cursors (3.426146ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 287.861797

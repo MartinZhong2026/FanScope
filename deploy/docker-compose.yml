@@ -1,0 +1,27 @@
+services:
+  fanscope-api:
+    build:
+      context: ../api
+      dockerfile: Dockerfile
+    container_name: fanscope-api
+    restart: unless-stopped
+    env_file:
+      - ../api/.env
+    environment:
+      DATABASE_PATH: /app/data/fanscope.sqlite
+    volumes:
+      - fanscope_data:/app/data
+    ports:
+      - '127.0.0.1:8787:8787'
+    mem_limit: 420m
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8787/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 8s
+      retries: 4
+      start_period: 15s
+volumes:
+  fanscope_data:
+    name: fanscope_data

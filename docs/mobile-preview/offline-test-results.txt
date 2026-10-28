@@ -1,0 +1,9 @@
+Research Radar 320px: OK
+Research Radar 375px: OK
+Research Radar 390px: OK
+Research Radar 430px: OK
+Research Radar 760px: OK
+Research Radar 1024px: OK
+Research Radar 1440px: OK
+Lab 390px: OK
+Lab 1024px: OK

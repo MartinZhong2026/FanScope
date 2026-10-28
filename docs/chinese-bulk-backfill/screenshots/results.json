@@ -1,0 +1,82 @@
+{
+  "checks": [
+    {
+      "width": 1440,
+      "corpus": 349,
+      "search": true,
+      "journalFilter": true,
+      "dateTopicFilter": true,
+      "filteredCount": 3,
+      "sourceOpened": "https://rkyj.ruc.edu.cn/CN/Y2026/V50/I5/116",
+      "marketIsolation": true,
+      "viewportOverflow": false
+    },
+    {
+      "width": 390,
+      "corpus": 349,
+      "search": true,
+      "journalFilter": true,
+      "dateTopicFilter": true,
+      "filteredCount": 3,
+      "sourceOpened": "https://rkyj.ruc.edu.cn/CN/Y2026/V50/I5/116",
+      "marketIsolation": true,
+      "viewportOverflow": false
+    }
+  ],
+  "sourceChecks": [
+    {
+      "width": 1440,
+      "url": "https://rkyj.ruc.edu.cn/CN/Y2026/V50/I5/116",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "url": "https://rkyj.ruc.edu.cn/CN/Y2026/V50/I5/116",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "blockedRequests": [
+    "https://rkyj.ruc.edu.cn/js/bootstrap/css/bootstrap.min.css",
+    "https://rkyj.ruc.edu.cn/images/1000-6087/css/css.css",
+    "https://rkyj.ruc.edu.cn/js/bootstrap/css/font-awesome.min.css",
+    "https://rkyj.ruc.edu.cn/js/jquery/jquery.min.js",
+    "https://rkyj.ruc.edu.cn/js/bootstrap/js/bootstrap.min.js",
+    "https://rkyj.ruc.edu.cn/js/colorbox/colorbox.css",
+    "https://rkyj.ruc.edu.cn/js/colorbox/jquery.colorbox.js",
+    "https://rkyj.ruc.edu.cn/js/modelDialog1.js",
+    "https://rkyj.ruc.edu.cn/js/layer2.1/layer.js",
+    "https://rkyj.ruc.edu.cn/js/drag.js",
+    "https://rkyj.ruc.edu.cn/js/store.js",
+    "https://rkyj.ruc.edu.cn/js/download.js",
+    "https://rkyj.ruc.edu.cn/images/1000-6087/js/abstract.js",
+    "https://rkyj.ruc.edu.cn/images/1000-6087/images/banner.png",
+    "https://tongji.journalreport.cn/mstatistics.service.js",
+    "https://rkyj.ruc.edu.cn/js/mathJax3.0/tex-mml-chtml.js",
+    "https://rkyj.ruc.edu.cn/CN/Y2026/images/knowledge_map1.png",
+    "https://rkyj.ruc.edu.cn/EN/article/updateBrowseNum.jsp?articleid=3971",
+    "https://rkyj.ruc.edu.cn/images/1000-6087/css/abstract.css",
+    "https://rkyj.ruc.edu.cn/CN/Y2026/images/knowledge_map1.png",
+    "https://rkyj.ruc.edu.cn/js/bootstrap/css/bootstrap.min.css",
+    "https://rkyj.ruc.edu.cn/images/1000-6087/css/css.css",
+    "https://rkyj.ruc.edu.cn/js/bootstrap/css/font-awesome.min.css",
+    "https://rkyj.ruc.edu.cn/js/jquery/jquery.min.js",
+    "https://rkyj.ruc.edu.cn/js/bootstrap/js/bootstrap.min.js",
+    "https://rkyj.ruc.edu.cn/js/colorbox/colorbox.css",
+    "https://rkyj.ruc.edu.cn/js/colorbox/jquery.colorbox.js",
+    "https://rkyj.ruc.edu.cn/js/modelDialog1.js",
+    "https://rkyj.ruc.edu.cn/js/layer2.1/layer.js",
+    "https://rkyj.ruc.edu.cn/js/drag.js",
+    "https://rkyj.ruc.edu.cn/js/store.js",
+    "https://rkyj.ruc.edu.cn/js/download.js",
+    "https://rkyj.ruc.edu.cn/images/1000-6087/js/abstract.js",
+    "https://rkyj.ruc.edu.cn/images/1000-6087/images/banner.png",
+    "https://tongji.journalreport.cn/mstatistics.service.js",
+    "https://rkyj.ruc.edu.cn/js/mathJax3.0/tex-mml-chtml.js",
+    "https://rkyj.ruc.edu.cn/CN/Y2026/images/knowledge_map1.png",
+    "https://rkyj.ruc.edu.cn/images/1000-6087/css/abstract.css",
+    "https://rkyj.ruc.edu.cn/EN/article/updateBrowseNum.jsp?articleid=3971",
+    "https://rkyj.ruc.edu.cn/CN/Y2026/images/knowledge_map1.png"
+  ],
+  "mutations": []
+}

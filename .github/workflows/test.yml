@@ -1,0 +1,86 @@
+name: FanScope checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+      - run: sudo apt-get update && sudo apt-get install -y unzip poppler-utils
+      - run: npm ci --ignore-scripts
+        working-directory: api
+      - run: npm test
+        working-directory: api
+      - run: node scripts/check-sensitive.mjs
+      - run: git diff --check
+      - run: npm audit --omit=dev
+        working-directory: api
+  mobile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci --ignore-scripts
+        working-directory: api
+      - run: python -m pip install playwright==1.62.0
+      - run: python -m playwright install --with-deps chromium webkit
+      - name: Mobile browser acceptance against isolated fixtures
+        run: |
+          mkdir -p work
+          DATABASE_PATH="$PWD/work/mobile-ci.sqlite" node --experimental-sqlite api/test/mobile-browser-server.mjs > work/mobile-server.log 2>&1 &
+          echo $! > work/mobile-server.pid
+          python scripts/bilingual-browser-acceptance.py --webkit --output work/bilingual-browser
+          python scripts/mobile-browser-acceptance.py --webkit --output work/mobile-browser-results
+          python scripts/dark-reference-acceptance.py --output work/dark-reference
+      - name: Publication, evidence and batch browser acceptance
+        run: |
+          # The prior fixture process is scoped to its step and may still own these ports.
+          # Stop only this job's recorded fixture, then use a new isolated database.
+          kill "$(cat work/mobile-server.pid)" 2>/dev/null || true
+          for attempt in $(seq 1 50); do
+            if ! curl -sf http://127.0.0.1:4173 >/dev/null; then break; fi
+            sleep 0.1
+          done
+          DATABASE_PATH="$PWD/work/quality-ci.sqlite" node --experimental-sqlite api/test/quality-browser-server.mjs > work/quality-server.log 2>&1 &
+          echo $! > work/quality-server.pid
+          python scripts/quality-browser-acceptance.py --output work/quality-browser
+          python scripts/quality-browser-acceptance.py --language en --output work/quality-browser-en
+      - name: Real Chinese metadata and separate-market browser acceptance
+        run: |
+          kill "$(cat work/quality-server.pid)" 2>/dev/null || true
+          for attempt in $(seq 1 50); do
+            if ! curl -sf http://127.0.0.1:4173 >/dev/null; then break; fi
+            sleep 0.1
+          done
+          DATABASE_PATH="$PWD/work/chinese-ci.sqlite" node --experimental-sqlite api/test/chinese-browser-server.mjs > work/chinese-server.log 2>&1 &
+          python scripts/chinese-browser-acceptance.py --output work/chinese-browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mobile-app-experience
+          path: |
+            work/mobile-browser-results
+            work/dark-reference
+            work/mobile-server.log
+            work/quality-server.log
+            work/quality-browser
+            work/quality-browser-en
+            work/bilingual-browser
+            work/chinese-server.log
+            work/chinese-browser

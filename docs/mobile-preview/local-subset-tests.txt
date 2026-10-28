@@ -1,0 +1,101 @@
+TAP version 13
+# (node:2499) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: auditable Research Brief accepts only supplied evidence IDs and caches without repeat costs
+ok 1 - auditable Research Brief accepts only supplied evidence IDs and caches without repeat costs
+  ---
+  duration_ms: 50.123982
+  type: 'test'
+  ...
+# (node:2500) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 550 records finish fixed window beyond soft four-page budget without losses
+ok 2 - 550 records finish fixed window beyond soft four-page budget without losses
+  ---
+  duration_ms: 2905.912763
+  type: 'test'
+  ...
+# Subtest: interruption preserves failed cursor; duplicate DOI replay is harmless
+ok 3 - interruption preserves failed cursor; duplicate DOI replay is harmless
+  ---
+  duration_ms: 504.180157
+  type: 'test'
+  ...
+# Subtest: missing/nonadvancing cursor with incomplete total is never silently accepted
+ok 4 - missing/nonadvancing cursor with incomplete total is never silently accepted
+  ---
+  duration_ms: 0.593403
+  type: 'test'
+  ...
+# Subtest: 429 and 5xx retry succeeds without a paid network call
+ok 5 - 429 and 5xx retry succeeds without a paid network call
+  ---
+  duration_ms: 2721.780579
+  type: 'test'
+  ...
+# Subtest: source dates and links never substitute indexing date or a journal homepage
+ok 6 - source dates and links never substitute indexing date or a journal homepage
+  ---
+  duration_ms: 0.53151
+  type: 'test'
+  ...
+# Monitor partial failure Journal of Medical Internet Research
+# Subtest: journal failure does not block others; partial checkpoint retained; initial backfill stays silent
+ok 7 - journal failure does not block others; partial checkpoint retained; initial backfill stays silent
+  ---
+  duration_ms: 2106.83306
+  type: 'test'
+  ...
+# Subtest: multiple anchored daily windows complete through repeated bounded invocations
+ok 8 - multiple anchored daily windows complete through repeated bounded invocations
+  ---
+  duration_ms: 3017.585583
+  type: 'test'
+  ...
+# Subtest: expired cursor replays only the fixed failed window with DOI deduplication
+ok 9 - expired cursor replays only the fixed failed window with DOI deduplication
+  ---
+  duration_ms: 504.056066
+  type: 'test'
+  ...
+# Subtest: JMIR and Social Science & Medicine both complete 550-item windows with maxPages=4
+ok 10 - JMIR and Social Science & Medicine both complete 550-item windows with maxPages=4
+  ---
+  duration_ms: 5026.791406
+  type: 'test'
+  ...
+# Subtest: very dense windows subdivide before consumption and retain complete temporal coverage
+ok 11 - very dense windows subdivide before consumption and retain complete temporal coverage
+  ---
+  duration_ms: 501.344368
+  type: 'test'
+  ...
+# Subtest: mobile launcher exposes six genuine module actions and no blank buttons
+ok 12 - mobile launcher exposes six genuine module actions and no blank buttons
+  ---
+  duration_ms: 0.863489
+  type: 'test'
+  ...
+# Subtest: mobile nav accepts real sections only and local svg icons are accessible
+ok 13 - mobile nav accepts real sections only and local svg icons are accessible
+  ---
+  duration_ms: 0.919444
+  type: 'test'
+  ...
+# (node:2532) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: OpenAlex is disabled without approved plan/key, matches DOI+ISSN and caches supplement
+ok 14 - OpenAlex is disabled without approved plan/key, matches DOI+ISSN and caches supplement
+  ---
+  duration_ms: 2027.294586
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17421.365016

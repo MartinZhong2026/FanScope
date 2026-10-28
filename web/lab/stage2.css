@@ -1,0 +1,16 @@
+/* Lab module: share FanScope v1.3 color tokens and app spacing. */
+:root[data-theme="dark"]{color-scheme:dark;--dark:#edf3fa;--muted:#a3b4c5;--line:#304155;--page:#101827;--teal:#65c5b8;--deep:#111e2f;--danger:#f69ca7}
+:root[data-theme="light"]{color-scheme:light;--dark:#172b44;--muted:#687c8e;--line:#e4ebf2;--page:#f3f7fa;--teal:#148f8a;--deep:#10253f;--danger:#ac3942}
+body{background:var(--page);color:var(--dark)}.sidebar{background:var(--deep);border-right:1px solid var(--line)}
+:root[data-theme="dark"] .box,:root[data-theme="dark"] .item,:root[data-theme="dark"] .mutedbox,:root[data-theme="dark"] .review,:root[data-theme="dark"] .modal-panel{background:var(--mobile-surface,#1b283a)!important;border-color:var(--line)!important;color:var(--dark)}
+:root[data-theme="dark"] .main,:root[data-theme="dark"] .topbar,:root[data-theme="dark"] .content{background:var(--page);color:var(--dark)}
+:root[data-theme="dark"] .headrow h1,:root[data-theme="dark"] .box h2,:root[data-theme="dark"] .box h3,:root[data-theme="dark"] .item h3{color:#edf3fa}
+:root[data-theme="dark"] input,:root[data-theme="dark"] select,:root[data-theme="dark"] textarea{background:var(--mobile-input,#182538);color:#edf3fa;border-color:#304155}
+:root[data-theme="dark"] .btn:not(.primary),:root[data-theme="dark"] .pill{background:var(--mobile-button,#213449);color:#d5e3ec;border-color:#3a5266}
+:root[data-theme="dark"] td,:root[data-theme="dark"] th,:root[data-theme="dark"] .subtle,:root[data-theme="dark"] .sm{color:#a9b9ca}
+:root[data-theme="dark"] .notice{background:#293b4b;border-color:#405c6e;color:#c5e1e9}
+:root[data-theme="dark"] .empty,:root[data-theme="dark"] .blocked{background:var(--mobile-surface,#1b283a);color:#9eafc0;border-color:#304155}
+
+
+:root[data-theme="dark"] .metric,:root[data-theme="dark"] .modal{background:var(--mobile-surface,#1b283a);color:var(--dark);border-color:var(--line)}
+:root[data-theme="dark"] .metric .num,:root[data-theme="dark"] .modal h2{color:var(--dark)}

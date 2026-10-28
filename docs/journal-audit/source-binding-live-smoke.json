@@ -1,0 +1,60 @@
+{
+  "verification": {
+    "journalId": "ageing-society",
+    "issn": "1469-1779",
+    "source": "crossref",
+    "verified": true,
+    "examined": 25,
+    "sample": [
+      {
+        "doi": "10.1017/s0144686x23000648",
+        "title": "ASO volume 43 issue 10 Cover and Front matter",
+        "publisher": "Cambridge University Press (CUP)"
+      },
+      {
+        "doi": "10.1017/s0144686x00005973",
+        "title": "Older Persons' Perceptions of the Quality of their Human Support Systems",
+        "publisher": "Cambridge University Press (CUP)"
+      }
+    ],
+    "enabled": true
+  },
+  "tick": {
+    "status": "completed",
+    "id": "f17367e2-6b4e-4ad7-9aaa-1cd56d7bde39",
+    "pages": 1,
+    "added": 61
+  },
+  "job": {
+    "id": "f17367e2-6b4e-4ad7-9aaa-1cd56d7bde39",
+    "journal_id": "ageing-society",
+    "from_date": "2025-01-01T00:00:00.000Z",
+    "to_date": "2026-01-01T00:00:00.000Z",
+    "status": "completed",
+    "created_at": "2026-10-25T04:14:38.768Z",
+    "started_at": "2026-10-25T04:14:38.769Z",
+    "finished_at": "2026-10-25T04:14:39.380Z",
+    "window_start": "2026-01-01T00:00:00.000Z",
+    "window_end": "2026-01-01T00:00:00.000Z",
+    "cursor": "*",
+    "processed": 0,
+    "total": null,
+    "attempts": 0,
+    "range_end": "2026-01-01T00:00:00.000Z",
+    "mode": "backfill",
+    "error": "",
+    "pages_done": 1,
+    "added_articles": 61,
+    "updated_at": "2026-10-25T04:14:39.380Z",
+    "source_identifier": "1469-1779"
+  },
+  "incrementalCursor": {
+    "checkpoint": null
+  },
+  "notifications": {
+    "n": 0
+  },
+  "aiUsage": {
+    "n": 0
+  }
+}

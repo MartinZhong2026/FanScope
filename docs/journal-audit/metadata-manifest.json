@@ -1,0 +1,11 @@
+{
+  "file": "articles.jsonl.gz",
+  "records": 18216,
+  "bytes": 11204352,
+  "sha256": "d88e1a0b1e4e9b1f62c4b64519cf537265c7568b853c531dabc56eafe43ab632",
+  "scope": "public Crossref metadata; isolated acceptance snapshot; no production database",
+  "earliestRequested": "2025-01-01",
+  "executedDate": "2026-10-25",
+  "monthPrecision": 2738,
+  "yearPrecision": 1
+}

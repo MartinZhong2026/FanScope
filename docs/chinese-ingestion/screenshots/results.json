@@ -1,0 +1,22 @@
+{
+  "checks": [
+    {
+      "width": 320,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "passed": true
+    },
+    {
+      "width": 768,
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "mutations": []
+}

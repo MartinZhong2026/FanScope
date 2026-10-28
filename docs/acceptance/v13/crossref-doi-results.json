@@ -1,0 +1,74 @@
+[
+  {
+    "journalId": "gerontologist",
+    "requestedDoi": "10.1093/geront/gns034",
+    "doi": "10.1093/geront/gns034",
+    "ISSN": [
+      "0016-9013",
+      "1758-5341"
+    ],
+    "containerTitle": [
+      "The Gerontologist"
+    ],
+    "publisher": "Oxford University Press (OUP)",
+    "sameDOI": true,
+    "matchingISSN": true
+  },
+  {
+    "journalId": "candidate-21",
+    "requestedDoi": "10.1093/geroni/igad104.3014",
+    "doi": "10.1093/geroni/igad104.3014",
+    "ISSN": [
+      "2399-5300"
+    ],
+    "containerTitle": [
+      "Innovation in Aging"
+    ],
+    "publisher": "Oxford University Press (OUP)",
+    "sameDOI": true,
+    "matchingISSN": true
+  },
+  {
+    "journalId": "candidate-25",
+    "requestedDoi": "10.1186/1471-2318-10-s1-a62",
+    "doi": "10.1186/1471-2318-10-s1-a62",
+    "ISSN": [
+      "1471-2318"
+    ],
+    "containerTitle": [
+      "BMC Geriatrics"
+    ],
+    "publisher": "Springer Science and Business Media LLC",
+    "sameDOI": true,
+    "matchingISSN": true
+  },
+  {
+    "journalId": "candidate-29",
+    "requestedDoi": "10.1016/j.healthplace.2015.08.003",
+    "doi": "10.1016/j.healthplace.2015.08.003",
+    "ISSN": [
+      "1353-8292"
+    ],
+    "containerTitle": [
+      "Health &amp; Place"
+    ],
+    "publisher": "Elsevier BV",
+    "sameDOI": true,
+    "matchingISSN": true
+  },
+  {
+    "journalId": "candidate-32",
+    "requestedDoi": "10.1017/s0047279400021875",
+    "doi": "10.1017/s0047279400021875",
+    "ISSN": [
+      "0047-2794",
+      "1469-7823"
+    ],
+    "containerTitle": [
+      "Journal of Social Policy"
+    ],
+    "publisher": "Cambridge University Press (CUP)",
+    "sameDOI": true,
+    "matchingISSN": true
+  }
+]

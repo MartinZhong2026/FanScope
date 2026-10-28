@@ -1,0 +1,300 @@
+[
+  {
+    "id": "ageing-society",
+    "at": "2026-10-25T03:58:21.429Z",
+    "url": "https://api.crossref.org/works/10.1017%2Fs0144686x26100786",
+    "doi": "10.1017/s0144686x26100786",
+    "issns": [
+      "0144-686X",
+      "1469-1779"
+    ],
+    "journalTitles": [
+      "Ageing and Society"
+    ],
+    "verified": true
+  },
+  {
+    "id": "gerontologist",
+    "at": "2026-10-25T03:58:22.182Z",
+    "url": "https://api.crossref.org/works/10.1093%2Fgeront%2Fgnag248",
+    "doi": "10.1093/geront/gnag248",
+    "issns": [
+      "0016-9013",
+      "1758-5341"
+    ],
+    "journalTitles": [
+      "The Gerontologist"
+    ],
+    "verified": true
+  },
+  {
+    "id": "geron-b",
+    "at": "2026-10-25T03:58:22.789Z",
+    "url": "https://api.crossref.org/works/10.1093%2Fgeronb%2Fgbag210",
+    "doi": "10.1093/geronb/gbag210",
+    "issns": [
+      "1079-5014",
+      "1758-5368"
+    ],
+    "journalTitles": [
+      "The Journals of Gerontology, Series B: Psychological Sciences and Social Sciences"
+    ],
+    "verified": true
+  },
+  {
+    "id": "ssm",
+    "at": "2026-10-25T03:58:23.699Z",
+    "url": "https://api.crossref.org/works/10.1016%2Fj.socscimed.2026.119724",
+    "doi": "10.1016/j.socscimed.2026.119724",
+    "issns": [
+      "0277-9536"
+    ],
+    "journalTitles": [
+      "Social Science &amp; Medicine"
+    ],
+    "verified": true
+  },
+  {
+    "id": "jmir",
+    "at": "2026-10-25T03:58:24.413Z",
+    "url": "https://api.crossref.org/works/10.2196%2F114408",
+    "doi": "10.2196/114408",
+    "issns": [
+      "1438-8871"
+    ],
+    "journalTitles": [
+      "Journal of Medical Internet Research"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-21",
+    "at": "2026-10-25T03:58:25.115Z",
+    "url": "https://api.crossref.org/works/10.1093%2Fgeroni%2Figag120",
+    "doi": "10.1093/geroni/igag120",
+    "issns": [
+      "2399-5300"
+    ],
+    "journalTitles": [
+      "Innovation in Aging"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-24",
+    "at": "2026-10-25T03:58:25.940Z",
+    "url": "https://api.crossref.org/works/10.2196%2F96922",
+    "doi": "10.2196/96922",
+    "issns": [
+      "2561-7605"
+    ],
+    "journalTitles": [
+      "JMIR Aging"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-25",
+    "at": "2026-10-25T03:58:26.580Z",
+    "url": "https://api.crossref.org/works/10.1186%2Fs12877-026-08562-9",
+    "doi": "10.1186/s12877-026-08562-9",
+    "issns": [
+      "1471-2318"
+    ],
+    "journalTitles": [
+      "BMC Geriatrics"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-26",
+    "at": "2026-10-25T03:58:27.254Z",
+    "url": "https://api.crossref.org/works/10.1016%2Fj.lanhl.2026.100945",
+    "doi": "10.1016/j.lanhl.2026.100945",
+    "issns": [
+      "2666-7568"
+    ],
+    "journalTitles": [
+      "The Lancet Healthy Longevity"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-28",
+    "at": "2026-10-25T03:58:27.878Z",
+    "url": "https://api.crossref.org/works/10.1016%2Fj.ssmph.2026.101990",
+    "doi": "10.1016/j.ssmph.2026.101990",
+    "issns": [
+      "2352-8273"
+    ],
+    "journalTitles": [
+      "SSM - Population Health"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-29",
+    "at": "2026-10-25T03:58:28.491Z",
+    "url": "https://api.crossref.org/works/10.1016%2Fj.healthplace.2026.103754",
+    "doi": "10.1016/j.healthplace.2026.103754",
+    "issns": [
+      "1353-8292"
+    ],
+    "journalTitles": [
+      "Health &amp; Place"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-30",
+    "at": "2026-10-25T03:58:30.131Z",
+    "url": "https://api.crossref.org/works/10.1111%2F1467-9566.70256",
+    "doi": "10.1111/1467-9566.70256",
+    "issns": [
+      "0141-9889",
+      "1467-9566"
+    ],
+    "journalTitles": [
+      "Sociology of Health &amp; Illness"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-31",
+    "at": "2026-10-25T03:58:30.775Z",
+    "url": "https://api.crossref.org/works/10.1186%2Fs12939-026-03075-8",
+    "doi": "10.1186/s12939-026-03075-8",
+    "issns": [
+      "1475-9276"
+    ],
+    "journalTitles": [
+      "International Journal for Equity in Health"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-32",
+    "at": "2026-10-25T03:58:31.450Z",
+    "url": "https://api.crossref.org/works/10.1017%2Fs0047279426101688",
+    "doi": "10.1017/s0047279426101688",
+    "issns": [
+      "0047-2794",
+      "1469-7823"
+    ],
+    "journalTitles": [
+      "Journal of Social Policy"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-33",
+    "at": "2026-10-25T03:58:32.104Z",
+    "url": "https://api.crossref.org/works/10.1111%2Fspol.70127",
+    "doi": "10.1111/spol.70127",
+    "issns": [
+      "0144-5596",
+      "1467-9515"
+    ],
+    "journalTitles": [
+      "Social Policy &amp; Administration"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-34",
+    "at": "2026-10-25T03:58:32.739Z",
+    "url": "https://api.crossref.org/works/10.1093%2Fbjsw%2Fbcag268",
+    "doi": "10.1093/bjsw/bcag268",
+    "issns": [
+      "0045-3102",
+      "1468-263X"
+    ],
+    "journalTitles": [
+      "The British Journal of Social Work"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-35",
+    "at": "2026-10-25T03:58:33.418Z",
+    "url": "https://api.crossref.org/works/10.1093%2Fsw%2Fswag048",
+    "doi": "10.1093/sw/swag048",
+    "issns": [
+      "0037-8046",
+      "1545-6846"
+    ],
+    "journalTitles": [
+      "Social Work"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-36",
+    "at": "2026-10-25T03:58:33.984Z",
+    "url": "https://api.crossref.org/works/10.1111%2Fjomf.70126",
+    "doi": "10.1111/jomf.70126",
+    "issns": [
+      "0022-2445",
+      "1741-3737"
+    ],
+    "journalTitles": [
+      "Journal of Marriage and Family"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-37",
+    "at": "2026-10-25T03:58:34.550Z",
+    "url": "https://api.crossref.org/works/10.1080%2F09687599.2026.2750120",
+    "doi": "10.1080/09687599.2026.2750120",
+    "issns": [
+      "0968-7599",
+      "1360-0508"
+    ],
+    "journalTitles": [
+      "Disability &amp; Society"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-39",
+    "at": "2026-10-25T03:58:35.131Z",
+    "url": "https://api.crossref.org/works/10.2196%2F109863",
+    "doi": "10.2196/109863",
+    "issns": [
+      "2817-1705"
+    ],
+    "journalTitles": [
+      "JMIR AI"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-40",
+    "at": "2026-10-25T03:58:35.734Z",
+    "url": "https://api.crossref.org/works/10.1093%2Fheapol%2Fczag120",
+    "doi": "10.1093/heapol/czag120",
+    "issns": [
+      "0268-1080",
+      "1460-2237"
+    ],
+    "journalTitles": [
+      "Health Policy and Planning"
+    ],
+    "verified": true
+  },
+  {
+    "id": "candidate-42",
+    "at": "2026-10-25T03:58:36.359Z",
+    "url": "https://api.crossref.org/works/10.1080%2F13607863.2026.2747821",
+    "doi": "10.1080/13607863.2026.2747821",
+    "issns": [
+      "1360-7863",
+      "1364-6915"
+    ],
+    "journalTitles": [
+      "Aging &amp; Mental Health"
+    ],
+    "verified": true
+  }
+]

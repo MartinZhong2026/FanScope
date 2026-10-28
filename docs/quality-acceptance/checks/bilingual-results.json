@@ -1,0 +1,85 @@
+{
+  "results": [
+    {
+      "browser": "chromium",
+      "width": 320,
+      "theme": "dark",
+      "passed": true
+    },
+    {
+      "browser": "chromium",
+      "width": 320,
+      "theme": "light",
+      "passed": true
+    },
+    {
+      "browser": "chromium",
+      "width": 375,
+      "theme": "dark",
+      "passed": true
+    },
+    {
+      "browser": "chromium",
+      "width": 375,
+      "theme": "light",
+      "passed": true
+    },
+    {
+      "browser": "chromium",
+      "width": 390,
+      "theme": "dark",
+      "passed": true
+    },
+    {
+      "browser": "chromium",
+      "width": 390,
+      "theme": "light",
+      "passed": true
+    },
+    {
+      "browser": "chromium",
+      "width": 430,
+      "theme": "dark",
+      "passed": true
+    },
+    {
+      "browser": "chromium",
+      "width": 430,
+      "theme": "light",
+      "passed": true
+    },
+    {
+      "browser": "chromium",
+      "width": 768,
+      "theme": "dark",
+      "passed": true
+    },
+    {
+      "browser": "chromium",
+      "width": 768,
+      "theme": "light",
+      "passed": true
+    },
+    {
+      "browser": "chromium",
+      "width": 1440,
+      "theme": "dark",
+      "passed": true
+    },
+    {
+      "browser": "chromium",
+      "width": 1440,
+      "theme": "light",
+      "passed": true
+    },
+    {
+      "browser": "webkit",
+      "width": 390,
+      "theme": "dark",
+      "passed": true
+    }
+  ],
+  "pageErrors": [],
+  "unexpectedAdminMutations": [],
+  "externalRequests": []
+}

@@ -1,0 +1,32 @@
+{
+  "baseline": "13e7d6c5d76952ba9e7002fcbd3bdf42a4e2aaad",
+  "migrations": 2,
+  "before": {
+    "articles": 120,
+    "journals": 43,
+    "lab_users": 3,
+    "lab_projects": 2,
+    "lab_manuscripts": 2,
+    "analysis_batches": null,
+    "analysis_batch_items": null,
+    "analysis_usage_log": null,
+    "journal_backfill_jobs": null,
+    "journal_discovery_jobs": null
+  },
+  "after": {
+    "articles": 120,
+    "journals": 43,
+    "lab_users": 3,
+    "lab_projects": 2,
+    "lab_manuscripts": 2,
+    "analysis_batches": 0,
+    "analysis_batch_items": 0,
+    "analysis_usage_log": 0,
+    "journal_backfill_jobs": 0,
+    "journal_discovery_jobs": 0
+  },
+  "legacyAnalyzed": 40,
+  "integrity": "ok",
+  "foreignKeyViolations": 0,
+  "allOriginalFieldsPreserved": true
+}

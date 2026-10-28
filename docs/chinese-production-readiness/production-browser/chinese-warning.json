@@ -1,0 +1,38 @@
+{
+  "visibleBackendError": false,
+  "apiResponses": [
+    {
+      "url": "https://fanscope-api.adapttochina.com/api/health",
+      "status": 200
+    },
+    {
+      "url": "https://fanscope-api.adapttochina.com/api/topics",
+      "status": 200
+    },
+    {
+      "url": "https://fanscope-api.adapttochina.com/api/journals",
+      "status": 200
+    },
+    {
+      "url": "https://fanscope-api.adapttochina.com/api/system-status",
+      "status": 200
+    },
+    {
+      "url": "https://fanscope-api.adapttochina.com/api/research?market=chinese&period=all&view=publication&article_type=all",
+      "status": 200
+    },
+    {
+      "url": "https://fanscope-api.adapttochina.com/api/stats?market=chinese&period=all&view=publication&article_type=all",
+      "status": 200
+    },
+    {
+      "url": "https://fanscope-api.adapttochina.com/api/articles?market=chinese&period=all&view=publication&article_type=all&limit=20&offset=0",
+      "status": 200
+    },
+    {
+      "url": "https://fanscope-api.adapttochina.com/api/articles?limit=8&market=chinese&period=all&view=publication&article_type=all",
+      "status": 200
+    }
+  ],
+  "note": "Read-only focused follow-up; warning cause not assumed to be server outage."
+}

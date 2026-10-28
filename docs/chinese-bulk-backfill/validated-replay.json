@@ -1,0 +1,54 @@
+{
+  "source": "unchanged factual metadata export from the real full-network rerun",
+  "before": 349,
+  "after": 349,
+  "input": 352,
+  "added": 0,
+  "duplicates": 349,
+  "excluded": 3,
+  "items": [
+    {
+      "journalId": "candidate-1",
+      "rows": 148,
+      "added": 0,
+      "duplicates": 148,
+      "updated": 0,
+      "valid": 148,
+      "rejected": [],
+      "review": []
+    },
+    {
+      "journalId": "candidate-7",
+      "rows": 146,
+      "added": 0,
+      "duplicates": 143,
+      "updated": 0,
+      "valid": 143,
+      "rejected": [
+        {
+          "index": 57,
+          "reason": "非论文目录或公告记录，不纳入论文库"
+        },
+        {
+          "index": 68,
+          "reason": "非论文目录或公告记录，不纳入论文库"
+        },
+        {
+          "index": 105,
+          "reason": "非论文目录或公告记录，不纳入论文库"
+        }
+      ],
+      "review": []
+    },
+    {
+      "journalId": "public-admin-cn",
+      "rows": 58,
+      "added": 0,
+      "duplicates": 58,
+      "updated": 0,
+      "valid": 58,
+      "rejected": [],
+      "review": []
+    }
+  ]
+}

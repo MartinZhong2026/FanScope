@@ -1,0 +1,121 @@
+[
+  {
+    "id": "doi:10.1017/s0144686x26100944",
+    "before": "2026-09-16",
+    "after": "2025",
+    "precision": "year",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1093/geront/gnaf062",
+    "before": "2025-12-06",
+    "after": "2025-05",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1017/s0047279425101141",
+    "before": "2026-08-11",
+    "after": "2026-07",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1017/s0047279425101153",
+    "before": "2026-08-11",
+    "after": "2026-07",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1080/09687599.2025.2458005",
+    "before": "2025-09-02",
+    "after": "2025-02",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1080/09687599.2025.2479094",
+    "before": "2026-01-02",
+    "after": "2025-04",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1093/heapol/czaf080",
+    "before": "2026-06-29",
+    "after": "2026-05",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1093/heapol/czaf088",
+    "before": "2026-06-29",
+    "after": "2026-05",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1093/heapol/czaf081",
+    "before": "2026-06-29",
+    "after": "2026-05",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1093/heapol/czaf096",
+    "before": "2026-06-29",
+    "after": "2026-05",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1093/heapol/czaf107",
+    "before": "2026-06-29",
+    "after": "2026-05",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1093/heapol/czaf091",
+    "before": "2026-06-29",
+    "after": "2026-05",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1093/heapol/czag011",
+    "before": "2026-06-29",
+    "after": "2026-05",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1093/heapol/czag038",
+    "before": "2026-06-29",
+    "after": "2026-05",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1093/heapol/czag036",
+    "before": "2026-06-29",
+    "after": "2026-05",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1080/13607863.2024.2445136",
+    "before": "2025-04-03",
+    "after": "2025-01",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  },
+  {
+    "id": "doi:10.1080/13607863.2025.2550352",
+    "before": "2026-03-04",
+    "after": "2025-09",
+    "precision": "month",
+    "reason": "earlier source publication with lower precision; later print date is not first publication"
+  }
+]

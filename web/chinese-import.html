@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FanScope · 中文授权导入</title><link rel="stylesheet" href="chinese-import.css"></head>
+<body><main>
+<header><a href="index.html?page=operations&market=chinese">返回 FanScope</a><h1>中文期刊授权批量导入</h1><p>文件先暂存，许可与论文证据分别审核。本工作台只处理本地元数据，不授予公开再分发权。</p><strong id="mode">尚未连接</strong></header>
+<section><h2>连接本地工作区</h2><form id="connect"><label>本次管理员密钥<input id="key" type="password" required autocomplete="off"></label><button>连接</button></form><p>在终端运行 <code>node scripts/chinese-import-local.mjs</code> 后复制本次密钥。密钥只保留在当前页面内存。</p></section>
+<p id="message" role="status" aria-live="polite"></p>
+<div id="workspace" hidden>
+<section><h2>1. 登记数据来源许可</h2><p>上传文件的权限、数据的使用许可、每篇论文的来源证据是三件事。请根据许可文档填写，不能仅用确认勾选替代授权材料。</p>
+<form id="license-form"><div class="grid"><label>许可出具方<input name="issuer" required></label><label>被许可的课题组或机构<input name="licensee" required></label><label>许可文档位置（本机路径或档案编号）<input name="documentRef" required></label><label>截止日期<input name="expiresOn" type="date" required></label></div>
+<label>选择许可文档，计算 SHA-256（只在浏览器计算，不上传文档）<input id="license-document" type="file"></label><label>文档 SHA-256<input name="documentHash" required pattern="[a-fA-F0-9]{64}"></label>
+<label>明确支持本地保存、检索展示的条款摘录<textarea name="grantExcerpt" required></textarea></label><fieldset><legend>文档明确包含的期刊</legend><div id="journal-scope" class="grid"></div></fieldset>
+<label class="check"><input name="abstracts" type="checkbox">许可另外包含摘要保存和展示</label><button>保存为待审查许可</button></form>
+<div id="licenses"></div>
+<form id="license-review"><h3>人工审查所选许可</h3><p>请实际核验文档出具方、受许可方、有效期和条款适用范围；审查结果仅记录本地使用范围。</p><label>所选许可 ID<input name="licenseId" readonly required></label><label>核对后的文档哈希<input name="documentHash" required></label><label>审查人<input name="reviewer" required></label><label>核验经过及许可适用说明<textarea name="notes" required></textarea></label><button name="action" value="approve_local">记录本地使用审查通过</button><button name="action" value="revoke" class="secondary">撤销许可</button></form></section>
+<section><h2>2. 上传文件、映射与暂存预览</h2><p>当前支持 UTF-8 CSV，最多 5,000 条、8MB。RIS/XML 请先依映射说明转换为 CSV，尚未提供未经样本验证的直接适配器。</p>
+<p>四刊模板：<a download href="import-templates/china-social-sciences.csv">中国社会科学</a> · <a download href="import-templates/candidate-6.csv">社会学研究</a> · <a download href="import-templates/management-world.csv">管理世界</a> · <a download href="import-templates/candidate-14.csv">公共管理学报</a></p>
+<form id="file-form"><label>来源许可<select name="licenseId" id="file-license" required></select></label><label>CSV 文件<input id="csv-file" type="file" accept=".csv,text/csv" required></label><label>上传人<input name="operator" required></label><label>有权将这个文件上传至本机工作区的依据<input name="permissionRef" placeholder="例如：机构交付单编号与接收授权；不同于数据使用许可" required></label>
+<div id="mapping" class="grid"></div><div id="file-sample"></div><button id="stage-button" disabled>写入隔离暂存区，生成校验预览</button></form></section>
+<section><h2>3. 人工审核暂存记录</h2><div class="actions"><button id="refresh" type="button">刷新批次</button><select id="batch-select" aria-label="选择暂存批次"></select></div>
+<div id="batch-summary"></div><div class="table-wrap"><table><thead><tr><th>选择 / 行号</th><th>期刊 / ISSN</th><th>题名 / 作者</th><th>日期 / DOI</th><th>原文及证据位置</th><th>状态 / 错误</th></tr></thead><tbody id="rows"></tbody></table></div><div class="actions"><button id="previous">上一页</button><span id="page-number"></span><button id="next">下一页</button></div>
+<form id="row-review"><label>论文证据审核人<input name="reviewer" required></label><label>原始目录/交付记录的核查说明<textarea name="notes" required></textarea></label><label class="check"><input name="allReady" type="checkbox">本次审核覆盖本批全部“待审核”记录（否则仅处理当前页勾选记录）</label><button name="action" value="approve">审核通过，等待分批入库</button><button name="action" value="reject" class="secondary">排除所选待审核记录</button></form>
+<div class="actions"><button id="download-errors">下载错误行 JSON</button><button id="download-audit">下载来源审计 JSON</button></div></section>
+<section><h2>4. 分批入库</h2><div id="progress-text"></div><progress id="progress" max="1" value="0" aria-label="批次入库进度"></progress><p>每批最多 100 条。关闭页面或暂停后，重新选择原批次继续；失败时安全重试。重复记录仍保留此次来源审计。</p><div class="actions"><button id="step">处理下一批（最多100条）</button><button id="run">连续处理已审核记录</button><button id="pause" class="secondary">本批完成后暂停</button></div></section>
+</div></main><script src="config.js"></script><script type="module" src="chinese-import.js"></script></body></html>

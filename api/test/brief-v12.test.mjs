@@ -1,0 +1,10 @@
+import test,{after} from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
+process.env.DATABASE_PATH=path.join(os.tmpdir(),`fanscope-brief-${process.pid}.sqlite`);process.env.DEEPSEEK_API_KEY='offline-only';
+const {db}=await import('../src/db.mjs');const {generateBrief}=await import('../src/brief.mjs');const original=globalThis.fetch;const {analysisFingerprint}=await import('../src/ai.mjs');
+after(()=>{globalThis.fetch=original;db.close();for(const ext of ['','-wal','-shm'])fs.rmSync(process.env.DATABASE_PATH+ext,{force:true})});
+test('auditable Research Brief accepts only supplied evidence IDs and caches without repeat costs',async()=>{
+ const stmt=db.prepare("INSERT INTO articles(id,journal_id,market,title,doi,publication_date,discovered_at,source,analysis_status,analysis_json) VALUES(?,'jmir','international','Synthetic abstract-only evidence',?,'2026-10-23','2026-10-24','crossref','analyzed',?)");for(let i=0;i<30;i++)stmt.run('brief-'+i,'10.9999/brief-'+i,JSON.stringify({study_design:'cohort',statistical_methods:[],data_source_type:'unknown',evidence:{study_design:{quote:'Synthetic cohort evidence',confidence:1}}}));
+ for(const a of db.prepare('SELECT * FROM articles').all())db.prepare('UPDATE articles SET abstract=?,analysis_input_hash=? WHERE id=?').run('Synthetic cohort evidence',analysisFingerprint({...a,abstract:'Synthetic cohort evidence'}),a.id);
+ let calls=0;globalThis.fetch=async()=>{calls++;return new Response(JSON.stringify({choices:[{message:{content:JSON.stringify({claims:[{text:'仅说明当前合成样本',evidence_ids:['brief-0','brief-1']},{text:'Invented evidence claim',evidence_ids:['nonexistent']}],candidate_gaps:[{text:'候选研究机会，需人工核验',evidence_ids:['brief-2']}]})}}],usage:{total_tokens:70}}));};
+ const r=await generateBrief({period:'all'});assert.equal(r.status,'ready');assert.equal(r.claims.length,1);assert.equal(r.claims[0].evidence_n,2);assert.equal(r.candidate_gaps.length,1);assert.equal(r.evidence.length,30);assert.equal(r.scope,'abstract-only');assert.equal((await generateBrief({period:'all'})).status,'ready');assert.equal(calls,1);
+});

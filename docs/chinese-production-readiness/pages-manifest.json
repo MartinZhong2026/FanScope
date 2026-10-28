@@ -1,0 +1,115 @@
+{
+  "sourceCommit": "65687cd2cb86eefbc2e35a612d32c03debeca60c",
+  "createdAt": "2026-10-26T12:39:55.796Z",
+  "folder": "work/release-readiness/pages-65687cd-1793018395771",
+  "productionApi": "https://fanscope-api.adapttochina.com",
+  "localWorkbenchExcluded": [
+    "chinese-import.css",
+    "chinese-import.html",
+    "chinese-import.js",
+    "import-templates"
+  ],
+  "readOnlyChineseControls": true,
+  "assets": [
+    {
+      "file": "404.html",
+      "sha256": "08e5e35944677f2f47fe00a8e4391e4a564028f72b2aaac0649b50453a10445c"
+    },
+    {
+      "file": "app.js",
+      "sha256": "1c056e53eb1fcc8e4d47834a42f3c6c92e1f886d831b0d93978cb724a9a0e321"
+    },
+    {
+      "file": "chinese-quality.mjs",
+      "sha256": "099ca82eebdef842f8703d7ed67321d955415198342668a19b2928aed575e811"
+    },
+    {
+      "file": "config.js",
+      "sha256": "49a1820106c41662df40852fbed63da074f4590cd81e12d117d130b6e492e116"
+    },
+    {
+      "file": "i18n.mjs",
+      "sha256": "08c45c967c0854b6b71aae31d39348a553c63866370d5d7efd0cbc6af368bffe"
+    },
+    {
+      "file": "index.html",
+      "sha256": "fc0d44334770f18459ff3577658f9813ba4b56c4de09c4b9d307420b12f537c8"
+    },
+    {
+      "file": "messages-en.mjs",
+      "sha256": "df2ff1f8fd93442eceb419080327c21a075d6ee36f56b91c4209bd69b30ce219"
+    },
+    {
+      "file": "mobile-ui.js",
+      "sha256": "e4a9290ff824361c45bd5e8aab83178906d50a341512edde7b8d50f6d17b98ad"
+    },
+    {
+      "file": "mobile.css",
+      "sha256": "eb548c941ba4cb5f71cacbdd54ffc70c73b36e0b19a524f2451b17d4cffd49a1"
+    },
+    {
+      "file": "research-visuals.mjs",
+      "sha256": "3dd741893afbd061f5a6a85e94bc4a69a2fb9010c5ae9f437a8ad508d6b3ad4e"
+    },
+    {
+      "file": "source-batch.mjs",
+      "sha256": "19b505460602c7c3f8240a2ec93fd7e4feffb5075a93fa1ce1802ef0045dbe14"
+    },
+    {
+      "file": "stage2.css",
+      "sha256": "748c5cccf930f47d7f746e0d5ae441f59c8b8150066983bda52f588eea626250"
+    },
+    {
+      "file": "style.css",
+      "sha256": "23d92d570258879c0531a2ad441eaeb73e8685f229f5abdaa39369efdb11ae9f"
+    },
+    {
+      "file": "theme.js",
+      "sha256": "c1e905ec486030c97d79b01cef70c8fe9ee075430bc13b471cc8b433f9bb1379"
+    },
+    {
+      "file": "trend-charts.mjs",
+      "sha256": "e6b673ed6ddf1ce392199ed7f42f5c576014b799169a54db186c2cf58195c278"
+    },
+    {
+      "file": "_headers",
+      "sha256": "9d6cc373aecf4f1595a45cb76b7fd4c7021215c0e3cccee452dace16f2c75657"
+    },
+    {
+      "file": "assets/favicon.svg",
+      "sha256": "a70adf8d91165a28fde7d571afb7933c1f4b24e1e85e9c6d748718d0ce94a090"
+    },
+    {
+      "file": "lab/app.js",
+      "sha256": "5469b0954fcdbe045fd4fd82976699d1a72e47b693ea91a1a4c389a1ac6730b3"
+    },
+    {
+      "file": "lab/index.html",
+      "sha256": "dfe3204d741e4b8bf98acd0aaad5c932d2817eeaa320caedd80ca6068fdf6985"
+    },
+    {
+      "file": "lab/lab-mobile.css",
+      "sha256": "b818dc71672ecfa207a0481f4d64a864b2c62800d14ad988fb4930feabf644f5"
+    },
+    {
+      "file": "lab/stage2.css",
+      "sha256": "81093e9259f7206fc5e1fef316b3a5402a1201159608f65d98f9097ae60f6e6e"
+    },
+    {
+      "file": "lab/style.css",
+      "sha256": "27718a8c109d190c9bb52aa44854338fd0506ad9a94f7e84b59a616de3ad0391"
+    },
+    {
+      "file": "vendor/ECHARTS-LICENSE.txt",
+      "sha256": "9ef11df57e751e8c6d10d54e1855c64d316627bbe89e73326de7e3ccdb8184aa"
+    },
+    {
+      "file": "vendor/echarts.min.js",
+      "sha256": "126ba5a6cf814a91bb1c93274ef7aeef4a0889f74d4bf423feb6204ec2efbd57"
+    },
+    {
+      "file": "vendor/ZRENDER-LICENSE.txt",
+      "sha256": "feba15132e9461b453617677a7e0bab5ef1f24fadb4c07b2901c5c05a3dcae0d"
+    }
+  ]
+}

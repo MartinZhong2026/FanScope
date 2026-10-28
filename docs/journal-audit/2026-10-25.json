@@ -1,0 +1,2082 @@
+[
+  {
+    "id": "ageing-society",
+    "title": "Ageing & Society",
+    "issn": "1469-1779",
+    "registryTitle": "Ageing and Society",
+    "issns": [
+      "0144-686X",
+      "1469-1779"
+    ],
+    "registryURL": "https://api.crossref.org/journals/1469-1779",
+    "sampleURL": "https://api.crossref.org/journals/1469-1779/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:46:40.698Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 121,
+    "samples": [
+      {
+        "doi": "10.1017/s0144686x26100786",
+        "title": [
+          "Long-term care staff experience with virtual family visits during the Covid-19 pandemic in Canada"
+        ],
+        "containerTitle": [
+          "Ageing and Society"
+        ],
+        "issns": [
+          "0144-686X",
+          "1469-1779"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              5,
+              6
+            ]
+          ]
+        },
+        "print": {
+          "date-parts": [
+            [
+              2026
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2026
+            ]
+          ]
+        },
+        "officialURL": "https://www.cambridge.org/core/product/identifier/S0144686X26100786/type/journal_article"
+      },
+      {
+        "doi": "10.1017/s0144686x26100877",
+        "title": [
+          "Digital ageing among mid-life and older 2SLGBTQ+ adults: expanding the health equity promotion model with a technological dimension"
+        ],
+        "containerTitle": [
+          "Ageing and Society"
+        ],
+        "issns": [
+          "0144-686X",
+          "1469-1779"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              9
+            ]
+          ]
+        },
+        "print": {
+          "date-parts": [
+            [
+              2026
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2026
+            ]
+          ]
+        },
+        "officialURL": "https://www.cambridge.org/core/product/identifier/S0144686X26100877/type/journal_article"
+      }
+    ]
+  },
+  {
+    "id": "gerontologist",
+    "title": "The Gerontologist",
+    "issn": "1758-5341",
+    "registryTitle": "The Gerontologist",
+    "issns": [
+      "0016-9013",
+      "1758-5341"
+    ],
+    "registryURL": "https://api.crossref.org/journals/1758-5341",
+    "sampleURL": "https://api.crossref.org/journals/1758-5341/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:46:42.139Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 560,
+    "samples": [
+      {
+        "doi": "10.1093/geront/gnag248",
+        "title": [
+          "What do young adults think about informal care for older adults?: Testing and validation of a public caregiver stigma scale in Canada"
+        ],
+        "containerTitle": [
+          "The Gerontologist"
+        ],
+        "issns": [
+          "0016-9013",
+          "1758-5341"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "officialURL": "https://academic.oup.com/gerontologist/advance-article/doi/10.1093/geront/gnag248/8985548"
+      },
+      {
+        "doi": "10.1093/geront/gnag245",
+        "title": [
+          "Balance on the Brain: Multimodal exercise programme evaluating physical performance, falls, quality of life and cognition for people with mild cognitive impairment-randomised controlled trial"
+        ],
+        "containerTitle": [
+          "The Gerontologist"
+        ],
+        "issns": [
+          "0016-9013",
+          "1758-5341"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              21
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              21
+            ]
+          ]
+        },
+        "officialURL": "https://academic.oup.com/gerontologist/advance-article/doi/10.1093/geront/gnag245/8964677"
+      }
+    ]
+  },
+  {
+    "id": "geron-b",
+    "title": "The Journals of Gerontology: Series B",
+    "issn": "1079-5014",
+    "registryTitle": "The Journals of Gerontology Series B",
+    "issns": [
+      "1079-5014",
+      "1758-5368"
+    ],
+    "registryURL": "https://api.crossref.org/journals/1079-5014",
+    "sampleURL": "https://api.crossref.org/journals/1079-5014/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:46:43.859Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 469,
+    "samples": [
+      {
+        "doi": "10.1093/geronb/gbag210",
+        "title": [
+          "Spending time helping others and well-being of givers: Age differences in immediate and long-term effects on well-being"
+        ],
+        "containerTitle": [
+          "The Journals of Gerontology, Series B: Psychological Sciences and Social Sciences"
+        ],
+        "issns": [
+          "1079-5014",
+          "1758-5368"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              20
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              20
+            ]
+          ]
+        },
+        "officialURL": "https://academic.oup.com/psychsocgerontology/advance-article/doi/10.1093/geronb/gbag210/8956105"
+      },
+      {
+        "doi": "10.1093/geronb/gbag209",
+        "title": [
+          "Lifetime family caregiving for older U.S. adults by men and women, 2011 and 2023"
+        ],
+        "containerTitle": [
+          "The Journals of Gerontology, Series B: Psychological Sciences and Social Sciences"
+        ],
+        "issns": [
+          "1079-5014",
+          "1758-5368"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              20
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              20
+            ]
+          ]
+        },
+        "officialURL": "https://academic.oup.com/psychsocgerontology/advance-article/doi/10.1093/geronb/gbag209/8943980"
+      }
+    ]
+  },
+  {
+    "id": "ssm",
+    "title": "Social Science & Medicine",
+    "issn": "0277-9536",
+    "registryTitle": "Social Science & Medicine",
+    "issns": [
+      "0277-9536"
+    ],
+    "registryURL": "https://api.crossref.org/journals/0277-9536",
+    "sampleURL": "https://api.crossref.org/journals/0277-9536/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:46:45.322Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 1904,
+    "samples": [
+      {
+        "doi": "10.1016/j.socscimed.2026.119724",
+        "title": [
+          "Causal effect of mandatory elementary education textbooks on literacy and cognition of low socioeconomic status older adults"
+        ],
+        "containerTitle": [
+          "Social Science &amp; Medicine"
+        ],
+        "issns": [
+          "0277-9536"
+        ],
+        "online": null,
+        "print": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "officialURL": "https://linkinghub.elsevier.com/retrieve/pii/S0277953626008014"
+      },
+      {
+        "doi": "10.1016/j.socscimed.2026.119682",
+        "title": [
+          "Multi-year contracts between Dutch hospitals and health insurers: Exploring contract function and frame"
+        ],
+        "containerTitle": [
+          "Social Science &amp; Medicine"
+        ],
+        "issns": [
+          "0277-9536"
+        ],
+        "online": null,
+        "print": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "officialURL": "https://linkinghub.elsevier.com/retrieve/pii/S0277953626007598"
+      }
+    ]
+  },
+  {
+    "id": "jmir",
+    "title": "Journal of Medical Internet Research",
+    "issn": "1438-8871",
+    "registryTitle": "Journal of Medical Internet Research",
+    "issns": [
+      "1438-8871"
+    ],
+    "registryURL": "https://api.crossref.org/journals/1438-8871",
+    "sampleURL": "https://api.crossref.org/journals/1438-8871/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:46:46.723Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 3035,
+    "samples": [
+      {
+        "doi": "10.2196/114408",
+        "title": [
+          "From Robots to Organizations: The Role of the AI Scientist"
+        ],
+        "containerTitle": [
+          "Journal of Medical Internet Research"
+        ],
+        "issns": [
+          "1438-8871"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "officialURL": "https://www.jmir.org/2026/1/e114408"
+      },
+      {
+        "doi": "10.2196/114611",
+        "title": [
+          "Closing the Postpartum Gap With Reverse Call Centers Alongside Traditional Support Lines"
+        ],
+        "containerTitle": [
+          "Journal of Medical Internet Research"
+        ],
+        "issns": [
+          "1438-8871"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "officialURL": "https://www.jmir.org/2026/1/e114611"
+      }
+    ]
+  },
+  {
+    "id": "soc-security-cn",
+    "title": "社会保障评论",
+    "configuredIssn": "2096-3211",
+    "leadURL": "https://sbpl.cbpt.cnki.net/journal/portal/sbpl/client/index",
+    "at": "2026-10-25T03:46:57.381Z",
+    "httpStatus": 200,
+    "contentType": "text/html;charset=UTF-8",
+    "redirect": null,
+    "bodyPrefix": "<!doctype html>\n<html>\n <head>\n  <link rel=\"shortcut icon\" href=\"https://publishmedia.cbpt.cnki.net/portal/minio/webs/common/favicon.ico\" type=\"image/x-icon\"><meta name = \"description\" content = \"\" / >\n  <meta charset=\"utf-8\">\n  <title>社会保障评论</title>\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover\">\n  <script src=\"https://",
+    "error": null,
+    "verification": "lead_only_not_verified",
+    "verifiedIssn": "2096-3211",
+    "issnEvidenceExcerpt": "color: rgb(0, 0, 0);\">journal@caoss.org.cn   \r\n国内统一刊号：CN 10-1472/C \r\n国际标准刊号：ISSN 2096-3211 \r\n\r\n 定价：36元/册 &nbsp;全年216元 \r\n \n                 "
+  },
+  {
+    "id": "soc-review-cn",
+    "title": "社会学评论",
+    "configuredIssn": "2095-5154",
+    "leadURL": "https://src.ruc.edu.cn/CN/home",
+    "at": "2026-10-25T03:47:08.142Z",
+    "httpStatus": 503,
+    "contentType": "text/plain",
+    "redirect": null,
+    "bodyPrefix": "upstream connect error or disconnect/reset before headers. reset reason: remote connection failure, transport failure reason: TLS_error:|268435581:SSL routines:OPENSSL_internal:CERTIFICATE_VERIFY_FAILED:TLS_error_end",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "public-admin-cn",
+    "title": "公共管理评论",
+    "configuredIssn": null,
+    "leadURL": "https://gogl.cbpt.cnki.net/portal",
+    "at": "2026-10-25T03:47:13.009Z",
+    "httpStatus": 200,
+    "contentType": "text/html;charset=UTF-8",
+    "redirect": null,
+    "bodyPrefix": "<!doctype html>\n<html>\n <head>\n  <link rel=\"shortcut icon\" href=\"https://publishmedia.cbpt.cnki.net/portal/minio/webs/common/favicon.ico\" type=\"image/x-icon\"><meta name = \"description\" content = \"\" / >\n  <meta charset=\"utf-8\">\n  <title>公共管理评论</title>\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover\">\n  <script src=\"https://",
+    "error": null,
+    "verification": "lead_only_not_verified",
+    "verifiedIssn": "2096-7713",
+    "issnEvidenceExcerpt": "p; &nbsp; &nbsp; &nbsp;箱： review@mail.tsinghua.edu.cn 国内统一刊号(CN)： 10-1653/D0 国际标准刊号(ISSN)：2096-7713 \n &nbsp;  \n                   "
+  },
+  {
+    "id": "candidate-1",
+    "title": "人口研究",
+    "configuredIssn": null,
+    "leadURL": "https://rkyj.ruc.edu.cn/CN/rss_dqml_1000-6087.xml",
+    "at": "2026-10-25T03:47:15.133Z",
+    "httpStatus": 200,
+    "contentType": "text/html;charset=UTF-8",
+    "redirect": null,
+    "bodyPrefix": "\r\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"><HTML>\r\n<head>\r\n\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n<title>HTTP404 无法找到页面</title>\r\n<style type=\"text/css\">\r\na:link {\r\n\tcolor: #555555; text-decoration: none;\r\n}\r\na:visited {\r\n\tcolor: #555555; text-decoration: none;\r\n}\r\na:active {\r\n\tcolor: #55",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-2",
+    "title": "中国人口科学",
+    "configuredIssn": null,
+    "leadURL": "https://www.ncpssd.org/journal/details.aspx?gch=97725X&langType=1&nav=1",
+    "at": "2026-10-25T03:47:18.521Z",
+    "httpStatus": 200,
+    "contentType": "text/html;charset=UTF-8",
+    "redirect": null,
+    "bodyPrefix": "\r\n\r\n\r\n\r\n\r\n    <!DOCTYPE html>\r\n    <html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\">\r\n    <head runat=\"server\"><script>localStorage.removeItem(\"iframe_status\");\n!function(t,e){\"object\"==typeof exports&&\"object\"==typeof module?module.exports=e():\"function\"==typeof define&&define.amd?define([],e):\"object\"==typeof exports?exports.TestModule=e():t.TestModule=e()}(this,(function(){return function()",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-3",
+    "title": "人口与经济",
+    "configuredIssn": null,
+    "leadURL": "https://ncpssd.org/journal/details?gch=95683X",
+    "at": "2026-10-25T03:47:22.019Z",
+    "httpStatus": 200,
+    "contentType": "text/html;charset=UTF-8",
+    "redirect": null,
+    "bodyPrefix": "\r\n\r\n\r\n\r\n\r\n    <!DOCTYPE html>\r\n    <html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\">\r\n    <head runat=\"server\"><script>localStorage.removeItem(\"iframe_status\");\n!function(t,e){\"object\"==typeof exports&&\"object\"==typeof module?module.exports=e():\"function\"==typeof define&&define.amd?define([],e):\"object\"==typeof exports?exports.TestModule=e():t.TestModule=e()}(this,(function(){return function()",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-4",
+    "title": "人口学刊",
+    "configuredIssn": null,
+    "leadURL": "https://hssra.jlu.edu.cn/xsqk/rkxk.htm",
+    "at": "2026-10-25T03:47:26.042Z",
+    "httpStatus": 200,
+    "contentType": "text/html",
+    "redirect": null,
+    "bodyPrefix": "<!DOCTYPE html>\r\n<html lang=\"zh-cn\">\r\n\r\n<head>\r\n    <meta charset=\"utf-8\">\r\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\r\n    <meta name=\"format-detection\" content=\"telephone=no,email=no,adress=no\">\r\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">\r\n    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0\">\r\n    <title",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-5",
+    "title": "人口与发展",
+    "configuredIssn": null,
+    "leadURL": "https://ccj.pku.edu.cn/journal/info?jid=99049&viid=15872092",
+    "at": "2026-10-25T03:47:29.791Z",
+    "httpStatus": 200,
+    "contentType": "text/html; charset=utf-8",
+    "redirect": null,
+    "bodyPrefix": "<!DOCTYPE html>\r\n<html>\r\n<head>\r\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\r\n    <title>\r\nPopulation and development\r\n\r\n - Journal homepage\r\n    </title>\r\n    <!-- CSP -->\r\n    <met.login name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\r\n        <link rel=\"icon\" href=\"/favicon.ico\" type=\"image",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-6",
+    "title": "社会学研究",
+    "configuredIssn": null,
+    "leadURL": "https://shxyj.ajcass.com/",
+    "at": "2026-10-25T03:47:34.024Z",
+    "httpStatus": 200,
+    "contentType": "text/html; charset=utf-8",
+    "redirect": null,
+    "bodyPrefix": "\r\n<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n<head>\r\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\r\n    <title>社会学研究</title>\r\n    <link href=\"/Areas/202005130001/Content/ZHYJY/css/style.css?1\" rel=\"stylesheet\" type=\"text/css\" />\r\n    <script type=\"text/javascript\" src=\"/Content/js/jquery-3.7.1.min.js\"></s",
+    "error": null,
+    "verification": "lead_only_not_verified",
+    "verifiedIssn": "1002-5936",
+    "issnEvidenceExcerpt": "月刊 \r\n                             语种:  中文 \r\n                             ISSN:  1002-5936 \r\n                             <font style=\"padding-"
+  },
+  {
+    "id": "candidate-7",
+    "title": "社会",
+    "configuredIssn": null,
+    "leadURL": "https://www.society.shu.edu.cn/CN/rss_dqml_1004-8804.xml",
+    "at": "2026-10-25T03:47:37.756Z",
+    "httpStatus": 200,
+    "contentType": "text/html;charset=UTF-8",
+    "redirect": null,
+    "bodyPrefix": "\r\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"><HTML>\r\n<head>\r\n\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n<title>HTTP404 无法找到页面</title>\r\n<style type=\"text/css\">\r\na:link {\r\n\tcolor: #555555; text-decoration: none;\r\n}\r\na:visited {\r\n\tcolor: #555555; text-decoration: none;\r\n}\r\na:active {\r\n\tcolor: #55",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-9",
+    "title": "社会发展研究",
+    "configuredIssn": null,
+    "leadURL": "https://ncpssd.org/journal/details?gch=72041X&langType=1&num=2&years=2024",
+    "at": "2026-10-25T03:47:42.083Z",
+    "httpStatus": 200,
+    "contentType": "text/html;charset=UTF-8",
+    "redirect": null,
+    "bodyPrefix": "\r\n\r\n\r\n\r\n\r\n    <!DOCTYPE html>\r\n    <html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\">\r\n    <head runat=\"server\"><script>localStorage.removeItem(\"iframe_status\");\n!function(t,e){\"object\"==typeof exports&&\"object\"==typeof module?module.exports=e():\"function\"==typeof define&&define.amd?define([],e):\"object\"==typeof exports?exports.TestModule=e():t.TestModule=e()}(this,(function(){return function()",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-10",
+    "title": "社会建设",
+    "configuredIssn": null,
+    "leadURL": "https://shjs.ruc.edu.cn/",
+    "at": "2026-10-25T03:47:43.894Z",
+    "httpStatus": 200,
+    "contentType": "text/html;charset=UTF-8",
+    "redirect": null,
+    "bodyPrefix": "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n<script type=\"text/javascript\">\r\n//修改人：lit\r\n//修改时间：2019-04-01\r\n//问题：在期刊基本信息列表页面中点击编辑index.jsp会报空指针\r\n//因为找不到具体原因在哪，故而在此对journal对象进行不为空判断(为空则不做任何事情)\r\n\r\n\twindow.location.href = 'https://shjs.ruc.edu.cn/CN/2095-8641/home.shtml';\r\n\r\n</script>",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-11",
+    "title": "妇女研究论丛",
+    "configuredIssn": null,
+    "leadURL": "https://www.ncpssd.cn/journal/details?gch=82596X",
+    "at": "2026-10-25T03:47:48.242Z",
+    "httpStatus": 200,
+    "contentType": "text/html;charset=UTF-8",
+    "redirect": null,
+    "bodyPrefix": "\r\n\r\n\r\n\r\n\r\n    <!DOCTYPE html>\r\n    <html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\">\r\n    <head runat=\"server\"><script>localStorage.removeItem(\"iframe_status\");\n!function(t,e){\"object\"==typeof exports&&\"object\"==typeof module?module.exports=e():\"function\"==typeof define&&define.amd?define([],e):\"object\"==typeof exports?exports.TestModule=e():t.TestModule=e()}(this,(function(){return function()",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-12",
+    "title": "残疾人研究",
+    "configuredIssn": null,
+    "leadURL": "https://www.ncpssd.cn/journal/details?gch=71362X",
+    "at": "2026-10-25T03:47:50.753Z",
+    "httpStatus": 200,
+    "contentType": "text/html;charset=UTF-8",
+    "redirect": null,
+    "bodyPrefix": "\r\n\r\n\r\n\r\n\r\n    <!DOCTYPE html>\r\n    <html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\">\r\n    <head runat=\"server\"><script>localStorage.removeItem(\"iframe_status\");\n!function(t,e){\"object\"==typeof exports&&\"object\"==typeof module?module.exports=e():\"function\"==typeof define&&define.amd?define([],e):\"object\"==typeof exports?exports.TestModule=e():t.TestModule=e()}(this,(function(){return function()",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-14",
+    "title": "公共管理学报",
+    "configuredIssn": null,
+    "leadURL": "https://gggl.cbpt.cnki.net/portal/journal/portal/client/advSearchResult",
+    "at": "2026-10-25T03:48:20.769Z",
+    "httpStatus": 200,
+    "contentType": "text/html;charset=UTF-8",
+    "redirect": null,
+    "bodyPrefix": "<!doctype html>\n<html>\n <head>\n  <link rel=\"shortcut icon\" href=\"https://publishmedia.cbpt.cnki.net/portal/minio/webs/common/favicon.ico\" type=\"image/x-icon\"><meta name = \"description\" content = \"\" / >\n  <meta charset=\"utf-8\">\n  <title>公共管理学报</title>\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover\">\n  <script src=\"https://",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-16",
+    "title": "公共管理与政策评论",
+    "configuredIssn": null,
+    "leadURL": "https://ggglyzc.ruc.edu.cn/CN/rss/showRssInfo.do",
+    "at": "2026-10-25T03:48:31.323Z",
+    "httpStatus": 503,
+    "contentType": "text/plain",
+    "redirect": null,
+    "bodyPrefix": "upstream connect error or disconnect/reset before headers. reset reason: remote connection failure, transport failure reason: TLS_error:|268435581:SSL routines:OPENSSL_internal:CERTIFICATE_VERIFY_FAILED:TLS_error_end",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-17",
+    "title": "中国行政管理",
+    "configuredIssn": null,
+    "leadURL": "https://www.cpaj.com.cn/",
+    "at": "2026-10-25T03:48:39.391Z",
+    "httpStatus": 503,
+    "contentType": "text/plain",
+    "redirect": null,
+    "bodyPrefix": "upstream connect error or disconnect/reset before headers. reset reason: remote connection failure, transport failure reason: TLS_error:|268435581:SSL routines:OPENSSL_internal:CERTIFICATE_VERIFY_FAILED:TLS_error_end",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-18",
+    "title": "治理研究",
+    "configuredIssn": null,
+    "leadURL": "https://www.cqvip.com/journal/80561A/80561A",
+    "at": "2026-10-25T03:48:42.567Z",
+    "httpStatus": 200,
+    "contentType": "text/html; charset=utf-8",
+    "redirect": null,
+    "bodyPrefix": "<!doctype html>\n<html data-n-head-ssr lang=\"en\" data-n-head=\"%7B%22lang%22:%7B%22ssr%22:%22en%22%7D%7D\">\n  <head >\n    <title>治理研究 | 期刊-维普官网</title><meta data-n-head=\"ssr\" charset=\"utf-8\"><meta data-n-head=\"ssr\" data-hid=\"viewport\" name=\"viewport\" content=\"width=1400, minimum-scale=0.1\"><meta data-n-head=\"ssr\" name=\"bytedance-verification-code\" content=\"HloudM+w16jU2UVBo1zx\"><meta data-n-head=\"ssr",
+    "error": null,
+    "verification": "lead_only_not_verified"
+  },
+  {
+    "id": "candidate-19",
+    "title": "电子政务",
+    "configuredIssn": null,
+    "leadURL": "https://www.las.cas.cn/qk/202112/t20211202_6286197.html",
+    "at": "2026-10-25T03:48:45.798Z",
+    "httpStatus": 200,
+    "contentType": "text/html",
+    "redirect": null,
+    "bodyPrefix": "<!DOCTYPE html>\n<html lang=\"zh-CN\">\n<head>\n<meta charset=\"utf-8\">\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<meta name=\"apple-mobile-web-app-capable\" content=\"yes\">\n<meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black\">\n<meta name=\"format-detection\" content=\"telephone=no\">\n<meta name=\"renderer\" content=\"w",
+    "error": null,
+    "verification": "lead_only_not_verified",
+    "verifiedIssn": "1672-7223",
+    "issnEvidenceExcerpt": "in-bottom:12px;line-height:1.8;font-family:宋体;font-size:12pt;} \n \n 　　 《电子政务》（ISSN 1672-7223，CN 11-5181/TP，月刊）是由中国科学院主管、中国科学院文献情报中心主办的中国首家大型电子政务专业杂志。《电子"
+  },
+  {
+    "id": "candidate-20",
+    "title": "中国软科学",
+    "configuredIssn": null,
+    "leadURL": "https://www.cssm.com.cn/zgrkx/home",
+    "at": "2026-10-25T03:48:51.067Z",
+    "httpStatus": 200,
+    "contentType": "text/html; charset=utf-8",
+    "redirect": null,
+    "bodyPrefix": "\r\n<!DOCTYPE html>\r\n<html xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:msxsl=\"urn:schemas-microsoft-com:xslt\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n<head>\r\n<base href=\"/\" >\r\n<meta charset=\"utf-8\">\r\n<title>中国软科学</title>\r\n<meta name=\"Keywords\" content=\"中国软科学\"/><meta name=\"Description\" content=\"中国软科学\"/>\r\n<!--[if GTE IE 8]>\r\n<script s",
+    "error": null,
+    "verification": "lead_only_not_verified",
+    "verifiedIssn": "1005-0566",
+    "issnEvidenceExcerpt": " 邮箱： -->\r\n                     国内统一连续出版物号： CN 11-3036/G3 \r\n\t\t\t\t\t 国际标准连续出版物号： ISSN 1005-0566   \r\n                 \r\n             \r\n        "
+  },
+  {
+    "id": "candidate-21",
+    "title": "Innovation in Aging",
+    "issn": "2399-5300",
+    "registryTitle": "Innovation in Aging",
+    "issns": [
+      "2399-5300"
+    ],
+    "registryURL": "https://api.crossref.org/journals/2399-5300",
+    "sampleURL": "https://api.crossref.org/journals/2399-5300/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:48:52.792Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 4681,
+    "samples": [
+      {
+        "doi": "10.1093/geroni/igag120",
+        "title": [
+          "The rigor in qualitative research framework: A practical guide to evaluating qualitative studies"
+        ],
+        "containerTitle": [
+          "Innovation in Aging"
+        ],
+        "issns": [
+          "2399-5300"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "officialURL": "https://academic.oup.com/innovateage/advance-article/doi/10.1093/geroni/igag120/8994458"
+      },
+      {
+        "doi": "10.1093/geroni/igag109",
+        "title": [
+          "Intrinsic capacity among Hispanic older adults in the United States: Sociodemographic correlates and subgroup analyses"
+        ],
+        "containerTitle": [
+          "Innovation in Aging"
+        ],
+        "issns": [
+          "2399-5300"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              10
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              10
+            ]
+          ]
+        },
+        "officialURL": "https://academic.oup.com/innovateage/advance-article/doi/10.1093/geroni/igag109/8907460"
+      }
+    ]
+  },
+  {
+    "id": "candidate-24",
+    "title": "JMIR Aging",
+    "issn": "2561-7605",
+    "registryTitle": "JMIR Aging",
+    "issns": [
+      "2561-7605"
+    ],
+    "registryURL": "https://api.crossref.org/journals/2561-7605",
+    "sampleURL": "https://api.crossref.org/journals/2561-7605/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:48:54.560Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 369,
+    "samples": [
+      {
+        "doi": "10.2196/96922",
+        "title": [
+          "Feasibility of a Co-Designed Personalized Cognitive Reablement Program Delivered via Digital Voice Assistants for Older Adults Living With Early-Stage Dementia or Mild Cognitive Impairment: Pilot Randomized Controlled Trial"
+        ],
+        "containerTitle": [
+          "JMIR Aging"
+        ],
+        "issns": [
+          "2561-7605"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "officialURL": "https://aging.jmir.org/2026/1/e96922"
+      },
+      {
+        "doi": "10.2196/93063",
+        "title": [
+          "Fear-Specific Technophobia as a Mediator Between Daily Technical Support and Instrumental Versus Hedonic Technology Use in Later Life: Cross-Sectional Survey Study"
+        ],
+        "containerTitle": [
+          "JMIR Aging"
+        ],
+        "issns": [
+          "2561-7605"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "officialURL": "https://aging.jmir.org/2026/1/e93063"
+      }
+    ]
+  },
+  {
+    "id": "candidate-25",
+    "title": "BMC Geriatrics",
+    "issn": "1471-2318",
+    "registryTitle": "BMC Geriatrics",
+    "issns": [
+      "1471-2318"
+    ],
+    "registryURL": "https://api.crossref.org/journals/1471-2318",
+    "sampleURL": "https://api.crossref.org/journals/1471-2318/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:48:55.915Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 2849,
+    "samples": [
+      {
+        "doi": "10.1186/s12877-026-08562-9",
+        "title": [
+          "Heterogeneous obesity phenotypes and late-life health in China"
+        ],
+        "containerTitle": [
+          "BMC Geriatrics"
+        ],
+        "issns": [
+          "1471-2318"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              24
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              24
+            ]
+          ]
+        },
+        "officialURL": "https://link.springer.com/article/10.1186/s12877-026-08562-9"
+      },
+      {
+        "doi": "10.1186/s12877-026-08527-y",
+        "title": [
+          "Hip fracture burden and projected incidence among older adults in China to 2035: a GBD 2023 modelling study with exploratory hospital case-mix comparison"
+        ],
+        "containerTitle": [
+          "BMC Geriatrics"
+        ],
+        "issns": [
+          "1471-2318"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              24
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              24
+            ]
+          ]
+        },
+        "officialURL": "https://link.springer.com/article/10.1186/s12877-026-08527-y"
+      }
+    ]
+  },
+  {
+    "id": "candidate-26",
+    "title": "The Lancet Healthy Longevity",
+    "issn": "2666-7568",
+    "registryTitle": "The Lancet Healthy Longevity",
+    "issns": [
+      "2666-7568"
+    ],
+    "registryURL": "https://api.crossref.org/journals/2666-7568",
+    "sampleURL": "https://api.crossref.org/journals/2666-7568/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:48:57.514Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 238,
+    "samples": [
+      {
+        "doi": "10.1016/j.lanhl.2026.100945",
+        "title": [
+          "Highlights of EuGMS 2026"
+        ],
+        "containerTitle": [
+          "The Lancet Healthy Longevity"
+        ],
+        "issns": [
+          "2666-7568"
+        ],
+        "online": null,
+        "print": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "officialURL": "https://linkinghub.elsevier.com/retrieve/pii/S2666756826001297"
+      },
+      {
+        "doi": "10.1016/j.lanhl.2026.100936",
+        "title": [
+          "The delirium we do not see"
+        ],
+        "containerTitle": [
+          "The Lancet Healthy Longevity"
+        ],
+        "issns": [
+          "2666-7568"
+        ],
+        "online": null,
+        "print": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "officialURL": "https://linkinghub.elsevier.com/retrieve/pii/S2666756826001200"
+      }
+    ]
+  },
+  {
+    "id": "candidate-28",
+    "title": "SSM - Population Health",
+    "issn": "2352-8273",
+    "registryTitle": "SSM - Population Health",
+    "issns": [
+      "2352-8273"
+    ],
+    "registryURL": "https://api.crossref.org/journals/2352-8273",
+    "sampleURL": "https://api.crossref.org/journals/2352-8273/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:48:59.048Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 234,
+    "samples": [
+      {
+        "doi": "10.1016/j.ssmph.2026.101990",
+        "title": [
+          "Longitudinal change in occupational engagement configurations in later life: evidence from SHARE France"
+        ],
+        "containerTitle": [
+          "SSM - Population Health"
+        ],
+        "issns": [
+          "2352-8273"
+        ],
+        "online": null,
+        "print": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "officialURL": "https://linkinghub.elsevier.com/retrieve/pii/S2352827326000923"
+      },
+      {
+        "doi": "10.1016/j.ssmph.2026.101987",
+        "title": [
+          "The Effect of Social Isolation on the Mental Health of Older Adults: Evidence from the UK COVID-19 Lockdown"
+        ],
+        "containerTitle": [
+          "SSM - Population Health"
+        ],
+        "issns": [
+          "2352-8273"
+        ],
+        "online": null,
+        "print": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "officialURL": "https://linkinghub.elsevier.com/retrieve/pii/S2352827326000893"
+      }
+    ]
+  },
+  {
+    "id": "candidate-29",
+    "title": "Health & Place",
+    "issn": "1353-8292",
+    "registryTitle": "Health & Place",
+    "issns": [
+      "1353-8292"
+    ],
+    "registryURL": "https://api.crossref.org/journals/1353-8292",
+    "sampleURL": "https://api.crossref.org/journals/1353-8292/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:49:00.284Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 336,
+    "samples": [
+      {
+        "doi": "10.1016/j.healthplace.2026.103754",
+        "title": [
+          "Corrigendum to “Exploring the links between mental health, social health, and physical environment: A prospective network analysis in a nationally representative sample” [Health Place, 100, (2026), 103680]"
+        ],
+        "containerTitle": [
+          "Health &amp; Place"
+        ],
+        "issns": [
+          "1353-8292"
+        ],
+        "online": null,
+        "print": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10
+            ]
+          ]
+        },
+        "officialURL": "https://linkinghub.elsevier.com/retrieve/pii/S1353829226001498"
+      },
+      {
+        "doi": "10.1016/j.healthplace.2026.103736",
+        "title": [
+          "Urban mobility responses to wildfire smoke-related air quality advisories in Montréal, Canada"
+        ],
+        "containerTitle": [
+          "Health &amp; Place"
+        ],
+        "issns": [
+          "1353-8292"
+        ],
+        "online": null,
+        "print": {
+          "date-parts": [
+            [
+              2026,
+              9
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              9
+            ]
+          ]
+        },
+        "officialURL": "https://linkinghub.elsevier.com/retrieve/pii/S1353829226001310"
+      }
+    ]
+  },
+  {
+    "id": "candidate-30",
+    "title": "Sociology of Health & Illness",
+    "issn": "0141-9889",
+    "registryTitle": "Sociology of Health & Illness",
+    "issns": [
+      "0141-9889",
+      "1467-9566"
+    ],
+    "registryURL": "https://api.crossref.org/journals/0141-9889",
+    "sampleURL": "https://api.crossref.org/journals/0141-9889/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:49:02.018Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 295,
+    "samples": [
+      {
+        "doi": "10.1111/1467-9566.70256",
+        "title": [
+          "How War Kills: The Overlooked Threats to Our Health. By Yara M.Asi, Baltimore, MA: John Hopkins University Press, 2024. 233 pp. £22.61 (paperback). ISBN: 978‐1‐4214‐4789‐6"
+        ],
+        "containerTitle": [
+          "Sociology of Health &amp; Illness"
+        ],
+        "issns": [
+          "0141-9889",
+          "1467-9566"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "print": {
+          "date-parts": [
+            [
+              2026,
+              11
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "officialURL": "https://onlinelibrary.wiley.com/doi/10.1111/1467-9566.70256"
+      },
+      {
+        "doi": "10.1111/1467-9566.70275",
+        "title": [
+          "Legitimating the Role of a New Profession in a Marketised Healthcare System: The Emergence of Medical Social Work in China"
+        ],
+        "containerTitle": [
+          "Sociology of Health &amp; Illness"
+        ],
+        "issns": [
+          "0141-9889",
+          "1467-9566"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              21
+            ]
+          ]
+        },
+        "print": {
+          "date-parts": [
+            [
+              2026,
+              11
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              21
+            ]
+          ]
+        },
+        "officialURL": "https://onlinelibrary.wiley.com/doi/10.1111/1467-9566.70275"
+      }
+    ]
+  },
+  {
+    "id": "candidate-31",
+    "title": "International Journal for Equity in Health",
+    "issn": "1475-9276",
+    "registryTitle": "International Journal for Equity in Health",
+    "issns": [
+      "1475-9276"
+    ],
+    "registryURL": "https://api.crossref.org/journals/1475-9276",
+    "sampleURL": "https://api.crossref.org/journals/1475-9276/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:49:03.450Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 708,
+    "samples": [
+      {
+        "doi": "10.1186/s12939-026-03075-8",
+        "title": [
+          "Intersectionality and gendered ageism: a critique from a justice theory perspective"
+        ],
+        "containerTitle": [
+          "International Journal for Equity in Health"
+        ],
+        "issns": [
+          "1475-9276"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              24
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              24
+            ]
+          ]
+        },
+        "officialURL": "https://link.springer.com/article/10.1186/s12939-026-03075-8"
+      },
+      {
+        "doi": "10.1186/s12939-026-03076-7",
+        "title": [
+          "Intersections of identity and multilevel social determinants of health in Hong Kong: a participatory qualitative study of health inequities among Pakistani women"
+        ],
+        "containerTitle": [
+          "International Journal for Equity in Health"
+        ],
+        "issns": [
+          "1475-9276"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              24
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              24
+            ]
+          ]
+        },
+        "officialURL": "https://link.springer.com/article/10.1186/s12939-026-03076-7"
+      }
+    ]
+  },
+  {
+    "id": "candidate-32",
+    "title": "Journal of Social Policy",
+    "issn": "0047-2794",
+    "registryTitle": "Journal of Social Policy",
+    "issns": [
+      "0047-2794",
+      "1469-7823"
+    ],
+    "registryURL": "https://api.crossref.org/journals/0047-2794",
+    "sampleURL": "https://api.crossref.org/journals/0047-2794/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:49:04.867Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 102,
+    "samples": [
+      {
+        "doi": "10.1017/s0047279426101688",
+        "title": [
+          "Who is more deserving of welfare rights? Evidence from a survey experiment on the perceived welfare deservingness of rural-to-urban migrants in Shanghai, China"
+        ],
+        "containerTitle": [
+          "Journal of Social Policy"
+        ],
+        "issns": [
+          "0047-2794",
+          "1469-7823"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              16
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              16
+            ]
+          ]
+        },
+        "officialURL": "https://www.cambridge.org/core/product/identifier/S0047279426101688/type/journal_article"
+      },
+      {
+        "doi": "10.1017/s004727942610169x",
+        "title": [
+          "Elite welfare and the good fortune of just being there"
+        ],
+        "containerTitle": [
+          "Journal of Social Policy"
+        ],
+        "issns": [
+          "0047-2794",
+          "1469-7823"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              12
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              12
+            ]
+          ]
+        },
+        "officialURL": "https://www.cambridge.org/core/product/identifier/S004727942610169X/type/journal_article"
+      }
+    ]
+  },
+  {
+    "id": "candidate-33",
+    "title": "Social Policy & Administration",
+    "issn": "0144-5596",
+    "registryTitle": "Social Policy and Administration",
+    "issns": [
+      "0144-5596",
+      "1467-9515"
+    ],
+    "registryURL": "https://api.crossref.org/journals/0144-5596",
+    "sampleURL": "https://api.crossref.org/journals/0144-5596/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:49:06.271Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 183,
+    "samples": [
+      {
+        "doi": "10.1111/spol.70127",
+        "title": [
+          "Perpetrator Programmes in Penal‐Welfare Governance: Variation in Programme Intake Across Italy"
+        ],
+        "containerTitle": [
+          "Social Policy &amp; Administration"
+        ],
+        "issns": [
+          "0144-5596",
+          "1467-9515"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              16
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              16
+            ]
+          ]
+        },
+        "officialURL": "https://onlinelibrary.wiley.com/doi/10.1111/spol.70127"
+      },
+      {
+        "doi": "10.1111/spol.70126",
+        "title": [
+          "The Elderly Sense of Gain in Community Elderly Care Services: A Grounded Theory Analysis"
+        ],
+        "containerTitle": [
+          "Social Policy &amp; Administration"
+        ],
+        "issns": [
+          "0144-5596",
+          "1467-9515"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              12
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              12
+            ]
+          ]
+        },
+        "officialURL": "https://onlinelibrary.wiley.com/doi/10.1111/spol.70126"
+      }
+    ]
+  },
+  {
+    "id": "candidate-34",
+    "title": "British Journal of Social Work",
+    "issn": "0045-3102",
+    "registryTitle": "The British Journal of Social Work",
+    "issns": [
+      "0045-3102",
+      "1468-263X"
+    ],
+    "registryURL": "https://api.crossref.org/journals/0045-3102",
+    "sampleURL": "https://api.crossref.org/journals/0045-3102/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:49:07.864Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 535,
+    "samples": [
+      {
+        "doi": "10.1093/bjsw/bcag268",
+        "title": [
+          "The evaporation of context: Epistemic agency and the problematic of ‘understanding’ in social work scholarship in the age of generative AI"
+        ],
+        "containerTitle": [
+          "The British Journal of Social Work"
+        ],
+        "issns": [
+          "0045-3102",
+          "1468-263X"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              22
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              22
+            ]
+          ]
+        },
+        "officialURL": "https://academic.oup.com/bjsw/advance-article/doi/10.1093/bjsw/bcag268/8979507"
+      },
+      {
+        "doi": "10.1093/bjsw/bcag261",
+        "title": [
+          "Between transition and transformation: A corpus analysis of environmental social work scholarship"
+        ],
+        "containerTitle": [
+          "The British Journal of Social Work"
+        ],
+        "issns": [
+          "0045-3102",
+          "1468-263X"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              21
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              21
+            ]
+          ]
+        },
+        "officialURL": "https://academic.oup.com/bjsw/advance-article/doi/10.1093/bjsw/bcag261/8965478"
+      }
+    ]
+  },
+  {
+    "id": "candidate-35",
+    "title": "Social Work",
+    "issn": "0037-8046",
+    "registryTitle": "Social Work",
+    "issns": [
+      "0037-8046",
+      "1545-6846"
+    ],
+    "registryURL": "https://api.crossref.org/journals/0037-8046",
+    "sampleURL": "https://api.crossref.org/journals/0037-8046/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:49:09.220Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 101,
+    "samples": [
+      {
+        "doi": "10.1093/sw/swag048",
+        "title": [
+          "Artificial Intelligence in the Behavioral Health Professions: Ethical and Risk Management Issues. Frederic G. Reamer"
+        ],
+        "containerTitle": [
+          "Social Work"
+        ],
+        "issns": [
+          "0037-8046",
+          "1545-6846"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "officialURL": "https://academic.oup.com/sw/advance-article/doi/10.1093/sw/swag048/8994262"
+      },
+      {
+        "doi": "10.1093/sw/swag047",
+        "title": [
+          "Social Work"
+        ],
+        "containerTitle": [
+          "Social Work"
+        ],
+        "issns": [
+          "0037-8046",
+          "1545-6846"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              9,
+              21
+            ]
+          ]
+        },
+        "print": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              1
+            ]
+          ]
+        },
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              9,
+              21
+            ]
+          ]
+        },
+        "officialURL": "https://academic.oup.com/sw/article/71/4/395/8824149"
+      }
+    ]
+  },
+  {
+    "id": "candidate-36",
+    "title": "Journal of Marriage and Family",
+    "issn": "0022-2445",
+    "registryTitle": "Journal of Marriage and Family",
+    "issns": [
+      "0022-2445",
+      "1741-3737"
+    ],
+    "registryURL": "https://api.crossref.org/journals/0022-2445",
+    "sampleURL": "https://api.crossref.org/journals/0022-2445/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:49:10.570Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 200,
+    "samples": [
+      {
+        "doi": "10.1111/jomf.70126",
+        "title": [
+          "No Kids, No Care, No Telework: Hiring Penalties When Requesting Telework"
+        ],
+        "containerTitle": [
+          "Journal of Marriage and Family"
+        ],
+        "issns": [
+          "0022-2445",
+          "1741-3737"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              21
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              21
+            ]
+          ]
+        },
+        "officialURL": "https://onlinelibrary.wiley.com/doi/10.1111/jomf.70126"
+      },
+      {
+        "doi": "10.1111/jomf.70127",
+        "title": [
+          "Rethinking the Motherhood Penalty: Occupational Stratification, Spousal Pairings, and Women's Occupational Trajectories in China"
+        ],
+        "containerTitle": [
+          "Journal of Marriage and Family"
+        ],
+        "issns": [
+          "0022-2445",
+          "1741-3737"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              19
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              19
+            ]
+          ]
+        },
+        "officialURL": "https://onlinelibrary.wiley.com/doi/10.1111/jomf.70127"
+      }
+    ]
+  },
+  {
+    "id": "candidate-37",
+    "title": "Disability & Society",
+    "issn": "0968-7599",
+    "registryTitle": "Disability & Society",
+    "issns": [
+      "0968-7599",
+      "1360-0508"
+    ],
+    "registryURL": "https://api.crossref.org/journals/0968-7599",
+    "sampleURL": "https://api.crossref.org/journals/0968-7599/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:49:11.944Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 284,
+    "samples": [
+      {
+        "doi": "10.1080/09687599.2026.2750120",
+        "title": [
+          "Embracing neurodiverse perspectives in storytelling: storytelling beyond conventional boundaries"
+        ],
+        "containerTitle": [
+          "Disability &amp; Society"
+        ],
+        "issns": [
+          "0968-7599",
+          "1360-0508"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              20
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              20
+            ]
+          ]
+        },
+        "officialURL": "https://www.tandfonline.com/doi/full/10.1080/09687599.2026.2750120"
+      },
+      {
+        "doi": "10.1080/09687599.2026.2738378",
+        "title": [
+          "Non-neurogenic bladder failure as an invisible disability"
+        ],
+        "containerTitle": [
+          "Disability &amp; Society"
+        ],
+        "issns": [
+          "0968-7599",
+          "1360-0508"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              5
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              5
+            ]
+          ]
+        },
+        "officialURL": "https://www.tandfonline.com/doi/full/10.1080/09687599.2026.2738378"
+      }
+    ]
+  },
+  {
+    "id": "candidate-39",
+    "title": "JMIR AI",
+    "issn": "2817-1705",
+    "registryTitle": "JMIR AI",
+    "issns": [
+      "2817-1705"
+    ],
+    "registryURL": "https://api.crossref.org/journals/2817-1705",
+    "sampleURL": "https://api.crossref.org/journals/2817-1705/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:49:13.325Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 303,
+    "samples": [
+      {
+        "doi": "10.2196/109863",
+        "title": [
+          "Deriving a Deployment Threshold for Benefit and Harm in Clinical AI: Multi-Institutional Decision-Analytic Modeling Study"
+        ],
+        "containerTitle": [
+          "JMIR AI"
+        ],
+        "issns": [
+          "2817-1705"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "officialURL": "https://ai.jmir.org/2026/1/e109863"
+      },
+      {
+        "doi": "10.2196/92470",
+        "title": [
+          "Optimizing Small Local Language Models for Culturally Competent Mental Health Counseling: Comparative Evaluation With GPT-4o by Psychiatrists"
+        ],
+        "containerTitle": [
+          "JMIR AI"
+        ],
+        "issns": [
+          "2817-1705"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              22
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              22
+            ]
+          ]
+        },
+        "officialURL": "https://ai.jmir.org/2026/1/e92470"
+      }
+    ]
+  },
+  {
+    "id": "candidate-40",
+    "title": "Health Policy and Planning",
+    "issn": "0268-1080",
+    "registryTitle": "Health Policy and Planning",
+    "issns": [
+      "0268-1080",
+      "1460-2237"
+    ],
+    "registryURL": "https://api.crossref.org/journals/0268-1080",
+    "sampleURL": "https://api.crossref.org/journals/0268-1080/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:49:14.665Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 207,
+    "samples": [
+      {
+        "doi": "10.1093/heapol/czag120",
+        "title": [
+          "Interventions to address the effects of climate change on human health in sub-Saharan Africa: A scoping review"
+        ],
+        "containerTitle": [
+          "Health Policy and Planning"
+        ],
+        "issns": [
+          "0268-1080",
+          "1460-2237"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              22
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              22
+            ]
+          ]
+        },
+        "officialURL": "https://academic.oup.com/heapol/advance-article/doi/10.1093/heapol/czag120/8976547"
+      },
+      {
+        "doi": "10.1093/heapol/czag121",
+        "title": [
+          "The Long Road to Care: A Mixed Methods Analysis of Referral Delays for Pediatric Injury Patients in Northern Tanzania"
+        ],
+        "containerTitle": [
+          "Health Policy and Planning"
+        ],
+        "issns": [
+          "0268-1080",
+          "1460-2237"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              22
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              22
+            ]
+          ]
+        },
+        "officialURL": "https://academic.oup.com/heapol/advance-article/doi/10.1093/heapol/czag121/8976548"
+      }
+    ]
+  },
+  {
+    "id": "candidate-42",
+    "title": "Aging & Mental Health",
+    "issn": "1360-7863",
+    "registryTitle": "Aging & Mental Health",
+    "issns": [
+      "1360-7863",
+      "1364-6915"
+    ],
+    "registryURL": "https://api.crossref.org/journals/1360-7863",
+    "sampleURL": "https://api.crossref.org/journals/1360-7863/works?filter=type%3Ajournal-article%2Cfrom-pub-date%3A2025-01-01%2Cuntil-pub-date%3A2026-10-25&rows=5&sort=published&order=desc",
+    "at": "2026-10-25T03:49:16.012Z",
+    "httpStatus": 200,
+    "reportedRangeCount": 502,
+    "samples": [
+      {
+        "doi": "10.1080/13607863.2026.2747821",
+        "title": [
+          "Motivational readiness for behavioral change and cognitive decline in at-risk older adults"
+        ],
+        "containerTitle": [
+          "Aging &amp; Mental Health"
+        ],
+        "issns": [
+          "1360-7863",
+          "1364-6915"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "officialURL": "https://www.tandfonline.com/doi/full/10.1080/13607863.2026.2747821"
+      },
+      {
+        "doi": "10.1080/13607863.2026.2750221",
+        "title": [
+          "Diversity of social interactions is related to higher emodiversity among older adults"
+        ],
+        "containerTitle": [
+          "Aging &amp; Mental Health"
+        ],
+        "issns": [
+          "1360-7863",
+          "1364-6915"
+        ],
+        "online": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "print": null,
+        "published": {
+          "date-parts": [
+            [
+              2026,
+              10,
+              23
+            ]
+          ]
+        },
+        "officialURL": "https://www.tandfonline.com/doi/full/10.1080/13607863.2026.2750221"
+      }
+    ]
+  }
+]

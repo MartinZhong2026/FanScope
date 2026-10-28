@@ -1,0 +1,34 @@
+{
+  "scope": "isolated acceptance copy; never production",
+  "executionDate": "2026-10-25",
+  "journalCount": 42,
+  "retained2025": 11476,
+  "metadataExamined": 500,
+  "metadataVerified": 384,
+  "notFound": 116,
+  "abstractsAdded": 323,
+  "candidateCount": 129,
+  "batchStatus": "paused",
+  "budgetCny": null,
+  "aiRequests": 0,
+  "aiRunning": 0,
+  "types2026": [
+    {
+      "article_type": "editorial",
+      "n": 3
+    },
+    {
+      "article_type": "original_research",
+      "n": 132
+    },
+    {
+      "article_type": "review",
+      "n": 39
+    },
+    {
+      "article_type": "unknown",
+      "n": 6566
+    }
+  ],
+  "supplementSha256": "b61a487b768bc7b97833391c36807d099c956585b025e1b7c24c4d9315eb9b88"
+}

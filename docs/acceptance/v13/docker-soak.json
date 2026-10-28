@@ -1,0 +1,9 @@
+{
+  "durationMs": 122598,
+  "articles": 1000,
+  "requests": 1000,
+  "cachedCycles": 40,
+  "maxRss": 108277760,
+  "cgroupPeak": 88535040,
+  "integrity": "ok"
+}

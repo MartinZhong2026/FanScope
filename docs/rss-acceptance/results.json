@@ -1,0 +1,42 @@
+[
+  {
+    "width": 390,
+    "action": "test",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "action": "save",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "action": "enable",
+    "pass": true
+  },
+  {
+    "width": 390,
+    "action": "pause",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "action": "test",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "action": "save",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "action": "enable",
+    "pass": true
+  },
+  {
+    "width": 1440,
+    "action": "pause",
+    "pass": true
+  }
+]

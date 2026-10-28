@@ -1,0 +1,70 @@
+[
+  {
+    "width": 390,
+    "view": "trends",
+    "periods": [
+      "90d",
+      "180d",
+      "ytd"
+    ],
+    "type": "original_research",
+    "chartQualityCount": 7,
+    "comparison": "same cutoff, type and common journals",
+    "layout": {
+      "width": 390,
+      "scroll": 390
+    },
+    "errors": []
+  },
+  {
+    "width": 390,
+    "view": "operations",
+    "defaults": {
+      "year": 2026,
+      "limit": 150,
+      "max": 200,
+      "budget": "unset"
+    },
+    "pausedCandidates": 129,
+    "startButtons": 0,
+    "layout": {
+      "width": 390,
+      "scroll": 390
+    },
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "view": "trends",
+    "periods": [
+      "90d",
+      "180d",
+      "ytd"
+    ],
+    "type": "original_research",
+    "chartQualityCount": 7,
+    "comparison": "same cutoff, type and common journals",
+    "layout": {
+      "width": 1440,
+      "scroll": 1440
+    },
+    "errors": []
+  },
+  {
+    "width": 1440,
+    "view": "operations",
+    "defaults": {
+      "year": 2026,
+      "limit": 150,
+      "max": 200,
+      "budget": "unset"
+    },
+    "pausedCandidates": 129,
+    "startButtons": 0,
+    "layout": {
+      "width": 1440,
+      "scroll": 1440
+    },
+    "errors": []
+  }
+]

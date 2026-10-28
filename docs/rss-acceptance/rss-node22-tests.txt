@@ -1,0 +1,578 @@
+
+> fanscope-api@1.2.0 test
+> node --experimental-sqlite --test test/*.test.mjs
+
+TAP version 13
+# (node:11423) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: batch is initially paused; caches old analyses; persists token usage and avoids second call
+ok 1 - batch is initially paused; caches old analyses; persists token usage and avoids second call
+  ---
+  duration_ms: 23.761082
+  type: 'test'
+  ...
+# Subtest: interrupted tasks recover without restarting completed work
+ok 2 - interrupted tasks recover without restarting completed work
+  ---
+  duration_ms: 1.053287
+  type: 'test'
+  ...
+# Subtest: invalid filters and budget without pricing are rejected
+ok 3 - invalid filters and budget without pricing are rejected
+  ---
+  duration_ms: 0.206131
+  type: 'test'
+  ...
+# (node:11431) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: historical backfill is operator-controlled and keeps independent cursor
+ok 4 - historical backfill is operator-controlled and keeps independent cursor
+  ---
+  duration_ms: 6.352224
+  type: 'test'
+  ...
+# Subtest: bad scopes cannot silently activate unknown or unconfigured journals
+ok 5 - bad scopes cannot silently activate unknown or unconfigured journals
+  ---
+  duration_ms: 0.364089
+  type: 'test'
+  ...
+# Subtest: failed fetch pauses but preserves operator resumability
+ok 6 - failed fetch pauses but preserves operator resumability
+  ---
+  duration_ms: 1.394252
+  type: 'test'
+  ...
+# (node:11439) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: auditable Research Brief accepts only supplied evidence IDs and caches without repeat costs
+ok 7 - auditable Research Brief accepts only supplied evidence IDs and caches without repeat costs
+  ---
+  duration_ms: 20.520067
+  type: 'test'
+  ...
+# (node:11447) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: research topic classification from title and abstract
+ok 8 - research topic classification from title and abstract
+  ---
+  duration_ms: 1.383815
+  type: 'test'
+  ...
+# Subtest: DOI normalization and Crossref fields
+ok 9 - DOI normalization and Crossref fields
+  ---
+  duration_ms: 0.815158
+  type: 'test'
+  ...
+# Subtest: RSS only accepts articles with valid URL
+ok 10 - RSS only accepts articles with valid URL
+  ---
+  duration_ms: 4.017385
+  type: 'test'
+  ...
+# Subtest: AI cannot claim sample size without verbatim evidence
+ok 11 - AI cannot claim sample size without verbatim evidence
+  ---
+  duration_ms: 0.162705
+  type: 'test'
+  ...
+# Subtest: duplicate paper insert is idempotent
+ok 12 - duplicate paper insert is idempotent
+  ---
+  duration_ms: 0.513444
+  type: 'test'
+  ...
+# Subtest: public health and articles, admin protection, subscribe disabled
+ok 13 - public health and articles, admin protection, subscribe disabled
+  ---
+  duration_ms: 53.096766
+  type: 'test'
+  ...
+# (node:11455) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 550 records finish fixed window beyond soft four-page budget without losses
+ok 14 - 550 records finish fixed window beyond soft four-page budget without losses
+  ---
+  duration_ms: 2561.245879
+  type: 'test'
+  ...
+# Subtest: interruption preserves failed cursor; duplicate DOI replay is harmless
+ok 15 - interruption preserves failed cursor; duplicate DOI replay is harmless
+  ---
+  duration_ms: 506.73418
+  type: 'test'
+  ...
+# Subtest: missing/nonadvancing cursor with incomplete total is never silently accepted
+ok 16 - missing/nonadvancing cursor with incomplete total is never silently accepted
+  ---
+  duration_ms: 2.777025
+  type: 'test'
+  ...
+# Subtest: 429 and 5xx retry succeeds without a paid network call
+ok 17 - 429 and 5xx retry succeeds without a paid network call
+  ---
+  duration_ms: 2731.299565
+  type: 'test'
+  ...
+# Subtest: source dates and links never substitute indexing date or a journal homepage
+ok 18 - source dates and links never substitute indexing date or a journal homepage
+  ---
+  duration_ms: 0.82284
+  type: 'test'
+  ...
+# Monitor partial failure Journal of Medical Internet Research
+# Subtest: journal failure does not block others; partial checkpoint retained; initial backfill stays silent
+ok 19 - journal failure does not block others; partial checkpoint retained; initial backfill stays silent
+  ---
+  duration_ms: 2104.248688
+  type: 'test'
+  ...
+# Subtest: multiple anchored daily windows complete through repeated bounded invocations
+ok 20 - multiple anchored daily windows complete through repeated bounded invocations
+  ---
+  duration_ms: 3021.34394
+  type: 'test'
+  ...
+# Subtest: expired cursor replays only the fixed failed window with DOI deduplication
+ok 21 - expired cursor replays only the fixed failed window with DOI deduplication
+  ---
+  duration_ms: 504.909169
+  type: 'test'
+  ...
+# Subtest: JMIR and Social Science & Medicine both complete 550-item windows with maxPages=4
+ok 22 - JMIR and Social Science & Medicine both complete 550-item windows with maxPages=4
+  ---
+  duration_ms: 5049.603139
+  type: 'test'
+  ...
+# Subtest: very dense windows subdivide before consumption and retain complete temporal coverage
+ok 23 - very dense windows subdivide before consumption and retain complete temporal coverage
+  ---
+  duration_ms: 505.996844
+  type: 'test'
+  ...
+# (node:11483) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: email verification, urgent deduplication, and confirmed unsubscribe
+ok 24 - email verification, urgent deduplication, and confirmed unsubscribe
+  ---
+  duration_ms: 41.445793
+  type: 'test'
+  ...
+# Subtest: historical and initial backfill is excluded from scheduled new-publication digests
+ok 25 - historical and initial backfill is excluded from scheduled new-publication digests
+  ---
+  duration_ms: 1.778931
+  type: 'test'
+  ...
+# (node:11491) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: matches Crossref journal identity and requires multiple different DOI samples
+ok 26 - matches Crossref journal identity and requires multiple different DOI samples
+  ---
+  duration_ms: 1.701104
+  type: 'test'
+  ...
+# Subtest: discovery uses Crossref fixed endpoint and does not activate source
+ok 27 - discovery uses Crossref fixed endpoint and does not activate source
+  ---
+  duration_ms: 0.940187
+  type: 'test'
+  ...
+# Subtest: operator-triggered durable journal discovery jobs pause, start, resume and persist evidence
+ok 28 - operator-triggered durable journal discovery jobs pause, start, resume and persist evidence
+  ---
+  duration_ms: 3.023818
+  type: 'test'
+  ...
+# (node:11499) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Crossref source cannot be enabled without matching DOI / ISSN and confirmation
+ok 29 - Crossref source cannot be enabled without matching DOI / ISSN and confirmation
+  ---
+  duration_ms: 2.894112
+  type: 'test'
+  ...
+# (node:11507) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# HTTP error: 该会议原始文件仅上传者和导师可查看
+# HTTP error: 该会议原始文件仅上传者和导师可查看
+# HTTP error: 该会议原始文件仅上传者和导师可查看
+# HTTP error: 该会议原始文件仅上传者和导师可查看
+# HTTP error: TXT/Markdown 文件必须采用 UTF-8 编码
+# HTTP error: Meetfolio 文本文件最大为 512KB
+# HTTP error: 文件扩展名与 Content-Type 不匹配
+# HTTP error: 文件名编码无效
+# HTTP error: 文件扩展名与 Content-Type 不匹配
+# Subtest: DOCX/PDF/Markdown/TXT upload, evidence-linked DeepSeek proposal, approve, PDF extraction, private file access
+ok 30 - DOCX/PDF/Markdown/TXT upload, evidence-linked DeepSeek proposal, approve, PDF extraction, private file access
+  ---
+  duration_ms: 340.30925
+  type: 'test'
+  ...
+# (node:11517) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# HTTP error: 没有项目管理权限
+# Subtest: project members, weighted milestone progress, tasks, exploratory mode and file permissions
+ok 31 - project members, weighted milestone progress, tasks, exploratory mode and file permissions
+  ---
+  duration_ms: 50.75069
+  type: 'test'
+  ...
+# HTTP error: 必须人工指定有效负责人和阶段
+# HTTP error: 只有作者、导师和管理员能修改论文
+# HTTP error: 论文私人讨论已停用
+# Subtest: Excel preview preserves raw fields, does not execute formulas, stage takes priority, confirmation is atomic/idempotent
+ok 32 - Excel preview preserves raw fields, does not execute formulas, stage takes priority, confirmation is atomic/idempotent
+  ---
+  duration_ms: 69.445429
+  type: 'test'
+  ...
+# Subtest: export protects spreadsheet formulas and does not expose private history or import payloads
+ok 33 - export protects spreadsheet formulas and does not expose private history or import payloads
+  ---
+  duration_ms: 18.38361
+  type: 'test'
+  ...
+# HTTP error: 该会议原始文件仅上传者和导师可查看
+# HTTP error: 仅上传者与导师能下载会议原始文件
+# HTTP error: 无权审批此建议
+# HTTP error: 此建议已经处理，不能重复提交
+# Subtest: pasted text proposes multiple updates, never writes until authorized individual review, raw file remains private
+ok 34 - pasted text proposes multiple updates, never writes until authorized individual review, raw file remains private
+  ---
+  duration_ms: 13.389633
+  type: 'test'
+  ...
+# Subtest: AI task suggestions require real task identity, verbatim quote and project manager approval
+ok 35 - AI task suggestions require real task identity, verbatim quote and project manager approval
+  ---
+  duration_ms: 0.314664
+  type: 'test'
+  ...
+# (node:11525) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# HTTP error: 请先登录课题组工作台
+# HTTP error: 邮箱或密码不正确
+# HTTP error: 没有此项目的管理权限
+# HTTP error: 只有作者、导师和管理员能修改论文
+# HTTP error: 论文私人讨论已停用
+# HTTP error: 该会议原始文件仅上传者和导师可查看
+# HTTP error: 无权审批此建议
+# Subtest: Lab auth / projects / manuscript public-private / document approval and audit
+ok 36 - Lab auth / projects / manuscript public-private / document approval and audit
+  ---
+  duration_ms: 271.957939
+  type: 'test'
+  ...
+# (node:11540) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:11547) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:11554) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:11561) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:11533) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: legacy database is backed up consistently, migrated twice, preserves accounts/articles/projects and privately archives notes
+ok 37 - legacy database is backed up consistently, migrated twice, preserves accounts/articles/projects and privately archives notes
+  ---
+  duration_ms: 738.495711
+  type: 'test'
+  ...
+# (node:11568) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: v1.2 fixture migrates twice without changing original papers, journal configuration or Lab records
+ok 38 - v1.2 fixture migrates twice without changing original papers, journal configuration or Lab records
+  ---
+  duration_ms: 467.907442
+  type: 'test'
+  ...
+# Subtest: mobile launcher exposes six genuine module actions and no blank buttons
+ok 39 - mobile launcher exposes six genuine module actions and no blank buttons
+  ---
+  duration_ms: 0.870984
+  type: 'test'
+  ...
+# Subtest: mobile nav accepts real sections only and local svg icons are accessible
+ok 40 - mobile nav accepts real sections only and local svg icons are accessible
+  ---
+  duration_ms: 0.27848
+  type: 'test'
+  ...
+# (node:11596) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: first Crossref scan inserts once and records journal health; repeat has zero new
+ok 41 - first Crossref scan inserts once and records journal health; repeat has zero new
+  ---
+  duration_ms: 3031.796095
+  type: 'test'
+  ...
+# (node:11604) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: OpenAlex is disabled without approved plan/key, matches DOI+ISSN and caches supplement
+ok 42 - OpenAlex is disabled without approved plan/key, matches DOI+ISSN and caches supplement
+  ---
+  duration_ms: 2019.758618
+  type: 'test'
+  ...
+# (node:11612) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 100-paper batch: pause, resume, usage, concurrent duplicate batch cache and changed abstract
+ok 43 - 100-paper batch: pause, resume, usage, concurrent duplicate batch cache and changed abstract
+  ---
+  duration_ms: 98.663538
+  type: 'test'
+  ...
+# Subtest: network failures reserve budget durably and cannot spend again after recovery
+ok 44 - network failures reserve budget durably and cannot spend again after recovery
+  ---
+  duration_ms: 2.346198
+  type: 'test'
+  ...
+# Subtest: invalid AI JSON still records returned token costs; explicit failure retry is paused
+ok 45 - invalid AI JSON still records returned token costs; explicit failure retry is paused
+  ---
+  duration_ms: 3.308208
+  type: 'test'
+  ...
+# Subtest: removed, infinite or negative pricing blocks resumed workers; unknown usage is conservative
+ok 46 - removed, infinite or negative pricing blocks resumed workers; unknown usage is conservative
+  ---
+  duration_ms: 1.504088
+  type: 'test'
+  ...
+# Subtest: cancelled work never invokes AI; interrupted successful work recovers using cache
+ok 47 - cancelled work never invokes AI; interrupted successful work recovers using cache
+  ---
+  duration_ms: 3.61468
+  type: 'test'
+  ...
+# Subtest: source verification handles real HTML entities, publisher and duplicate DOI evidence
+ok 48 - source verification handles real HTML entities, publisher and duplicate DOI evidence
+  ---
+  duration_ms: 1.213129
+  type: 'test'
+  ...
+# Subtest: wrong ISSN checksum, malformed DOI, foreign journal and upstream failures never enable a journal
+ok 49 - wrong ISSN checksum, malformed DOI, foreign journal and upstream failures never enable a journal
+  ---
+  duration_ms: 1.209784
+  type: 'test'
+  ...
+# Subtest: backfill pause/cancel during HTTP stops at a committed page and never overwrites cancellation
+ok 50 - backfill pause/cancel during HTTP stops at a committed page and never overwrites cancellation
+  ---
+  duration_ms: 1006.176019
+  type: 'test'
+  ...
+# Subtest: backfill excludes another journal and does not alter daily checkpoints or call DeepSeek
+ok 51 - backfill excludes another journal and does not alter daily checkpoints or call DeepSeek
+  ---
+  duration_ms: 2.438277
+  type: 'test'
+  ...
+# Subtest: all administrator route families reject missing/wrong credentials and CSV import is bounded/idempotent
+ok 52 - all administrator route families reject missing/wrong credentials and CSV import is bounded/idempotent
+  ---
+  duration_ms: 77.420373
+  type: 'test'
+  ...
+# Subtest: malformed pagination never advances processed count across repeated retries
+ok 53 - malformed pagination never advances processed count across repeated retries
+  ---
+  duration_ms: 1.074169
+  type: 'test'
+  ...
+# Subtest: monitoring with AUTO_AI_ANALYSIS=false and a configured mock key never calls AI
+ok 54 - monitoring with AUTO_AI_ANALYSIS=false and a configured mock key never calls AI
+  ---
+  duration_ms: 1.420061
+  type: 'test'
+  ...
+# Subtest: entire 2025–2026-to-date range completes through every fixed window with DOI deduplication and no AI or notifications
+ok 55 - entire 2025–2026-to-date range completes through every fixed window with DOI deduplication and no AI or notifications
+  ---
+  duration_ms: 49.994353
+  type: 'test'
+  ...
+# (node:11620) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: publication sorting, unknown dates, period/history/discovery views and production preflight
+ok 56 - publication sorting, unknown dates, period/history/discovery views and production preflight
+  ---
+  duration_ms: 40.979411
+  type: 'test'
+  ...
+# Subtest: 20+20+2 independent candidates do not claim official rank verification
+ok 57 - 20+20+2 independent candidates do not claim official rank verification
+  ---
+  duration_ms: 0.452201
+  type: 'test'
+  ...
+# Subtest: structured AI rejects unsupported claims, invalid units and invented numerical evidence
+ok 58 - structured AI rejects unsupported claims, invalid units and invented numerical evidence
+  ---
+  duration_ms: 0.893177
+  type: 'test'
+  ...
+# Subtest: failed AI item does not block next; retries and daily budget are recorded
+ok 59 - failed AI item does not block next; retries and daily budget are recorded
+  ---
+  duration_ms: 2.787172
+  type: 'test'
+  ...
+# Subtest: 8/1590 does not produce global trend inference
+ok 60 - 8/1590 does not produce global trend inference
+  ---
+  duration_ms: 44.681293
+  type: 'test'
+  ...
+# Subtest: Research Brief refuses low coverage before any network request
+ok 61 - Research Brief refuses low coverage before any network request
+  ---
+  duration_ms: 8.366092
+  type: 'test'
+  ...
+# Subtest: rank review separates CSSCI from JCR, requires official evidence and never enables a source
+ok 62 - rank review separates CSSCI from JCR, requires official evidence and never enables a source
+  ---
+  duration_ms: 11.456602
+  type: 'test'
+  ...
+# (node:11635) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:11643) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: fresh processes resume AI/cache, backfill cursor and discovery without losing committed progress
+ok 63 - fresh processes resume AI/cache, backfill cursor and discovery without losing committed progress
+  ---
+  duration_ms: 150.780944
+  type: 'test'
+  ...
+# (node:11651) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: RSS title, link, dates, journal ownership and stable URL deduplication
+ok 64 - RSS title, link, dates, journal ownership and stable URL deduplication
+  ---
+  duration_ms: 10.227308
+  type: 'test'
+  ...
+# Subtest: Atom chooses alternate article link, relative URLs and original published date
+ok 65 - Atom chooses alternate article link, relative URLs and original published date
+  ---
+  duration_ms: 0.764853
+  type: 'test'
+  ...
+# Subtest: DTD, malformed XML, foreign links and HTML pages fail closed
+ok 66 - DTD, malformed XML, foreign links and HTML pages fail closed
+  ---
+  duration_ms: 0.698913
+  type: 'test'
+  ...
+# Subtest: SSRF blocks private/reserved/mapped IPv4/IPv6 and unauthorized origins
+ok 67 - SSRF blocks private/reserved/mapped IPv4/IPv6 and unauthorized origins
+  ---
+  duration_ms: 0.648157
+  type: 'test'
+  ...
+# Subtest: transport pins validated DNS and never follows redirects; bounds streaming bytes
+ok 68 - transport pins validated DNS and never follows redirects; bounds streaming bytes
+  ---
+  duration_ms: 7.873008
+  type: 'test'
+  ...
+# (node:11659) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:11666) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:11673) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: admin API rejects unauthenticated mutation; pause requires no network; failed enable leaves state intact
+ok 69 - admin API rejects unauthenticated mutation; pause requires no network; failed enable leaves state intact
+  ---
+  duration_ms: 25.762586
+  type: 'test'
+  ...
+# Subtest: migration twice preserves 2549 synthetic papers and complete existing Lab rows
+ok 70 - migration twice preserves 2549 synthetic papers and complete existing Lab rows
+  ---
+  duration_ms: 596.073963
+  type: 'test'
+  ...
+# Subtest: test/save/enable always validate, save pauses, failed enable preserves state and restart retains URL
+ok 71 - test/save/enable always validate, save pauses, failed enable preserves state and restart retains URL
+  ---
+  duration_ms: 37.736536
+  type: 'test'
+  ...
+# Subtest: legacy RSS identifiers are not reinserted after URL hashing changes
+ok 72 - legacy RSS identifiers are not reinserted after URL hashing changes
+  ---
+  duration_ms: 1.37376
+  type: 'test'
+  ...
+# Subtest: pause supersedes an in-flight enable verification
+ok 73 - pause supersedes an in-flight enable verification
+  ---
+  duration_ms: 4.607931
+  type: 'test'
+  ...
+# Subtest: Stage 2 theme loads on research and Lab pages without changing the default app entry
+ok 74 - Stage 2 theme loads on research and Lab pages without changing the default app entry
+  ---
+  duration_ms: 0.730251
+  type: 'test'
+  ...
+# Subtest: Six module shortcuts and four mobile tabs navigate to supported pages
+ok 75 - Six module shortcuts and four mobile tabs navigate to supported pages
+  ---
+  duration_ms: 0.242796
+  type: 'test'
+  ...
+# Subtest: Source UI uses real status API and requires an operator key only on action
+ok 76 - Source UI uses real status API and requires an operator key only on action
+  ---
+  duration_ms: 0.267383
+  type: 'test'
+  ...
+# Subtest: Existing ECharts layer retains no-evidence empty states and theme contrast
+ok 77 - Existing ECharts layer retains no-evidence empty states and theme contrast
+  ---
+  duration_ms: 0.15948
+  type: 'test'
+  ...
+# Subtest: stage 3 exposes a dedicated operations center, mobile access and cost guards
+ok 78 - stage 3 exposes a dedicated operations center, mobile access and cost guards
+  ---
+  duration_ms: 0.825375
+  type: 'test'
+  ...
+# Subtest: historical backfill does not overwrite monitor checkpoints or invoke AI
+ok 79 - historical backfill does not overwrite monitor checkpoints or invoke AI
+  ---
+  duration_ms: 0.227023
+  type: 'test'
+  ...
+# Subtest: Stage 4 exposes explicit operator actions, research UI and safe pending state
+ok 80 - Stage 4 exposes explicit operator actions, research UI and safe pending state
+  ---
+  duration_ms: 2.170021
+  type: 'test'
+  ...
+1..80
+# tests 80
+# suites 0
+# pass 80
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 30026.271573
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

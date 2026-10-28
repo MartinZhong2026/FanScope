@@ -1,0 +1,28 @@
+{
+  "name": "fanscope-api",
+  "version": "1.2.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --experimental-sqlite src/server.mjs",
+    "scan": "node --experimental-sqlite src/cli.mjs scan",
+    "digest": "node --experimental-sqlite src/cli.mjs digest",
+    "import": "node --experimental-sqlite src/cli.mjs import",
+    "test": "node --experimental-sqlite --test test/*.test.mjs",
+    "lab:user": "node --experimental-sqlite src/lab-cli.mjs",
+    "analysis:cli": "node --experimental-sqlite src/analysis-cli.mjs"
+  },
+  "dependencies": {
+    "exceljs": "4.4.0",
+    "fast-xml-parser": "5.11.2"
+  },
+  "devDependencies": {
+    "echarts": "6.1.0"
+  },
+  "overrides": {
+    "uuid": "11.1.1"
+  }
+}

@@ -1,0 +1,338 @@
+{
+  "results": [
+    {
+      "name": "390 homepage six entries + Night Mode",
+      "status": "pass"
+    },
+    {
+      "name": "390 dark/light/system react to OS",
+      "status": "pass"
+    },
+    {
+      "name": "390 mobile navigation",
+      "status": "pass"
+    },
+    {
+      "name": "390 home layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "390 feed layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "390 journals layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "390 trends layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "390 health layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "390 sources layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "390 operations layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "390 alerts layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "390 system theme updates ECharts contrast",
+      "status": "pass"
+    },
+    {
+      "name": "390 Lab invalid and successful login",
+      "status": "pass"
+    },
+    {
+      "name": "390 Lab project modal, submission and dark contrast",
+      "status": "pass"
+    },
+    {
+      "name": "390 v1.2 Lab deep links and Markdown import remain functional",
+      "status": "pass"
+    },
+    {
+      "name": "768 homepage six entries + Night Mode",
+      "status": "pass"
+    },
+    {
+      "name": "768 dark/light/system react to OS",
+      "status": "pass"
+    },
+    {
+      "name": "768 mobile navigation",
+      "status": "pass"
+    },
+    {
+      "name": "768 home layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "768 feed layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "768 journals layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "768 trends layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "768 health layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "768 sources layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "768 operations layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "768 alerts layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "768 system theme updates ECharts contrast",
+      "status": "pass"
+    },
+    {
+      "name": "768 Lab invalid and successful login",
+      "status": "pass"
+    },
+    {
+      "name": "768 Lab project modal, submission and dark contrast",
+      "status": "pass"
+    },
+    {
+      "name": "768 v1.2 Lab deep links and Markdown import remain functional",
+      "status": "pass"
+    },
+    {
+      "name": "1440 homepage six entries + Night Mode",
+      "status": "pass"
+    },
+    {
+      "name": "1440 dark/light/system react to OS",
+      "status": "pass"
+    },
+    {
+      "name": "1440 mobile navigation",
+      "status": "pass"
+    },
+    {
+      "name": "1440 home layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "1440 feed layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "1440 journals layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "1440 trends layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "1440 health layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "1440 sources layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "1440 operations layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "1440 alerts layout/route",
+      "status": "pass"
+    },
+    {
+      "name": "1440 system theme updates ECharts contrast",
+      "status": "pass"
+    },
+    {
+      "name": "1440 Lab invalid and successful login",
+      "status": "pass"
+    },
+    {
+      "name": "1440 Lab project modal, submission and dark contrast",
+      "status": "pass"
+    },
+    {
+      "name": "1440 v1.2 Lab deep links and Markdown import remain functional",
+      "status": "pass"
+    },
+    {
+      "name": "admin AI create/start/pause/cancel actual API",
+      "status": "pass"
+    },
+    {
+      "name": "admin batch details uses authenticated GET",
+      "status": "pass"
+    },
+    {
+      "name": "admin backfill create/start/pause/cancel actual API",
+      "status": "pass"
+    },
+    {
+      "name": "CSV preview/import actual API",
+      "status": "pass"
+    },
+    {
+      "name": "imported HTML is escaped in article list",
+      "status": "pass"
+    },
+    {
+      "name": "source detect/failed activation + discovery actual APIs",
+      "status": "pass"
+    },
+    {
+      "name": "admin key not persisted",
+      "status": "pass"
+    },
+    {
+      "name": "old API compatibility fallback",
+      "status": "pass"
+    },
+    {
+      "name": "offline error state",
+      "status": "pass"
+    }
+  ],
+  "passed": 54,
+  "failed": 0,
+  "issues": [],
+  "pageErrors": [],
+  "consoleErrors": [
+    {
+      "width": 390,
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "width": 768,
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "width": 1440,
+      "text": "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+    },
+    {
+      "width": 1440,
+      "text": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    },
+    {
+      "width": 1440,
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "width": 1440,
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    },
+    {
+      "width": 1440,
+      "text": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "width": 1440,
+      "text": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "width": 1440,
+      "text": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "width": 1440,
+      "text": "Failed to load resource: net::ERR_FAILED"
+    }
+  ],
+  "adminRequests": [
+    {
+      "width": 1440,
+      "path": "/api/admin/analysis-batches",
+      "method": "POST"
+    },
+    {
+      "width": 1440,
+      "path": "/api/admin/analysis-batches/ca42d96e-22ca-475c-af46-dc4f17cf3623/start",
+      "method": "POST"
+    },
+    {
+      "width": 1440,
+      "path": "/api/admin/analysis-batches/ca42d96e-22ca-475c-af46-dc4f17cf3623/pause",
+      "method": "POST"
+    },
+    {
+      "width": 1440,
+      "path": "/api/admin/analysis-batches/ca42d96e-22ca-475c-af46-dc4f17cf3623/cancel",
+      "method": "POST"
+    },
+    {
+      "width": 1440,
+      "path": "/api/admin/analysis-batches",
+      "method": "GET"
+    },
+    {
+      "width": 1440,
+      "path": "/api/admin/journal-backfills",
+      "method": "POST"
+    },
+    {
+      "width": 1440,
+      "path": "/api/admin/journal-backfills/88f4c254-6288-441b-9cd5-bdc2ebf6d3ca/start",
+      "method": "POST"
+    },
+    {
+      "width": 1440,
+      "path": "/api/admin/journal-backfills/88f4c254-6288-441b-9cd5-bdc2ebf6d3ca/pause",
+      "method": "POST"
+    },
+    {
+      "width": 1440,
+      "path": "/api/admin/journal-backfills/88f4c254-6288-441b-9cd5-bdc2ebf6d3ca/cancel",
+      "method": "POST"
+    },
+    {
+      "width": 1440,
+      "path": "/api/admin/import",
+      "method": "POST"
+    },
+    {
+      "width": 1440,
+      "path": "/api/admin/journal-source/test",
+      "method": "POST"
+    },
+    {
+      "width": 1440,
+      "path": "/api/admin/journal-source/activate",
+      "method": "POST"
+    },
+    {
+      "width": 1440,
+      "path": "/api/admin/journal-discoveries",
+      "method": "POST"
+    },
+    {
+      "width": 1440,
+      "path": "/api/admin/journal-discoveries/start-all",
+      "method": "POST"
+    }
+  ]
+}

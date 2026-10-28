@@ -1,0 +1,157 @@
+TAP version 13
+# (node:1988) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: batch is initially paused; caches old analyses; persists token usage and avoids second call
+ok 1 - batch is initially paused; caches old analyses; persists token usage and avoids second call
+  ---
+  duration_ms: 105.592502
+  type: 'test'
+  ...
+# Subtest: interrupted tasks recover without restarting completed work
+ok 2 - interrupted tasks recover without restarting completed work
+  ---
+  duration_ms: 22.82844
+  type: 'test'
+  ...
+# Subtest: invalid filters and budget without pricing are rejected
+ok 3 - invalid filters and budget without pricing are rejected
+  ---
+  duration_ms: 4.770105
+  type: 'test'
+  ...
+# (node:1994) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: historical backfill is operator-controlled and keeps independent cursor
+ok 4 - historical backfill is operator-controlled and keeps independent cursor
+  ---
+  duration_ms: 65.784681
+  type: 'test'
+  ...
+# Subtest: bad scopes cannot silently activate unknown or unconfigured journals
+ok 5 - bad scopes cannot silently activate unknown or unconfigured journals
+  ---
+  duration_ms: 1.165265
+  type: 'test'
+  ...
+# Subtest: failed fetch pauses but preserves operator resumability
+ok 6 - failed fetch pauses but preserves operator resumability
+  ---
+  duration_ms: 18.971806
+  type: 'test'
+  ...
+# (node:1995) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 550 records finish fixed window beyond soft four-page budget without losses
+ok 7 - 550 records finish fixed window beyond soft four-page budget without losses
+  ---
+  duration_ms: 4782.218307
+  type: 'test'
+  ...
+# Subtest: interruption preserves failed cursor; duplicate DOI replay is harmless
+ok 8 - interruption preserves failed cursor; duplicate DOI replay is harmless
+  ---
+  duration_ms: 518.885273
+  type: 'test'
+  ...
+# Subtest: missing/nonadvancing cursor with incomplete total is never silently accepted
+ok 9 - missing/nonadvancing cursor with incomplete total is never silently accepted
+  ---
+  duration_ms: 1.67241
+  type: 'test'
+  ...
+# Subtest: 429 and 5xx retry succeeds without a paid network call
+ok 10 - 429 and 5xx retry succeeds without a paid network call
+  ---
+  duration_ms: 2786.500141
+  type: 'test'
+  ...
+# Subtest: source dates and links never substitute indexing date or a journal homepage
+ok 11 - source dates and links never substitute indexing date or a journal homepage
+  ---
+  duration_ms: 2.766358
+  type: 'test'
+  ...
+# Monitor partial failure Journal of Medical Internet Research
+# Subtest: journal failure does not block others; partial checkpoint retained; initial backfill stays silent
+ok 12 - journal failure does not block others; partial checkpoint retained; initial backfill stays silent
+  ---
+  duration_ms: 2120.553376
+  type: 'test'
+  ...
+# Subtest: multiple anchored daily windows complete through repeated bounded invocations
+ok 13 - multiple anchored daily windows complete through repeated bounded invocations
+  ---
+  duration_ms: 3049.373284
+  type: 'test'
+  ...
+# Subtest: expired cursor replays only the fixed failed window with DOI deduplication
+ok 14 - expired cursor replays only the fixed failed window with DOI deduplication
+  ---
+  duration_ms: 514.522411
+  type: 'test'
+  ...
+# Subtest: JMIR and Social Science & Medicine both complete 550-item windows with maxPages=4
+ok 15 - JMIR and Social Science & Medicine both complete 550-item windows with maxPages=4
+  ---
+  duration_ms: 5087.873729
+  type: 'test'
+  ...
+# Subtest: very dense windows subdivide before consumption and retain complete temporal coverage
+ok 16 - very dense windows subdivide before consumption and retain complete temporal coverage
+  ---
+  duration_ms: 505.925574
+  type: 'test'
+  ...
+# (node:2021) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Crossref source cannot be enabled without matching DOI / ISSN and confirmation
+ok 17 - Crossref source cannot be enabled without matching DOI / ISSN and confirmation
+  ---
+  duration_ms: 19.923297
+  type: 'test'
+  ...
+# Subtest: Stage 2 theme loads on research and Lab pages without changing the default app entry
+ok 18 - Stage 2 theme loads on research and Lab pages without changing the default app entry
+  ---
+  duration_ms: 0.885646
+  type: 'test'
+  ...
+# Subtest: Six module shortcuts and four mobile tabs navigate to supported pages
+ok 19 - Six module shortcuts and four mobile tabs navigate to supported pages
+  ---
+  duration_ms: 0.412242
+  type: 'test'
+  ...
+# Subtest: Source UI uses real status API and requires an operator key only on action
+ok 20 - Source UI uses real status API and requires an operator key only on action
+  ---
+  duration_ms: 0.367155
+  type: 'test'
+  ...
+# Subtest: Existing ECharts layer retains no-evidence empty states and theme contrast
+ok 21 - Existing ECharts layer retains no-evidence empty states and theme contrast
+  ---
+  duration_ms: 0.241333
+  type: 'test'
+  ...
+# Subtest: stage 3 exposes a dedicated operations center, mobile access and cost guards
+ok 22 - stage 3 exposes a dedicated operations center, mobile access and cost guards
+  ---
+  duration_ms: 2.73395
+  type: 'test'
+  ...
+# Subtest: historical backfill does not overwrite monitor checkpoints or invoke AI
+ok 23 - historical backfill does not overwrite monitor checkpoints or invoke AI
+  ---
+  duration_ms: 0.607311
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 19993.190404

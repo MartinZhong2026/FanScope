@@ -1,0 +1,23 @@
+{
+  "applied": true,
+  "excluded": [
+    {
+      "id": "cn:200d6156ee41be7842bc8ed665fd196ae052b4e2e3e19c5cebceda59f895fc2c",
+      "title": "《社会》2025年总目录",
+      "journal_id": "candidate-7",
+      "url": "https://www.society.shu.edu.cn/CN/Y2025/V45/I6/239"
+    },
+    {
+      "id": "cn:527ae969a96a4f367e0d7713557be5594993cad17b1685c358d142557e1d3b85",
+      "title": "《社会》2024年总目录",
+      "journal_id": "candidate-7",
+      "url": "https://www.society.shu.edu.cn/CN/Y2025/V45/I1/234"
+    },
+    {
+      "id": "cn:eb93e7a08c0146d7d782b58ec1f42c0c92041347a94be576f538abc72caae9cf",
+      "title": "《社会》2023年总目录",
+      "journal_id": "candidate-7",
+      "url": "https://www.society.shu.edu.cn/CN/Y2024/V44/I1/235"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "width": 390,
+    "view": "sources",
+    "layout": {
+      "width": 390,
+      "scroll": 390
+    },
+    "pageErrors": [],
+    "cards": 42
+  },
+  {
+    "width": 390,
+    "view": "health",
+    "layout": {
+      "width": 390,
+      "scroll": 390
+    },
+    "pageErrors": [],
+    "cards": 0
+  },
+  {
+    "width": 390,
+    "view": "operations",
+    "layout": {
+      "width": 390,
+      "scroll": 390
+    },
+    "pageErrors": [],
+    "cards": 0
+  },
+  {
+    "width": 390,
+    "view": "feed",
+    "layout": {
+      "width": 390,
+      "scroll": 390
+    },
+    "pageErrors": [],
+    "cards": 0
+  },
+  {
+    "width": 1440,
+    "view": "sources",
+    "layout": {
+      "width": 1440,
+      "scroll": 1440
+    },
+    "pageErrors": [],
+    "cards": 42
+  },
+  {
+    "width": 1440,
+    "view": "health",
+    "layout": {
+      "width": 1440,
+      "scroll": 1440
+    },
+    "pageErrors": [],
+    "cards": 0
+  },
+  {
+    "width": 1440,
+    "view": "operations",
+    "layout": {
+      "width": 1440,
+      "scroll": 1440
+    },
+    "pageErrors": [],
+    "cards": 0
+  },
+  {
+    "width": 1440,
+    "view": "feed",
+    "layout": {
+      "width": 1440,
+      "scroll": 1440
+    },
+    "pageErrors": [],
+    "cards": 0
+  }
+]

@@ -1,0 +1,1052 @@
+{
+  "journals": [
+    {
+      "id": "ageing-society",
+      "reportedRangeCount": 121,
+      "uniqueReturnedDOIs": 121,
+      "storedUniqueDOIs": 121,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "gerontologist",
+      "reportedRangeCount": 560,
+      "uniqueReturnedDOIs": 560,
+      "storedUniqueDOIs": 560,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "geron-b",
+      "reportedRangeCount": 469,
+      "uniqueReturnedDOIs": 469,
+      "storedUniqueDOIs": 469,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "ssm",
+      "reportedRangeCount": 1904,
+      "uniqueReturnedDOIs": 1904,
+      "storedUniqueDOIs": 1904,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "jmir",
+      "reportedRangeCount": 3035,
+      "uniqueReturnedDOIs": 3035,
+      "storedUniqueDOIs": 3035,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-21",
+      "reportedRangeCount": 4681,
+      "uniqueReturnedDOIs": 4681,
+      "storedUniqueDOIs": 4681,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-24",
+      "reportedRangeCount": 369,
+      "uniqueReturnedDOIs": 369,
+      "storedUniqueDOIs": 369,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-25",
+      "reportedRangeCount": 2849,
+      "uniqueReturnedDOIs": 2849,
+      "storedUniqueDOIs": 2849,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-26",
+      "reportedRangeCount": 238,
+      "uniqueReturnedDOIs": 238,
+      "storedUniqueDOIs": 238,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-28",
+      "reportedRangeCount": 234,
+      "uniqueReturnedDOIs": 234,
+      "storedUniqueDOIs": 234,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-29",
+      "reportedRangeCount": 336,
+      "uniqueReturnedDOIs": 336,
+      "storedUniqueDOIs": 336,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-30",
+      "reportedRangeCount": 295,
+      "uniqueReturnedDOIs": 295,
+      "storedUniqueDOIs": 295,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-31",
+      "reportedRangeCount": 708,
+      "uniqueReturnedDOIs": 708,
+      "storedUniqueDOIs": 708,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-32",
+      "reportedRangeCount": 102,
+      "uniqueReturnedDOIs": 102,
+      "storedUniqueDOIs": 102,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-33",
+      "reportedRangeCount": 183,
+      "uniqueReturnedDOIs": 183,
+      "storedUniqueDOIs": 183,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-34",
+      "reportedRangeCount": 535,
+      "uniqueReturnedDOIs": 535,
+      "storedUniqueDOIs": 535,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-35",
+      "reportedRangeCount": 101,
+      "uniqueReturnedDOIs": 101,
+      "storedUniqueDOIs": 101,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-36",
+      "reportedRangeCount": 200,
+      "uniqueReturnedDOIs": 200,
+      "storedUniqueDOIs": 200,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-37",
+      "reportedRangeCount": 284,
+      "uniqueReturnedDOIs": 284,
+      "storedUniqueDOIs": 284,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-39",
+      "reportedRangeCount": 303,
+      "uniqueReturnedDOIs": 303,
+      "storedUniqueDOIs": 303,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-40",
+      "reportedRangeCount": 207,
+      "uniqueReturnedDOIs": 207,
+      "storedUniqueDOIs": 207,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    },
+    {
+      "id": "candidate-42",
+      "reportedRangeCount": 502,
+      "uniqueReturnedDOIs": 502,
+      "storedUniqueDOIs": 502,
+      "returnedNotStored": [],
+      "storedOutsideBackfillResponses": [],
+      "sourceCountReconciled": true
+    }
+  ],
+  "requests": [
+    {
+      "journalId": "ageing-society",
+      "url": "https://api.crossref.org/journals/1469-1779/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:50:44.775Z",
+      "returned": 121,
+      "reportedWindowTotal": 121,
+      "responseSha256": "cb64b28002990dcfdb2c1a8d5b872b5a7408ee0f00135eecf5dba814466445da"
+    },
+    {
+      "journalId": "ageing-society",
+      "url": "https://api.crossref.org/journals/1469-1779/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A50%3A44&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:50:45.599Z",
+      "returned": 0,
+      "reportedWindowTotal": 0,
+      "responseSha256": "ee3f803ae2fb0632af692b4a6151e1e36391c65fe91973865a1c4fb3891bae36"
+    },
+    {
+      "journalId": "gerontologist",
+      "url": "https://api.crossref.org/journals/1758-5341/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:50:47.474Z",
+      "returned": 313,
+      "reportedWindowTotal": 313,
+      "responseSha256": "6bb643ea9fa6bcb01cb444ccd183a65b02cf5910e049d4a6d794d3d43aad7f3b"
+    },
+    {
+      "journalId": "gerontologist",
+      "url": "https://api.crossref.org/journals/1758-5341/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A50%3A46&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:50:48.902Z",
+      "returned": 247,
+      "reportedWindowTotal": 247,
+      "responseSha256": "07551996a0f8b2517d79b2af3b13bc70ae4f92951d21113a2ffab781e7496cc8"
+    },
+    {
+      "journalId": "geron-b",
+      "url": "https://api.crossref.org/journals/1079-5014/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:50:50.678Z",
+      "returned": 253,
+      "reportedWindowTotal": 253,
+      "responseSha256": "0a06c0e3a5d0c3783e2c842ec762972b44123201eb2c952a8c9b0eb4379a3a4a"
+    },
+    {
+      "journalId": "geron-b",
+      "url": "https://api.crossref.org/journals/1079-5014/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A50%3A49&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:50:51.895Z",
+      "returned": 219,
+      "reportedWindowTotal": 219,
+      "responseSha256": "d7d11a3fc36d83d4fd6ff32ab47afe1b7cfd02233678d2c9e1999b3dc60cbcc2"
+    },
+    {
+      "journalId": "ssm",
+      "url": "https://api.crossref.org/journals/0277-9536/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:50:54.371Z",
+      "returned": 1000,
+      "reportedWindowTotal": 1102,
+      "responseSha256": "b39ce9d8c9c010555decc76107e890d19e736ceccba124ff687b74aa8958489f"
+    },
+    {
+      "journalId": "ssm",
+      "url": "https://api.crossref.org/journals/0277-9536/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc2MTM1NDM2MDAwMCwxMC4xMDE2JTJGai5zb2NzY2ltZWQuMjAyNS4xMTg3MTI%3D&mailto=",
+      "at": "2026-10-25T03:50:55.636Z",
+      "returned": 102,
+      "reportedWindowTotal": 1102,
+      "responseSha256": "9c0f61acee5f3d014e9d0abab9cfc20917e98d8d76518c9228c0e9a29c675171"
+    },
+    {
+      "journalId": "ssm",
+      "url": "https://api.crossref.org/journals/0277-9536/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A50%3A52&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:50:57.853Z",
+      "returned": 802,
+      "reportedWindowTotal": 802,
+      "responseSha256": "4f7d3c48b5463b7c7b7142d1fb8404674cf6d83d025cf08b339ba14cb0da1f0e"
+    },
+    {
+      "journalId": "jmir",
+      "url": "https://api.crossref.org/journals/1438-8871/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:00.543Z",
+      "returned": 1000,
+      "reportedWindowTotal": 1656,
+      "responseSha256": "0d6864e5be73fba19b534839b20af8a21b2acd1713adc0be32c1060d34e4819e"
+    },
+    {
+      "journalId": "jmir",
+      "url": "https://api.crossref.org/journals/1438-8871/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc0OTY1NjU2MjAwMCwxMC4yMTk2JTJGNTY3NDc%3D&mailto=",
+      "at": "2026-10-25T03:51:03.577Z",
+      "returned": 656,
+      "reportedWindowTotal": 1656,
+      "responseSha256": "d40780cdbf001ad0c8b9cc8d30da5c7265583d1bc890e3c75df1bd271a29c9c9"
+    },
+    {
+      "journalId": "jmir",
+      "url": "https://api.crossref.org/journals/1438-8871/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A50%3A58&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:08.955Z",
+      "returned": 1000,
+      "reportedWindowTotal": 1382,
+      "responseSha256": "a8c08c0f765f11e2309f34c4ca65c62ae62d157347486150026f66f1eadfb258"
+    },
+    {
+      "journalId": "jmir",
+      "url": "https://api.crossref.org/journals/1438-8871/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A50%3A58&rows=1000&cursor=MTc4NjA1MDcxNTAwMCwxMC4yMTk2JTJGODUyODE%3D&mailto=",
+      "at": "2026-10-25T03:51:13.050Z",
+      "returned": 382,
+      "reportedWindowTotal": 1382,
+      "responseSha256": "02febfffb529d1112441e3557292177724f6d89cc80180d08264380be4f61078"
+    },
+    {
+      "journalId": "candidate-21",
+      "url": "https://api.crossref.org/journals/2399-5300/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:16.256Z",
+      "returned": 1000,
+      "reportedWindowTotal": 4664,
+      "responseSha256": "0d4f5f9bb972e1832a26ee6b5e773ed34346b8c8c1d5f031cd5155f9ac25aa82"
+    },
+    {
+      "journalId": "candidate-21",
+      "url": "https://api.crossref.org/journals/2399-5300/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc2NzQzNjQ0MzAwMCwxMC4xMDkzJTJGZ2Vyb25pJTJGaWdhZjEyMi44NTI%3D&mailto=",
+      "at": "2026-10-25T03:51:18.166Z",
+      "returned": 1000,
+      "reportedWindowTotal": 4664,
+      "responseSha256": "ef5b7d8974e8e39f93c04ab80f19396117a7a873ec1a412190fd67de2eda157e"
+    },
+    {
+      "journalId": "candidate-21",
+      "url": "https://api.crossref.org/journals/2399-5300/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc2NzQzNzYwNjAwMCwxMC4xMDkzJTJGZ2Vyb25pJTJGaWdhZjEyMi4yODU2&mailto=",
+      "at": "2026-10-25T03:51:20.810Z",
+      "returned": 1000,
+      "reportedWindowTotal": 4664,
+      "responseSha256": "75966888ce70deda5bb6cbb4719acfee34bb1cb8fdd690fc0bdf511ebd462346"
+    },
+    {
+      "journalId": "candidate-21",
+      "url": "https://api.crossref.org/journals/2399-5300/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc2NzQ0MTY4OTAwMCwxMC4xMDkzJTJGZ2Vyb25pJTJGaWdhZjEyMi4xNTU2&mailto=",
+      "at": "2026-10-25T03:51:24.394Z",
+      "returned": 1000,
+      "reportedWindowTotal": 4664,
+      "responseSha256": "b3bef438353293e378cf57ebb21792c57714d6f0707c2ef6633068babd0b525f"
+    },
+    {
+      "journalId": "candidate-21",
+      "url": "https://api.crossref.org/journals/2399-5300/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc2NzQ0Mjg2ODAwMCwxMC4xMDkzJTJGZ2Vyb25pJTJGaWdhZjEyMi4zODU3&mailto=",
+      "at": "2026-10-25T03:51:28.835Z",
+      "returned": 664,
+      "reportedWindowTotal": 4664,
+      "responseSha256": "010da995bd1298b8adf20bff9d1db9d1b820560a431383ece670b4f8faa72bee"
+    },
+    {
+      "journalId": "candidate-21",
+      "url": "https://api.crossref.org/journals/2399-5300/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A51%3A14&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:32.455Z",
+      "returned": 17,
+      "reportedWindowTotal": 17,
+      "responseSha256": "09d1d430f5a828b78590cdf73e3f175f38cc6aa01ac89566741526b916f32baa"
+    },
+    {
+      "journalId": "candidate-24",
+      "url": "https://api.crossref.org/journals/2561-7605/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:33.900Z",
+      "returned": 201,
+      "reportedWindowTotal": 201,
+      "responseSha256": "3d6b2365a77f72f408ba712a4cc3049d678f953197ae3169bbcf4949df337c15"
+    },
+    {
+      "journalId": "candidate-24",
+      "url": "https://api.crossref.org/journals/2561-7605/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A51%3A32&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:34.905Z",
+      "returned": 170,
+      "reportedWindowTotal": 170,
+      "responseSha256": "7900223791dad6e8f40898ac4169c9de10d58e718db34725013a5a1a98d522ac"
+    },
+    {
+      "journalId": "candidate-25",
+      "url": "https://api.crossref.org/journals/1471-2318/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:38.622Z",
+      "returned": 1000,
+      "reportedWindowTotal": 1242,
+      "responseSha256": "203e40e8aaa1843528407478ad26c97cea53c5d6b060b3a0f7dd7dd7a46f67ec"
+    },
+    {
+      "journalId": "candidate-25",
+      "url": "https://api.crossref.org/journals/1471-2318/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc2NDE2OTg4OTAwMCwxMC4xMTg2JTJGczEyODc3LTAyNS0wNjYzOC02&mailto=",
+      "at": "2026-10-25T03:51:40.648Z",
+      "returned": 242,
+      "reportedWindowTotal": 1242,
+      "responseSha256": "79501ded8fa7432733ef427a65f8d53db72c6ca48664febe81274975807e085b"
+    },
+    {
+      "journalId": "candidate-25",
+      "url": "https://api.crossref.org/journals/1471-2318/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A51%3A35&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:44.611Z",
+      "returned": 1000,
+      "reportedWindowTotal": 1607,
+      "responseSha256": "6a7c4ea2b6ac693086e07111ffd128f0a312ce1a0cad6428f9cf03ea64d50077"
+    },
+    {
+      "journalId": "candidate-25",
+      "url": "https://api.crossref.org/journals/1471-2318/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A51%3A35&rows=1000&cursor=MTc4MzMxNzIzMDAwMCwxMC4xMTg2JTJGczEyODc3LTAyNi0wNzk0OS15&mailto=",
+      "at": "2026-10-25T03:51:47.962Z",
+      "returned": 607,
+      "reportedWindowTotal": 1607,
+      "responseSha256": "d6e249ee170c9a0a4a0001c1226505085e9f8b5403a7038d46311e648e808e4c"
+    },
+    {
+      "journalId": "candidate-26",
+      "url": "https://api.crossref.org/journals/2666-7568/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:50.415Z",
+      "returned": 141,
+      "reportedWindowTotal": 141,
+      "responseSha256": "6d03e9bc47d7da0e3b0544b481763e237aaac94d67a16d57cb046b32edd699b2"
+    },
+    {
+      "journalId": "candidate-26",
+      "url": "https://api.crossref.org/journals/2666-7568/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A51%3A49&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:51.249Z",
+      "returned": 97,
+      "reportedWindowTotal": 97,
+      "responseSha256": "2ead6ac5efac51481748fe8151f0729996b63736d75c76576d3b1a610bb6bfd4"
+    },
+    {
+      "journalId": "candidate-28",
+      "url": "https://api.crossref.org/journals/2352-8273/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:52.156Z",
+      "returned": 153,
+      "reportedWindowTotal": 153,
+      "responseSha256": "1445b8ec21cd83f909746ef5e78324d043da9ebca57ebfa627df30f8c2f8ce50"
+    },
+    {
+      "journalId": "candidate-28",
+      "url": "https://api.crossref.org/journals/2352-8273/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A51%3A51&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:53.057Z",
+      "returned": 81,
+      "reportedWindowTotal": 81,
+      "responseSha256": "3ea54e56c0da1bb7936264685d16ccd444bf0e3a4989d7c3cd1427c93b1b96e8"
+    },
+    {
+      "journalId": "candidate-29",
+      "url": "https://api.crossref.org/journals/1353-8292/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:53.938Z",
+      "returned": 211,
+      "reportedWindowTotal": 211,
+      "responseSha256": "9de2ee8872ef455d326f54621c8e4fc73de7cef502253cd775609ae5ed6ebfa7"
+    },
+    {
+      "journalId": "candidate-29",
+      "url": "https://api.crossref.org/journals/1353-8292/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A51%3A53&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:55.047Z",
+      "returned": 125,
+      "reportedWindowTotal": 125,
+      "responseSha256": "e7ebe48eb9c4abefbe5499a721a6c409915082217012d598915be8835575a645"
+    },
+    {
+      "journalId": "candidate-30",
+      "url": "https://api.crossref.org/journals/0141-9889/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:55.687Z",
+      "returned": 160,
+      "reportedWindowTotal": 160,
+      "responseSha256": "3e09ba15ea11c5309e90fa0124188e01c77c4602bbc83d1d6f4a3a7e060875e5"
+    },
+    {
+      "journalId": "candidate-30",
+      "url": "https://api.crossref.org/journals/0141-9889/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A51%3A55&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:56.751Z",
+      "returned": 150,
+      "reportedWindowTotal": 150,
+      "responseSha256": "1302d9a395fc0c774e86308558452ffe00f32ac1fc33b0a1a0ac3c1c7936415a"
+    },
+    {
+      "journalId": "candidate-31",
+      "url": "https://api.crossref.org/journals/1475-9276/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:51:58.909Z",
+      "returned": 382,
+      "reportedWindowTotal": 382,
+      "responseSha256": "28481e1c246d0e089013f154ef0549cdfbe554d80fe0f45d9faae948047b7c9c"
+    },
+    {
+      "journalId": "candidate-31",
+      "url": "https://api.crossref.org/journals/1475-9276/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A51%3A57&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:00.546Z",
+      "returned": 327,
+      "reportedWindowTotal": 327,
+      "responseSha256": "a4f569b398865410368df7146555939a9cde5baa72fd4a208ab9729934d90f36"
+    },
+    {
+      "journalId": "candidate-32",
+      "url": "https://api.crossref.org/journals/0047-2794/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:01.849Z",
+      "returned": 51,
+      "reportedWindowTotal": 51,
+      "responseSha256": "5baa507bcf79913cd62517dc0f349d607c3b0a9fdee4bd88e249c01e274ec978"
+    },
+    {
+      "journalId": "candidate-32",
+      "url": "https://api.crossref.org/journals/0047-2794/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A52%3A01&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:02.833Z",
+      "returned": 51,
+      "reportedWindowTotal": 51,
+      "responseSha256": "23009e4d552a3e0382b65e1e282c83c371ff718e53855074026317d443f8c886"
+    },
+    {
+      "journalId": "candidate-33",
+      "url": "https://api.crossref.org/journals/0144-5596/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:03.763Z",
+      "returned": 110,
+      "reportedWindowTotal": 110,
+      "responseSha256": "678914aa0a90bc4f0f83dbee3d502ade43faa53a52926530cfc9fd617572e686"
+    },
+    {
+      "journalId": "candidate-33",
+      "url": "https://api.crossref.org/journals/0144-5596/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A52%3A03&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:04.620Z",
+      "returned": 85,
+      "reportedWindowTotal": 85,
+      "responseSha256": "28172fe561c3e2e9e96c3bde2a0ae68421714ab6e4f9993b2a300171fa022894"
+    },
+    {
+      "journalId": "candidate-34",
+      "url": "https://api.crossref.org/journals/0045-3102/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:05.768Z",
+      "returned": 287,
+      "reportedWindowTotal": 287,
+      "responseSha256": "f939036fee3215e98dbdb266ab599ee05a07a16b31e8bf71bc0da903e49560fd"
+    },
+    {
+      "journalId": "candidate-34",
+      "url": "https://api.crossref.org/journals/0045-3102/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A52%3A05&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:07.062Z",
+      "returned": 248,
+      "reportedWindowTotal": 248,
+      "responseSha256": "060c1ae015ca8178bc868e3fb795ba76b379aafdd2178008679e0fe502aadeb6"
+    },
+    {
+      "journalId": "candidate-35",
+      "url": "https://api.crossref.org/journals/0037-8046/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:08.263Z",
+      "returned": 53,
+      "reportedWindowTotal": 53,
+      "responseSha256": "71262a7aa1306755fee7714d1e8bd6026538053418d90b74c3f262a04bb3791d"
+    },
+    {
+      "journalId": "candidate-35",
+      "url": "https://api.crossref.org/journals/0037-8046/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A52%3A07&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:09.009Z",
+      "returned": 48,
+      "reportedWindowTotal": 48,
+      "responseSha256": "23116e1840b7ee2c195dccab5662e8906fdaa51d224d8974b4cdce530f2d746c"
+    },
+    {
+      "journalId": "candidate-36",
+      "url": "https://api.crossref.org/journals/0022-2445/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:10.079Z",
+      "returned": 130,
+      "reportedWindowTotal": 130,
+      "responseSha256": "833a3bc41a6560319841b8169d655900480c99e32df6c82d879d417dae158314"
+    },
+    {
+      "journalId": "candidate-36",
+      "url": "https://api.crossref.org/journals/0022-2445/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A52%3A09&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:10.896Z",
+      "returned": 80,
+      "reportedWindowTotal": 80,
+      "responseSha256": "1a0db2b149ec875fa0c748f2a39b2096ad2d003baa8af41ecd8f802686172644"
+    },
+    {
+      "journalId": "candidate-37",
+      "url": "https://api.crossref.org/journals/0968-7599/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:11.750Z",
+      "returned": 144,
+      "reportedWindowTotal": 144,
+      "responseSha256": "30e35b55bfa14cbf0ea1b77b1da40d3021dadda60c74db9835e2df39fd3e6cd6"
+    },
+    {
+      "journalId": "candidate-37",
+      "url": "https://api.crossref.org/journals/0968-7599/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A52%3A11&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:12.571Z",
+      "returned": 141,
+      "reportedWindowTotal": 141,
+      "responseSha256": "667653b6d1a804e7a493e25460efc8f2304e37c0db45e01e0181195ff864b580"
+    },
+    {
+      "journalId": "candidate-39",
+      "url": "https://api.crossref.org/journals/2817-1705/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:13.303Z",
+      "returned": 115,
+      "reportedWindowTotal": 115,
+      "responseSha256": "24d4fa8d6529b93d2cce5c27510ba5df6446910eb52ac159a32ac4f5b1c96782"
+    },
+    {
+      "journalId": "candidate-39",
+      "url": "https://api.crossref.org/journals/2817-1705/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A52%3A12&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:14.711Z",
+      "returned": 188,
+      "reportedWindowTotal": 188,
+      "responseSha256": "0a9b4559c442b5d13bca1dae035e04fa38f14656bd4574b0aba6f8629672a87e"
+    },
+    {
+      "journalId": "candidate-40",
+      "url": "https://api.crossref.org/journals/0268-1080/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:15.456Z",
+      "returned": 77,
+      "reportedWindowTotal": 77,
+      "responseSha256": "f15857f7f6df2fb05e8b44b397ed5ba01970311075f30bf5d845e2c042604e6d"
+    },
+    {
+      "journalId": "candidate-40",
+      "url": "https://api.crossref.org/journals/0268-1080/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A52%3A15&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:16.454Z",
+      "returned": 130,
+      "reportedWindowTotal": 130,
+      "responseSha256": "d3a45979009cffb0417f640103b3c3567133d1ef648dfee6671a48e7590474fd"
+    },
+    {
+      "journalId": "candidate-42",
+      "url": "https://api.crossref.org/journals/1360-7863/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:17.545Z",
+      "returned": 253,
+      "reportedWindowTotal": 253,
+      "responseSha256": "b47bdf158b964cdcb15ce25166d60bd6acfc594cd8bdf0f0510b3020604f275e"
+    },
+    {
+      "journalId": "candidate-42",
+      "url": "https://api.crossref.org/journals/1360-7863/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A52%3A16&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:52:18.630Z",
+      "returned": 250,
+      "reportedWindowTotal": 250,
+      "responseSha256": "c9f94d861ee10b2166890e86d9f1583b19445a325dc05bbe1018500827bb0d9e"
+    },
+    {
+      "journalId": "ageing-society",
+      "url": "https://api.crossref.org/journals/1469-1779/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:53:24.728Z",
+      "returned": 121,
+      "reportedWindowTotal": 121,
+      "responseSha256": "cb64b28002990dcfdb2c1a8d5b872b5a7408ee0f00135eecf5dba814466445da"
+    },
+    {
+      "journalId": "ageing-society",
+      "url": "https://api.crossref.org/journals/1469-1779/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A53%3A23&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:53:25.625Z",
+      "returned": 0,
+      "reportedWindowTotal": 0,
+      "responseSha256": "ee3f803ae2fb0632af692b4a6151e1e36391c65fe91973865a1c4fb3891bae36"
+    },
+    {
+      "journalId": "gerontologist",
+      "url": "https://api.crossref.org/journals/1758-5341/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:53:27.555Z",
+      "returned": 313,
+      "reportedWindowTotal": 313,
+      "responseSha256": "6bb643ea9fa6bcb01cb444ccd183a65b02cf5910e049d4a6d794d3d43aad7f3b"
+    },
+    {
+      "journalId": "gerontologist",
+      "url": "https://api.crossref.org/journals/1758-5341/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A53%3A26&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:53:29.447Z",
+      "returned": 247,
+      "reportedWindowTotal": 247,
+      "responseSha256": "07551996a0f8b2517d79b2af3b13bc70ae4f92951d21113a2ffab781e7496cc8"
+    },
+    {
+      "journalId": "geron-b",
+      "url": "https://api.crossref.org/journals/1079-5014/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:53:30.601Z",
+      "returned": 253,
+      "reportedWindowTotal": 253,
+      "responseSha256": "0a06c0e3a5d0c3783e2c842ec762972b44123201eb2c952a8c9b0eb4379a3a4a"
+    },
+    {
+      "journalId": "geron-b",
+      "url": "https://api.crossref.org/journals/1079-5014/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A53%3A29&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:53:32.092Z",
+      "returned": 219,
+      "reportedWindowTotal": 219,
+      "responseSha256": "d7d11a3fc36d83d4fd6ff32ab47afe1b7cfd02233678d2c9e1999b3dc60cbcc2"
+    },
+    {
+      "journalId": "ssm",
+      "url": "https://api.crossref.org/journals/0277-9536/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:53:35.541Z",
+      "returned": 1000,
+      "reportedWindowTotal": 1102,
+      "responseSha256": "b39ce9d8c9c010555decc76107e890d19e736ceccba124ff687b74aa8958489f"
+    },
+    {
+      "journalId": "ssm",
+      "url": "https://api.crossref.org/journals/0277-9536/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc2MTM1NDM2MDAwMCwxMC4xMDE2JTJGai5zb2NzY2ltZWQuMjAyNS4xMTg3MTI%3D&mailto=",
+      "at": "2026-10-25T03:53:36.881Z",
+      "returned": 102,
+      "reportedWindowTotal": 1102,
+      "responseSha256": "9c0f61acee5f3d014e9d0abab9cfc20917e98d8d76518c9228c0e9a29c675171"
+    },
+    {
+      "journalId": "ssm",
+      "url": "https://api.crossref.org/journals/0277-9536/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A53%3A32&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:53:39.828Z",
+      "returned": 802,
+      "reportedWindowTotal": 802,
+      "responseSha256": "4f7d3c48b5463b7c7b7142d1fb8404674cf6d83d025cf08b339ba14cb0da1f0e"
+    },
+    {
+      "journalId": "jmir",
+      "url": "https://api.crossref.org/journals/1438-8871/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:53:42.972Z",
+      "returned": 1000,
+      "reportedWindowTotal": 1656,
+      "responseSha256": "0d6864e5be73fba19b534839b20af8a21b2acd1713adc0be32c1060d34e4819e"
+    },
+    {
+      "journalId": "jmir",
+      "url": "https://api.crossref.org/journals/1438-8871/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc0OTY1NjU2MjAwMCwxMC4yMTk2JTJGNTY3NDc%3D&mailto=",
+      "at": "2026-10-25T03:53:46.300Z",
+      "returned": 656,
+      "reportedWindowTotal": 1656,
+      "responseSha256": "d40780cdbf001ad0c8b9cc8d30da5c7265583d1bc890e3c75df1bd271a29c9c9"
+    },
+    {
+      "journalId": "jmir",
+      "url": "https://api.crossref.org/journals/1438-8871/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A53%3A41&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:53:52.498Z",
+      "returned": 1000,
+      "reportedWindowTotal": 1382,
+      "responseSha256": "a8c08c0f765f11e2309f34c4ca65c62ae62d157347486150026f66f1eadfb258"
+    },
+    {
+      "journalId": "jmir",
+      "url": "https://api.crossref.org/journals/1438-8871/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A53%3A41&rows=1000&cursor=MTc4NjA1MDcxNTAwMCwxMC4yMTk2JTJGODUyODE%3D&mailto=",
+      "at": "2026-10-25T03:53:57.482Z",
+      "returned": 382,
+      "reportedWindowTotal": 1382,
+      "responseSha256": "02febfffb529d1112441e3557292177724f6d89cc80180d08264380be4f61078"
+    },
+    {
+      "journalId": "candidate-21",
+      "url": "https://api.crossref.org/journals/2399-5300/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:00.042Z",
+      "returned": 1000,
+      "reportedWindowTotal": 4664,
+      "responseSha256": "0d4f5f9bb972e1832a26ee6b5e773ed34346b8c8c1d5f031cd5155f9ac25aa82"
+    },
+    {
+      "journalId": "candidate-21",
+      "url": "https://api.crossref.org/journals/2399-5300/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc2NzQzNjQ0MzAwMCwxMC4xMDkzJTJGZ2Vyb25pJTJGaWdhZjEyMi44NTI%3D&mailto=",
+      "at": "2026-10-25T03:54:04.686Z",
+      "returned": 1000,
+      "reportedWindowTotal": 4664,
+      "responseSha256": "ef5b7d8974e8e39f93c04ab80f19396117a7a873ec1a412190fd67de2eda157e"
+    },
+    {
+      "journalId": "candidate-21",
+      "url": "https://api.crossref.org/journals/2399-5300/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc2NzQzNzYwNjAwMCwxMC4xMDkzJTJGZ2Vyb25pJTJGaWdhZjEyMi4yODU2&mailto=",
+      "at": "2026-10-25T03:54:08.383Z",
+      "returned": 1000,
+      "reportedWindowTotal": 4664,
+      "responseSha256": "75966888ce70deda5bb6cbb4719acfee34bb1cb8fdd690fc0bdf511ebd462346"
+    },
+    {
+      "journalId": "candidate-21",
+      "url": "https://api.crossref.org/journals/2399-5300/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc2NzQ0MTY4OTAwMCwxMC4xMDkzJTJGZ2Vyb25pJTJGaWdhZjEyMi4xNTU2&mailto=",
+      "at": "2026-10-25T03:54:11.181Z",
+      "returned": 1000,
+      "reportedWindowTotal": 4664,
+      "responseSha256": "b3bef438353293e378cf57ebb21792c57714d6f0707c2ef6633068babd0b525f"
+    },
+    {
+      "journalId": "candidate-21",
+      "url": "https://api.crossref.org/journals/2399-5300/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc2NzQ0Mjg2ODAwMCwxMC4xMDkzJTJGZ2Vyb25pJTJGaWdhZjEyMi4zODU3&mailto=",
+      "at": "2026-10-25T03:54:14.350Z",
+      "returned": 664,
+      "reportedWindowTotal": 4664,
+      "responseSha256": "010da995bd1298b8adf20bff9d1db9d1b820560a431383ece670b4f8faa72bee"
+    },
+    {
+      "journalId": "candidate-21",
+      "url": "https://api.crossref.org/journals/2399-5300/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A53%3A58&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:20.461Z",
+      "returned": 17,
+      "reportedWindowTotal": 17,
+      "responseSha256": "09d1d430f5a828b78590cdf73e3f175f38cc6aa01ac89566741526b916f32baa"
+    },
+    {
+      "journalId": "candidate-24",
+      "url": "https://api.crossref.org/journals/2561-7605/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:21.631Z",
+      "returned": 201,
+      "reportedWindowTotal": 201,
+      "responseSha256": "3d6b2365a77f72f408ba712a4cc3049d678f953197ae3169bbcf4949df337c15"
+    },
+    {
+      "journalId": "candidate-24",
+      "url": "https://api.crossref.org/journals/2561-7605/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A21&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:22.842Z",
+      "returned": 170,
+      "reportedWindowTotal": 170,
+      "responseSha256": "7900223791dad6e8f40898ac4169c9de10d58e718db34725013a5a1a98d522ac"
+    },
+    {
+      "journalId": "candidate-25",
+      "url": "https://api.crossref.org/journals/1471-2318/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:26.304Z",
+      "returned": 1000,
+      "reportedWindowTotal": 1242,
+      "responseSha256": "203e40e8aaa1843528407478ad26c97cea53c5d6b060b3a0f7dd7dd7a46f67ec"
+    },
+    {
+      "journalId": "candidate-25",
+      "url": "https://api.crossref.org/journals/1471-2318/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=MTc2NDE2OTg4OTAwMCwxMC4xMTg2JTJGczEyODc3LTAyNS0wNjYzOC02&mailto=",
+      "at": "2026-10-25T03:54:28.747Z",
+      "returned": 242,
+      "reportedWindowTotal": 1242,
+      "responseSha256": "79501ded8fa7432733ef427a65f8d53db72c6ca48664febe81274975807e085b"
+    },
+    {
+      "journalId": "candidate-25",
+      "url": "https://api.crossref.org/journals/1471-2318/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A23&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:33.677Z",
+      "returned": 1000,
+      "reportedWindowTotal": 1607,
+      "responseSha256": "6a7c4ea2b6ac693086e07111ffd128f0a312ce1a0cad6428f9cf03ea64d50077"
+    },
+    {
+      "journalId": "candidate-25",
+      "url": "https://api.crossref.org/journals/1471-2318/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A23&rows=1000&cursor=MTc4MzMxNzIzMDAwMCwxMC4xMTg2JTJGczEyODc3LTAyNi0wNzk0OS15&mailto=",
+      "at": "2026-10-25T03:54:36.519Z",
+      "returned": 607,
+      "reportedWindowTotal": 1607,
+      "responseSha256": "d6e249ee170c9a0a4a0001c1226505085e9f8b5403a7038d46311e648e808e4c"
+    },
+    {
+      "journalId": "candidate-26",
+      "url": "https://api.crossref.org/journals/2666-7568/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:38.405Z",
+      "returned": 141,
+      "reportedWindowTotal": 141,
+      "responseSha256": "6d03e9bc47d7da0e3b0544b481763e237aaac94d67a16d57cb046b32edd699b2"
+    },
+    {
+      "journalId": "candidate-26",
+      "url": "https://api.crossref.org/journals/2666-7568/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A37&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:39.461Z",
+      "returned": 97,
+      "reportedWindowTotal": 97,
+      "responseSha256": "2ead6ac5efac51481748fe8151f0729996b63736d75c76576d3b1a610bb6bfd4"
+    },
+    {
+      "journalId": "candidate-28",
+      "url": "https://api.crossref.org/journals/2352-8273/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:40.507Z",
+      "returned": 153,
+      "reportedWindowTotal": 153,
+      "responseSha256": "1445b8ec21cd83f909746ef5e78324d043da9ebca57ebfa627df30f8c2f8ce50"
+    },
+    {
+      "journalId": "candidate-28",
+      "url": "https://api.crossref.org/journals/2352-8273/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A39&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:41.383Z",
+      "returned": 81,
+      "reportedWindowTotal": 81,
+      "responseSha256": "3ea54e56c0da1bb7936264685d16ccd444bf0e3a4989d7c3cd1427c93b1b96e8"
+    },
+    {
+      "journalId": "candidate-29",
+      "url": "https://api.crossref.org/journals/1353-8292/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:42.282Z",
+      "returned": 211,
+      "reportedWindowTotal": 211,
+      "responseSha256": "9de2ee8872ef455d326f54621c8e4fc73de7cef502253cd775609ae5ed6ebfa7"
+    },
+    {
+      "journalId": "candidate-29",
+      "url": "https://api.crossref.org/journals/1353-8292/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A41&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:43.289Z",
+      "returned": 125,
+      "reportedWindowTotal": 125,
+      "responseSha256": "e7ebe48eb9c4abefbe5499a721a6c409915082217012d598915be8835575a645"
+    },
+    {
+      "journalId": "candidate-30",
+      "url": "https://api.crossref.org/journals/0141-9889/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:43.970Z",
+      "returned": 160,
+      "reportedWindowTotal": 160,
+      "responseSha256": "3e09ba15ea11c5309e90fa0124188e01c77c4602bbc83d1d6f4a3a7e060875e5"
+    },
+    {
+      "journalId": "candidate-30",
+      "url": "https://api.crossref.org/journals/0141-9889/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A43&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:44.818Z",
+      "returned": 150,
+      "reportedWindowTotal": 150,
+      "responseSha256": "1302d9a395fc0c774e86308558452ffe00f32ac1fc33b0a1a0ac3c1c7936415a"
+    },
+    {
+      "journalId": "candidate-31",
+      "url": "https://api.crossref.org/journals/1475-9276/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:46.108Z",
+      "returned": 382,
+      "reportedWindowTotal": 382,
+      "responseSha256": "28481e1c246d0e089013f154ef0549cdfbe554d80fe0f45d9faae948047b7c9c"
+    },
+    {
+      "journalId": "candidate-31",
+      "url": "https://api.crossref.org/journals/1475-9276/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A45&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:47.738Z",
+      "returned": 327,
+      "reportedWindowTotal": 327,
+      "responseSha256": "a4f569b398865410368df7146555939a9cde5baa72fd4a208ab9729934d90f36"
+    },
+    {
+      "journalId": "candidate-32",
+      "url": "https://api.crossref.org/journals/0047-2794/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:48.331Z",
+      "returned": 51,
+      "reportedWindowTotal": 51,
+      "responseSha256": "5baa507bcf79913cd62517dc0f349d607c3b0a9fdee4bd88e249c01e274ec978"
+    },
+    {
+      "journalId": "candidate-32",
+      "url": "https://api.crossref.org/journals/0047-2794/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A48&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:49.099Z",
+      "returned": 51,
+      "reportedWindowTotal": 51,
+      "responseSha256": "23009e4d552a3e0382b65e1e282c83c371ff718e53855074026317d443f8c886"
+    },
+    {
+      "journalId": "candidate-33",
+      "url": "https://api.crossref.org/journals/0144-5596/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:49.628Z",
+      "returned": 110,
+      "reportedWindowTotal": 110,
+      "responseSha256": "678914aa0a90bc4f0f83dbee3d502ade43faa53a52926530cfc9fd617572e686"
+    },
+    {
+      "journalId": "candidate-33",
+      "url": "https://api.crossref.org/journals/0144-5596/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A49&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:50.410Z",
+      "returned": 85,
+      "reportedWindowTotal": 85,
+      "responseSha256": "28172fe561c3e2e9e96c3bde2a0ae68421714ab6e4f9993b2a300171fa022894"
+    },
+    {
+      "journalId": "candidate-34",
+      "url": "https://api.crossref.org/journals/0045-3102/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:51.239Z",
+      "returned": 287,
+      "reportedWindowTotal": 287,
+      "responseSha256": "f939036fee3215e98dbdb266ab599ee05a07a16b31e8bf71bc0da903e49560fd"
+    },
+    {
+      "journalId": "candidate-34",
+      "url": "https://api.crossref.org/journals/0045-3102/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A50&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:52.575Z",
+      "returned": 248,
+      "reportedWindowTotal": 248,
+      "responseSha256": "060c1ae015ca8178bc868e3fb795ba76b379aafdd2178008679e0fe502aadeb6"
+    },
+    {
+      "journalId": "candidate-35",
+      "url": "https://api.crossref.org/journals/0037-8046/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:54.058Z",
+      "returned": 53,
+      "reportedWindowTotal": 53,
+      "responseSha256": "71262a7aa1306755fee7714d1e8bd6026538053418d90b74c3f262a04bb3791d"
+    },
+    {
+      "journalId": "candidate-35",
+      "url": "https://api.crossref.org/journals/0037-8046/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A52&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:54.776Z",
+      "returned": 48,
+      "reportedWindowTotal": 48,
+      "responseSha256": "23116e1840b7ee2c195dccab5662e8906fdaa51d224d8974b4cdce530f2d746c"
+    },
+    {
+      "journalId": "candidate-36",
+      "url": "https://api.crossref.org/journals/0022-2445/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:55.335Z",
+      "returned": 130,
+      "reportedWindowTotal": 130,
+      "responseSha256": "833a3bc41a6560319841b8169d655900480c99e32df6c82d879d417dae158314"
+    },
+    {
+      "journalId": "candidate-36",
+      "url": "https://api.crossref.org/journals/0022-2445/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A55&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:56.132Z",
+      "returned": 80,
+      "reportedWindowTotal": 80,
+      "responseSha256": "1a0db2b149ec875fa0c748f2a39b2096ad2d003baa8af41ecd8f802686172644"
+    },
+    {
+      "journalId": "candidate-37",
+      "url": "https://api.crossref.org/journals/0968-7599/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:56.718Z",
+      "returned": 144,
+      "reportedWindowTotal": 144,
+      "responseSha256": "30e35b55bfa14cbf0ea1b77b1da40d3021dadda60c74db9835e2df39fd3e6cd6"
+    },
+    {
+      "journalId": "candidate-37",
+      "url": "https://api.crossref.org/journals/0968-7599/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A56&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:57.596Z",
+      "returned": 141,
+      "reportedWindowTotal": 141,
+      "responseSha256": "667653b6d1a804e7a493e25460efc8f2304e37c0db45e01e0181195ff864b580"
+    },
+    {
+      "journalId": "candidate-39",
+      "url": "https://api.crossref.org/journals/2817-1705/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:58.257Z",
+      "returned": 115,
+      "reportedWindowTotal": 115,
+      "responseSha256": "24d4fa8d6529b93d2cce5c27510ba5df6446910eb52ac159a32ac4f5b1c96782"
+    },
+    {
+      "journalId": "candidate-39",
+      "url": "https://api.crossref.org/journals/2817-1705/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A57&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:59.388Z",
+      "returned": 188,
+      "reportedWindowTotal": 188,
+      "responseSha256": "0a9b4559c442b5d13bca1dae035e04fa38f14656bd4574b0aba6f8629672a87e"
+    },
+    {
+      "journalId": "candidate-40",
+      "url": "https://api.crossref.org/journals/0268-1080/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:54:59.906Z",
+      "returned": 77,
+      "reportedWindowTotal": 77,
+      "responseSha256": "f15857f7f6df2fb05e8b44b397ed5ba01970311075f30bf5d845e2c042604e6d"
+    },
+    {
+      "journalId": "candidate-40",
+      "url": "https://api.crossref.org/journals/0268-1080/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A54%3A59&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:55:00.921Z",
+      "returned": 130,
+      "reportedWindowTotal": 130,
+      "responseSha256": "d3a45979009cffb0417f640103b3c3567133d1ef648dfee6671a48e7590474fd"
+    },
+    {
+      "journalId": "candidate-42",
+      "url": "https://api.crossref.org/journals/1360-7863/works?filter=from-pub-date%3A2025-01-01T00%3A00%3A00%2Cuntil-pub-date%3A2026-01-02T00%3A00%3A00&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:55:02.898Z",
+      "returned": 253,
+      "reportedWindowTotal": 253,
+      "responseSha256": "b47bdf158b964cdcb15ce25166d60bd6acfc594cd8bdf0f0510b3020604f275e"
+    },
+    {
+      "journalId": "candidate-42",
+      "url": "https://api.crossref.org/journals/1360-7863/works?filter=from-pub-date%3A2026-01-02T00%3A00%3A00%2Cuntil-pub-date%3A2026-10-25T03%3A55%3A01&rows=1000&cursor=*&mailto=",
+      "at": "2026-10-25T03:55:04.627Z",
+      "returned": 250,
+      "reportedWindowTotal": 250,
+      "responseSha256": "c9f94d861ee10b2166890e86d9f1583b19445a325dc05bbe1018500827bb0d9e"
+    }
+  ]
+}

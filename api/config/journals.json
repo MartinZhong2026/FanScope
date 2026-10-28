@@ -1,0 +1,779 @@
+[
+  {
+    "id": "ageing-society",
+    "title": "Ageing & Society",
+    "market": "international",
+    "issn": "1469-1779",
+    "source": "crossref",
+    "enabled": true,
+    "rank_label": "待核验",
+    "homepage": "https://www.cambridge.org/core/journals/ageing-and-society",
+    "rank_system": "none",
+    "rank_year": "",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "high_relevance_non_Q1",
+    "candidate_issn": "1469-1779",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "Ageing and Society"
+    ]
+  },
+  {
+    "id": "gerontologist",
+    "title": "The Gerontologist",
+    "market": "international",
+    "issn": "1758-5341",
+    "source": "crossref",
+    "enabled": true,
+    "rank_label": "待核验",
+    "homepage": "https://academic.oup.com/gerontologist",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "1758-5341",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "The Gerontologist"
+    ]
+  },
+  {
+    "id": "geron-b",
+    "title": "The Journals of Gerontology: Series B",
+    "market": "international",
+    "issn": "1079-5014",
+    "source": "crossref",
+    "enabled": true,
+    "rank_label": "待核验",
+    "homepage": "https://academic.oup.com/psychsocgerontology",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "source_title_aliases": [
+      "The Journals of Gerontology, Series B: Psychological Sciences and Social Sciences"
+    ],
+    "candidate_issn": "1079-5014",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json"
+  },
+  {
+    "id": "ssm",
+    "title": "Social Science & Medicine",
+    "market": "international",
+    "issn": "0277-9536",
+    "source": "crossref",
+    "enabled": true,
+    "rank_label": "待核验",
+    "homepage": "https://www.sciencedirect.com/journal/social-science-and-medicine",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "0277-9536",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "Social Science &amp; Medicine"
+    ]
+  },
+  {
+    "id": "jmir",
+    "title": "Journal of Medical Internet Research",
+    "market": "international",
+    "issn": "1438-8871",
+    "source": "crossref",
+    "enabled": true,
+    "rank_label": "待核验",
+    "homepage": "https://www.jmir.org/",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "1438-8871",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "Journal of Medical Internet Research"
+    ]
+  },
+  {
+    "id": "soc-security-cn",
+    "title": "社会保障评论",
+    "market": "chinese",
+    "issn": "2096-3211",
+    "source": "rss",
+    "rss_url": "",
+    "enabled": false,
+    "rank_label": "待核验",
+    "homepage": "https://www.ncpssd.cn/",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [
+      "sbpl.cbpt.cnki.net"
+    ]
+  },
+  {
+    "id": "soc-review-cn",
+    "title": "社会学评论",
+    "market": "chinese",
+    "issn": "2095-5154",
+    "source": "rss",
+    "rss_url": "",
+    "enabled": false,
+    "rank_label": "待核验",
+    "homepage": "https://www.ncpssd.cn/",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [
+      "src.ruc.edu.cn"
+    ]
+  },
+  {
+    "id": "public-admin-cn",
+    "title": "公共管理评论",
+    "market": "chinese",
+    "issn": "",
+    "source": "rss",
+    "rss_url": "",
+    "enabled": false,
+    "rank_label": "待核验",
+    "homepage": "https://www.sciopen.com/journal/2096-7713",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [
+      "gogl.cbpt.cnki.net"
+    ],
+    "candidate_issn": "2096-7713",
+    "source_title_aliases": [
+      "China Public Administration Review"
+    ]
+  },
+  {
+    "id": "candidate-1",
+    "title": "人口研究",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [
+      "rkyj.ruc.edu.cn"
+    ],
+    "rss_url": "",
+    "candidate_issn": "1000-6087",
+    "homepage": "https://rkyj.ruc.edu.cn/CN/1000-6087/home.shtml"
+  },
+  {
+    "id": "candidate-2",
+    "title": "中国人口科学",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-3",
+    "title": "人口与经济",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-4",
+    "title": "人口学刊",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-5",
+    "title": "人口与发展",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-6",
+    "title": "社会学研究",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-7",
+    "title": "社会",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [
+      "www.society.shu.edu.cn"
+    ],
+    "rss_url": "",
+    "candidate_issn": "1004-8804",
+    "homepage": "https://www.society.shu.edu.cn/CN/1004-8804/home.shtml",
+    "source_title_aliases": [
+      "社会杂志"
+    ]
+  },
+  {
+    "id": "candidate-9",
+    "title": "社会发展研究",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-10",
+    "title": "社会建设",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [
+      "shjs.ruc.edu.cn"
+    ],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-11",
+    "title": "妇女研究论丛",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-12",
+    "title": "残疾人研究",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-14",
+    "title": "公共管理学报",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [
+      "gggl.cbpt.cnki.net"
+    ],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-16",
+    "title": "公共管理与政策评论",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [
+      "ggglyzc.ruc.edu.cn"
+    ],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-17",
+    "title": "中国行政管理",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-18",
+    "title": "治理研究",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-19",
+    "title": "电子政务",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-20",
+    "title": "中国软科学",
+    "market": "chinese",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "rss_allowed_hosts": [],
+    "rss_url": ""
+  },
+  {
+    "id": "candidate-21",
+    "title": "Innovation in Aging",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "2399-5300",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "Innovation in Aging"
+    ]
+  },
+  {
+    "id": "candidate-24",
+    "title": "JMIR Aging",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "2561-7605",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "JMIR Aging"
+    ]
+  },
+  {
+    "id": "candidate-25",
+    "title": "BMC Geriatrics",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "1471-2318",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "BMC Geriatrics"
+    ]
+  },
+  {
+    "id": "candidate-26",
+    "title": "The Lancet Healthy Longevity",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "2666-7568",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "The Lancet Healthy Longevity"
+    ]
+  },
+  {
+    "id": "candidate-28",
+    "title": "SSM - Population Health",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "2352-8273",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "SSM - Population Health"
+    ]
+  },
+  {
+    "id": "candidate-29",
+    "title": "Health & Place",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "1353-8292",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "Health &amp; Place"
+    ]
+  },
+  {
+    "id": "candidate-30",
+    "title": "Sociology of Health & Illness",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "0141-9889",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "Sociology of Health &amp; Illness"
+    ]
+  },
+  {
+    "id": "candidate-31",
+    "title": "International Journal for Equity in Health",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "1475-9276",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "International Journal for Equity in Health"
+    ]
+  },
+  {
+    "id": "candidate-32",
+    "title": "Journal of Social Policy",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "0047-2794",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "Journal of Social Policy"
+    ]
+  },
+  {
+    "id": "candidate-33",
+    "title": "Social Policy & Administration",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "0144-5596",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "Social Policy &amp; Administration"
+    ]
+  },
+  {
+    "id": "candidate-34",
+    "title": "British Journal of Social Work",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "0045-3102",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "The British Journal of Social Work"
+    ]
+  },
+  {
+    "id": "candidate-35",
+    "title": "Social Work",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "0037-8046",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "Social Work"
+    ]
+  },
+  {
+    "id": "candidate-36",
+    "title": "Journal of Marriage and Family",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "0022-2445",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "Journal of Marriage and Family"
+    ]
+  },
+  {
+    "id": "candidate-37",
+    "title": "Disability & Society",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "0968-7599",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "Disability &amp; Society"
+    ]
+  },
+  {
+    "id": "candidate-39",
+    "title": "JMIR AI",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "2817-1705",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "JMIR AI"
+    ]
+  },
+  {
+    "id": "candidate-40",
+    "title": "Health Policy and Planning",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "JCR_Q1",
+    "rank_year": "2025",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "candidate_issn": "0268-1080",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "Health Policy and Planning"
+    ]
+  },
+  {
+    "id": "candidate-42",
+    "title": "Aging & Mental Health",
+    "market": "international",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "none",
+    "rank_year": "",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "high_relevance_non_Q1",
+    "candidate_issn": "1360-7863",
+    "verified_source_reference": "docs/journal-audit/2026-10-25.json",
+    "source_title_aliases": [
+      "Aging &amp; Mental Health"
+    ]
+  },
+  {
+    "id": "china-social-sciences",
+    "title": "中国社会科学",
+    "market": "chinese",
+    "issn": "1002-4921",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "homepage": "https://sscp.cssn.cn/",
+    "rss_allowed_hosts": [
+      "sscp.cssn.cn"
+    ],
+    "rss_url": ""
+  },
+  {
+    "id": "management-world",
+    "title": "管理世界",
+    "market": "chinese",
+    "issn": "1002-5502",
+    "source": "manual",
+    "enabled": false,
+    "rank_label": "待核验",
+    "rank_system": "CSSCI_source",
+    "rank_year": "2025-2026",
+    "rank_category": "",
+    "rank_evidence_url": "",
+    "watchlist_class": "candidate",
+    "homepage": "https://www.mwm.net.cn/",
+    "rss_allowed_hosts": [
+      "www.mwm.net.cn"
+    ],
+    "rss_url": ""
+  }
+]

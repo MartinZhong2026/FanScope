@@ -1,0 +1,16 @@
+# Proposed staged recovery overlay. Apply only after isolated validation and approval.
+services:
+  fanscope-api:
+    image: ${FANSCOPE_RELEASE_IMAGE:?Set the verified release image tag or digest}
+    environment:
+      NODE_ENV: production
+      FANSCOPE_STAGED_RECOVERY: 'true'
+      FANSCOPE_ENGLISH_MONITOR: ${FANSCOPE_ENGLISH_MONITOR:-false}
+      SCAN_ON_START: 'false'
+      CHINESE_AUTH_IMPORT_ENABLED: 'false'
+      OPENALEX_ENABLED: 'false'
+      OPENALEX_API_KEY: ''
+      DEEPSEEK_API_KEY: ''
+      RESEND_API_KEY: ''
+    command: [node, --experimental-sqlite, src/staged-recovery-server.mjs]
+    stop_grace_period: 3m

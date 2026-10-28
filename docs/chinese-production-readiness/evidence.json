@@ -1,0 +1,115 @@
+{
+  "checkedAt": "2026-10-26T12:57:16.304Z",
+  "applicationCommit": "65687cd2cb86eefbc2e35a612d32c03debeca60c",
+  "productionActions": {
+    "ssh": false,
+    "deploy": false,
+    "databaseMigration": false,
+    "restart": false,
+    "readOnlyPublicHttp": true
+  },
+  "production": {
+    "health": {
+      "status": "ok",
+      "time": "2026-10-26T12:29:00.329Z",
+      "service": "fanscope-api",
+      "monitoring": 22,
+      "emailConfigured": false,
+      "aiConfigured": true
+    },
+    "english": {
+      "count": 10803,
+      "analyzed": 375
+    },
+    "chinese": {
+      "count": 0,
+      "analyzed": 0
+    },
+    "journalsMarketQueryReturned": {
+      "chinese": 20,
+      "international": 22
+    },
+    "diagnosticsHttpStatus": 404,
+    "anonymousImportCatalogStatus": 401,
+    "actualBackendCommit": null,
+    "actualComposeAndVolumeVerified": false,
+    "productionBackupRestoreVerified": false,
+    "browser": {
+      "existingUiOnly": true,
+      "viewports": [
+        1440,
+        390
+      ],
+      "pageErrors": 0,
+      "overflow": false,
+      "transientChineseWarningObserved": true,
+      "focusedRetryRecovered": true
+    }
+  },
+  "assets": [
+    {
+      "file": "index.html",
+      "liveSha256": "2ae086995ed4d3fa66d1d69077efc8ad0d6ed9b6c1b8d39350c72724acdaabf0",
+      "localSha256": "fc0d44334770f18459ff3577658f9813ba4b56c4de09c4b9d307420b12f537c8"
+    },
+    {
+      "file": "config.js",
+      "liveSha256": "3c9047022d9738a1614c179a2a01e276139bc7307e4974f8113f924d6203910b",
+      "localSha256": "49a1820106c41662df40852fbed63da074f4590cd81e12d117d130b6e492e116"
+    },
+    {
+      "file": "app.js",
+      "liveSha256": "552a690e9a3a6387574dde706fac6a0fd6f6df0a6018425270f89df36ff57053",
+      "localSha256": "0e0bbd4989b17c83db2a30df895c52c6b30315bebe97125c20d215b6226df2ff"
+    }
+  ],
+  "local": {
+    "backendTests": {
+      "tests": 160,
+      "pass": 160,
+      "fail": 0
+    },
+    "docker": {
+      "id": "sha256:1685c72a0f8452e9eefb17dd3c4de4511a3d042c2cd67feb9434833401a237ac",
+      "os": "linux",
+      "architecture": "amd64",
+      "node": "22.23.4",
+      "build": "passed",
+      "networkIsolatedSmoke": "passed",
+      "workbenchAuthenticatedStatus": 403,
+      "diagnosticJournals": 22
+    },
+    "backupHelper": {
+      "readOnlyVolumeAttempt": "failed: WAL shared-memory conditions",
+      "frozenPrivateCopyAttempt": "passed",
+      "sqliteSourceReadOnly": true
+    },
+    "proofScopes": 35,
+    "proofDifferences": [],
+    "workbenchExcludedFromPages": true
+  },
+  "rights": {
+    "localRealRecords": 349,
+    "approvedPublicMigrationRecords": 0,
+    "crossrefReviewCandidates": 58,
+    "officialRecordsHeld": 291,
+    "pendingManifest": "work/release-readiness/public-migration-PENDING.json"
+  },
+  "readiness": "NO-GO",
+  "blockers": [
+    "production snapshot restore/migration not tested",
+    "public-use record manifest not approved",
+    "source-status UI needs correction",
+    "server/Pages deployment identity not verified"
+  ],
+  "originalCorpusPreserved": [
+    {
+      "file": "work/chinese-bulk/fanscope-chinese.sqlite",
+      "sha256": "aacf357cf684647b04eebb4865ac9767ca4542e97531af4650498372bf0908ec"
+    },
+    {
+      "file": "work/chinese-bulk/final/fanscope-chinese-backup.sqlite",
+      "sha256": "cc9ce25041ce78e27d15550c687f32c7858c368e2bd34448692b13f7d8808144"
+    }
+  ]
+}

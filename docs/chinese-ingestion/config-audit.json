@@ -1,0 +1,302 @@
+{
+  "scope": "repository configuration, not production state",
+  "productionInspected": false,
+  "items": [
+    {
+      "id": "soc-security-cn",
+      "title": "社会保障评论",
+      "market": "chinese",
+      "source": "rss",
+      "enabled": false,
+      "issn": "2096-3211",
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [
+        "sbpl.cbpt.cnki.net"
+      ],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "soc-review-cn",
+      "title": "社会学评论",
+      "market": "chinese",
+      "source": "rss",
+      "enabled": false,
+      "issn": "2095-5154",
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [
+        "src.ruc.edu.cn"
+      ],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "public-admin-cn",
+      "title": "公共管理评论",
+      "market": "chinese",
+      "source": "rss",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [
+        "gogl.cbpt.cnki.net"
+      ],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-1",
+      "title": "人口研究",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [
+        "rkyj.ruc.edu.cn"
+      ],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-2",
+      "title": "中国人口科学",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-3",
+      "title": "人口与经济",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-4",
+      "title": "人口学刊",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-5",
+      "title": "人口与发展",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-6",
+      "title": "社会学研究",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-7",
+      "title": "社会",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [
+        "www.society.shu.edu.cn"
+      ],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-9",
+      "title": "社会发展研究",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-10",
+      "title": "社会建设",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [
+        "shjs.ruc.edu.cn"
+      ],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-11",
+      "title": "妇女研究论丛",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-12",
+      "title": "残疾人研究",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-14",
+      "title": "公共管理学报",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [
+        "gggl.cbpt.cnki.net"
+      ],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-16",
+      "title": "公共管理与政策评论",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [
+        "ggglyzc.ruc.edu.cn"
+      ],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-17",
+      "title": "中国行政管理",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-18",
+      "title": "治理研究",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-19",
+      "title": "电子政务",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    },
+    {
+      "id": "candidate-20",
+      "title": "中国软科学",
+      "market": "chinese",
+      "source": "manual",
+      "enabled": false,
+      "issn": null,
+      "rank_system": "CSSCI_source",
+      "rank_year": "2025-2026",
+      "rank_verification_status": "pending",
+      "rss_url": null,
+      "approved_hosts": [],
+      "gap": "Disabled: no verified automatic source; authorized import required"
+    }
+  ]
+}

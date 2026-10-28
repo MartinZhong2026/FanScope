@@ -1,0 +1,256 @@
+{
+  "checks": [
+    {
+      "name": "01-home-390-dark.png no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390 2x2 tiles",
+      "pass": true,
+      "detail": [
+        {
+          "x": 20,
+          "y": 263.34375,
+          "width": 169,
+          "height": 139
+        },
+        {
+          "x": 201,
+          "y": 263.34375,
+          "width": 169,
+          "height": 139
+        },
+        {
+          "x": 20,
+          "y": 414.34375,
+          "width": 169,
+          "height": 139
+        },
+        {
+          "x": 201,
+          "y": 414.34375,
+          "width": 169,
+          "height": 139
+        }
+      ]
+    },
+    {
+      "name": "390 generous touchable tiles",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390 reference colors",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "390 real project link",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "02-trends-topics-390-dark.png no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "topic pane has topic charts only",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "matching legend 长期照护",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "matching legend 气候健康",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "matching legend AI与照护",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "matching legend 社会救助",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "03-trends-methods-390-dark.png no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "method pane actually changes content",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "sample unit really changes",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "yearly sample unavailable, no invented curve",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "unknown source preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "zero-data charts stay empty",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "04-literature-390-dark.png no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "no fabricated ranks or bookmarks",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "05-article-390-dark.png no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "detail keeps research question and evidence",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "projects use real login flow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "06-projects-390-dark.png no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "projects remain real business cards",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "07-home-320-dark.png no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320 2x2 tiles",
+      "pass": true,
+      "detail": [
+        {
+          "x": 12,
+          "y": 287.0625,
+          "width": 145,
+          "height": 139
+        },
+        {
+          "x": 163,
+          "y": 287.0625,
+          "width": 145,
+          "height": 139
+        },
+        {
+          "x": 12,
+          "y": 432.0625,
+          "width": 145,
+          "height": 139
+        },
+        {
+          "x": 163,
+          "y": 432.0625,
+          "width": 145,
+          "height": 139
+        }
+      ]
+    },
+    {
+      "name": "320 generous touchable tiles",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320 reference colors",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "320 real project link",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "08-home-430-dark.png no horizontal overflow",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "430 2x2 tiles",
+      "pass": true,
+      "detail": [
+        {
+          "x": 20,
+          "y": 263.34375,
+          "width": 189,
+          "height": 139
+        },
+        {
+          "x": 221,
+          "y": 263.34375,
+          "width": 189,
+          "height": 139
+        },
+        {
+          "x": 20,
+          "y": 414.34375,
+          "width": 189,
+          "height": 139
+        },
+        {
+          "x": 221,
+          "y": 414.34375,
+          "width": 189,
+          "height": 139
+        }
+      ]
+    },
+    {
+      "name": "430 generous touchable tiles",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "430 reference colors",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "430 real project link",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "09-home-1440-dark.png no horizontal overflow",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "passed": 35,
+  "errors": []
+}

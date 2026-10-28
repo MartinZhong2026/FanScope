@@ -1,0 +1,107 @@
+TAP version 13
+# (node:12) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# HTTP error: 该会议原始文件仅上传者和导师可查看
+# HTTP error: 该会议原始文件仅上传者和导师可查看
+# HTTP error: 该会议原始文件仅上传者和导师可查看
+# HTTP error: 该会议原始文件仅上传者和导师可查看
+# HTTP error: TXT/Markdown 文件必须采用 UTF-8 编码
+# HTTP error: Meetfolio 文本文件最大为 512KB
+# HTTP error: 文件扩展名与 Content-Type 不匹配
+# HTTP error: 文件名编码无效
+# HTTP error: 文件扩展名与 Content-Type 不匹配
+# Subtest: DOCX/PDF/Markdown/TXT upload, evidence-linked DeepSeek proposal, approve, PDF extraction, private file access
+ok 1 - DOCX/PDF/Markdown/TXT upload, evidence-linked DeepSeek proposal, approve, PDF extraction, private file access
+  ---
+  duration_ms: 649.384206
+  type: 'test'
+  ...
+# (node:13) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 100-paper batch: pause, resume, usage, concurrent duplicate batch cache and changed abstract
+ok 2 - 100-paper batch: pause, resume, usage, concurrent duplicate batch cache and changed abstract
+  ---
+  duration_ms: 757.733381
+  type: 'test'
+  ...
+# Subtest: network failures reserve budget durably and cannot spend again after recovery
+ok 3 - network failures reserve budget durably and cannot spend again after recovery
+  ---
+  duration_ms: 6.861758
+  type: 'test'
+  ...
+# Subtest: invalid AI JSON still records returned token costs; explicit failure retry is paused
+ok 4 - invalid AI JSON still records returned token costs; explicit failure retry is paused
+  ---
+  duration_ms: 9.01763
+  type: 'test'
+  ...
+# Subtest: removed, infinite or negative pricing blocks resumed workers; unknown usage is conservative
+ok 5 - removed, infinite or negative pricing blocks resumed workers; unknown usage is conservative
+  ---
+  duration_ms: 3.153596
+  type: 'test'
+  ...
+# Subtest: cancelled work never invokes AI; interrupted successful work recovers using cache
+ok 6 - cancelled work never invokes AI; interrupted successful work recovers using cache
+  ---
+  duration_ms: 11.449797
+  type: 'test'
+  ...
+# Subtest: source verification handles real HTML entities, publisher and duplicate DOI evidence
+ok 7 - source verification handles real HTML entities, publisher and duplicate DOI evidence
+  ---
+  duration_ms: 1.189083
+  type: 'test'
+  ...
+# Subtest: wrong ISSN checksum, malformed DOI, foreign journal and upstream failures never enable a journal
+ok 8 - wrong ISSN checksum, malformed DOI, foreign journal and upstream failures never enable a journal
+  ---
+  duration_ms: 4.102567
+  type: 'test'
+  ...
+# Subtest: backfill pause/cancel during HTTP stops at a committed page and never overwrites cancellation
+ok 9 - backfill pause/cancel during HTTP stops at a committed page and never overwrites cancellation
+  ---
+  duration_ms: 1014.383204
+  type: 'test'
+  ...
+# Subtest: backfill excludes another journal and does not alter daily checkpoints or call DeepSeek
+ok 10 - backfill excludes another journal and does not alter daily checkpoints or call DeepSeek
+  ---
+  duration_ms: 4.895984
+  type: 'test'
+  ...
+# Subtest: all administrator route families reject missing/wrong credentials and CSV import is bounded/idempotent
+ok 11 - all administrator route families reject missing/wrong credentials and CSV import is bounded/idempotent
+  ---
+  duration_ms: 84.985185
+  type: 'test'
+  ...
+# Subtest: malformed pagination never advances processed count across repeated retries
+ok 12 - malformed pagination never advances processed count across repeated retries
+  ---
+  duration_ms: 0.883612
+  type: 'test'
+  ...
+# Subtest: monitoring with AUTO_AI_ANALYSIS=false and a configured mock key never calls AI
+ok 13 - monitoring with AUTO_AI_ANALYSIS=false and a configured mock key never calls AI
+  ---
+  duration_ms: 2.360379
+  type: 'test'
+  ...
+# Subtest: entire 2025–2026-to-date range completes through every fixed window with DOI deduplication and no AI or notifications
+ok 14 - entire 2025–2026-to-date range completes through every fixed window with DOI deduplication and no AI or notifications
+  ---
+  duration_ms: 85.104925
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2648.271063

@@ -1,0 +1,1166 @@
+{
+  "scope": "separate isolated copy; historical export unchanged",
+  "journals": [
+    {
+      "id": "ageing-society",
+      "at": "2026-10-25T04:12:28.883Z",
+      "before": 121,
+      "after": 185,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 64,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "ageing-society",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:12:26.531Z",
+        "window_start": "2026-10-25T04:12:26.531Z",
+        "window_end": "2026-10-25T04:12:26.531Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:12:28.874Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/1469-1779/works?filter=from-index-date%3A2026-10-23T03%3A50%3A44%2Cuntil-index-date%3A2026-10-24T03%3A50%3A44&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1469-1779/works?filter=from-index-date%3A2026-10-24T03%3A50%3A44%2Cuntil-index-date%3A2026-10-25T03%3A50%3A44&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1469-1779/works?filter=from-index-date%3A2026-10-25T03%3A50%3A44%2Cuntil-index-date%3A2026-10-25T04%3A12%3A26&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-21",
+      "at": "2026-10-25T04:12:33.436Z",
+      "before": 4681,
+      "after": 4743,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 62,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-21",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:12:28.884Z",
+        "window_start": "2026-10-25T04:12:28.884Z",
+        "window_end": "2026-10-25T04:12:28.884Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:12:33.430Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/2399-5300/works?filter=from-index-date%3A2026-10-23T03%3A51%3A14%2Cuntil-index-date%3A2026-10-24T03%3A51%3A14&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/2399-5300/works?filter=from-index-date%3A2026-10-24T03%3A51%3A14%2Cuntil-index-date%3A2026-10-25T03%3A51%3A14&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/2399-5300/works?filter=from-index-date%3A2026-10-24T03%3A51%3A14%2Cuntil-index-date%3A2026-10-25T03%3A51%3A14&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/2399-5300/works?filter=from-index-date%3A2026-10-25T03%3A51%3A14%2Cuntil-index-date%3A2026-10-25T04%3A12%3A28&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-24",
+      "at": "2026-10-25T04:12:35.720Z",
+      "before": 369,
+      "after": 404,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 35,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-24",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:12:33.437Z",
+        "window_start": "2026-10-25T04:12:33.437Z",
+        "window_end": "2026-10-25T04:12:33.437Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:12:35.715Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/2561-7605/works?filter=from-index-date%3A2026-10-23T03%3A51%3A32%2Cuntil-index-date%3A2026-10-24T03%3A51%3A32&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/2561-7605/works?filter=from-index-date%3A2026-10-24T03%3A51%3A32%2Cuntil-index-date%3A2026-10-25T03%3A51%3A32&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/2561-7605/works?filter=from-index-date%3A2026-10-25T03%3A51%3A32%2Cuntil-index-date%3A2026-10-25T04%3A12%3A33&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-25",
+      "at": "2026-10-25T04:12:44.920Z",
+      "before": 2849,
+      "after": 3171,
+      "results": [
+        {
+          "status": "partial",
+          "scanned": 1,
+          "newCount": 253,
+          "errors": [
+            {
+              "journal": "BMC Geriatrics",
+              "error": "扫描预算已用完，窗口游标已保存，下一轮续跑"
+            }
+          ],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        },
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 69,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-25",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:12:35.722Z",
+        "window_start": "2026-10-25T04:12:35.722Z",
+        "window_end": "2026-10-25T04:12:35.722Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:12:44.915Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/1471-2318/works?filter=from-index-date%3A2026-10-23T03%3A51%3A35%2Cuntil-index-date%3A2026-10-24T03%3A51%3A35&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1471-2318/works?filter=from-index-date%3A2026-10-23T03%3A51%3A35%2Cuntil-index-date%3A2026-10-24T03%3A51%3A35&rows=100&cursor=MTYzNDA3MjYzMDAwMCwxMC4xMTg2JTJGczEyODc3LTAyMS0wMjQ5OS14&mailto=",
+        "https://api.crossref.org/journals/1471-2318/works?filter=from-index-date%3A2026-10-23T03%3A51%3A35%2Cuntil-index-date%3A2026-10-24T03%3A51%3A35&rows=100&cursor=MTcwNjIzNDM0MzAwMCwxMC4xMTg2JTJGczEyODc3LTAyNC0wNDY5OS03&mailto=",
+        "https://api.crossref.org/journals/1471-2318/works?filter=from-index-date%3A2026-10-23T03%3A51%3A35%2Cuntil-index-date%3A2026-10-24T03%3A51%3A35&rows=100&cursor=MTc2NDIzMDIxODAwMCwxMC4xMTg2JTJGczEyODc3LTAyNS0wNjc4OC03&mailto=",
+        "https://api.crossref.org/journals/1471-2318/works?filter=from-index-date%3A2026-10-23T03%3A51%3A35%2Cuntil-index-date%3A2026-10-24T03%3A51%3A35&rows=100&cursor=MTc5MjAzOTM0OTAwMCwxMC4xMTg2JTJGczEyODc3LTAyNi0wODM5MS13&mailto=",
+        "https://api.crossref.org/journals/1471-2318/works?filter=from-index-date%3A2026-10-24T03%3A51%3A35%2Cuntil-index-date%3A2026-10-25T03%3A51%3A35&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1471-2318/works?filter=from-index-date%3A2026-10-25T03%3A51%3A35%2Cuntil-index-date%3A2026-10-25T04%3A12%3A35&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1471-2318/works?filter=from-index-date%3A2026-10-25T03%3A51%3A35%2Cuntil-index-date%3A2026-10-25T04%3A12%3A35&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-26",
+      "at": "2026-10-25T04:12:46.778Z",
+      "before": 238,
+      "after": 275,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 37,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-26",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:12:44.921Z",
+        "window_start": "2026-10-25T04:12:44.921Z",
+        "window_end": "2026-10-25T04:12:44.921Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:12:46.775Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/2666-7568/works?filter=from-index-date%3A2026-10-23T03%3A51%3A49%2Cuntil-index-date%3A2026-10-24T03%3A51%3A49&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/2666-7568/works?filter=from-index-date%3A2026-10-24T03%3A51%3A49%2Cuntil-index-date%3A2026-10-25T03%3A51%3A49&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/2666-7568/works?filter=from-index-date%3A2026-10-25T03%3A51%3A49%2Cuntil-index-date%3A2026-10-25T04%3A12%3A44&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-28",
+      "at": "2026-10-25T04:12:48.610Z",
+      "before": 234,
+      "after": 300,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 66,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-28",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:12:46.779Z",
+        "window_start": "2026-10-25T04:12:46.779Z",
+        "window_end": "2026-10-25T04:12:46.779Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:12:48.605Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/2352-8273/works?filter=from-index-date%3A2026-10-23T03%3A51%3A51%2Cuntil-index-date%3A2026-10-24T03%3A51%3A51&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/2352-8273/works?filter=from-index-date%3A2026-10-24T03%3A51%3A51%2Cuntil-index-date%3A2026-10-25T03%3A51%3A51&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/2352-8273/works?filter=from-index-date%3A2026-10-25T03%3A51%3A51%2Cuntil-index-date%3A2026-10-25T04%3A12%3A46&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-29",
+      "at": "2026-10-25T04:12:51.797Z",
+      "before": 336,
+      "after": 434,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 98,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-29",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:12:48.611Z",
+        "window_start": "2026-10-25T04:12:48.611Z",
+        "window_end": "2026-10-25T04:12:48.611Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:12:51.791Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/1353-8292/works?filter=from-index-date%3A2026-10-23T03%3A51%3A53%2Cuntil-index-date%3A2026-10-24T03%3A51%3A53&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1353-8292/works?filter=from-index-date%3A2026-10-24T03%3A51%3A53%2Cuntil-index-date%3A2026-10-25T03%3A51%3A53&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1353-8292/works?filter=from-index-date%3A2026-10-24T03%3A51%3A53%2Cuntil-index-date%3A2026-10-25T03%3A51%3A53&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1353-8292/works?filter=from-index-date%3A2026-10-25T03%3A51%3A53%2Cuntil-index-date%3A2026-10-25T04%3A12%3A48&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-30",
+      "at": "2026-10-25T04:12:53.411Z",
+      "before": 295,
+      "after": 338,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 43,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-30",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:12:51.798Z",
+        "window_start": "2026-10-25T04:12:51.798Z",
+        "window_end": "2026-10-25T04:12:51.798Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:12:53.406Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/0141-9889/works?filter=from-index-date%3A2026-10-23T03%3A51%3A55%2Cuntil-index-date%3A2026-10-24T03%3A51%3A55&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0141-9889/works?filter=from-index-date%3A2026-10-24T03%3A51%3A55%2Cuntil-index-date%3A2026-10-25T03%3A51%3A55&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0141-9889/works?filter=from-index-date%3A2026-10-25T03%3A51%3A55%2Cuntil-index-date%3A2026-10-25T04%3A12%3A51&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-31",
+      "at": "2026-10-25T04:12:59.394Z",
+      "before": 708,
+      "after": 836,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 128,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-31",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:12:53.412Z",
+        "window_start": "2026-10-25T04:12:53.412Z",
+        "window_end": "2026-10-25T04:12:53.412Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:12:59.385Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/1475-9276/works?filter=from-index-date%3A2026-10-23T03%3A51%3A57%2Cuntil-index-date%3A2026-10-24T03%3A51%3A57&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1475-9276/works?filter=from-index-date%3A2026-10-23T03%3A51%3A57%2Cuntil-index-date%3A2026-10-24T03%3A51%3A57&rows=100&cursor=MTczNzAwNjYxNjAwMCwxMC4xMTg2JTJGczEyOTM5LTAyNS0wMjM4MC15&mailto=",
+        "https://api.crossref.org/journals/1475-9276/works?filter=from-index-date%3A2026-10-24T03%3A51%3A57%2Cuntil-index-date%3A2026-10-25T03%3A51%3A57&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1475-9276/works?filter=from-index-date%3A2026-10-24T03%3A51%3A57%2Cuntil-index-date%3A2026-10-25T03%3A51%3A57&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1475-9276/works?filter=from-index-date%3A2026-10-24T03%3A51%3A57%2Cuntil-index-date%3A2026-10-25T03%3A51%3A57&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1475-9276/works?filter=from-index-date%3A2026-10-25T03%3A51%3A57%2Cuntil-index-date%3A2026-10-25T04%3A12%3A53&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-32",
+      "at": "2026-10-25T04:13:00.995Z",
+      "before": 102,
+      "after": 131,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 29,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-32",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:12:59.394Z",
+        "window_start": "2026-10-25T04:12:59.394Z",
+        "window_end": "2026-10-25T04:12:59.394Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:13:00.991Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/0047-2794/works?filter=from-index-date%3A2026-10-23T03%3A52%3A00%2Cuntil-index-date%3A2026-10-24T03%3A52%3A00&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0047-2794/works?filter=from-index-date%3A2026-10-24T03%3A52%3A00%2Cuntil-index-date%3A2026-10-25T03%3A52%3A00&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0047-2794/works?filter=from-index-date%3A2026-10-25T03%3A52%3A00%2Cuntil-index-date%3A2026-10-25T04%3A12%3A59&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-33",
+      "at": "2026-10-25T04:13:05.580Z",
+      "before": 183,
+      "after": 218,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 35,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-33",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:13:00.995Z",
+        "window_start": "2026-10-25T04:13:00.995Z",
+        "window_end": "2026-10-25T04:13:00.995Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:13:05.577Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/0144-5596/works?filter=from-index-date%3A2026-10-23T03%3A52%3A03%2Cuntil-index-date%3A2026-10-24T03%3A52%3A03&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0144-5596/works?filter=from-index-date%3A2026-10-24T03%3A52%3A03%2Cuntil-index-date%3A2026-10-25T03%3A52%3A03&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0144-5596/works?filter=from-index-date%3A2026-10-24T03%3A52%3A03%2Cuntil-index-date%3A2026-10-25T03%3A52%3A03&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0144-5596/works?filter=from-index-date%3A2026-10-24T03%3A52%3A03%2Cuntil-index-date%3A2026-10-25T03%3A52%3A03&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0144-5596/works?filter=from-index-date%3A2026-10-25T03%3A52%3A03%2Cuntil-index-date%3A2026-10-25T04%3A13%3A00&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-34",
+      "at": "2026-10-25T04:13:07.518Z",
+      "before": 535,
+      "after": 586,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 51,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-34",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:13:05.581Z",
+        "window_start": "2026-10-25T04:13:05.581Z",
+        "window_end": "2026-10-25T04:13:05.581Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:13:07.512Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/0045-3102/works?filter=from-index-date%3A2026-10-23T03%3A52%3A04%2Cuntil-index-date%3A2026-10-24T03%3A52%3A04&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0045-3102/works?filter=from-index-date%3A2026-10-24T03%3A52%3A04%2Cuntil-index-date%3A2026-10-25T03%3A52%3A04&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0045-3102/works?filter=from-index-date%3A2026-10-25T03%3A52%3A04%2Cuntil-index-date%3A2026-10-25T04%3A13%3A05&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-35",
+      "at": "2026-10-25T04:13:10.026Z",
+      "before": 101,
+      "after": 112,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 11,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-35",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:13:07.521Z",
+        "window_start": "2026-10-25T04:13:07.521Z",
+        "window_end": "2026-10-25T04:13:07.521Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:13:10.024Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/0037-8046/works?filter=from-index-date%3A2026-10-23T03%3A52%3A07%2Cuntil-index-date%3A2026-10-24T03%3A52%3A07&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0037-8046/works?filter=from-index-date%3A2026-10-24T03%3A52%3A07%2Cuntil-index-date%3A2026-10-25T03%3A52%3A07&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0037-8046/works?filter=from-index-date%3A2026-10-24T03%3A52%3A07%2Cuntil-index-date%3A2026-10-25T03%3A52%3A07&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0037-8046/works?filter=from-index-date%3A2026-10-25T03%3A52%3A07%2Cuntil-index-date%3A2026-10-25T04%3A13%3A07&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-36",
+      "at": "2026-10-25T04:13:12.455Z",
+      "before": 200,
+      "after": 287,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 87,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-36",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:13:10.027Z",
+        "window_start": "2026-10-25T04:13:10.027Z",
+        "window_end": "2026-10-25T04:13:10.027Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:13:12.449Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/0022-2445/works?filter=from-index-date%3A2026-10-23T03%3A52%3A09%2Cuntil-index-date%3A2026-10-24T03%3A52%3A09&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0022-2445/works?filter=from-index-date%3A2026-10-24T03%3A52%3A09%2Cuntil-index-date%3A2026-10-25T03%3A52%3A09&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0022-2445/works?filter=from-index-date%3A2026-10-25T03%3A52%3A09%2Cuntil-index-date%3A2026-10-25T04%3A13%3A10&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-37",
+      "at": "2026-10-25T04:13:16.938Z",
+      "before": 284,
+      "after": 343,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 59,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-37",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:13:12.456Z",
+        "window_start": "2026-10-25T04:13:12.456Z",
+        "window_end": "2026-10-25T04:13:12.456Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:13:16.933Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/0968-7599/works?filter=from-index-date%3A2026-10-23T03%3A52%3A11%2Cuntil-index-date%3A2026-10-24T03%3A52%3A11&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0968-7599/works?filter=from-index-date%3A2026-10-24T03%3A52%3A11%2Cuntil-index-date%3A2026-10-25T03%3A52%3A11&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0968-7599/works?filter=from-index-date%3A2026-10-25T03%3A52%3A11%2Cuntil-index-date%3A2026-10-25T04%3A13%3A12&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0968-7599/works?filter=from-index-date%3A2026-10-25T03%3A52%3A11%2Cuntil-index-date%3A2026-10-25T04%3A13%3A12&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0968-7599/works?filter=from-index-date%3A2026-10-25T03%3A52%3A11%2Cuntil-index-date%3A2026-10-25T04%3A13%3A12&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-39",
+      "at": "2026-10-25T04:13:18.719Z",
+      "before": 303,
+      "after": 310,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 7,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-39",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:13:16.938Z",
+        "window_start": "2026-10-25T04:13:16.938Z",
+        "window_end": "2026-10-25T04:13:16.938Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:13:18.711Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/2817-1705/works?filter=from-index-date%3A2026-10-23T03%3A52%3A12%2Cuntil-index-date%3A2026-10-24T03%3A52%3A12&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/2817-1705/works?filter=from-index-date%3A2026-10-24T03%3A52%3A12%2Cuntil-index-date%3A2026-10-25T03%3A52%3A12&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/2817-1705/works?filter=from-index-date%3A2026-10-25T03%3A52%3A12%2Cuntil-index-date%3A2026-10-25T04%3A13%3A16&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-40",
+      "at": "2026-10-25T04:13:20.677Z",
+      "before": 207,
+      "after": 266,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 59,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-40",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:13:18.723Z",
+        "window_start": "2026-10-25T04:13:18.723Z",
+        "window_end": "2026-10-25T04:13:18.723Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:13:20.672Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/0268-1080/works?filter=from-index-date%3A2026-10-23T03%3A52%3A14%2Cuntil-index-date%3A2026-10-24T03%3A52%3A14&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0268-1080/works?filter=from-index-date%3A2026-10-24T03%3A52%3A14%2Cuntil-index-date%3A2026-10-25T03%3A52%3A14&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0268-1080/works?filter=from-index-date%3A2026-10-25T03%3A52%3A14%2Cuntil-index-date%3A2026-10-25T04%3A13%3A18&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "candidate-42",
+      "at": "2026-10-25T04:13:22.693Z",
+      "before": 502,
+      "after": 592,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 90,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "candidate-42",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:13:20.678Z",
+        "window_start": "2026-10-25T04:13:20.678Z",
+        "window_end": "2026-10-25T04:13:20.678Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:13:22.687Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/1360-7863/works?filter=from-index-date%3A2026-10-23T03%3A52%3A16%2Cuntil-index-date%3A2026-10-24T03%3A52%3A16&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1360-7863/works?filter=from-index-date%3A2026-10-24T03%3A52%3A16%2Cuntil-index-date%3A2026-10-25T03%3A52%3A16&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1360-7863/works?filter=from-index-date%3A2026-10-25T03%3A52%3A16%2Cuntil-index-date%3A2026-10-25T04%3A13%3A20&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "geron-b",
+      "at": "2026-10-25T04:13:25.322Z",
+      "before": 469,
+      "after": 589,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 120,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "geron-b",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:13:22.694Z",
+        "window_start": "2026-10-25T04:13:22.694Z",
+        "window_end": "2026-10-25T04:13:22.694Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:13:25.307Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/1079-5014/works?filter=from-index-date%3A2026-10-23T03%3A50%3A49%2Cuntil-index-date%3A2026-10-24T03%3A50%3A49&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1079-5014/works?filter=from-index-date%3A2026-10-23T03%3A50%3A49%2Cuntil-index-date%3A2026-10-24T03%3A50%3A49&rows=100&cursor=MTc4Mjg2MDE3NTAwMCwxMC4xMDkzJTJGZ2Vyb25iJTJGZ2JhZzEyNQ%3D%3D&mailto=",
+        "https://api.crossref.org/journals/1079-5014/works?filter=from-index-date%3A2026-10-24T03%3A50%3A49%2Cuntil-index-date%3A2026-10-25T03%3A50%3A49&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1079-5014/works?filter=from-index-date%3A2026-10-25T03%3A50%3A49%2Cuntil-index-date%3A2026-10-25T04%3A13%3A22&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "gerontologist",
+      "at": "2026-10-25T04:13:28.839Z",
+      "before": 560,
+      "after": 763,
+      "results": [
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 203,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "gerontologist",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:13:25.323Z",
+        "window_start": "2026-10-25T04:13:25.323Z",
+        "window_end": "2026-10-25T04:13:25.323Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:13:28.809Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/1758-5341/works?filter=from-index-date%3A2026-10-23T03%3A50%3A46%2Cuntil-index-date%3A2026-10-24T03%3A50%3A46&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1758-5341/works?filter=from-index-date%3A2026-10-23T03%3A50%3A46%2Cuntil-index-date%3A2026-10-24T03%3A50%3A46&rows=100&cursor=MTU4MDk0NTE4ODAwMCwxMC4xMDkzJTJGZ2Vyb250JTJGZ256MTc4&mailto=",
+        "https://api.crossref.org/journals/1758-5341/works?filter=from-index-date%3A2026-10-24T03%3A50%3A46%2Cuntil-index-date%3A2026-10-25T03%3A50%3A46&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1758-5341/works?filter=from-index-date%3A2026-10-25T03%3A50%3A46%2Cuntil-index-date%3A2026-10-25T04%3A13%3A25&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "jmir",
+      "at": "2026-10-25T04:13:40.997Z",
+      "before": 3035,
+      "after": 3517,
+      "results": [
+        {
+          "status": "partial",
+          "scanned": 1,
+          "newCount": 334,
+          "errors": [
+            {
+              "journal": "Journal of Medical Internet Research",
+              "error": "扫描预算已用完，窗口游标已保存，下一轮续跑"
+            }
+          ],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        },
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 148,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "jmir",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:13:28.844Z",
+        "window_start": "2026-10-25T04:13:28.844Z",
+        "window_end": "2026-10-25T04:13:28.844Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:13:40.974Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/1438-8871/works?filter=from-index-date%3A2026-10-23T03%3A50%3A58%2Cuntil-index-date%3A2026-10-24T03%3A50%3A58&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1438-8871/works?filter=from-index-date%3A2026-10-23T03%3A50%3A58%2Cuntil-index-date%3A2026-10-24T03%3A50%3A58&rows=100&cursor=MTU3NDg1MTUyMTAwMCwxMC4yMTk2JTJGMTU3ODc%3D&mailto=",
+        "https://api.crossref.org/journals/1438-8871/works?filter=from-index-date%3A2026-10-23T03%3A50%3A58%2Cuntil-index-date%3A2026-10-24T03%3A50%3A58&rows=100&cursor=MTY1NzU1NjYxMzAwMCwxMC4yMTk2JTJGMzczNjc%3D&mailto=",
+        "https://api.crossref.org/journals/1438-8871/works?filter=from-index-date%3A2026-10-23T03%3A50%3A58%2Cuntil-index-date%3A2026-10-24T03%3A50%3A58&rows=100&cursor=MTcxNjc5OTg2NjAwMCwxMC4yMTk2JTJGNTM5OTM%3D&mailto=",
+        "https://api.crossref.org/journals/1438-8871/works?filter=from-index-date%3A2026-10-23T03%3A50%3A58%2Cuntil-index-date%3A2026-10-24T03%3A50%3A58&rows=100&cursor=MTc1Mzg4NzMwNzAwMCwxMC4yMTk2JTJGNzY5Njg%3D&mailto=",
+        "https://api.crossref.org/journals/1438-8871/works?filter=from-index-date%3A2026-10-24T03%3A50%3A58%2Cuntil-index-date%3A2026-10-25T03%3A50%3A58&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/1438-8871/works?filter=from-index-date%3A2026-10-24T03%3A50%3A58%2Cuntil-index-date%3A2026-10-25T03%3A50%3A58&rows=100&cursor=MTY4MTk4MzU1ODAwMCwxMC4yMTk2JTJGNDM4MjY%3D&mailto=",
+        "https://api.crossref.org/journals/1438-8871/works?filter=from-index-date%3A2026-10-24T03%3A50%3A58%2Cuntil-index-date%3A2026-10-25T03%3A50%3A58&rows=100&cursor=MTc2NjIzMjkwNzAwMCwxMC4yMTk2JTJGNzI4MzA%3D&mailto=",
+        "https://api.crossref.org/journals/1438-8871/works?filter=from-index-date%3A2026-10-25T03%3A50%3A58%2Cuntil-index-date%3A2026-10-25T04%3A13%3A28&rows=100&cursor=*&mailto="
+      ]
+    },
+    {
+      "id": "ssm",
+      "at": "2026-10-25T04:13:48.479Z",
+      "before": 1904,
+      "after": 2413,
+      "results": [
+        {
+          "status": "partial",
+          "scanned": 1,
+          "newCount": 348,
+          "errors": [
+            {
+              "journal": "Social Science & Medicine",
+              "error": "扫描预算已用完，窗口游标已保存，下一轮续跑"
+            }
+          ],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        },
+        {
+          "status": "ok",
+          "scanned": 1,
+          "newCount": 161,
+          "errors": [],
+          "ai": {
+            "status": "independent_queue"
+          },
+          "mail": {
+            "sent": 0,
+            "skipped": true
+          }
+        }
+      ],
+      "state": {
+        "journal_id": "ssm",
+        "mode": "incremental",
+        "range_end": "2026-10-25T04:13:40.999Z",
+        "window_start": "2026-10-25T04:13:40.999Z",
+        "window_end": "2026-10-25T04:13:40.999Z",
+        "cursor": "*",
+        "processed": 0,
+        "total": null,
+        "attempts": 0,
+        "status": "complete",
+        "error": "",
+        "updated_at": "2026-10-25T04:13:48.470Z"
+      },
+      "requests": [
+        "https://api.crossref.org/journals/0277-9536/works?filter=from-index-date%3A2026-10-23T03%3A50%3A52%2Cuntil-index-date%3A2026-10-24T03%3A50%3A52&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0277-9536/works?filter=from-index-date%3A2026-10-23T03%3A50%3A52%2Cuntil-index-date%3A2026-10-24T03%3A50%3A52&rows=100&cursor=MTMwOTA5MDg0ODAwMCwxMC4xMDE2JTJGai5zb2NzY2ltZWQuMjAxMS4wNS4wNDA%3D&mailto=",
+        "https://api.crossref.org/journals/0277-9536/works?filter=from-index-date%3A2026-10-23T03%3A50%3A52%2Cuntil-index-date%3A2026-10-24T03%3A50%3A52&rows=100&cursor=MTQ3MjA1NDYwMjAwMCwxMC4xMDE2JTJGai5zb2NzY2ltZWQuMjAxNi4wOC4wMjU%3D&mailto=",
+        "https://api.crossref.org/journals/0277-9536/works?filter=from-index-date%3A2026-10-23T03%3A50%3A52%2Cuntil-index-date%3A2026-10-24T03%3A50%3A52&rows=100&cursor=MTYwNjczNjczMzAwMCwxMC4xMDE2JTJGai5zb2NzY2ltZWQuMjAyMC4xMTM1NTQ%3D&mailto=",
+        "https://api.crossref.org/journals/0277-9536/works?filter=from-index-date%3A2026-10-24T03%3A50%3A52%2Cuntil-index-date%3A2026-10-25T03%3A50%3A52&rows=100&cursor=*&mailto=",
+        "https://api.crossref.org/journals/0277-9536/works?filter=from-index-date%3A2026-10-24T03%3A50%3A52%2Cuntil-index-date%3A2026-10-25T03%3A50%3A52&rows=100&cursor=MTU5MjI3MzQyNDAwMCwxMC4xMDE2JTJGai5zb2NzY2ltZWQuMjAyMC4xMTMxMzg%3D&mailto=",
+        "https://api.crossref.org/journals/0277-9536/works?filter=from-index-date%3A2026-10-25T03%3A50%3A52%2Cuntil-index-date%3A2026-10-25T04%3A13%3A40&rows=100&cursor=*&mailto="
+      ]
+    }
+  ],
+  "years": [
+    {
+      "published_year": 1961,
+      "n": 1
+    },
+    {
+      "published_year": 1967,
+      "n": 1
+    },
+    {
+      "published_year": 1969,
+      "n": 1
+    },
+    {
+      "published_year": 1977,
+      "n": 1
+    },
+    {
+      "published_year": 1980,
+      "n": 1
+    },
+    {
+      "published_year": 1981,
+      "n": 1
+    },
+    {
+      "published_year": 1982,
+      "n": 2
+    },
+    {
+      "published_year": 1983,
+      "n": 1
+    },
+    {
+      "published_year": 1985,
+      "n": 1
+    },
+    {
+      "published_year": 1986,
+      "n": 1
+    },
+    {
+      "published_year": 1988,
+      "n": 2
+    },
+    {
+      "published_year": 1989,
+      "n": 1
+    },
+    {
+      "published_year": 1990,
+      "n": 1
+    },
+    {
+      "published_year": 1991,
+      "n": 3
+    },
+    {
+      "published_year": 1992,
+      "n": 2
+    },
+    {
+      "published_year": 1993,
+      "n": 4
+    },
+    {
+      "published_year": 1994,
+      "n": 4
+    },
+    {
+      "published_year": 1995,
+      "n": 6
+    },
+    {
+      "published_year": 1996,
+      "n": 7
+    },
+    {
+      "published_year": 1997,
+      "n": 8
+    },
+    {
+      "published_year": 1998,
+      "n": 6
+    },
+    {
+      "published_year": 1999,
+      "n": 8
+    },
+    {
+      "published_year": 2000,
+      "n": 17
+    },
+    {
+      "published_year": 2001,
+      "n": 19
+    },
+    {
+      "published_year": 2002,
+      "n": 15
+    },
+    {
+      "published_year": 2003,
+      "n": 21
+    },
+    {
+      "published_year": 2004,
+      "n": 19
+    },
+    {
+      "published_year": 2005,
+      "n": 25
+    },
+    {
+      "published_year": 2006,
+      "n": 30
+    },
+    {
+      "published_year": 2007,
+      "n": 26
+    },
+    {
+      "published_year": 2008,
+      "n": 32
+    },
+    {
+      "published_year": 2009,
+      "n": 41
+    },
+    {
+      "published_year": 2010,
+      "n": 42
+    },
+    {
+      "published_year": 2011,
+      "n": 41
+    },
+    {
+      "published_year": 2012,
+      "n": 63
+    },
+    {
+      "published_year": 2013,
+      "n": 65
+    },
+    {
+      "published_year": 2014,
+      "n": 70
+    },
+    {
+      "published_year": 2015,
+      "n": 90
+    },
+    {
+      "published_year": 2016,
+      "n": 113
+    },
+    {
+      "published_year": 2017,
+      "n": 151
+    },
+    {
+      "published_year": 2018,
+      "n": 160
+    },
+    {
+      "published_year": 2019,
+      "n": 195
+    },
+    {
+      "published_year": 2020,
+      "n": 230
+    },
+    {
+      "published_year": 2021,
+      "n": 234
+    },
+    {
+      "published_year": 2022,
+      "n": 237
+    },
+    {
+      "published_year": 2023,
+      "n": 285
+    },
+    {
+      "published_year": 2024,
+      "n": 313
+    },
+    {
+      "published_year": 2025,
+      "n": 11476
+    },
+    {
+      "published_year": 2026,
+      "n": 6740
+    }
+  ],
+  "aiUsage": 0,
+  "deliveries": 0
+}

@@ -1,0 +1,135 @@
+
+> fanscope-api@1.2.0 test
+> node --experimental-sqlite --test test/*.test.mjs
+
+✔ batch is initially paused; caches old analyses; persists token usage and avoids second call (22.640059ms)
+✔ interrupted tasks recover without restarting completed work (1.273653ms)
+✔ invalid filters and budget without pricing are rejected (0.225846ms)
+✔ historical backfill is operator-controlled and keeps independent cursor (6.364959ms)
+✔ bad scopes cannot silently activate unknown or unconfigured journals (0.25888ms)
+✔ failed fetch pauses but preserves operator resumability (1.015012ms)
+✔ auditable Research Brief accepts only supplied evidence IDs and caches without repeat costs (21.300036ms)
+✔ research topic classification from title and abstract (1.504054ms)
+✔ DOI normalization and Crossref fields (4.076423ms)
+✔ RSS only accepts articles with valid URL (5.356327ms)
+✔ AI cannot claim sample size without verbatim evidence (0.385062ms)
+✔ duplicate paper insert is idempotent (0.632641ms)
+✔ public health and articles, admin protection, subscribe disabled (42.793365ms)
+✔ 550 records finish fixed window beyond soft four-page budget without losses (2593.811493ms)
+✔ interruption preserves failed cursor; duplicate DOI replay is harmless (509.748028ms)
+✔ missing/nonadvancing cursor with incomplete total is never silently accepted (0.539311ms)
+✔ 429 and 5xx retry succeeds without a paid network call (2726.781033ms)
+✔ source dates and links never substitute indexing date or a journal homepage (0.864244ms)
+Monitor partial failure Journal of Medical Internet Research
+✔ journal failure does not block others; partial checkpoint retained; initial backfill stays silent (2106.29489ms)
+✔ multiple anchored daily windows complete through repeated bounded invocations (3023.799547ms)
+✔ expired cursor replays only the fixed failed window with DOI deduplication (508.608855ms)
+✔ JMIR and Social Science & Medicine both complete 550-item windows with maxPages=4 (5030.443556ms)
+✔ very dense windows subdivide before consumption and retain complete temporal coverage (501.798204ms)
+✔ email verification, urgent deduplication, and confirmed unsubscribe (43.441928ms)
+✔ historical and initial backfill is excluded from scheduled new-publication digests (1.742646ms)
+✔ explicit verified Series B alias permits own articles and rejects Series A (2.510186ms)
+✔ online and future formal dates remain distinct; DOI replay preserves AI fields (1.425288ms)
+✔ future-only records rejected and indexed timestamp cannot fill missing publication date (0.578025ms)
+✔ historical scope excludes online-before-range but preserves explicit year precision (0.575567ms)
+✔ repeated cursor expiration is bounded and retains replayable window (1504.367493ms)
+✔ health requires persisted identity and recent monitor success; enabled alone is insufficient (10.746074ms)
+✔ malformed totals and unbounded page sizes fail without advancing cursor (0.540112ms)
+✔ Atom updated timestamp is never treated as its publication date (7.706911ms)
+✔ month-only historical metadata is retained without manufacturing a day and remains queryable (2.473424ms)
+✔ administrator pause supersedes an in-flight Crossref activation (1.314393ms)
+✔ switching ISSN cannot reuse another source incremental cursor (0.567454ms)
+✔ a historical job pauses before requesting a changed source ISSN (2.18016ms)
+✔ earlier month-precision online publication wins over a later exact print year (0.358148ms)
+✔ matches Crossref journal identity and requires multiple different DOI samples (3.79368ms)
+✔ discovery uses Crossref fixed endpoint and does not activate source (3.062203ms)
+✔ operator-triggered durable journal discovery jobs pause, start, resume and persist evidence (8.418314ms)
+✔ Crossref source cannot be enabled without matching DOI / ISSN and confirmation (5.796178ms)
+HTTP error: 该会议原始文件仅上传者和导师可查看
+HTTP error: 该会议原始文件仅上传者和导师可查看
+HTTP error: 该会议原始文件仅上传者和导师可查看
+HTTP error: 该会议原始文件仅上传者和导师可查看
+HTTP error: TXT/Markdown 文件必须采用 UTF-8 编码
+HTTP error: Meetfolio 文本文件最大为 512KB
+HTTP error: 文件扩展名与 Content-Type 不匹配
+HTTP error: 文件名编码无效
+HTTP error: 文件扩展名与 Content-Type 不匹配
+✔ DOCX/PDF/Markdown/TXT upload, evidence-linked DeepSeek proposal, approve, PDF extraction, private file access (390.998134ms)
+HTTP error: 没有项目管理权限
+✔ project members, weighted milestone progress, tasks, exploratory mode and file permissions (75.454067ms)
+HTTP error: 必须人工指定有效负责人和阶段
+HTTP error: 只有作者、导师和管理员能修改论文
+HTTP error: 论文私人讨论已停用
+✔ Excel preview preserves raw fields, does not execute formulas, stage takes priority, confirmation is atomic/idempotent (93.568604ms)
+✔ export protects spreadsheet formulas and does not expose private history or import payloads (18.338378ms)
+HTTP error: 该会议原始文件仅上传者和导师可查看
+HTTP error: 仅上传者与导师能下载会议原始文件
+HTTP error: 无权审批此建议
+HTTP error: 此建议已经处理，不能重复提交
+✔ pasted text proposes multiple updates, never writes until authorized individual review, raw file remains private (29.958396ms)
+✔ AI task suggestions require real task identity, verbatim quote and project manager approval (0.50552ms)
+HTTP error: 请先登录课题组工作台
+HTTP error: 邮箱或密码不正确
+HTTP error: 没有此项目的管理权限
+HTTP error: 只有作者、导师和管理员能修改论文
+HTTP error: 论文私人讨论已停用
+HTTP error: 该会议原始文件仅上传者和导师可查看
+HTTP error: 无权审批此建议
+✔ Lab auth / projects / manuscript public-private / document approval and audit (285.077006ms)
+✔ legacy database is backed up consistently, migrated twice, preserves accounts/articles/projects and privately archives notes (759.782452ms)
+✔ v1.2 fixture migrates twice without changing original papers, journal configuration or Lab records (561.816464ms)
+✔ mobile launcher exposes six genuine module actions and no blank buttons (0.975592ms)
+✔ mobile nav accepts real sections only and local svg icons are accessible (0.257345ms)
+✔ first Crossref scan inserts once and records journal health; repeat has zero new (3037.562676ms)
+✔ OpenAlex is disabled without approved plan/key, matches DOI+ISSN and caches supplement (2022.533598ms)
+✔ 100-paper batch: pause, resume, usage, concurrent duplicate batch cache and changed abstract (148.429108ms)
+✔ network failures reserve budget durably and cannot spend again after recovery (2.356176ms)
+✔ invalid AI JSON still records returned token costs; explicit failure retry is paused (5.424513ms)
+✔ removed, infinite or negative pricing blocks resumed workers; unknown usage is conservative (2.510143ms)
+✔ cancelled work never invokes AI; interrupted successful work recovers using cache (15.671444ms)
+✔ source verification handles real HTML entities, publisher and duplicate DOI evidence (1.48078ms)
+✔ wrong ISSN checksum, malformed DOI, foreign journal and upstream failures never enable a journal (1.56479ms)
+✔ backfill pause/cancel during HTTP stops at a committed page and never overwrites cancellation (1010.043648ms)
+✔ backfill excludes another journal and does not alter daily checkpoints or call DeepSeek (2.808398ms)
+✔ all administrator route families reject missing/wrong credentials and CSV import is bounded/idempotent (160.452327ms)
+✔ malformed pagination never advances processed count across repeated retries (1.661921ms)
+✔ monitoring with AUTO_AI_ANALYSIS=false and a configured mock key never calls AI (2.255748ms)
+✔ entire 2025–2026-to-date range completes through every fixed window with DOI deduplication and no AI or notifications (125.141926ms)
+✔ publication sorting, unknown dates, period/history/discovery views and production preflight (105.935862ms)
+✔ 20+20+2 independent candidates do not claim official rank verification (0.882331ms)
+✔ structured AI rejects unsupported claims, invalid units and invented numerical evidence (2.530764ms)
+✔ failed AI item does not block next; retries and daily budget are recorded (5.212903ms)
+✔ 8/1590 does not produce global trend inference (91.842491ms)
+✔ Research Brief refuses low coverage before any network request (13.751299ms)
+✔ rank review separates CSSCI from JCR, requires official evidence and never enables a source (53.165754ms)
+✔ fresh processes resume AI/cache, backfill cursor and discovery without losing committed progress (819.104275ms)
+✔ RSS title, link, dates, journal ownership and stable URL deduplication (19.239825ms)
+✔ Atom chooses alternate article link, relative URLs and original published date (1.0438ms)
+✔ DTD, malformed XML, foreign links and HTML pages fail closed (1.096436ms)
+✔ SSRF blocks private/reserved/mapped IPv4/IPv6 and unauthorized origins (0.958472ms)
+✔ transport pins validated DNS and never follows redirects; bounds streaming bytes (6.850283ms)
+✔ admin API rejects unauthenticated mutation; pause requires no network; failed enable leaves state intact (25.319262ms)
+✔ migration twice preserves 2549 synthetic papers and complete existing Lab rows (1450.462188ms)
+✔ test/save/enable always validate, save pauses, failed enable preserves state and restart retains URL (99.286089ms)
+✔ legacy RSS identifiers are not reinserted after URL hashing changes (6.626124ms)
+✔ pause supersedes an in-flight enable verification (7.839726ms)
+✔ Stage 2 theme loads on research and Lab pages without changing the default app entry (1.073056ms)
+✔ Six module shortcuts and four mobile tabs navigate to supported pages (0.230961ms)
+✔ Source UI uses real status API and requires an operator key only on action (0.237207ms)
+✔ Existing ECharts layer retains no-evidence empty states and theme contrast (0.152168ms)
+✔ stage 3 exposes a dedicated operations center, mobile access and cost guards (0.997633ms)
+✔ historical backfill does not overwrite monitor checkpoints or invoke AI (0.802368ms)
+✔ Stage 4 exposes explicit operator actions, research UI and safe pending state (2.165812ms)
+ℹ tests 93
+ℹ suites 0
+ℹ pass 93
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35525.172401
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

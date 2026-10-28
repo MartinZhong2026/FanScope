@@ -1,0 +1,33 @@
+✔ exact composite identity separates same-title authors/issues and repeat pages are idempotent (21.1045ms)
+✔ month precision is retained; discovery and provider updates never substitute for publication (16.345ms)
+✔ archive traversal bounds years, follows published links only, and rejects out-of-window article years (1.8929ms)
+✔ page import and checkpoint commit roll back together on failure (1.1763ms)
+✔ failed journal pauses without blocking a different journal; tasks support three-year fixed windows (40.79ms)
+✔ HTTP request budget counts retries; authentication and long Retry-After stop without retries (15.7782ms)
+✔ public listing/search exposes real source links and keeps Chinese/international denominators isolated (352.9753ms)
+✔ real public Chinese metadata imports without inventing abstracts or AI; titles/URLs/DOI deduplicate (17.8612ms)
+✔ catalog pages resume checkpoints, reject foreign hosts, retain data on failures and allow incremental replay (43.7064ms)
+✔ Chinese and international report denominators, metadata and evidence never cross markets (19.8953ms)
+✔ provider pagination resumes from persisted cursors; late pages cannot double import (38.0844ms)
+✔ new management APIs require authentication; catalog verification never grants CSSCI status (343.3981ms)
+✔ explicit verified Series B alias permits own articles and rejects Series A (12.8982ms)
+✔ online and future formal dates remain distinct; DOI replay preserves AI fields (22.4812ms)
+✔ future-only records rejected and indexed timestamp cannot fill missing publication date (0.5211ms)
+✔ historical scope excludes online-before-range but preserves explicit year precision (0.7883ms)
+✔ repeated cursor expiration is bounded and retains replayable window (1522.8534ms)
+✔ health requires persisted identity and recent monitor success; enabled alone is insufficient (19.7005ms)
+✔ malformed totals and unbounded page sizes fail without advancing cursor (0.3624ms)
+✔ Atom updated timestamp is never treated as its publication date (5.0227ms)
+✔ month-only historical metadata is retained without manufacturing a day and remains queryable (13.9ms)
+✔ administrator pause supersedes an in-flight Crossref activation (10.9811ms)
+✔ switching ISSN cannot reuse another source incremental cursor (16.5143ms)
+✔ a historical job pauses before requesting a changed source ISSN (12.0148ms)
+✔ earlier month-precision online publication wins over a later exact print year (0.3978ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2575.8118

@@ -1,0 +1,35 @@
+{
+  "reviewedAt": "2026-10-26",
+  "rankEvidence": "https://cssrac.nju.edu.cn/cpzx/zwshkxywsy/gndslqkml/index.html",
+  "rankStatus": "pending: official annual pages do not expose a verifiable 2025-2026 title-level entry",
+  "sources": [
+    {
+      "journalId": "candidate-1", "title": "人口研究", "issn": "1000-6087", "cn": "11-1489/C",
+      "publisher": "中国人民大学", "identityEvidence": "https://rkyj.ruc.edu.cn/CN/1000-6087/home.shtml",
+      "provider": "catalog", "url": "https://rkyj.ruc.edu.cn/CN/1000-6087/home.shtml",
+      "seedUrls": ["https://rkyj.ruc.edu.cn/CN/article/showOldVolumn.do"],
+      "sampleUrl": "https://rkyj.ruc.edu.cn/CN/Y2026/V50/I5/3",
+      "permissionEvidence": "https://rkyj.ruc.edu.cn/robots.txt",
+      "scope": "Public citation metadata only; robots Allow: /; no full text, PDF or abstract republication",
+      "metadataOnly": true
+    },
+    {
+      "journalId": "candidate-7", "title": "社会", "issn": "1004-8804", "cn": "31-1123/C",
+      "publisher": "上海大学", "identityEvidence": "https://www.society.shu.edu.cn/CN/1004-8804/home.shtml",
+      "provider": "catalog", "url": "https://www.society.shu.edu.cn/CN/1004-8804/home.shtml",
+      "seedUrls": ["https://www.society.shu.edu.cn/CN/article/showOldVolumn.do"],
+      "sampleUrl": "https://www.society.shu.edu.cn/CN/Y2026/V46/I4/1",
+      "permissionEvidence": "https://www.society.shu.edu.cn/robots.txt",
+      "scope": "Public citation metadata only; robots Allow: / and publisher RSS; respect noarchive by retaining hashes and extracted facts, not page HTML",
+      "metadataOnly": true
+    },
+    {
+      "journalId": "public-admin-cn", "title": "公共管理评论", "issn": "2096-7713", "cn": "10-1653/D0",
+      "publisher": "清华大学出版社", "identityEvidence": "https://www.sciopen.com/journal/2096-7713",
+      "provider": "crossref", "url": "", "seedUrls": [],
+      "permissionEvidence": "https://www.crossref.org/documentation/retrieve-metadata/",
+      "scope": "Public Crossref bibliographic metadata; English titles as supplied; abstracts withheld without reuse licence",
+      "metadataOnly": true
+    }
+  ]
+}

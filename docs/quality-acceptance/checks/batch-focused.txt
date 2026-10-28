@@ -1,0 +1,15 @@
+✔ batch is initially paused; caches old analyses; persists token usage and avoids second call (43.973031ms)
+✔ interrupted tasks recover without restarting completed work (1.577917ms)
+✔ invalid filters and budget without pricing are rejected (0.5543ms)
+✔ home query uses 90 publication days, excludes uncertain/invalid/future dates and ignores discovery order (53.812982ms)
+✔ dimension counts deduplicate labels, require current validated evidence and retain undated distributions (5.278185ms)
+✔ 200 and 164 item progress, partial prices and failure reasons are read-only projections (78.005984ms)
+✔ overlapping batches share a successful cache even when the response has no usable evidence (10.96087ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 704.192417

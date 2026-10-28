@@ -1,0 +1,47 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 738B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22-bookworm-slim
+#2 DONE 0.5s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 88B done
+#3 DONE 0.0s
+
+#4 [stage-0 1/8] FROM docker.io/library/node:22-bookworm-slim@sha256:de170b39439eb0e5a3444ad7d60b015614a381e10fecae2e30ec9e735122f38d
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 40.37kB 0.0s done
+#5 DONE 0.0s
+
+#6 [stage-0 2/8] WORKDIR /app
+#6 CACHED
+
+#7 [stage-0 3/8] RUN apt-get update && apt-get install -y --no-install-recommends unzip poppler-utils     && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [stage-0 4/8] COPY package.json package-lock.json ./
+#8 CACHED
+
+#9 [stage-0 5/8] RUN --mount=type=secret,id=proxy_ca     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi;     npm ci --omit=dev --ignore-scripts
+#9 CACHED
+
+#10 [stage-0 6/8] COPY config ./config
+#10 CACHED
+
+#11 [stage-0 7/8] COPY src ./src
+#11 DONE 0.6s
+
+#12 [stage-0 8/8] RUN mkdir -p /app/data && chown -R node:node /app
+#12 DONE 0.7s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 0.7s done
+#13 writing image sha256:faca0225a8f01322882f4dca5328bdb488c2b9979532b9422d26e47df065e380 done
+#13 naming to docker.io/library/fanscope-v13-qa:local done
+#13 DONE 0.7s

@@ -1,0 +1,31 @@
+✔ home query uses 90 publication days, excludes uncertain/invalid/future dates and ignores discovery order (52.396221ms)
+✔ dimension counts deduplicate labels, require current validated evidence and retain undated distributions (5.546948ms)
+✔ 200 and 164 item progress, partial prices and failure reasons are read-only projections (72.590671ms)
+✔ overlapping batches share a successful cache even when the response has no usable evidence (6.560079ms)
+✔ publication sorting, unknown dates, period/history/discovery views and production preflight (55.782497ms)
+✔ 20+20+2 independent candidates do not claim official rank verification (0.684895ms)
+✔ structured AI rejects unsupported claims, invalid units and invented numerical evidence (1.252245ms)
+✔ failed AI item does not block next; retries and daily budget are recorded (4.170078ms)
+✔ 8/1590 does not produce global trend inference (43.956722ms)
+✔ Research Brief refuses low coverage before any network request (15.278908ms)
+✔ rank review separates CSSCI from JCR, requires official evidence and never enables a source (9.289423ms)
+✔ explicit source types distinguish research/review/abstract/editorial/book review; generic labels and protocols stay unknown (1.696353ms)
+✔ 2026 default and 30/90/180-day windows, optional 2025, and 2027 rollover preserve the full corpus (16.571782ms)
+✔ all seven chart denominators share the selected type and show missing evidence without inventing methods (1.287537ms)
+✔ default AI candidate policy is current-year, relevant, abstract-backed, newest-first and capped at 200; never starts (2.938274ms)
+✔ queued candidates are revalidated before spending when source metadata later changes their type (1.425612ms)
+✔ candidate preparation and legacy budget endpoint never trigger paid AI or require prices (1.136244ms)
+✔ public metadata fills absent abstracts, verifies DOI+ISSN and preserves existing AI/cache; mismatch fails closed (2.600002ms)
+✔ metadata failures are recorded and protected from immediate repeated requests; no paid tasks are created (0.970458ms)
+✔ normalization reuses analyzed 2026 results across formatting and into 2027; substantive content changes invalidate cache (0.483396ms)
+✔ comparison uses the same month/day cutoff, common journals and types; excludes coarse dates and never reports annual growth (2.512262ms)
+✔ backfill defaults to 2026 and supports recent windows without deleting optional 2025 data (2.731206ms)
+✔ current-year backfill runs before optional 2025 work and keeps independent cursors (2.257445ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1048.619576

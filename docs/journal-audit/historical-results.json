@@ -1,0 +1,1045 @@
+[
+  {
+    "id": "ageing-society",
+    "title": "Ageing & Society",
+    "newArticlesIsolated": 121,
+    "years": {
+      "2025": 61,
+      "2026": 60
+    },
+    "precision": {
+      "year": 1,
+      "day": 120
+    },
+    "observedFirst": "2025",
+    "observedLast": "2026-10-19",
+    "job": {
+      "id": "3f9e6cf2-9989-4591-bf1a-e398f0972ba8",
+      "journal_id": "ageing-society",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:53:23.004Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:53:23.004Z",
+      "started_at": "2026-10-25T03:53:23.005Z",
+      "finished_at": "2026-10-25T03:53:25.627Z",
+      "window_start": "2026-10-25T03:53:23.004Z",
+      "window_end": "2026-10-25T03:53:23.004Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:53:23.004Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 0,
+      "updated_at": "2026-10-25T03:53:25.627Z"
+    },
+    "error": null
+  },
+  {
+    "id": "gerontologist",
+    "title": "The Gerontologist",
+    "newArticlesIsolated": 560,
+    "years": {
+      "2025": 313,
+      "2026": 247
+    },
+    "precision": {
+      "month": 1,
+      "day": 559
+    },
+    "observedFirst": "2025-01-06",
+    "observedLast": "2026-10-23",
+    "job": {
+      "id": "772d77db-c866-4e65-ae5a-c5bd714ad4bc",
+      "journal_id": "gerontologist",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:53:26.523Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:53:26.523Z",
+      "started_at": "2026-10-25T03:53:26.524Z",
+      "finished_at": "2026-10-25T03:53:29.718Z",
+      "window_start": "2026-10-25T03:53:26.523Z",
+      "window_end": "2026-10-25T03:53:26.523Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:53:26.523Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 0,
+      "updated_at": "2026-10-25T03:53:29.718Z"
+    },
+    "error": null
+  },
+  {
+    "id": "geron-b",
+    "title": "The Journals of Gerontology: Series B",
+    "newArticlesIsolated": 469,
+    "years": {
+      "2025": 250,
+      "2026": 219
+    },
+    "precision": {
+      "day": 469
+    },
+    "observedFirst": "2025-01-04",
+    "observedLast": "2026-10-20",
+    "job": {
+      "id": "5532099c-0a81-41e3-93e8-507db3430143",
+      "journal_id": "geron-b",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:53:29.962Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:53:29.962Z",
+      "started_at": "2026-10-25T03:53:29.963Z",
+      "finished_at": "2026-10-25T03:53:32.174Z",
+      "window_start": "2026-10-25T03:53:29.962Z",
+      "window_end": "2026-10-25T03:53:29.962Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:53:29.962Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 0,
+      "updated_at": "2026-10-25T03:53:32.174Z"
+    },
+    "error": null
+  },
+  {
+    "id": "ssm",
+    "title": "Social Science & Medicine",
+    "newArticlesIsolated": 1904,
+    "years": {
+      "2025": 995,
+      "2026": 909
+    },
+    "precision": {
+      "month": 1904
+    },
+    "observedFirst": "2025-01",
+    "observedLast": "2026-10",
+    "job": {
+      "id": "614f09ba-1030-422d-91c1-1e80cc9928d7",
+      "journal_id": "ssm",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:53:32.354Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:53:32.354Z",
+      "started_at": "2026-10-25T03:53:32.355Z",
+      "finished_at": "2026-10-25T03:53:40.613Z",
+      "window_start": "2026-10-25T03:53:32.354Z",
+      "window_end": "2026-10-25T03:53:32.354Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:53:32.354Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 3,
+      "added_articles": 1904,
+      "updated_at": "2026-10-25T03:53:40.613Z"
+    },
+    "error": null
+  },
+  {
+    "id": "jmir",
+    "title": "Journal of Medical Internet Research",
+    "newArticlesIsolated": 3035,
+    "years": {
+      "2025": 1653,
+      "2026": 1382
+    },
+    "precision": {
+      "day": 3035
+    },
+    "observedFirst": "2025-01-01",
+    "observedLast": "2026-10-23",
+    "job": {
+      "id": "647c4779-7841-43be-bb7e-e38a31b2adc0",
+      "journal_id": "jmir",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:53:41.058Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:53:41.058Z",
+      "started_at": "2026-10-25T03:53:41.060Z",
+      "finished_at": "2026-10-25T03:53:58.440Z",
+      "window_start": "2026-10-25T03:53:41.058Z",
+      "window_end": "2026-10-25T03:53:41.058Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:53:41.058Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 4,
+      "added_articles": 0,
+      "updated_at": "2026-10-25T03:53:58.440Z"
+    },
+    "error": null
+  },
+  {
+    "id": "soc-security-cn",
+    "title": "社会保障评论",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "soc-review-cn",
+    "title": "社会学评论",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "public-admin-cn",
+    "title": "公共管理评论",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-1",
+    "title": "人口研究",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-2",
+    "title": "中国人口科学",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-3",
+    "title": "人口与经济",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-4",
+    "title": "人口学刊",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-5",
+    "title": "人口与发展",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-6",
+    "title": "社会学研究",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-7",
+    "title": "社会",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-9",
+    "title": "社会发展研究",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-10",
+    "title": "社会建设",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-11",
+    "title": "妇女研究论丛",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-12",
+    "title": "残疾人研究",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-14",
+    "title": "公共管理学报",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-16",
+    "title": "公共管理与政策评论",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-17",
+    "title": "中国行政管理",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-18",
+    "title": "治理研究",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-19",
+    "title": "电子政务",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-20",
+    "title": "中国软科学",
+    "newArticlesIsolated": 0,
+    "years": {},
+    "precision": {},
+    "observedFirst": null,
+    "observedLast": null,
+    "job": null,
+    "error": null
+  },
+  {
+    "id": "candidate-21",
+    "title": "Innovation in Aging",
+    "newArticlesIsolated": 4681,
+    "years": {
+      "2025": 4563,
+      "2026": 118
+    },
+    "precision": {
+      "day": 4681
+    },
+    "observedFirst": "2025-01-07",
+    "observedLast": "2026-10-23",
+    "job": {
+      "id": "fd16b343-83cd-489a-906d-39763cd0635e",
+      "journal_id": "candidate-21",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:53:58.623Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:53:58.623Z",
+      "started_at": "2026-10-25T03:53:58.623Z",
+      "finished_at": "2026-10-25T03:54:20.589Z",
+      "window_start": "2026-10-25T03:53:58.623Z",
+      "window_end": "2026-10-25T03:53:58.623Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:53:58.623Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 6,
+      "added_articles": 0,
+      "updated_at": "2026-10-25T03:54:20.589Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-24",
+    "title": "JMIR Aging",
+    "newArticlesIsolated": 369,
+    "years": {
+      "2025": 199,
+      "2026": 170
+    },
+    "precision": {
+      "day": 369
+    },
+    "observedFirst": "2025-01-06",
+    "observedLast": "2026-10-23",
+    "job": {
+      "id": "a11c4ef8-06c6-418d-86f2-2b922ac6a4f1",
+      "journal_id": "candidate-24",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:21.022Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:21.022Z",
+      "started_at": "2026-10-25T03:54:21.027Z",
+      "finished_at": "2026-10-25T03:54:22.929Z",
+      "window_start": "2026-10-25T03:54:21.022Z",
+      "window_end": "2026-10-25T03:54:21.022Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:21.022Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 0,
+      "updated_at": "2026-10-25T03:54:22.929Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-25",
+    "title": "BMC Geriatrics",
+    "newArticlesIsolated": 2849,
+    "years": {
+      "2025": 1242,
+      "2026": 1607
+    },
+    "precision": {
+      "day": 2849
+    },
+    "observedFirst": "2025-01-02",
+    "observedLast": "2026-10-24",
+    "job": {
+      "id": "a3983d58-8271-4a89-9a56-8621218b39d7",
+      "journal_id": "candidate-25",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:23.190Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:23.190Z",
+      "started_at": "2026-10-25T03:54:23.191Z",
+      "finished_at": "2026-10-25T03:54:37.640Z",
+      "window_start": "2026-10-25T03:54:23.190Z",
+      "window_end": "2026-10-25T03:54:23.190Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:23.190Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 4,
+      "added_articles": 0,
+      "updated_at": "2026-10-25T03:54:37.640Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-26",
+    "title": "The Lancet Healthy Longevity",
+    "newArticlesIsolated": 238,
+    "years": {
+      "2025": 133,
+      "2026": 105
+    },
+    "precision": {
+      "month": 238
+    },
+    "observedFirst": "2025-01",
+    "observedLast": "2026-10",
+    "job": {
+      "id": "70a1f808-3b8d-48da-832a-aa5170afea13",
+      "journal_id": "candidate-26",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:37.887Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:37.887Z",
+      "started_at": "2026-10-25T03:54:37.888Z",
+      "finished_at": "2026-10-25T03:54:39.485Z",
+      "window_start": "2026-10-25T03:54:37.887Z",
+      "window_end": "2026-10-25T03:54:37.887Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:37.887Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 238,
+      "updated_at": "2026-10-25T03:54:39.485Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-28",
+    "title": "SSM - Population Health",
+    "newArticlesIsolated": 234,
+    "years": {
+      "2025": 153,
+      "2026": 81
+    },
+    "precision": {
+      "month": 234
+    },
+    "observedFirst": "2025-03",
+    "observedLast": "2026-10",
+    "job": {
+      "id": "efc914c4-7c75-4fb2-aac1-36c0a91e5168",
+      "journal_id": "candidate-28",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:39.760Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:39.760Z",
+      "started_at": "2026-10-25T03:54:39.761Z",
+      "finished_at": "2026-10-25T03:54:41.407Z",
+      "window_start": "2026-10-25T03:54:39.760Z",
+      "window_end": "2026-10-25T03:54:39.760Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:39.760Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 234,
+      "updated_at": "2026-10-25T03:54:41.407Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-29",
+    "title": "Health & Place",
+    "newArticlesIsolated": 336,
+    "years": {
+      "2025": 186,
+      "2026": 150
+    },
+    "precision": {
+      "month": 336
+    },
+    "observedFirst": "2025-01",
+    "observedLast": "2026-10",
+    "job": {
+      "id": "c38dcb90-bc0e-491a-b83c-1312a93f7b57",
+      "journal_id": "candidate-29",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:41.630Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:41.630Z",
+      "started_at": "2026-10-25T03:54:41.631Z",
+      "finished_at": "2026-10-25T03:54:43.332Z",
+      "window_start": "2026-10-25T03:54:41.630Z",
+      "window_end": "2026-10-25T03:54:41.630Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:41.630Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 336,
+      "updated_at": "2026-10-25T03:54:43.332Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-30",
+    "title": "Sociology of Health & Illness",
+    "newArticlesIsolated": 295,
+    "years": {
+      "2025": 146,
+      "2026": 149
+    },
+    "precision": {
+      "month": 3,
+      "day": 292
+    },
+    "observedFirst": "2025-01",
+    "observedLast": "2026-10-23",
+    "job": {
+      "id": "22d4b9cb-d75c-458a-8e07-5538c52d87be",
+      "journal_id": "candidate-30",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:43.654Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:43.654Z",
+      "started_at": "2026-10-25T03:54:43.655Z",
+      "finished_at": "2026-10-25T03:54:44.845Z",
+      "window_start": "2026-10-25T03:54:43.654Z",
+      "window_end": "2026-10-25T03:54:43.654Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:43.654Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 3,
+      "updated_at": "2026-10-25T03:54:44.845Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-31",
+    "title": "International Journal for Equity in Health",
+    "newArticlesIsolated": 708,
+    "years": {
+      "2025": 381,
+      "2026": 327
+    },
+    "precision": {
+      "day": 708
+    },
+    "observedFirst": "2025-01-02",
+    "observedLast": "2026-10-24",
+    "job": {
+      "id": "c033b97f-da9c-4f7f-b8a8-5958d4e6c193",
+      "journal_id": "candidate-31",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:45.109Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:45.109Z",
+      "started_at": "2026-10-25T03:54:45.110Z",
+      "finished_at": "2026-10-25T03:54:47.846Z",
+      "window_start": "2026-10-25T03:54:45.109Z",
+      "window_end": "2026-10-25T03:54:45.109Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:45.109Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 0,
+      "updated_at": "2026-10-25T03:54:47.846Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-32",
+    "title": "Journal of Social Policy",
+    "newArticlesIsolated": 102,
+    "years": {
+      "2026": 53,
+      "2025": 49
+    },
+    "precision": {
+      "month": 2,
+      "day": 100
+    },
+    "observedFirst": "2025-01-03",
+    "observedLast": "2026-10-16",
+    "job": {
+      "id": "6f6da18a-f572-4816-ac6f-e416ae5740fe",
+      "journal_id": "candidate-32",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:48.053Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:48.053Z",
+      "started_at": "2026-10-25T03:54:48.054Z",
+      "finished_at": "2026-10-25T03:54:49.108Z",
+      "window_start": "2026-10-25T03:54:48.053Z",
+      "window_end": "2026-10-25T03:54:48.053Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:48.053Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 0,
+      "updated_at": "2026-10-25T03:54:49.108Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-33",
+    "title": "Social Policy & Administration",
+    "newArticlesIsolated": 183,
+    "years": {
+      "2025": 102,
+      "2026": 81
+    },
+    "precision": {
+      "month": 1,
+      "day": 182
+    },
+    "observedFirst": "2025-01-05",
+    "observedLast": "2026-10-16",
+    "job": {
+      "id": "e02cc841-6e1e-45d6-9344-846565c69f1a",
+      "journal_id": "candidate-33",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:49.278Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:49.278Z",
+      "started_at": "2026-10-25T03:54:49.278Z",
+      "finished_at": "2026-10-25T03:54:50.428Z",
+      "window_start": "2026-10-25T03:54:49.278Z",
+      "window_end": "2026-10-25T03:54:49.278Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:49.278Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 1,
+      "updated_at": "2026-10-25T03:54:50.428Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-34",
+    "title": "British Journal of Social Work",
+    "newArticlesIsolated": 535,
+    "years": {
+      "2025": 286,
+      "2026": 249
+    },
+    "precision": {
+      "day": 535
+    },
+    "observedFirst": "2025-01-01",
+    "observedLast": "2026-10-22",
+    "job": {
+      "id": "e9edc19e-707a-42a1-8818-9281abe00484",
+      "journal_id": "candidate-34",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:50.620Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:50.620Z",
+      "started_at": "2026-10-25T03:54:50.621Z",
+      "finished_at": "2026-10-25T03:54:52.700Z",
+      "window_start": "2026-10-25T03:54:50.620Z",
+      "window_end": "2026-10-25T03:54:50.620Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:50.620Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 0,
+      "updated_at": "2026-10-25T03:54:52.700Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-35",
+    "title": "Social Work",
+    "newArticlesIsolated": 101,
+    "years": {
+      "2025": 53,
+      "2026": 48
+    },
+    "precision": {
+      "day": 101
+    },
+    "observedFirst": "2025-02-08",
+    "observedLast": "2026-10-23",
+    "job": {
+      "id": "5eded717-d693-4f01-aa17-b82471603f7b",
+      "journal_id": "candidate-35",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:52.866Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:52.866Z",
+      "started_at": "2026-10-25T03:54:52.867Z",
+      "finished_at": "2026-10-25T03:54:54.786Z",
+      "window_start": "2026-10-25T03:54:52.866Z",
+      "window_end": "2026-10-25T03:54:52.866Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:52.866Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 0,
+      "updated_at": "2026-10-25T03:54:54.786Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-36",
+    "title": "Journal of Marriage and Family",
+    "newArticlesIsolated": 200,
+    "years": {
+      "2025": 125,
+      "2026": 75
+    },
+    "precision": {
+      "month": 2,
+      "day": 198
+    },
+    "observedFirst": "2025-01-02",
+    "observedLast": "2026-10-21",
+    "job": {
+      "id": "2446a39a-9787-4967-8ffb-6e149159d7b6",
+      "journal_id": "candidate-36",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:55.047Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:55.047Z",
+      "started_at": "2026-10-25T03:54:55.047Z",
+      "finished_at": "2026-10-25T03:54:56.151Z",
+      "window_start": "2026-10-25T03:54:55.047Z",
+      "window_end": "2026-10-25T03:54:55.047Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:55.047Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 2,
+      "updated_at": "2026-10-25T03:54:56.151Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-37",
+    "title": "Disability & Society",
+    "newArticlesIsolated": 284,
+    "years": {
+      "2025": 143,
+      "2026": 141
+    },
+    "precision": {
+      "month": 3,
+      "day": 281
+    },
+    "observedFirst": "2025-01-02",
+    "observedLast": "2026-10-20",
+    "job": {
+      "id": "7f797668-7ca5-40cf-80ed-2d347540a1b3",
+      "journal_id": "candidate-37",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:56.402Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:56.402Z",
+      "started_at": "2026-10-25T03:54:56.402Z",
+      "finished_at": "2026-10-25T03:54:57.643Z",
+      "window_start": "2026-10-25T03:54:56.402Z",
+      "window_end": "2026-10-25T03:54:56.402Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:56.402Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 1,
+      "updated_at": "2026-10-25T03:54:57.643Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-39",
+    "title": "JMIR AI",
+    "newArticlesIsolated": 303,
+    "years": {
+      "2025": 115,
+      "2026": 188
+    },
+    "precision": {
+      "day": 303
+    },
+    "observedFirst": "2025-01-02",
+    "observedLast": "2026-10-23",
+    "job": {
+      "id": "53c58787-063d-4e29-8cff-3b94071b80d7",
+      "journal_id": "candidate-39",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:57.836Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:57.836Z",
+      "started_at": "2026-10-25T03:54:57.836Z",
+      "finished_at": "2026-10-25T03:54:59.439Z",
+      "window_start": "2026-10-25T03:54:57.836Z",
+      "window_end": "2026-10-25T03:54:57.836Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:57.836Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 0,
+      "updated_at": "2026-10-25T03:54:59.439Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-40",
+    "title": "Health Policy and Planning",
+    "newArticlesIsolated": 207,
+    "years": {
+      "2026": 131,
+      "2025": 76
+    },
+    "precision": {
+      "month": 9,
+      "day": 198
+    },
+    "observedFirst": "2025-04-07",
+    "observedLast": "2026-10-22",
+    "job": {
+      "id": "f10dd11f-23e3-497d-a02e-10948600c19b",
+      "journal_id": "candidate-40",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:54:59.592Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:54:59.592Z",
+      "started_at": "2026-10-25T03:54:59.592Z",
+      "finished_at": "2026-10-25T03:55:00.958Z",
+      "window_start": "2026-10-25T03:54:59.592Z",
+      "window_end": "2026-10-25T03:54:59.592Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:54:59.592Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 0,
+      "updated_at": "2026-10-25T03:55:00.958Z"
+    },
+    "error": null
+  },
+  {
+    "id": "candidate-42",
+    "title": "Aging & Mental Health",
+    "newArticlesIsolated": 502,
+    "years": {
+      "2025": 252,
+      "2026": 250
+    },
+    "precision": {
+      "month": 5,
+      "day": 497
+    },
+    "observedFirst": "2025-01",
+    "observedLast": "2026-10-23",
+    "job": {
+      "id": "10e18e10-b814-4c1c-a649-95b085de0cb1",
+      "journal_id": "candidate-42",
+      "from_date": "2025-01-01T00:00:00.000Z",
+      "to_date": "2026-10-25T03:55:01.334Z",
+      "status": "completed",
+      "created_at": "2026-10-25T03:55:01.334Z",
+      "started_at": "2026-10-25T03:55:01.334Z",
+      "finished_at": "2026-10-25T03:55:04.688Z",
+      "window_start": "2026-10-25T03:55:01.334Z",
+      "window_end": "2026-10-25T03:55:01.334Z",
+      "cursor": "*",
+      "processed": 0,
+      "total": null,
+      "attempts": 0,
+      "range_end": "2026-10-25T03:55:01.334Z",
+      "mode": "backfill",
+      "error": "",
+      "pages_done": 2,
+      "added_articles": 3,
+      "updated_at": "2026-10-25T03:55:04.688Z"
+    },
+    "error": null
+  }
+]

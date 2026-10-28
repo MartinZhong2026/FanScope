@@ -1,0 +1,57 @@
+{
+  "checkedAt": "2026-10-26T11:30:22.493Z",
+  "baseCommits": [
+    "de4aea5",
+    "99162f1"
+  ],
+  "snapshots": [
+    {
+      "file": "work/chinese-bulk/fanscope-chinese.sqlite",
+      "counts": [
+        {
+          "demo": 0,
+          "n": 349
+        }
+      ],
+      "integrity": "ok",
+      "sha256": "aacf357cf684647b04eebb4865ac9767ca4542e97531af4650498372bf0908ec"
+    },
+    {
+      "file": "work/chinese-bulk/final/fanscope-chinese-backup.sqlite",
+      "counts": [
+        {
+          "demo": 0,
+          "n": 349
+        }
+      ],
+      "integrity": "ok",
+      "sha256": "cc9ce25041ce78e27d15550c687f32c7858c368e2bd34448692b13f7d8808144"
+    },
+    {
+      "file": "work/chinese-authorized-import/local.sqlite",
+      "counts": [
+        {
+          "demo": 0,
+          "n": 349
+        }
+      ],
+      "integrity": "ok",
+      "sha256": "3ba62eee1d510ec670a2987ff28b1977ddf59169bd82ae9c4da4fcff3c93143e"
+    },
+    {
+      "file": "work/chinese-authorized-import/synthetic.sqlite",
+      "counts": [
+        {
+          "demo": 1,
+          "n": 3300
+        }
+      ],
+      "integrity": "ok",
+      "sha256": "27e00da4b0d05d9853d16d03f86ac5fc46698760dadd49b0c10b6bbe84ac8c93"
+    }
+  ],
+  "syntheticNote": "Synthetic DB contains cumulative browser reruns only; the acceptance cohorts are 100 and 1000. These are not real papers.",
+  "realImportRun": false,
+  "productionAccess": false,
+  "externalCollection": false
+}

@@ -1,0 +1,181 @@
+
+> fanscope-api@1.2.0 test
+> node --experimental-sqlite --test test/*.test.mjs
+
+✔ batch is initially paused; caches old analyses; persists token usage and avoids second call (42.477246ms)
+✔ interrupted tasks recover without restarting completed work (1.407197ms)
+✔ invalid filters and budget without pricing are rejected (0.668912ms)
+✔ historical backfill is operator-controlled and keeps independent cursor (20.414706ms)
+✔ bad scopes cannot silently activate unknown or unconfigured journals (0.770102ms)
+✔ failed fetch pauses but preserves operator resumability (1.552342ms)
+✔ auditable Research Brief accepts only supplied evidence IDs and caches without repeat costs (43.095493ms)
+✔ research topic classification from title and abstract (1.646011ms)
+✔ DOI normalization and Crossref fields (14.310144ms)
+✔ RSS only accepts articles with valid URL (6.782869ms)
+✔ AI cannot claim sample size without verbatim evidence (0.180157ms)
+✔ duplicate paper insert is idempotent (0.729592ms)
+✔ public health and articles, admin protection, subscribe disabled (66.825517ms)
+✔ 550 records finish fixed window beyond soft four-page budget without losses (2716.346553ms)
+✔ interruption preserves failed cursor; duplicate DOI replay is harmless (526.276032ms)
+✔ missing/nonadvancing cursor with incomplete total is never silently accepted (1.40408ms)
+✔ 429 and 5xx retry succeeds without a paid network call (2765.231082ms)
+✔ source dates and links never substitute indexing date or a journal homepage (3.425117ms)
+Monitor partial failure Journal of Medical Internet Research
+✔ journal failure does not block others; partial checkpoint retained; initial backfill stays silent (2106.406313ms)
+✔ multiple anchored daily windows complete through repeated bounded invocations (3068.804879ms)
+✔ expired cursor replays only the fixed failed window with DOI deduplication (518.004341ms)
+✔ JMIR and Social Science & Medicine both complete 550-item windows with maxPages=4 (5134.038685ms)
+✔ very dense windows subdivide before consumption and retain complete temporal coverage (503.400213ms)
+✔ request disables thinking, allows 4096 tokens and includes complete JSON example; evidence standards remain intact (20.840197ms)
+✔ length: rejects response, records usage and length, and never automatically repeats paid request ("{\"summary_zh\":\"truncated") (1.865325ms)
+✔ length: rejects response, records usage and length, and never automatically repeats paid request ("{}") (1.399394ms)
+✔ empty_content: rejects response, records usage and length, and never automatically repeats paid request ("") (1.23466ms)
+✔ empty_content: rejects response, records usage and length, and never automatically repeats paid request ("  \n") (1.775802ms)
+✔ empty_content: rejects response, records usage and length, and never automatically repeats paid request (null) (1.872781ms)
+✔ invalid_json: rejects response, records usage and length, and never automatically repeats paid request ("{\"unfinished\":") (1.609916ms)
+✔ invalid_json: rejects response, records usage and length, and never automatically repeats paid request ("null") (1.080962ms)
+✔ invalid_json: rejects response, records usage and length, and never automatically repeats paid request ("[]") (1.432232ms)
+✔ invalid_json: rejects response, records usage and length, and never automatically repeats paid request ("42") (1.57252ms)
+✔ unexpected_finish_reason: rejects response, records usage and length, and never automatically repeats paid request ("{}") (1.144306ms)
+✔ manual retry preserves successes, stays paused, and adds exactly one usage row for the actual retry (10.877692ms)
+✔ HTTP 503 retries with backoff and stops after five actual requests (8.600186ms)
+✔ invalid HTTP request is terminal and provider body is not logged (0.990879ms)
+✔ ambiguous network failure and crash reservation cannot be billed again automatically, including duplicate batches (3.727354ms)
+✔ concurrent workers cannot reserve or request the same article twice (2.447658ms)
+✔ partial usage preserves known output tokens and unknown finish reasons never leak provider strings (0.930639ms)
+✔ recovery annotates only the latest reserved request and preserves historical accounting (0.702921ms)
+✔ email verification, urgent deduplication, and confirmed unsubscribe (46.549682ms)
+✔ historical and initial backfill is excluded from scheduled new-publication digests (3.213534ms)
+✔ only unenabled English journals are offered; checked candidates retain ISSN (1.296381ms)
+✔ sequential activation reports only verified successes, explicit failures and missing ISSNs (0.435946ms)
+✔ 401 authentication failures stop the batch without changing later journals (0.882317ms)
+✔ cancel stops requests after current verified journal (0.32347ms)
+✔ UI uses protected endpoint, asks for ephemeral key and provides accessible progress (1.454445ms)
+✔ explicit verified Series B alias permits own articles and rejects Series A (14.8973ms)
+✔ online and future formal dates remain distinct; DOI replay preserves AI fields (1.802501ms)
+✔ future-only records rejected and indexed timestamp cannot fill missing publication date (0.636063ms)
+✔ historical scope excludes online-before-range but preserves explicit year precision (1.239938ms)
+✔ repeated cursor expiration is bounded and retains replayable window (1506.394705ms)
+✔ health requires persisted identity and recent monitor success; enabled alone is insufficient (9.660067ms)
+✔ malformed totals and unbounded page sizes fail without advancing cursor (0.666708ms)
+✔ Atom updated timestamp is never treated as its publication date (6.900618ms)
+✔ month-only historical metadata is retained without manufacturing a day and remains queryable (3.296096ms)
+✔ administrator pause supersedes an in-flight Crossref activation (0.945472ms)
+✔ switching ISSN cannot reuse another source incremental cursor (0.650334ms)
+✔ a historical job pauses before requesting a changed source ISSN (2.430472ms)
+✔ earlier month-precision online publication wins over a later exact print year (0.308888ms)
+✔ matches Crossref journal identity and requires multiple different DOI samples (1.599871ms)
+✔ discovery uses Crossref fixed endpoint and does not activate source (0.942247ms)
+✔ operator-triggered durable journal discovery jobs pause, start, resume and persist evidence (2.68508ms)
+✔ Crossref source cannot be enabled without matching DOI / ISSN and confirmation (5.611467ms)
+HTTP error: 该会议原始文件仅上传者和导师可查看
+HTTP error: 该会议原始文件仅上传者和导师可查看
+HTTP error: 该会议原始文件仅上传者和导师可查看
+HTTP error: 该会议原始文件仅上传者和导师可查看
+HTTP error: TXT/Markdown 文件必须采用 UTF-8 编码
+HTTP error: Meetfolio 文本文件最大为 512KB
+HTTP error: 文件扩展名与 Content-Type 不匹配
+HTTP error: 文件名编码无效
+HTTP error: 文件扩展名与 Content-Type 不匹配
+✔ DOCX/PDF/Markdown/TXT upload, evidence-linked DeepSeek proposal, approve, PDF extraction, private file access (458.392341ms)
+HTTP error: 没有项目管理权限
+✔ project members, weighted milestone progress, tasks, exploratory mode and file permissions (73.5765ms)
+HTTP error: 必须人工指定有效负责人和阶段
+HTTP error: 只有作者、导师和管理员能修改论文
+HTTP error: 论文私人讨论已停用
+✔ Excel preview preserves raw fields, does not execute formulas, stage takes priority, confirmation is atomic/idempotent (71.883407ms)
+✔ export protects spreadsheet formulas and does not expose private history or import payloads (17.844369ms)
+HTTP error: 该会议原始文件仅上传者和导师可查看
+HTTP error: 仅上传者与导师能下载会议原始文件
+HTTP error: 无权审批此建议
+HTTP error: 此建议已经处理，不能重复提交
+✔ pasted text proposes multiple updates, never writes until authorized individual review, raw file remains private (26.44699ms)
+✔ AI task suggestions require real task identity, verbatim quote and project manager approval (0.382146ms)
+HTTP error: 请先登录课题组工作台
+HTTP error: 邮箱或密码不正确
+HTTP error: 没有此项目的管理权限
+HTTP error: 只有作者、导师和管理员能修改论文
+HTTP error: 论文私人讨论已停用
+HTTP error: 该会议原始文件仅上传者和导师可查看
+HTTP error: 无权审批此建议
+✔ Lab auth / projects / manuscript public-private / document approval and audit (291.199113ms)
+✔ legacy database is backed up consistently, migrated twice, preserves accounts/articles/projects and privately archives notes (884.29048ms)
+✔ v1.2 fixture migrates twice without changing original papers, journal configuration or Lab records (702.081307ms)
+✔ mobile shell is actually loaded in both apps and exposes one shared navigation (3.330517ms)
+✔ dashboard actions point to actual modules, never create fake research data (0.387104ms)
+✔ first Crossref scan inserts once and records journal health; repeat has zero new (3065.044253ms)
+✔ OpenAlex is disabled without approved plan/key, matches DOI+ISSN and caches supplement (2036.301405ms)
+✔ home query uses 90 publication days, excludes uncertain/invalid/future dates and ignores discovery order (52.179172ms)
+✔ dimension counts deduplicate labels, require current validated evidence and retain undated distributions (5.209959ms)
+✔ 200 and 164 item progress, partial prices and failure reasons are read-only projections (105.102845ms)
+✔ overlapping batches share a successful cache even when the response has no usable evidence (6.171592ms)
+✔ 100-paper batch: pause, resume, usage, concurrent duplicate batch cache and changed abstract (128.103548ms)
+✔ network failures preserve uncertain usage and require manual retry across restart (2.909836ms)
+✔ invalid AI JSON still records returned token costs; explicit failure retry is paused (4.381564ms)
+✔ explicitly started work ignores daily counters, previous batch caps and missing price estimates (2.39251ms)
+✔ cancelled work never invokes AI; interrupted successful work recovers using cache (2.163732ms)
+✔ source verification handles real HTML entities, publisher and duplicate DOI evidence (1.259604ms)
+✔ wrong ISSN checksum, malformed DOI, foreign journal and upstream failures never enable a journal (1.568731ms)
+✔ backfill pause/cancel during HTTP stops at a committed page and never overwrites cancellation (1018.58271ms)
+✔ backfill excludes another journal and does not alter daily checkpoints or call DeepSeek (2.390817ms)
+✔ all administrator route families reject missing/wrong credentials and CSV import is bounded/idempotent (143.21017ms)
+✔ malformed pagination never advances processed count across repeated retries (1.774506ms)
+✔ monitoring with AUTO_AI_ANALYSIS=false and a configured mock key never calls AI (1.565717ms)
+✔ entire 2025–2026-to-date range completes through every fixed window with DOI deduplication and no AI or notifications (127.913039ms)
+✔ publication sorting, unknown dates, period/history/discovery views and production preflight (71.174209ms)
+✔ 20+20+2 independent candidates do not claim official rank verification (0.81081ms)
+✔ structured AI rejects unsupported claims, invalid units and invented numerical evidence (1.451518ms)
+✔ failed AI item does not block next; retries and daily budget are recorded (5.028942ms)
+✔ 8/1590 does not produce global trend inference (41.985507ms)
+✔ Research Brief refuses low coverage before any network request (41.943706ms)
+✔ rank review separates CSSCI from JCR, requires official evidence and never enables a source (8.398708ms)
+✔ theme and method matrices aggregate independently; overlapping labels are assignments, not unique papers (1.848445ms)
+✔ growth uses equal complete six-month windows, rejects missing windows and small/zero baselines (24.168903ms)
+✔ sample bins preserve units and reject missing or invalid sizes (1.422905ms)
+✔ source unknown and known-without-date remain distinct, preserving the denominator (0.398109ms)
+✔ method annual series sum observed months without mixing topic data or filling unobserved years (0.345622ms)
+✔ fresh processes resume AI/cache, backfill cursor and discovery without losing committed progress (310.869893ms)
+✔ RSS title, link, dates, journal ownership and stable URL deduplication (30.254248ms)
+✔ Atom chooses alternate article link, relative URLs and original published date (0.931889ms)
+✔ DTD, malformed XML, foreign links and HTML pages fail closed (0.764671ms)
+✔ SSRF blocks private/reserved/mapped IPv4/IPv6 and unauthorized origins (0.698013ms)
+✔ transport pins validated DNS and never follows redirects; bounds streaming bytes (23.472548ms)
+✔ admin API rejects unauthenticated mutation; pause requires no network; failed enable leaves state intact (21.831885ms)
+✔ migration twice preserves 2549 synthetic papers and complete existing Lab rows (796.959629ms)
+✔ test/save/enable always validate, save pauses, failed enable preserves state and restart retains URL (45.183377ms)
+✔ legacy RSS identifiers are not reinserted after URL hashing changes (1.4235ms)
+✔ pause supersedes an in-flight enable verification (2.760932ms)
+✔ Stage 2 theme loads on research and Lab pages without changing the default app entry (0.752666ms)
+✔ Six module shortcuts and four mobile tabs navigate to supported pages (1.210564ms)
+✔ Source UI uses real status API and requires an operator key only on action (0.259434ms)
+✔ Existing ECharts layer retains no-evidence empty states and theme contrast (0.17501ms)
+✔ stage 3 exposes an administrator-gated operations center and mobile access (1.82115ms)
+✔ historical backfill does not overwrite monitor checkpoints or invoke AI (0.18882ms)
+✔ Stage 4 exposes explicit operator actions, research UI and safe pending state (1.620472ms)
+✔ small samples and sparse time points use bars without manufacturing observations (1.695222ms)
+✔ dense time series keep observed zeros, full labels and translated schema categories (0.388807ms)
+✔ explicit source types distinguish research/review/abstract/editorial/book review; generic labels and protocols stay unknown (1.941868ms)
+✔ 2026 default and 30/90/180-day windows, optional 2025, and 2027 rollover preserve the full corpus (17.011914ms)
+✔ all seven chart denominators share the selected type and show missing evidence without inventing methods (1.246077ms)
+✔ default AI candidate policy is current-year, relevant, abstract-backed, newest-first and capped at 200; never starts (3.09668ms)
+✔ queued candidates are revalidated before spending when source metadata later changes their type (1.238866ms)
+✔ candidate preparation and legacy budget endpoint never trigger paid AI or require prices (1.177305ms)
+✔ public metadata fills absent abstracts, verifies DOI+ISSN and preserves existing AI/cache; mismatch fails closed (3.080195ms)
+✔ metadata failures are recorded and protected from immediate repeated requests; no paid tasks are created (4.445808ms)
+✔ normalization reuses analyzed 2026 results across formatting and into 2027; substantive content changes invalidate cache (0.480352ms)
+✔ comparison uses the same month/day cutoff, common journals and types; excludes coarse dates and never reports annual growth (7.276094ms)
+✔ backfill defaults to 2026 and supports recent windows without deleting optional 2025 data (3.217509ms)
+✔ current-year backfill runs before optional 2025 work and keeps independent cursors (2.559714ms)
+ℹ tests 139
+ℹ suites 0
+ℹ pass 139
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 35126.331478
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+npm notice To update run: npm install -g npm@12.2.1
+npm notice

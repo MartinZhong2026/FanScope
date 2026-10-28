@@ -1,0 +1,107 @@
+[
+  {
+    "at": "2026-10-24T23:54:18.006Z",
+    "journalId": "gerontologist",
+    "issn": "1758-5341",
+    "source": "crossref",
+    "verified": true,
+    "examined": 25,
+    "sample": [
+      {
+        "doi": "10.1093/geront/gns034",
+        "title": "The BRIGHTEN Program: Implementation and Evaluation of a Program to Bridge Resources of an Interdisciplinary Geriatric Health Team via Electronic Networking",
+        "publisher": "Oxford University Press (OUP)"
+      },
+      {
+        "doi": "10.1093/geront/gnv557.01",
+        "title": "COGNITION AND ADAPTATION  DAILY ANTICIPATORY COPING AND MEMORY FAILURES: NEUROTICISM AND AGE DIFFERENCES",
+        "publisher": "Oxford University Press (OUP)"
+      }
+    ],
+    "enabled": true
+  },
+  {
+    "at": "2026-10-24T23:54:18.299Z",
+    "journalId": "candidate-21",
+    "issn": "2399-5300",
+    "source": "crossref",
+    "verified": true,
+    "examined": 25,
+    "sample": [
+      {
+        "doi": "10.1093/geroni/igad104.3014",
+        "title": "INTOLERANCE FOR UNCERTAINTY MEDIATES DEATH ANXIETY AND HYPOCHONDRIASIS IN OLDER ADULTS",
+        "publisher": "Oxford University Press (OUP)"
+      },
+      {
+        "doi": "10.1093/geroni/igab046.1797",
+        "title": "An Interdisciplinary Home-Based Medical Care Program to Reach Homebound Adults Living With Dementia",
+        "publisher": "Oxford University Press (OUP)"
+      }
+    ],
+    "enabled": false
+  },
+  {
+    "at": "2026-10-24T23:54:18.549Z",
+    "journalId": "candidate-25",
+    "issn": "1471-2318",
+    "source": "crossref",
+    "verified": true,
+    "examined": 25,
+    "sample": [
+      {
+        "doi": "10.1186/1471-2318-10-s1-a62",
+        "title": "Hemangiomas and laser therapy: clinical experience",
+        "publisher": "Springer Science and Business Media LLC"
+      },
+      {
+        "doi": "10.1186/1471-2318-10-s1-a111",
+        "title": "Chronic muscular Pain treatment with Muscular Acoustic Modulator Device in elderly",
+        "publisher": "Springer Science and Business Media LLC"
+      }
+    ],
+    "enabled": false
+  },
+  {
+    "at": "2026-10-24T23:54:18.914Z",
+    "journalId": "candidate-29",
+    "issn": "1353-8292",
+    "source": "crossref",
+    "verified": true,
+    "examined": 25,
+    "sample": [
+      {
+        "doi": "10.1016/j.healthplace.2015.08.003",
+        "title": "Comparison of estimation methods for creating small area rates of acute myocardial infarction among Medicare beneficiaries in California",
+        "publisher": "Elsevier BV"
+      },
+      {
+        "doi": "10.1016/s1353-8292(10)00138-3",
+        "title": "Editorial Board",
+        "publisher": "Elsevier BV"
+      }
+    ],
+    "enabled": false
+  },
+  {
+    "at": "2026-10-24T23:54:19.231Z",
+    "journalId": "candidate-32",
+    "issn": "0047-2794",
+    "source": "crossref",
+    "verified": true,
+    "examined": 25,
+    "sample": [
+      {
+        "doi": "10.1017/s0047279400021875",
+        "title": "JSP volume 23 issue 3 Cover and Back matter",
+        "publisher": "Cambridge University Press (CUP)"
+      },
+      {
+        "doi": "10.1017/s0047279401416461",
+        "title": "Ruth Gilchrist, Tony Jeffs and Jean Spence (eds.), <i>Essays in the History of \nCommunity and Youth Work</i>, Youth Work Press, Leicester, 2001, vii+247 \npp, £16.95 pbk.",
+        "publisher": "Cambridge University Press (CUP)"
+      }
+    ],
+    "enabled": false
+  }
+]

@@ -1,0 +1,206 @@
+{
+  "scope": "isolated acceptance copy; 2025 retained; no production access",
+  "batch": {
+    "id": "28e6e231-af6a-44e1-9122-7fb251c0fb34",
+    "created_at": "2026-10-25T04:53:21.700Z",
+    "started_at": null,
+    "finished_at": null,
+    "status": "paused",
+    "filter_json": "{\"yearFrom\":2026,\"yearTo\":2026,\"journalId\":\"\",\"limit\":150,\"policy\":\"trend_candidates\"}",
+    "total": 129,
+    "estimated_cost_limit_cny": null,
+    "completed_at": null,
+    "error": "",
+    "filter": {
+      "yearFrom": 2026,
+      "yearTo": 2026,
+      "journalId": "",
+      "limit": 150,
+      "policy": "trend_candidates"
+    },
+    "counts": {
+      "queued": 129
+    },
+    "usage": {
+      "requests": 0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "estimatedCostCny": null
+    }
+  },
+  "candidateCount": 129,
+  "shortfall": 0,
+  "quality": {
+    "n": 6740,
+    "analyzed": 0,
+    "evidenced": 0,
+    "coverage": 0,
+    "window": {
+      "period": "ytd",
+      "start": "2026-01-01",
+      "end": "2026-10-25",
+      "year": 2026
+    },
+    "article_type": "all",
+    "type_counts": {
+      "unknown": 6566,
+      "original_research": 132,
+      "review": 39,
+      "editorial": 3
+    },
+    "missingAbstract": 3072,
+    "missingAbstractRatio": 0.45578635014836794,
+    "unknown_rates": {
+      "date": 0,
+      "topics": 0.6798219584569734,
+      "design": 1,
+      "methods": 1,
+      "data": 1,
+      "sample": 1
+    },
+    "known": {
+      "date": 6740,
+      "topics": 2158,
+      "design": 0,
+      "methods": 0,
+      "data": 0,
+      "sample": 0
+    },
+    "chart_quality": [
+      {
+        "valid_n": 6740,
+        "missing_ratio": 0,
+        "selected_n": 6740,
+        "article_type": "all",
+        "article_type_label": "全部类型"
+      },
+      {
+        "valid_n": 2158,
+        "missing_ratio": 0.6798219584569734,
+        "selected_n": 6740,
+        "article_type": "all",
+        "article_type_label": "全部类型"
+      },
+      {
+        "valid_n": 0,
+        "missing_ratio": 1,
+        "selected_n": 6740,
+        "article_type": "all",
+        "article_type_label": "全部类型"
+      },
+      {
+        "valid_n": 0,
+        "missing_ratio": 1,
+        "selected_n": 6740,
+        "article_type": "all",
+        "article_type_label": "全部类型"
+      },
+      {
+        "valid_n": 0,
+        "missing_ratio": 1,
+        "selected_n": 6740,
+        "article_type": "all",
+        "article_type_label": "全部类型"
+      },
+      {
+        "valid_n": 0,
+        "missing_ratio": 1,
+        "selected_n": 6740,
+        "article_type": "all",
+        "article_type_label": "全部类型"
+      },
+      {
+        "valid_n": 0,
+        "missing_ratio": 1,
+        "selected_n": 6740,
+        "article_type": "all",
+        "article_type_label": "全部类型"
+      }
+    ],
+    "insufficient": true,
+    "brief": "样本不足，暂不能推断趋势",
+    "warning": "当前年度尚未结束；默认不与上一年全年作同比。日期精度、期刊覆盖和文章类型须一致；类型未确认不能算作原创研究。",
+    "monthly": {
+      "2026-01": 582,
+      "2026-02": 551,
+      "2026-03": 701,
+      "2026-04": 656,
+      "2026-05": 647,
+      "2026-06": 704,
+      "2026-07": 754,
+      "2026-08": 698,
+      "2026-09": 774,
+      "2026-10": 673
+    },
+    "topics": {
+      "2026-01|ai": 87,
+      "2026-02|care": 56,
+      "2026-03|care": 90,
+      "2026-03|poverty": 23,
+      "2026-04|poverty": 25,
+      "2026-05|care": 97,
+      "2026-07|care": 95,
+      "2026-09|care": 72,
+      "2026-10|care": 76,
+      "2026-10|poverty": 34,
+      "2026-02|ai": 80,
+      "2026-03|ai": 106,
+      "2026-04|care": 93,
+      "2026-04|climate": 8,
+      "2026-04|ai": 123,
+      "2026-05|ai": 123,
+      "2026-05|poverty": 27,
+      "2026-05|climate": 8,
+      "2026-06|poverty": 24,
+      "2026-06|care": 87,
+      "2026-06|ai": 140,
+      "2026-06|climate": 9,
+      "2026-07|climate": 6,
+      "2026-07|ai": 162,
+      "2026-08|care": 78,
+      "2026-08|climate": 6,
+      "2026-08|poverty": 26,
+      "2026-09|ai": 132,
+      "2026-10|ai": 101,
+      "2026-01|care": 56,
+      "2026-02|poverty": 14,
+      "2026-03|climate": 8,
+      "2026-07|poverty": 33,
+      "2026-10|climate": 9,
+      "2026-08|ai": 151,
+      "2026-02|climate": 4,
+      "2026-09|climate": 13,
+      "2026-01|poverty": 19,
+      "2026-09|poverty": 35,
+      "2026-01|climate": 4
+    },
+    "designs": {},
+    "methods": {},
+    "sources": {},
+    "matrix": {},
+    "samples": {},
+    "evidence": []
+  },
+  "types": [
+    {
+      "article_type": "editorial",
+      "n": 3
+    },
+    {
+      "article_type": "original_research",
+      "n": 132
+    },
+    {
+      "article_type": "review",
+      "n": 39
+    },
+    {
+      "article_type": "unknown",
+      "n": 6566
+    }
+  ],
+  "journals": 42,
+  "retained2025": 11476,
+  "aiUsage": 0,
+  "aiRunning": 0
+}

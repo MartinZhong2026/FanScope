@@ -1,0 +1,1 @@
+Sensitive artifact and credential-pattern scan passed.

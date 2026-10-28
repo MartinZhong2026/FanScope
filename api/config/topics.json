@@ -1,0 +1,6 @@
+[
+  {"id":"climate","label":"灾害、气候与老年健康","short":"气候健康","keywords":["climate","heatwave","heat wave","extreme heat","disaster","emergency preparedness","environmental justice","气候","极端高温","灾害","寒潮","气象","韧性","应急"]},
+  {"id":"care","label":"长期照护与照护劳动","short":"长期照护","keywords":["caregiver","caregiving","informal care","long-term care","long term care","nursing home","dementia","alzheimer","照护","养老","护理员","照料","失智","认知障碍","家属照护"]},
+  {"id":"ai","label":"AI、数字劳动与智能养老","short":"AI与照护","keywords":["artificial intelligence","generative ai","ai","large language model","machine learning","digital health","digital care","robot","chatbot","人工智能","智能养老","数字劳动","数字人","人机协同","智能体"]},
+  {"id":"poverty","label":"社会救助、贫困与家庭政策","short":"社会救助","keywords":["poverty","social assistance","welfare","family policy","inequality","grandparenting","social protection","低保","救助","家庭政策","贫困","代际","不平等","公共政策"]}
+]

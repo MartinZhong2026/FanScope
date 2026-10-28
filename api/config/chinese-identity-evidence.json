@@ -1,0 +1,28 @@
+{
+  "reviewedAt": "2026-10-26",
+  "note": "Identity evidence does not grant article collection permission. Historic profiles do not verify CSSCI 2025-2026 membership. Missing fields remain unverified.",
+  "items": [
+    {"id":"china-social-sciences","publisher":"中国社会科学院；中国社会科学杂志社编辑出版","identityEvidence":["https://sscp.cssn.cn/kbw/zgshkx/","https://sem.tsinghua.edu.cn/info/1154/37673.htm"],"identityNote":"中文刊1002-4921；不以英文版或文摘替代。官网可确认办刊身份，但没有已获许可的批量元数据接口；文章转载使用受限。"},
+    {"id":"candidate-6","cn":"11-1100/C","publisher":"中国社会科学院社会学研究所","identityEvidence":["https://zsyyb.cn/journal/browseissue.htm?journalid=10410","https://shxyj.ajcass.com/"],"identityNote":"1002-5936；首页有2026年目录，文章详情出现JavaScript验证，停止自动采集。"},
+    {"id":"management-world","publisher":"国务院发展研究中心","identityEvidence":["https://portal.issn.org/resource/ISSN/1002-5502","https://fms-journal.net/journals_cn"],"identityNote":"ISSN登记和主办单位可核对；官网超时，不以第三方同名投稿站替代。CN本轮未由可访问的刊方证据复核。"},
+    {"id":"candidate-14","cn":"23-1523/F","publisher":"哈尔滨工业大学","identityEvidence":["https://cssrac.nju.edu.cn/xscb/lyqk/20200524/i83480.html","https://ncpssd.org/journal/details?gch=87267X"],"identityNote":"1672-6162；历史南大身份页与文献中心相符，不能据2020年页面确认2025-2026排名。官网接口返回TOKEN无效。"},
+    {"id":"soc-security-cn","cn":"10-1472/C","publisher":"中国社会保障学会","identityEvidence":["https://m.ncpssd.cn/journal/details?gch=83815X&langType=1&nav=1","https://www.caoss.org.cn/upload/file/26030515220553.pdf"],"identityNote":"ISSN2096-3211；刊方征稿材料不等于批量采集授权。"},
+    {"id":"soc-review-cn","cn":"10-1098/C","publisher":"中国人民大学社会学理论与方法研究中心、中国人民大学书报资料中心","identityEvidence":["https://src.ruc.edu.cn/CN/home","https://portal.issn.org/resource/ISSN/2095-5154"],"identityNote":"刊名、ISSN、CN可核对；本机HTTPS证书验证失败，未关闭证书校验。"},
+    {"id":"public-admin-cn","cn":"10-1653/D0","publisher":"清华大学出版社","identityEvidence":["https://www.sciopen.com/journal/2096-7713"],"identityNote":"2096-7713对应China Public Administration Review，刊方标明Publishing Language: Chinese。Crossref题名为英文，保持供应商原始题名，不自行翻译成中文原题。"},
+    {"id":"candidate-1","cn":"11-1489/C","publisher":"中国人民大学","identityEvidence":["https://rkyj.ruc.edu.cn/CN/1000-6087/home.shtml","https://rkyj.ruc.edu.cn/CN/Y2026/V50/I5/3"],"identityNote":"1000-6087及文章citation元数据精确匹配；仅提取书目事实，不保留全文。"},
+    {"id":"candidate-2","identityEvidence":["https://www.ncpssd.org/journal/details.aspx?gch=97725X&langType=1&nav=1"],"identityNote":"文献中心确认1000-7881；候选官网域名未证实，不作为自动采集入口。"},
+    {"id":"candidate-3","cn":"11-1115/F","publisher":"首都经济贸易大学","identityEvidence":["https://cssrac.nju.edu.cn/xscb/lyqk/20200524/i82868.html"],"identityNote":"1000-4149；南大历史刊物简介可核身份，不能核2025-2026年度资格或近期论文覆盖。"},
+    {"id":"candidate-4","cn":"22-1017/C","publisher":"吉林大学","identityEvidence":["https://nasa.jlu.edu.cn/info/1086/2323.htm","https://hssra.jlu.edu.cn/xsqk/rkxk.htm"],"identityNote":"历史办刊信息；近期自动来源和元数据批量许可未核实。"},
+    {"id":"candidate-5","identityEvidence":["https://ncpssd.org/journal/secure/details?params=WVh3R1E3NFRYcjNaQmxhcGNGc3RnZHJXZVFyWlgzQktXVFpOOUNEdTZzbkttMDlEam5yWEJORTBSZGQvTy9oNw"],"identityNote":"文献中心确认1674-1668；不与英文China Population and Development Studies混淆。"},
+    {"id":"candidate-7","cn":"31-1123/C","publisher":"上海大学","identityEvidence":["https://www.society.shu.edu.cn/CN/1004-8804/home.shtml"],"identityNote":"1004-8804；官方citation_journal_title为社会杂志，登记为精确别名。遵守noarchive，不存整页HTML。"},
+    {"id":"candidate-9","cn":"10-1217/C","publisher":"中国社会科学院社会发展战略研究院（2020年南大简介；现主办机构名称待更新核验）","identityEvidence":["https://cssrac.nju.edu.cn/xscb/lyqk/20200524/i82368.html"],"identityNote":"2095-7580；历史身份与当前来源许可分开。"},
+    {"id":"candidate-10","cn":"10-1896/C","publisher":"中国人民大学","identityEvidence":["https://shjs.ruc.edu.cn/CN/home","https://news.ruc.edu.cn/1959817134478696450.html"],"cssciPublisherClaim":{"kind":"source","year":"2025-2026","url":"https://news.ruc.edu.cn/1959817134478696450.html"},"identityNote":"纠正发现输入中的ISSN误写：正式ISSN为2095-8641。刊方有2025-2026来源期刊入选声明；系统仍等待南京大学年度原文人工审核。"},
+    {"id":"candidate-11","identityEvidence":["https://ci.nii.ac.jp/ncid/AA12854428"],"identityNote":"书目目录存在；本轮未取得足够的现行刊方身份及批量元数据许可证据。"},
+    {"id":"candidate-12","identityEvidence":[],"identityNote":"2095-0810作为精确ISSN探测输入；无公开接口匹配来源，CN、主办与官网本轮待核。"},
+    {"id":"candidate-16","cn":"10-1062/D","publisher":"中国人民大学","identityEvidence":["https://ggglyzc.ruc.edu.cn/CN/column/column1.shtml"],"identityNote":"2095-4026；本机访问证书验证失败，不能自动采集。"},
+    {"id":"candidate-17","cn":"11-1145/D","identityEvidence":["https://iat.ustc.edu.cn/u/cms/xjjs/202105/220349347x2f.pdf"],"identityNote":"历史机构目录确认1006-0863，现官网证书过期；没有降级HTTP或忽略证书。"},
+    {"id":"candidate-18","identityEvidence":[],"identityNote":"1007-9092为发现输入；候选官网证书主机名不匹配，近期身份与批量授权待刊方确认。"},
+    {"id":"candidate-19","publisher":"中国科学院文献情报中心","identityEvidence":["https://www.las.cas.cn/qk/202112/t20211202_6286197.html"],"identityNote":"1672-7223；机构介绍可作身份线索，没有据此推断批量文章接口已开放。"},
+    {"id":"candidate-20","publisher":"中国软科学研究会","identityEvidence":["https://cssrac.nju.edu.cn/xscb/lyqk/20200524/i83486.html","https://www.cssm.com.cn/zgrkx/home"],"identityNote":"身份冲突须人工处理：南大历史页/机构目录为1002-9753，当前候选官网页脚却写1005-0566。两者不得自动视为同刊，未导入任何记录。"}
+  ]
+}

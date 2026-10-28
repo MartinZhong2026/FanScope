@@ -1,0 +1,45 @@
+import test,{after} from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import os from 'node:os';
+process.env.DATABASE_PATH=path.join(os.tmpdir(),`fanscope-stage4-${process.pid}.sqlite`);
+const {db}=await import('../src/db.mjs');
+const {parseJournalCandidates,discoverJournalSource}=await import('../src/journal-onboarding.mjs');
+const {queueJournalDiscoveries,getJournalDiscoveries,updateJournalDiscovery,startAllJournalDiscoveries,discoveryTick,recoverJournalDiscoveries}=await import('../src/journal-discovery.mjs');
+after(()=>{db.close();for(const ext of ['','-wal','-shm'])fs.rmSync(process.env.DATABASE_PATH+ext,{force:true});});
+const journal=db.prepare("SELECT id,title FROM journals WHERE enabled=0 AND market='international' LIMIT 1").get();
+const article=(doi,title=journal.title,issn='1234-5679')=>({DOI:doi,ISSN:[issn],type:'journal-article','container-title':[title]});
+const fixture={message:{items:[article('10.1000/alpha'),article('10.1000/beta'),article('10.1000/alpha'),article('10.1000/other','Unrelated Journal','9999-9999')]}};
+test('matches Crossref journal identity and requires multiple different DOI samples',()=>{
+ const out=parseJournalCandidates(fixture,journal.title);
+ assert.equal(out.length,1);assert.equal(out[0].issn,'1234-5679');assert.equal(out[0].evidenceCount,2);
+ assert.deepEqual(parseJournalCandidates({message:{items:[article('10.1000/a','Wrong Journal')]}},journal.title),[]);
+ assert.deepEqual(parseJournalCandidates({message:{items:[article('10.1000/a')]}},journal.title),[]);
+});
+test('discovery uses Crossref fixed endpoint and does not activate source',async()=>{
+ let target='';const r=await discoverJournalSource(journal.id,async url=>{target=url;return fixture;});
+ assert.match(target,/^https:\/\/api\.crossref\.org\/works\?/);
+ assert.match(target,/query\.bibliographic=/);assert.equal(r.candidates.length,1);
+ assert.equal(db.prepare('SELECT enabled FROM journals WHERE id=?').get(journal.id).enabled,0);
+ await assert.rejects(discoverJournalSource('not-real',async()=>fixture),/Unknown journal/);
+});
+test('operator-triggered durable journal discovery jobs pause, start, resume and persist evidence',async()=>{
+ const created=queueJournalDiscoveries({ids:[journal.id]});assert.equal(created.created,1);
+ assert.equal(getJournalDiscoveries().items[0].status,'paused');
+ assert.equal(await discoveryTick(async()=>fixture).then(x=>x.status),'idle');
+ assert.equal(startAllJournalDiscoveries().started,1);
+ const completed=await discoveryTick(async()=>fixture);assert.equal(completed.status,'completed');
+ assert.equal(getJournalDiscoveries().items[0].candidates[0].issn,'1234-5679');
+ assert.equal(db.prepare('SELECT enabled FROM journals WHERE id=?').get(journal.id).enabled,0);
+ await assert.rejects(async()=>updateJournalDiscovery(created.items[0].id,'start'),/state/);
+ const retry=queueJournalDiscoveries({ids:[journal.id]});updateJournalDiscovery(retry.items[0].id,'start');
+ await discoveryTick(async()=>{throw Error('upstream 503')});
+ assert.equal(getJournalDiscoveries().items.find(x=>x.id===retry.items[0].id).status,'failed');
+ updateJournalDiscovery(retry.items[0].id,'retry');
+ const job=await discoveryTick(async()=>fixture);assert.equal(job.status,'completed');
+ const interrupted=queueJournalDiscoveries({ids:[journal.id]});
+ db.prepare("UPDATE journal_discovery_jobs SET status='running' WHERE id=?").run(interrupted.items[0].id);
+ recoverJournalDiscoveries();
+ assert.equal(getJournalDiscoveries().items.find(x=>x.id===interrupted.items[0].id).status,'queued');
+});

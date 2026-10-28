@@ -1,0 +1,21 @@
+# Proposed maintenance/acceptance overlay. Do not apply without release approval.
+# Keeps the base Compose volume, ports, limits and architecture.
+services:
+  fanscope-api:
+    image: ${FANSCOPE_RELEASE_IMAGE:?Set the verified release image tag or digest}
+    environment:
+      NODE_ENV: production
+      FANSCOPE_RELEASE_HTTP_ONLY: 'true'
+      SCAN_ON_START: 'false'
+      AUTO_AI_ANALYSIS: 'false'
+      MAX_AI_PER_SCAN: '0'
+      CHINESE_AUTH_IMPORT_ENABLED: 'false'
+      OPENALEX_ENABLED: 'false'
+      OPENALEX_API_KEY: ''
+      DEEPSEEK_API_KEY: ''
+      RESEND_API_KEY: ''
+    # Explicit HTTP-only entry; no recovery, timers, writes or paid requests.
+    command:
+      - node
+      - --experimental-sqlite
+      - src/release-server.mjs

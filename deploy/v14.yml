@@ -1,0 +1,16 @@
+# Existing project/volume preserved. Real AI requires explicit flag AND resume.
+services:
+  fanscope-api:
+    image: ${FANSCOPE_RELEASE_IMAGE:?Set reviewed V1.4 image}
+    environment:
+      NODE_ENV: production
+      FANSCOPE_V14_RUNTIME: 'true'
+      FANSCOPE_ENGLISH_MONITOR: 'true'
+      FANSCOPE_AI_AUTO_ENABLED: ${FANSCOPE_AI_AUTO_ENABLED:-false}
+      AI_AUTO_INTERVAL_SECONDS: '15'
+      SCAN_ON_START: 'false'
+      RESEND_API_KEY: ''
+      OPENALEX_API_KEY: ''
+      CHINESE_AUTH_IMPORT_ENABLED: 'false'
+    command: [node, --experimental-sqlite, src/v14-server.mjs]
+    stop_grace_period: 3m

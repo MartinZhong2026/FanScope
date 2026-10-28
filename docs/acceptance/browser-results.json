@@ -1,0 +1,17 @@
+{
+  "viewports": [
+    1440,
+    1024,
+    390
+  ],
+  "flows": [
+    "radar",
+    "seven ECharts",
+    "lab login",
+    "project milestone/member",
+    "manuscript edit and Excel preview/confirm",
+    "text paste AI proposal and human approval"
+  ],
+  "pageErrors": [],
+  "data": "local synthetic acceptance only"
+}

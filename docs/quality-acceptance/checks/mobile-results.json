@@ -1,0 +1,408 @@
+{
+  "passed": 99,
+  "failed": 0,
+  "results": [
+    {
+      "name": "320-light dashboard / single dock / touch targets / overflow",
+      "status": "pass"
+    },
+    {
+      "name": "320-light literature / systems / filters / detail / history / scroll / pagination",
+      "status": "pass"
+    },
+    {
+      "name": "320-light trend categories / real distinct charts / coverage / evidence",
+      "status": "pass"
+    },
+    {
+      "name": "320-light journal evaluation systems remain separate",
+      "status": "pass"
+    },
+    {
+      "name": "320-light account / admin access / failed and valid login",
+      "status": "pass"
+    },
+    {
+      "name": "320-light project facts / details / history / native dialog / manuscript cards",
+      "status": "pass"
+    },
+    {
+      "name": "320-light documents / file and form drafts / AI suggestions / clear review decisions",
+      "status": "pass"
+    },
+    {
+      "name": "320-dark dashboard / single dock / touch targets / overflow",
+      "status": "pass"
+    },
+    {
+      "name": "320-dark literature / systems / filters / detail / history / scroll / pagination",
+      "status": "pass"
+    },
+    {
+      "name": "320-dark trend categories / real distinct charts / coverage / evidence",
+      "status": "pass"
+    },
+    {
+      "name": "320-dark journal evaluation systems remain separate",
+      "status": "pass"
+    },
+    {
+      "name": "320-dark account / admin access / failed and valid login",
+      "status": "pass"
+    },
+    {
+      "name": "320-dark project facts / details / history / native dialog / manuscript cards",
+      "status": "pass"
+    },
+    {
+      "name": "320-dark documents / file and form drafts / AI suggestions / clear review decisions",
+      "status": "pass"
+    },
+    {
+      "name": "375-light dashboard / single dock / touch targets / overflow",
+      "status": "pass"
+    },
+    {
+      "name": "375-light literature / systems / filters / detail / history / scroll / pagination",
+      "status": "pass"
+    },
+    {
+      "name": "375-light trend categories / real distinct charts / coverage / evidence",
+      "status": "pass"
+    },
+    {
+      "name": "375-light journal evaluation systems remain separate",
+      "status": "pass"
+    },
+    {
+      "name": "375-light account / admin access / failed and valid login",
+      "status": "pass"
+    },
+    {
+      "name": "375-light project facts / details / history / native dialog / manuscript cards",
+      "status": "pass"
+    },
+    {
+      "name": "375-light documents / file and form drafts / AI suggestions / clear review decisions",
+      "status": "pass"
+    },
+    {
+      "name": "375-dark dashboard / single dock / touch targets / overflow",
+      "status": "pass"
+    },
+    {
+      "name": "375-dark literature / systems / filters / detail / history / scroll / pagination",
+      "status": "pass"
+    },
+    {
+      "name": "375-dark trend categories / real distinct charts / coverage / evidence",
+      "status": "pass"
+    },
+    {
+      "name": "375-dark journal evaluation systems remain separate",
+      "status": "pass"
+    },
+    {
+      "name": "375-dark account / admin access / failed and valid login",
+      "status": "pass"
+    },
+    {
+      "name": "375-dark project facts / details / history / native dialog / manuscript cards",
+      "status": "pass"
+    },
+    {
+      "name": "375-dark documents / file and form drafts / AI suggestions / clear review decisions",
+      "status": "pass"
+    },
+    {
+      "name": "390-light dashboard / single dock / touch targets / overflow",
+      "status": "pass"
+    },
+    {
+      "name": "390-light literature / systems / filters / detail / history / scroll / pagination",
+      "status": "pass"
+    },
+    {
+      "name": "390-light trend categories / real distinct charts / coverage / evidence",
+      "status": "pass"
+    },
+    {
+      "name": "390-light journal evaluation systems remain separate",
+      "status": "pass"
+    },
+    {
+      "name": "390-light account / admin access / failed and valid login",
+      "status": "pass"
+    },
+    {
+      "name": "390-light project facts / details / history / native dialog / manuscript cards",
+      "status": "pass"
+    },
+    {
+      "name": "390-light documents / file and form drafts / AI suggestions / clear review decisions",
+      "status": "pass"
+    },
+    {
+      "name": "390-light safe area / text scaling / rotation / virtual keyboard",
+      "status": "pass"
+    },
+    {
+      "name": "390-dark dashboard / single dock / touch targets / overflow",
+      "status": "pass"
+    },
+    {
+      "name": "390-dark literature / systems / filters / detail / history / scroll / pagination",
+      "status": "pass"
+    },
+    {
+      "name": "390-dark trend categories / real distinct charts / coverage / evidence",
+      "status": "pass"
+    },
+    {
+      "name": "390-dark journal evaluation systems remain separate",
+      "status": "pass"
+    },
+    {
+      "name": "390-dark account / admin access / failed and valid login",
+      "status": "pass"
+    },
+    {
+      "name": "390-dark project facts / details / history / native dialog / manuscript cards",
+      "status": "pass"
+    },
+    {
+      "name": "390-dark documents / file and form drafts / AI suggestions / clear review decisions",
+      "status": "pass"
+    },
+    {
+      "name": "430-light dashboard / single dock / touch targets / overflow",
+      "status": "pass"
+    },
+    {
+      "name": "430-light literature / systems / filters / detail / history / scroll / pagination",
+      "status": "pass"
+    },
+    {
+      "name": "430-light trend categories / real distinct charts / coverage / evidence",
+      "status": "pass"
+    },
+    {
+      "name": "430-light journal evaluation systems remain separate",
+      "status": "pass"
+    },
+    {
+      "name": "430-light account / admin access / failed and valid login",
+      "status": "pass"
+    },
+    {
+      "name": "430-light project facts / details / history / native dialog / manuscript cards",
+      "status": "pass"
+    },
+    {
+      "name": "430-light documents / file and form drafts / AI suggestions / clear review decisions",
+      "status": "pass"
+    },
+    {
+      "name": "430-dark dashboard / single dock / touch targets / overflow",
+      "status": "pass"
+    },
+    {
+      "name": "430-dark literature / systems / filters / detail / history / scroll / pagination",
+      "status": "pass"
+    },
+    {
+      "name": "430-dark trend categories / real distinct charts / coverage / evidence",
+      "status": "pass"
+    },
+    {
+      "name": "430-dark journal evaluation systems remain separate",
+      "status": "pass"
+    },
+    {
+      "name": "430-dark account / admin access / failed and valid login",
+      "status": "pass"
+    },
+    {
+      "name": "430-dark project facts / details / history / native dialog / manuscript cards",
+      "status": "pass"
+    },
+    {
+      "name": "430-dark documents / file and form drafts / AI suggestions / clear review decisions",
+      "status": "pass"
+    },
+    {
+      "name": "768-light dashboard / single dock / touch targets / overflow",
+      "status": "pass"
+    },
+    {
+      "name": "768-light literature / systems / filters / detail / history / scroll / pagination",
+      "status": "pass"
+    },
+    {
+      "name": "768-light trend categories / real distinct charts / coverage / evidence",
+      "status": "pass"
+    },
+    {
+      "name": "768-light journal evaluation systems remain separate",
+      "status": "pass"
+    },
+    {
+      "name": "768-light account / admin access / failed and valid login",
+      "status": "pass"
+    },
+    {
+      "name": "768-light project facts / details / history / native dialog / manuscript cards",
+      "status": "pass"
+    },
+    {
+      "name": "768-light documents / file and form drafts / AI suggestions / clear review decisions",
+      "status": "pass"
+    },
+    {
+      "name": "768-dark dashboard / single dock / touch targets / overflow",
+      "status": "pass"
+    },
+    {
+      "name": "768-dark literature / systems / filters / detail / history / scroll / pagination",
+      "status": "pass"
+    },
+    {
+      "name": "768-dark trend categories / real distinct charts / coverage / evidence",
+      "status": "pass"
+    },
+    {
+      "name": "768-dark journal evaluation systems remain separate",
+      "status": "pass"
+    },
+    {
+      "name": "768-dark account / admin access / failed and valid login",
+      "status": "pass"
+    },
+    {
+      "name": "768-dark project facts / details / history / native dialog / manuscript cards",
+      "status": "pass"
+    },
+    {
+      "name": "768-dark documents / file and form drafts / AI suggestions / clear review decisions",
+      "status": "pass"
+    },
+    {
+      "name": "1440-light dashboard / single dock / touch targets / overflow",
+      "status": "pass"
+    },
+    {
+      "name": "1440-light literature / systems / filters / detail / history / scroll / pagination",
+      "status": "pass"
+    },
+    {
+      "name": "1440-light trend categories / real distinct charts / coverage / evidence",
+      "status": "pass"
+    },
+    {
+      "name": "1440-light journal evaluation systems remain separate",
+      "status": "pass"
+    },
+    {
+      "name": "1440-light account / admin access / failed and valid login",
+      "status": "pass"
+    },
+    {
+      "name": "1440-light project facts / details / history / native dialog / manuscript cards",
+      "status": "pass"
+    },
+    {
+      "name": "1440-light documents / file and form drafts / AI suggestions / clear review decisions",
+      "status": "pass"
+    },
+    {
+      "name": "1440-dark dashboard / single dock / touch targets / overflow",
+      "status": "pass"
+    },
+    {
+      "name": "1440-dark literature / systems / filters / detail / history / scroll / pagination",
+      "status": "pass"
+    },
+    {
+      "name": "1440-dark trend categories / real distinct charts / coverage / evidence",
+      "status": "pass"
+    },
+    {
+      "name": "1440-dark journal evaluation systems remain separate",
+      "status": "pass"
+    },
+    {
+      "name": "1440-dark account / admin access / failed and valid login",
+      "status": "pass"
+    },
+    {
+      "name": "1440-dark project facts / details / history / native dialog / manuscript cards",
+      "status": "pass"
+    },
+    {
+      "name": "1440-dark documents / file and form drafts / AI suggestions / clear review decisions",
+      "status": "pass"
+    },
+    {
+      "name": "390 actual API: review edits survive 503, retry approves/rejects, document upload works",
+      "status": "pass"
+    },
+    {
+      "name": "member data / controls / private notes / source-file permissions",
+      "status": "pass"
+    },
+    {
+      "name": "admin data / controls / private notes / source-file permissions",
+      "status": "pass"
+    },
+    {
+      "name": "other data / controls / private notes / source-file permissions",
+      "status": "pass"
+    },
+    {
+      "name": "mentor data / controls / private notes / source-file permissions",
+      "status": "pass"
+    },
+    {
+      "name": "same browser: logout and role switch clear private record caches",
+      "status": "pass"
+    },
+    {
+      "name": "network error exposes working retry",
+      "status": "pass"
+    },
+    {
+      "name": "direct detail URLs: root back has no loop; theme controls and system ECharts contrast update",
+      "status": "pass"
+    },
+    {
+      "name": "320 WebKit Safari: key routes / layouts / login / native dialog",
+      "status": "pass"
+    },
+    {
+      "name": "375 WebKit Safari: key routes / layouts / login / native dialog",
+      "status": "pass"
+    },
+    {
+      "name": "390 WebKit Safari: key routes / layouts / login / native dialog",
+      "status": "pass"
+    },
+    {
+      "name": "430 WebKit Safari: key routes / layouts / login / native dialog",
+      "status": "pass"
+    },
+    {
+      "name": "768 WebKit Safari: key routes / layouts / login / native dialog",
+      "status": "pass"
+    },
+    {
+      "name": "1440 WebKit Safari: key routes / layouts / login / native dialog",
+      "status": "pass"
+    }
+  ],
+  "pageErrors": [],
+  "unexpectedAdminMutations": [],
+  "notes": [
+    "Screenshots use labelled isolated test fixtures, never production data.",
+    "Safe area and virtual keyboard tested with emulated insets / visualViewport; physical iOS/Android devices remain outside headless coverage."
+  ]
+}

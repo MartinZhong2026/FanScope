@@ -1,0 +1,203 @@
+{
+  "date": "2026-10-25",
+  "reportTimezone": "Asia/Taipei",
+  "base": "13e7d6c5d76952ba9e7002fcbd3bdf42a4e2aaad",
+  "originalPRHead": "e0fc7068e2258633679ccdf930096a098b80d5a6",
+  "fixedSourceCommit": "5951cd1f4d77142b3f3d02d9b7e8355f33424a78",
+  "tests": {
+    "node22": {
+      "pass": 70,
+      "fail": 0
+    },
+    "node24": {
+      "pass": 70,
+      "fail": 0
+    },
+    "docker420mb": {
+      "pass": 14,
+      "fail": 0
+    },
+    "browser": {
+      "pass": 54,
+      "fail": 0
+    }
+  },
+  "screenshots": [
+    {
+      "path": "screenshots/1440-alerts.png",
+      "sha256": "16f21c1d1a06ce2f41c6a65d8a5c660e9bd7435c02aa3d3cec404eeded361314"
+    },
+    {
+      "path": "screenshots/1440-feed.png",
+      "sha256": "dd8fa27031da18e72f95cc2912078965f3856b729f74c09d4327f5b669033a42"
+    },
+    {
+      "path": "screenshots/1440-health.png",
+      "sha256": "9ac810da076cb3cb103e0b6f45a8a53fe204a3029cd3b0a8cb2a6f67a6f89a1e"
+    },
+    {
+      "path": "screenshots/1440-home-dark.png",
+      "sha256": "45a626b5924763a36ea83c8ab87c9f41dd023a8e61d1bf57bbacc4c724354a29"
+    },
+    {
+      "path": "screenshots/1440-home-light.png",
+      "sha256": "61f33a2acfd89b76648d946f5784fe9eb9651541c4cbb3f43f0bc90b3f6e9320"
+    },
+    {
+      "path": "screenshots/1440-home.png",
+      "sha256": "71514178104340dcf9eaaf53a564b3d5e1d81bcac478c722e33400b10a9cc3b8"
+    },
+    {
+      "path": "screenshots/1440-journals.png",
+      "sha256": "140a461f165d635e72d0e22059d8356172132fa9846f70bf92d365f674183714"
+    },
+    {
+      "path": "screenshots/1440-lab-documents.png",
+      "sha256": "2583a18927f30350e2f709a37fed5f2ad9058a9162d988a3d6ec9eae723f5fa5"
+    },
+    {
+      "path": "screenshots/1440-lab-modal.png",
+      "sha256": "3766cc954cf7c7305fd4c6ca5a840328ea689dfa33ab8934f10d1aba11e51f3b"
+    },
+    {
+      "path": "screenshots/1440-lab-project.png",
+      "sha256": "cadae66706d629bd1cfa96f42031762f31628bc738b999128dac5a0bb332a1c0"
+    },
+    {
+      "path": "screenshots/1440-lab.png",
+      "sha256": "f1ff5a4c90377b695f3312e576f50da4e254aae340647c26581d36b197aa22f4"
+    },
+    {
+      "path": "screenshots/1440-offline.png",
+      "sha256": "b4537c4903a5703cbb4797291e9fb94f0298ce08e3ca3df195c8efc176813b17"
+    },
+    {
+      "path": "screenshots/1440-old-api.png",
+      "sha256": "863866f0bb8c23459d27a5dfa9a30ca695ee7abe32644b01f8c5061e03bfa153"
+    },
+    {
+      "path": "screenshots/1440-operations.png",
+      "sha256": "fec1009ab27479dbbc5355c586ee0340d6fcad47890495d99636feac1d6f1198"
+    },
+    {
+      "path": "screenshots/1440-sources.png",
+      "sha256": "58742a45ce943d348976caeec1f7347380ffe905a62c936b2426384d6a781ee8"
+    },
+    {
+      "path": "screenshots/1440-trends.png",
+      "sha256": "424f60ee950c24cad01c19e30e0f3f3cc336e15d128dd5a80ee23d98dffdef73"
+    },
+    {
+      "path": "screenshots/390-alerts.png",
+      "sha256": "2d811124241ad35ee56fda7825ed71a28ff57c68201747012625b9ca051a93fb"
+    },
+    {
+      "path": "screenshots/390-feed.png",
+      "sha256": "c6cc8c93ced302da8720319326beb944d97f527323fd40cdb25846ea4ae75810"
+    },
+    {
+      "path": "screenshots/390-health.png",
+      "sha256": "f7c6cc04cdbdd40feb41c2dd828bb013700cebe8e84bffd15912fdd3e5213165"
+    },
+    {
+      "path": "screenshots/390-home-dark.png",
+      "sha256": "4d78f94c9c3d041ba08ae74fbda9f392fa991d12a91f1a4692ac33b9a5f826b0"
+    },
+    {
+      "path": "screenshots/390-home-light.png",
+      "sha256": "1b2c436da80042730e222b5294a579a9a4025568369d553942394df48423ff7d"
+    },
+    {
+      "path": "screenshots/390-home.png",
+      "sha256": "4d78f94c9c3d041ba08ae74fbda9f392fa991d12a91f1a4692ac33b9a5f826b0"
+    },
+    {
+      "path": "screenshots/390-journals.png",
+      "sha256": "3bd07e26dd7777c839801de055057ecaa20ef0e1774ee450a80e2f1f6fc247ef"
+    },
+    {
+      "path": "screenshots/390-lab-documents.png",
+      "sha256": "0c8cc3daad7a8c4a1e233e453560448ba266df13a11ebf3a5b6935a7dbf93813"
+    },
+    {
+      "path": "screenshots/390-lab-modal.png",
+      "sha256": "f5401fc3591d98be10f239f7b10684def3471e006d7327581e4c5f58f6b3f873"
+    },
+    {
+      "path": "screenshots/390-lab-project.png",
+      "sha256": "fe9d5715fd3d541d54f70023321bc2573547d56f08327dd7004e06c7f4a7593d"
+    },
+    {
+      "path": "screenshots/390-lab.png",
+      "sha256": "c97357a1a038a1ed3e2b4af5271652ac8c142cfb36705183de388ab602d8a412"
+    },
+    {
+      "path": "screenshots/390-operations.png",
+      "sha256": "a14afda4442117a6728d64625d30e9c554efe411e44d7b0f9548a7f590aa59c6"
+    },
+    {
+      "path": "screenshots/390-sources.png",
+      "sha256": "643567cc54346039f3acebb91ddf5dc615135e8eba59355886262d802cfa7f75"
+    },
+    {
+      "path": "screenshots/390-trends.png",
+      "sha256": "9d2b3d54795a9ed083c4c517037af3de9ff34a280f33d72c2d5395ef8872c48d"
+    },
+    {
+      "path": "screenshots/768-alerts.png",
+      "sha256": "d48497805bf3911c84d31080df25a803ae077d5154f4fb37681012de503d4dc8"
+    },
+    {
+      "path": "screenshots/768-feed.png",
+      "sha256": "8740bac2990252174a736eaf87c35b8d8de9962858e88cf096748d64e30e79d8"
+    },
+    {
+      "path": "screenshots/768-health.png",
+      "sha256": "a99eeca8d4b3d752916931d63ee6613fa31166e18d5eefd65b844f8a441baf3d"
+    },
+    {
+      "path": "screenshots/768-home-dark.png",
+      "sha256": "381df348117a2051cd0f3ad9bfcd088decc8b7ced34c8012f7090b21f3693a3f"
+    },
+    {
+      "path": "screenshots/768-home-light.png",
+      "sha256": "077e307a781fc309645b4253b809b28db7e1724e456f6ff67cf8231d0613cd66"
+    },
+    {
+      "path": "screenshots/768-home.png",
+      "sha256": "56814c03101edf421dd9500fccf5d65a278bbad4046147267c247a0f4a0657fc"
+    },
+    {
+      "path": "screenshots/768-journals.png",
+      "sha256": "979f66169c5219fd641041b5d65781a1d77d5d797c9d78babb984b521b2afd3c"
+    },
+    {
+      "path": "screenshots/768-lab-documents.png",
+      "sha256": "4d2d4168d8b541defc565d4c0bea595402c7a122fb34ef0985f63a8063476309"
+    },
+    {
+      "path": "screenshots/768-lab-modal.png",
+      "sha256": "7aa86392f74571f7ee1f955f798d19aab19c2748e4dcd909b566f01538f8d09f"
+    },
+    {
+      "path": "screenshots/768-lab-project.png",
+      "sha256": "94298edbf949096df67a83cd43ac076ed7f6f6e37677ef9fbf4822f197021dcb"
+    },
+    {
+      "path": "screenshots/768-lab.png",
+      "sha256": "4fb9a8ec2cd2fd841deee2e7fa223646a31cd79b6cf3f2c66b3179ad37f7f0b2"
+    },
+    {
+      "path": "screenshots/768-operations.png",
+      "sha256": "c4fe47827349ab91f720748d8f9f04731baa84b577865f4d240962785897e275"
+    },
+    {
+      "path": "screenshots/768-sources.png",
+      "sha256": "a93de7b5a74baad4b1804bd45979d624b9d87e2b6e4a540a28b8753650d4d96d"
+    },
+    {
+      "path": "screenshots/768-trends.png",
+      "sha256": "0a4f12a3314eb9ddb64431363bfb9317b2337f601b35aa4c03053059e9ab886c"
+    }
+  ]
+}

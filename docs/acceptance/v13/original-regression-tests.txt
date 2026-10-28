@@ -1,0 +1,236 @@
+TAP version 13
+# (node:5013) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: 100-paper batch: pause, resume, usage, concurrent duplicate batch cache and changed abstract
+ok 1 - 100-paper batch: pause, resume, usage, concurrent duplicate batch cache and changed abstract
+  ---
+  duration_ms: 188.004985
+  type: 'test'
+  ...
+# Subtest: network failures reserve budget durably and cannot spend again after recovery
+not ok 2 - network failures reserve budget durably and cannot spend again after recovery
+  ---
+  duration_ms: 6.106749
+  type: 'test'
+  location: '/workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:42:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    null !== 0.0272
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0.0272
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:45:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: invalid AI JSON still records returned token costs; explicit failure retry is paused
+not ok 3 - invalid AI JSON still records returned token costs; explicit failure retry is paused
+  ---
+  duration_ms: 9.68732
+  type: 'test'
+  location: '/workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:50:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+
+      assert.ok(batchDetail(b.id).usage.requests>=1)
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:53:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: removed, infinite or negative pricing blocks resumed workers; unknown usage is conservative
+not ok 4 - removed, infinite or negative pricing blocks resumed workers; unknown usage is conservative
+  ---
+  duration_ms: 1.321082
+  type: 'test'
+  location: '/workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:58:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'running'
+    - 'paused'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'paused'
+  actual: 'running'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:60:105)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: cancelled work never invokes AI; interrupted successful work recovers using cache
+not ok 5 - cancelled work never invokes AI; interrupted successful work recovers using cache
+  ---
+  duration_ms: 0.290518
+  type: 'test'
+  location: '/workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:64:1'
+  failureType: 'testCodeFailure'
+  error: 'Configure AI_INPUT_CNY_PER_M_TOKENS and AI_OUTPUT_CNY_PER_M_TOKENS before using a CNY budget'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    bad (file:///workspace/FanScope/work/pr-original/api/src/analysis-batches.mjs:10:47)
+    createBatch (file:///workspace/FanScope/work/pr-original/api/src/analysis-batches.mjs:35:130)
+    TestContext.<anonymous> (file:///workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:65:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: source verification handles real HTML entities, publisher and duplicate DOI evidence
+not ok 6 - source verification handles real HTML entities, publisher and duplicate DOI evidence
+  ---
+  duration_ms: 0.617511
+  type: 'test'
+  location: '/workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:69:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    false !== true
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:71:84)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: wrong ISSN checksum, malformed DOI, foreign journal and upstream failures never enable a journal
+not ok 7 - wrong ISSN checksum, malformed DOI, foreign journal and upstream failures never enable a journal
+  ---
+  duration_ms: 0.449207
+  type: 'test'
+  location: '/workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:74:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:75:2)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: backfill pause/cancel during HTTP stops at a committed page and never overwrites cancellation
+not ok 8 - backfill pause/cancel during HTTP stops at a committed page and never overwrites cancellation
+  ---
+  duration_ms: 1507.305332
+  type: 'test'
+  location: '/workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:83:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    4 !== 1
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 4
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:87:40)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: backfill excludes another journal and does not alter daily checkpoints or call DeepSeek
+not ok 9 - backfill excludes another journal and does not alter daily checkpoints or call DeepSeek
+  ---
+  duration_ms: 1.90906
+  type: 'test'
+  location: '/workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:91:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    1 !== 0
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:95:9)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# HTTP error: Input buffers must have the same byte length
+# Subtest: all administrator route families reject missing/wrong credentials and CSV import is bounded/idempotent
+not ok 10 - all administrator route families reject missing/wrong credentials and CSV import is bounded/idempotent
+  ---
+  duration_ms: 28.48693
+  type: 'test'
+  location: '/workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:97:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    journal-source/discover
+
+    500 !== 401
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 401
+  actual: 500
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:101:357)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: malformed pagination never advances processed count across repeated retries
+not ok 11 - malformed pagination never advances processed count across repeated retries
+  ---
+  duration_ms: 1.110294
+  type: 'test'
+  location: '/workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:110:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    1 !== 0
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 1
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/FanScope/work/pr-original/api/test/release-v13.test.mjs:115:10)
+    process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 1
+# fail 10
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2374.202933
