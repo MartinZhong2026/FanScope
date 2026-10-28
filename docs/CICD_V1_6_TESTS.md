@@ -60,3 +60,9 @@ API 全量中继续执行既有的生产模式保护矩阵：7 类中文管理�
 扩展验收首次暴露市场切换后读取旧 DOM 的异步时序问题；改为等待匹配 market/q 参数的 articles HTTP 响应再判断列表，重跑通过，没有增加固定延时、删断言或跳过 Chinese。原 Mobile、Desktop、WebKit 和 API CI 配置保留不变。
 
 `git diff --check`、敏感信息扫描、Python 编译和 actionlint 均通过。上述是实际 Linux 本地结果，不能标作新的 GitHub Actions 成功；Push/远端验证需要先完成 Git Credential Manager 认证，旧两次失败记录不会因本地修复自动改变。
+
+### 首次远端 V1.6 演练发现的 Linux ownership 差异
+
+完成 GCM 浏览器认证并推送后，PR #3 的 [运行 40680239339](https://github.com/MartinZhong2026/FanScope/actions/runs/40680239339) 中 API、前端构建、15 项 Python 测试及 Docker 构建通过。真实 Docker 演练在模拟失败迁移时报告 `attempt to write a readonly database`：容器以 root 建立 SQLite，而后续 Python 以 runner 用户模拟迁移；Windows bind mount 未暴露此 ownership 问题。
+
+演练现使用宿主测试 runner 的 UID/GID 运行 seed/API 容器，保证合成数据库仍归 runner 所有；Windows 保留原兼容行为。没有放宽文件权限、跳过演练、使用 sudo 掩盖错误，也没有改生产控制器或 Volume。修复后远端结果以同一 PR 最新 SHA 的实际 Actions 为准。

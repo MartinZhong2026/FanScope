@@ -19,6 +19,9 @@ def main(image):
     suffix = uuid.uuid4().hex[:12]
     name = 'fanscope-ci-' + suffix
     project = 'fanscope-ci-' + suffix
+    # Bind-mounted synthetic files must remain writable by the host test runner.
+    # Windows bind mounts do not model Unix ownership; Linux CI does.
+    fixture_user = f'{os.getuid()}:{os.getgid()}' if os.name == 'posix' else '0:0'
     root = Path(__file__).resolve().parents[2]
     (root / 'work').mkdir(exist_ok=True)
     original = [json.loads(line) for line in deploy.run('docker', 'ps', '--format', 'json').splitlines()]
@@ -35,7 +38,7 @@ def main(image):
         db.prepare("INSERT INTO lab_projects(id,title,updated_at,created_by) VALUES('ci-lab','Preserve Lab','2026-01-01','synthetic')").run();
         db.prepare("INSERT INTO meta VALUES('ai-auto:v14:control',?)").run(JSON.stringify({state:'paused'}));db.close();
         """
-        deploy.run('docker', 'run', '--rm', '--network', 'none', '--user', '0:0',
+        deploy.run('docker', 'run', '--rm', '--network', 'none', '--user', fixture_user,
             '--mount', f'type=bind,source={data},target=/app/data',
             '--entrypoint', 'node', image, '--experimental-sqlite', '--input-type=module', '-e', seed)
         database = data / 'fanscope.sqlite'
@@ -43,7 +46,7 @@ def main(image):
         deploy.rehearsal(image, directory / 'frozen', frozen['manifest'])
         spec = {
             'services': {'fanscope-api': {
-                'image': image, 'container_name': name, 'network_mode': 'none', 'user': '0:0',
+                'image': image, 'container_name': name, 'network_mode': 'none', 'user': fixture_user,
                 'command': ['node', '--experimental-sqlite', 'src/v14-server.mjs'],
                 'environment': {'NODE_ENV': 'production', 'FANSCOPE_V14_RUNTIME': 'true',
                     'DATABASE_PATH': '/app/data/fanscope.sqlite', 'ADMIN_KEY': 'synthetic-ci-only-not-a-real-secret',
