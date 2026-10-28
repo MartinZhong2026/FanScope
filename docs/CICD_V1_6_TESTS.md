@@ -34,3 +34,29 @@ Chinese 首轮遇到旧的 data-cn-import 内嵌表单断言失败；V1.4 已改
 - Cloudflare 真实 API token、Git 集成状态、Environments/reviewers、nginx/主机安装与生产 smoke 均未验证/执行。它们是启用前置条件，见 [操作手册](CICD_V1_6_ZH.md)。
 
 本地新增工具位于独立的 D:/FanScope-ci-v16，未全局更换 Node；部署源码、日志和截图中不包含实际密钥。Docker Desktop 需要用户在合适的维护窗口检查存储；本次不对其他项目运行环境作修复操作。
+
+## Chinese Job 连续失败的追加修复
+
+已核对 [main 运行 40665121636](https://github.com/MartinZhong2026/FanScope/actions/runs/40665121636) 和 [PR 运行 40665052498](https://github.com/MartinZhong2026/FanScope/actions/runs/40665052498) 的实际 job 日志：API、Mobile 和 Publication 步骤通过，均在旧脚本第 28 行查找 `[data-cn-import]` 失败。两次 SHA 分别为 b77f2b0 和 64157ef；当时本地 V1.6 尚未推送，远端没有收到初步 selector 修复。
+
+根因：V1.4 的 `chinesePanel(true)` 提供单独的 `chinese-import.html` 本地工作台链接，已无旧的 inline import form。测试应检查该链接存在、旧表单不存在。生产公开包继续排除该工作台，生产 API 在鉴权前关闭中文管理路由；本次没有改动 web/、api/src/ 或生产部署配置。
+
+本次在 **WSL Ubuntu 26.04 / Linux x86_64、Node 22.23.4、Python 3.14、Playwright 1.62.0 Chromium** 中执行。Node 官方下载包通过 SHASUMS256 校验；源码只从 Git 跟踪文件复制到新 Linux 临时目录，不复制实际 .env、数据库或 work 数据。Docker 镜像存储仍报告 I/O error，未重启或清理 Docker。
+
+```bash
+cd api
+npm ci --ignore-scripts
+npm test
+cd ..
+bash scripts/ci-fixture-server.sh start chinese api/test/chinese-browser-server.mjs
+python scripts/chinese-browser-acceptance.py --output work/chinese-browser-linux
+bash scripts/ci-fixture-server.sh stop chinese
+```
+
+结果：API **193 passed / 0 failed / 0 skipped**；Chinese **4/4 屏宽**通过，覆盖趋势、中文论文列表、真实原文来源、正反向搜索、中英文市场隔离和本地工作台。**8 次 missing/wrong-key 管理权限请求全部返回 401**；浏览器无页面错误、无写请求、无外部请求；验收前后两类论文列表完整一致。
+
+API 全量中继续执行既有的生产模式保护矩阵：7 类中文管理路由 × GET/POST/PATCH/DELETE/OPTIONS，带正确管理员密钥、强制本地导入 flag 和 method override 仍全部 404。另新增子进程测试：本地中文 fixture 在 NODE_ENV=production 时立即拒绝，且不创建数据库。没有通过开放生产接口来满足本地 UI 测试。
+
+扩展验收首次暴露市场切换后读取旧 DOM 的异步时序问题；改为等待匹配 market/q 参数的 articles HTTP 响应再判断列表，重跑通过，没有增加固定延时、删断言或跳过 Chinese。原 Mobile、Desktop、WebKit 和 API CI 配置保留不变。
+
+`git diff --check`、敏感信息扫描、Python 编译和 actionlint 均通过。上述是实际 Linux 本地结果，不能标作新的 GitHub Actions 成功；Push/远端验证需要先完成 Git Credential Manager 认证，旧两次失败记录不会因本地修复自动改变。
