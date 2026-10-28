@@ -23,7 +23,7 @@ makeServer().listen(8787,'127.0.0.1');
 http.createServer((req,res)=>{
  const url=new URL(req.url,'http://localhost');
  if(url.pathname==='/config.js'){res.setHeader('Content-Type','text/javascript');res.end("window.FANSCOPE_CONFIG={API_BASE_URL:'http://127.0.0.1:8787'};");return;}
- let rel=decodeURIComponent(url.pathname);if(rel.endsWith('/'))rel+='index.html';const f=path.resolve(root+'/web','.'+rel);
- if(!f.startsWith(root+'/web/')){res.writeHead(403);res.end();return;}
+ let rel=decodeURIComponent(url.pathname);if(rel.endsWith('/'))rel+='index.html';const webRoot=path.resolve(root,'web'),f=path.resolve(webRoot,'.'+rel);
+ if(!f.startsWith(webRoot+path.sep)){res.writeHead(403);res.end();return;}
  try{res.setHeader('Content-Type',({'.html':'text/html','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.svg':'image/svg+xml'})[path.extname(f)]||'application/octet-stream');res.end(fs.readFileSync(f))}catch{res.writeHead(404);res.end('Not found')}
 }).listen(4173,'127.0.0.1',()=>console.log('QA web+API ready, isolated database and mock outbound APIs'));

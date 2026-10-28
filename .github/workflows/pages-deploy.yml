@@ -1,0 +1,72 @@
+name: FanScope Pages deploy
+on:
+  workflow_run:
+    workflows: [FanScope checks]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      deployment_id:
+        description: Existing successful production Pages deployment UUID to roll back to
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  # Includes rollback and preview: no cancellation during a production publish.
+  group: fanscope-pages
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: >-
+      vars.PAGES_CD_ENABLED == 'true' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.repository.full_name == github.repository &&
+        github.event.workflow_run.path == '.github/workflows/test.yml'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+    environment: ${{ (github.event_name == 'workflow_dispatch' || github.event.workflow_run.event == 'push') && 'pages-production' || 'pages-preview' }}
+    steps:
+      # Always trusted main code. No PR checkout/npm lifecycle/PR shell commands here.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts --prefix deploy/pages
+      - name: Validate source run and reject stale releases
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_PATH: ${{ github.event_path }}
+        run: node scripts/cicd/pages-source.mjs
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        if: github.event_name != 'workflow_dispatch'
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ github.event.workflow_run.id }}
+          name: ${{ steps.source.outputs.artifact }}
+          path: dist/${{ steps.source.outputs.mode }}
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        if: steps.source.outputs.mode == 'preview'
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ github.event.workflow_run.id }}
+          name: mobile-app-experience
+          path: work/preview-evidence
+      - name: Inspect deployment channel, publish, verify, and roll back on failure
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          PAGES_PROJECT: ${{ steps.source.outputs.project }}
+          RELEASE_SHA: ${{ steps.source.outputs.sha }}
+          PR_NUMBER: ${{ steps.source.outputs.pr }}
+          DEPLOYMENT_ID: ${{ inputs.deployment_id }}
+          WRANGLER_SEND_METRICS: 'false'
+        run: node scripts/cicd/pages.mjs ${{ github.event_name == 'workflow_dispatch' && 'rollback' || 'deploy' }}

@@ -1,0 +1,22 @@
+# Overlay only. Existing volume is mandatory, never provisioned/replaced by CD.
+services:
+  fanscope-api:
+    image: ${FANSCOPE_RELEASE_IMAGE:?Verified local image ID required}
+    environment:
+      NODE_ENV: production
+      FANSCOPE_V14_RUNTIME: 'true'
+      FANSCOPE_AI_AUTO_ENABLED: 'false'
+      FANSCOPE_ENGLISH_MONITOR: 'true'
+      SCAN_ON_START: 'false'
+      AUTO_AI_ANALYSIS: 'false'
+      CHINESE_AUTH_IMPORT_ENABLED: 'false'
+      OPENALEX_ENABLED: 'false'
+      DEEPSEEK_API_KEY: ''
+      OPENALEX_API_KEY: ''
+      RESEND_API_KEY: ''
+    command: [node, --experimental-sqlite, src/v14-server.mjs]
+    stop_grace_period: 3m
+volumes:
+  fanscope_data:
+    external: true
+    name: fanscope_data
