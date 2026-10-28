@@ -5,24 +5,32 @@ on:
     types: [completed]
   workflow_dispatch:
     inputs:
+      operation:
+        description: Read-only preflight, or explicitly roll back production
+        required: true
+        type: choice
+        default: inspect
+        options: [inspect, rollback]
       deployment_id:
         description: Existing successful production Pages deployment UUID to roll back to
-        required: true
+        required: false
         type: string
 permissions:
   contents: read
 concurrency:
-  # Includes rollback and preview: no cancellation during a production publish.
-  group: fanscope-pages
+  # Production and rollback serialize together. Preview branches have their own
+  # queues and cannot replace a pending production deployment.
+  group: ${{ (github.event_name == 'workflow_dispatch' || github.event.workflow_run.event == 'push') && 'fanscope-pages-production' || format('fanscope-pages-preview-{0}-{1}', github.event.workflow_run.head_repository.id, github.event.workflow_run.head_branch) }}
   cancel-in-progress: false
 jobs:
   publish:
     if: >-
-      vars.PAGES_CD_ENABLED == 'true' &&
       (github.event_name == 'workflow_dispatch' ||
-       (github.event.workflow_run.conclusion == 'success' &&
+       (vars.PAGES_CD_ENABLED == 'true' && github.event.workflow_run.conclusion == 'success' &&
         github.event.workflow_run.repository.full_name == github.repository &&
-        github.event.workflow_run.path == '.github/workflows/test.yml'))
+        github.event.workflow_run.path == '.github/workflows/test.yml' &&
+        (github.event.workflow_run.event == 'pull_request' ||
+         (github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main'))))
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
@@ -40,6 +48,7 @@ jobs:
         with:
           node-version: '22'
       - run: npm ci --ignore-scripts --prefix deploy/pages
+        if: github.event_name != 'workflow_dispatch'
       - name: Validate source run and reject stale releases
         id: source
         env:
@@ -64,9 +73,11 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          PAGES_CURRENT_DEPLOYMENT_ID: ${{ vars.PAGES_CURRENT_DEPLOYMENT_ID }}
           PAGES_PROJECT: ${{ steps.source.outputs.project }}
           RELEASE_SHA: ${{ steps.source.outputs.sha }}
           PR_NUMBER: ${{ steps.source.outputs.pr }}
           DEPLOYMENT_ID: ${{ inputs.deployment_id }}
           WRANGLER_SEND_METRICS: 'false'
-        run: node scripts/cicd/pages.mjs ${{ github.event_name == 'workflow_dispatch' && 'rollback' || 'deploy' }}
+          PAGES_ACTION: ${{ github.event_name == 'workflow_dispatch' && inputs.operation || 'deploy' }}
+        run: node scripts/cicd/pages.mjs "$PAGES_ACTION"

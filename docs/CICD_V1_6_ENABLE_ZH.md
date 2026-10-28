@@ -1,0 +1,21 @@
+# FanScope V1.6 首次启用：八步清单
+
+以下是未来由管理员执行的操作；本次审查没有更改云端设置或部署生产。先完成审查和主分支保护，再由用户决定是否合并 PR。网页选项名称可能随界面变化；服务器步骤请交给熟悉现有部署的管理员。
+
+1. **关闭重复的 Cloudflare 发布渠道。** 打开 [Cloudflare 控制台](https://dash.cloudflare.com/) → Workers & Pages → `fanscope` → Settings → Builds & deployments。确认 Git 连接 `MartinZhong2026/FanScope`、生产分支 `main`；在 Configure Production deployments 取消 Enable automatic production branch deployments，Preview branch 选 None 并保存。保留项目和现有部署。PR #3 曾由 Git 集成生成预览，生产构建开关实际状态仍需核对。在 Deployments 找到目前正式域名正在使用的成功生产部署，记录其部署详情中的 UUID；“最新部署”不一定是回滚后正在服务的版本。[Cloudflare 操作说明](https://developers.cloudflare.com/pages/configuration/branch-build-controls/)
+
+2. **设置 GitHub 保护，先关闭自动开关。** 打开 [仓库 Settings](https://github.com/MartinZhong2026/FanScope/settings) → Secrets and variables → Actions → Variables → New repository variable，分别建立 `PAGES_CD_ENABLED=false` 和 `BACKEND_CD_ENABLED=false`。Settings → Rules → Rulesets → New branch ruleset，目标 `main`，要求 PR 和审查、禁止绕过及强推，必需状态检查选择 `FanScope checks / required`（界面可能仅显示 `required`）。Settings → Environments 新建 `production`，允许部署分支选 main，启用 Required reviewers 并指定实际审批人、禁止管理员绕过；如只有一位维护者，不要开启阻止自审，除非另有可审批的人。实际可用保护选项取决于 GitHub 账户方案。
+
+3. **配置 Pages 环境与凭据。** 用户确认资源和配额后，在 Cloudflare 手动创建独立的 Direct Upload Pages 项目 `fanscope-preview`，生产分支 main，不连接 Git，也不绑定生产数据库、D1/KV/R2 或生产密钥。Cloudflare → My Profile → API Tokens → Create Token，分别为生产和预览创建 token，权限仅 Account → Cloudflare Pages → Edit，Account Resources 仅选实际账户；Pages 权限是账户级而不是项目级。复制该账户的 Account ID。GitHub Settings → Environments 分别新建 `pages-production` 和 `pages-preview`，部署分支仅 main，不设置逐次审批；各自在 Environment secrets 添加 `CLOUDFLARE_API_TOKEN`，在 Environment variables 添加 `CLOUDFLARE_ACCOUNT_ID`。在 `pages-production` 再添加 Variable `PAGES_CURRENT_DEPLOYMENT_ID`，填写第 1 步确认的当前生产部署 UUID；恢复到没有 V1.6 标记的旧部署后，须更新此值。不要将密钥发到聊天或提交仓库。[Cloudflare Token 说明](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/)
+
+4. **准备腾讯云服务器，暂不启用。** 管理员通过现有腾讯云控制台或既有管理方式登录，不新增公网 SSH 入口。检查 Ubuntu 24.04、Docker Compose、空闲磁盘和独立加密备份；核对 `deploy` 项目、`fanscope-api`、`fanscope_data` 和现运行的 V1.4 入口。以最终审查通过的提交为来源，按照[完整手册](CICD_V1_6_ZH.md)安装默认关闭的控制器，并仅在 FanScope API 的 nginx server 内配置维护入口，验证维护门禁、没有绕过入口的其他写入者及其他项目容器不受影响。创建只读、仅限本仓库 Actions read 和 Contents read 的 GitHub fine-grained token，私下保存到 root 拥有且权限 0600 的 `/etc/fanscope-cd/github-token`；勿放入命令参数或 GitHub Secrets。主机需要出站 HTTPS 访问 GitHub 和 API。保持控制器 `enabled=false`、timer 未启动。以上检查若不满足则停止，勿修改生产数据库。
+
+5. **审查后再验证前端。** 管理员确认 PR #3 及最新 Linux CI 后，自行决定是否从 Draft 转为 Ready、完成审查并合并；本清单不代替审批。合并且 main CI 成功后，GitHub → Actions → FanScope Pages deploy → Run workflow，选择 branch `main`、operation `inspect`，查看日志，确认 Git 自动生产和预览均已关闭、项目和仓库匹配；此检查不会上传。失败则保持两个开关为 false 并修复配置。确认第 1 步记录的是当前正式部署，且已填入第 3 步变量。
+
+6. **首次启用前端自动发布。** 在 GitHub repository Variables 把 `PAGES_CD_ENABLED` 改为 `true`；对最新成功的 main `FanScope checks` 选择 Re-run all jobs，或之后合并新的已审查变更。等待 Actions 和 Cloudflare 完成，访问 https://fanscope.pages.dev/ 和 https://fanscope.pages.dev/lab/，确认页面正常及 `/release.json` 的 commit 与 main 一致，确认没有 Git 集成的第二次部署。之后成功的 main CI 自动部署前端；成功 PR CI 发布到独立项目的截图预览，预览不连接生产 API。重复验证已发布 SHA 不应重复发布。
+
+7. **首次受控后端验收。** 经管理员确认后，从 GitHub API 的 `/repos/MartinZhong2026/FanScope/actions/workflows/backend-release.yml` 获取数字 `id` 填入服务器 `/etc/fanscope-cd/config.json` 的 `workflow_id`，`first_run_number` 设为下一次计划授权的运行号（首次为 1），再将 `enabled` 改为 true，启动 `fanscope-pull.timer`，并将 GitHub `BACKEND_CD_ENABLED` 改为 `true`。在 Actions → FanScope backend release → Run workflow 选择 main，输入当前 main 完整 commit SHA；由 `production` 指定审批人核对并批准。GitHub 绿色只表示构建与授权成功；管理员还需查看 `journalctl -u fanscope-pull.service` 和 `/var/lib/fanscope-cd/backups/<release>/result.json` 的实际结果，核实备份与隔离恢复检查、API 健康、英文和中文论文、Lab 数据及其他容器。此部署不自动迁移数据库、导入中文、恢复历史任务或发送邮件，AI 保持暂停/关闭；不要为测试而制造线上故障。
+
+8. **需要回滚时。** 前端：Cloudflare → Workers & Pages → fanscope → Deployments，找到确认过的旧生产部署，菜单选择 Rollback to this deployment 并确认；也可 Actions → FanScope Pages deploy → Run workflow → main → `rollback`，填写目标 `deployment_id`，等待运行真正完成，如排队任务被替代则重试。后端：发布失败且入口仍关闭时控制器会尝试恢复已验证数据库快照和上一镜像；恢复失败会保持入口关闭，管理员检查事务后按[完整手册](CICD_V1_6_ZH.md)执行 recover。若成功上线后已产生新写入，不要直接覆盖旧数据库快照；通过审查过的 revert PR、新 CI 和重新审批的发布恢复代码，或另行审核数据恢复方案。
+
+停止后续自动发布可将相应 repository Variable 改回 `false`；后端还可由管理员停用 timer。已经运行的生产任务不会因此被强行中断。手动前端回滚仍可用，操作本身会更改线上版本，须由管理员自行决定。

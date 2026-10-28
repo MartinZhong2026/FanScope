@@ -6,7 +6,7 @@
 
 V1.4 的 v14-server.mjs 独立运行英文增量监测/显式启用的 AI，不恢复通用 server 入口中的历史回填、邮件、文档队列。旧发布脚本有固定旧镜像和备份路径，本 CD 不调用它的部署、中文导入或 enable-ai 操作。
 
-**没有执行生产部署、数据库操作、付费 AI 或平台配置变更。Cloudflare 当前 Git 绑定未取得账户级证据，尚未确认。** 两个 CD 开关默认关闭；本地通过不能等同线上验证。
+**没有执行生产部署、数据库操作、付费 AI 或平台配置变更。** PR #3 的 Cloudflare 机器人曾为提交 a4d6280 创建预览，证明 Git 集成曾启用预览构建；生产自动构建当前状态仍需账户管理员确认。两个 CD 开关默认关闭；本地通过不能等同线上验证。
 
 ## 信任边界
 
@@ -21,7 +21,7 @@ V1.4 的 v14-server.mjs 独立运行英文增量监测/显式启用的 AI，不�
 | Environment | 规则 | Secrets | Variables |
 | --- | --- | --- | --- |
 | production | 仅 main；Required reviewers；禁止绕过。多人维护建议防自批，单维护者先确认审批制度可执行 | 无 | 无 |
-| pages-production | 仅 main；合并后自动发布，无逐次审批 | CLOUDFLARE_API_TOKEN | CLOUDFLARE_ACCOUNT_ID |
+| pages-production | 仅 main；合并后自动发布，无逐次审批 | CLOUDFLARE_API_TOKEN | CLOUDFLARE_ACCOUNT_ID；必要时 PAGES_CURRENT_DEPLOYMENT_ID |
 | pages-preview | 仅 main（可信 workflow_run 在 main 执行） | 独立 CLOUDFLARE_API_TOKEN | CLOUDFLARE_ACCOUNT_ID |
 
 仓库 Variables：PAGES_CD_ENABLED=false、BACKEND_CD_ENABLED=false。完成验证后再分别设 true。不要添加仓库级 Cloudflare token、SSH、DeepSeek、Resend 或数据库 Secrets。
@@ -34,13 +34,13 @@ CI contents read；发布仅额外 actions read、PR 元数据 read，无 conten
 
 Workers & Pages → fanscope → Settings → Builds & deployments：确认 Git 是否绑定本仓库、production branch 为 main，记录当前成功 production deployment UUID。若有 Git 绑定，**关闭 production 自动部署及全部 preview 自动部署**，保留项目与旧部署，不删除或重建项目。
 
-每次 Actions 部署调用项目 GET API；如存在 source，严格要求 production_deployments_enabled=false、preview_deployment_setting=none；缺字段也拒绝。若继续 Git 集成，则 PAGES_CD_ENABLED 保持 false，本实现的保护不自动适用于 Git 集成。
+每次 Actions 部署调用项目 GET API；要求 Git 绑定本仓库，且 production_deployments_enabled=false、preview_deployment_setting=none；缺字段也拒绝。在关闭两种 Git 自动构建之前，PAGES_CD_ENABLED 保持 false。首次确认配置可在 Actions 的 FanScope Pages deploy 中手动运行 main、operation=inspect；此操作只读，不需要开启自动部署。
 
 用户确认资源/费用后手动准备独立 fanscope-preview，production branch main，但仅发布 pr-N 分支；无自动 Git 部署、Functions、生产 Secrets 或 D1/KV/R2 绑定。代码不创建云资源。
 
 Token 仅 **Account → Cloudflare Pages → Edit**，限制实际账户；不用 Global API Key，不授予 DNS/Zone/Workers scripts。Pages 权限按账户而非单项目限制；两个环境独立 token 便于轮换，更强隔离可使用专用预览账户。工具另固定允许两个项目名。
 
-生产必须有上一个成功 canonical production deployment。上传失败保留旧版本；正式域名页面/config/SHA smoke 失败，仅在当前 SHA 仍拥有 active deployment 时自动 rollback。旧版没有 release.json 时，通过不可变 deployment UUID 和页面/config 验证恢复。手动一键回滚：Actions → **FanScope Pages deploy → Run workflow(main) → deployment_id**，填写成功生产 deployment UUID。发布/回滚共用串行并发组，不中途 cancel；过期 main CI 被 SHA 检查拒绝。有尚未结束的生产部署时拒绝新发布/回滚，避免客户端超时后异步旧部署覆盖新版；等待平台任务结束后再回滚。不要并行 Dashboard 手工发布绕过控制。
+生产必须有经过验证的当前成功部署。不能把 Cloudflare 的 canonical（最新生产部署）当成回滚后正在服务的版本：程序依据正式域名 release.json 和部署列表识别当前版本，并将正式域名关键文件与不可变部署地址逐字节比较。旧版无标记、同 SHA 有多个部署或列表无法唯一确定时，先在 Cloudflare 面板确认当前生产部署 UUID，填写 pages-production Variable `PAGES_CURRENT_DEPLOYMENT_ID`；恢复到旧版后也需更新它。旧站 SPA 回退的 HTML 视为缺少标记，仍须人工 UUID 和内容比对。上传失败保留旧版本；正式域名 smoke 失败且仍可识别为新 SHA 时自动回滚，否则停止并人工调查。手动回滚：Actions → FanScope Pages deploy → Run workflow → main → operation=rollback，填写 deployment_id。inspect 和手动 rollback 不受自动发布开关限制。发布/回滚共享生产串行组，不取消正在执行的生产部署；不同 PR 预览各用独立组。同一组新等待任务可能替代旧等待任务，手动回滚后须确认运行完成，必要时重试。旧 main CI 被 SHA 检查拒绝。有尚未结束的生产部署时拒绝新发布/回滚；等待平台任务结束后再回滚。不要并行 Dashboard 手动发布绕过控制。
 
 ## 腾讯云安装：管理员审查后执行
 
@@ -95,17 +95,9 @@ sudo python3 /opt/fanscope-cd/scripts/cicd/deploy_backend.py recover --confirm-s
 
 备份/incoming 不上传 GitHub、不自动清理。空间不足停止。人工维护须保留上一镜像/已验证备份；同机备份不防磁盘损坏，应加密复制到已有独立位置并定期演练，代码不创建付费备份资源。
 
-## 首次启用：9 步
+## 首次启用
 
-1. 审查代码、本地测试及配置，创建 PR，验证远端 Linux CI。
-2. 配置 main 保护和三个 Environments，production 有实际 reviewer，两个开关保持 false。
-3. 确认 fanscope Git 绑定，关闭 production/preview 自动部署，记录旧成功 UUID。
-4. 用户确认资源后准备 fanscope-preview，设置独立最小权限 token/Account ID。
-5. 完成隔离 Docker/数据库演练；生产缺 V1.4 优雅退出基线时先独立维护升级。
-6. 从审核 commit 安装禁用控制器，配置只读 credential、workflow ID、run 门槛、Compose 路径。
-7. 仅为 FanScope include nginx gate，维护窗口验证 503/health，检查空间及独立备份。
-8. 先启用 Pages，用新 PR 验证视觉预览；合并经 CI/review 的变更，核对正式 SHA/回滚。
-9. 开主机 enabled/timer 与 BACKEND_CD_ENABLED；dispatch 当前 SHA，批准 production，观察主机结果与其他容器。
+面向操作人员的配置、验收与回滚顺序见[首次启用八步清单](CICD_V1_6_ENABLE_ZH.md)。线上设置及生产验收仍须管理员完成。
 
 ## 验证
 

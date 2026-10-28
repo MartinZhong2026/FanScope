@@ -6,6 +6,10 @@ on:
   merge_group:
 permissions:
   contents: read
+concurrency:
+  # Only test runs share this group; deployment workflows use separate groups.
+  group: fanscope-checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
   build:
     runs-on: ubuntu-24.04

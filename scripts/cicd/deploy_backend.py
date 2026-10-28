@@ -53,7 +53,7 @@ def health(image):
                 "const r=await fetch('http://127.0.0.1:8787/api/stats?period=all&article_type=all&market='+market);"
                 "if(!r.ok||(await r.json()).count!==n)throw Error('Existing paper API/database count mismatch');}}finally{d.close()}"
                 "console.log(JSON.stringify(h))"))
-            if report.get('status') != 'ok' or report.get('aiConfigured') or report.get('emailConfigured'):
+            if report.get('status') != 'ok' or report.get('service') != 'fanscope-api' or report.get('aiConfigured') or report.get('emailConfigured'):
                 raise RuntimeError('API health/paid-worker guards failed')
             return
         if status == 'unhealthy':
@@ -65,7 +65,7 @@ def health(image):
 def public_health():
     with urllib.request.urlopen('https://fanscope-api.adapttochina.com/api/health', timeout=15) as r:
         h = json.load(r)
-        if r.status != 200 or h.get('status') != 'ok' or h.get('aiConfigured') or h.get('emailConfigured'):
+        if r.status != 200 or h.get('status') != 'ok' or h.get('service') != 'fanscope-api' or h.get('aiConfigured') or h.get('emailConfigured'):
             raise RuntimeError('Public HTTPS API guard failed')
 
 
@@ -82,10 +82,10 @@ def verify_ingress_closed():
     raise RuntimeError('Public FanScope ingress is not in maintenance; refusing to touch database')
 
 
-def stop():
+def stop(*, require_graceful=True):
     run('docker', 'stop', '--time', '180', CONTAINER)
     c = docker_json('inspect', CONTAINER)
-    if c['State']['Running'] or c['State']['ExitCode'] != 0:
+    if c['State']['Running'] or (require_graceful and c['State']['ExitCode'] != 0):
         raise RuntimeError('API did not drain gracefully; retain maintenance, inspect uncertain work')
 
 
@@ -228,7 +228,9 @@ def rollback(report):
         raise RuntimeError('Rollback snapshot verification failed')
     c = docker_json('inspect', CONTAINER)
     if c['State']['Running']:
-        stop()
+        # Candidate has no paid workers; ingress remains closed. Once stopped,
+        # even a failed exit must not prevent verified database/image rollback.
+        stop(require_graceful=False)
     # Preserve failed startup data, then restore through SQLite into the SAME file/volume.
     if inspect(database) != final['manifest']:
         backup(database, release / 'failed-startup')

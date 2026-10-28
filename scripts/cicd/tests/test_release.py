@@ -172,9 +172,10 @@ class RollbackTests(unittest.TestCase):
         def compose(image, *args):
             self.assertEqual(sql.inspect(self.file), baseline)
             calls.append(image)
-        with patch.object(deploy, 'STATE', state), patch.object(deploy, 'docker_json', return_value={'State': {'Running': False}}), \
-                patch.object(deploy, 'compose', side_effect=compose), patch.object(deploy, 'health'), patch.object(deploy, 'public_health'):
+        with patch.object(deploy, 'STATE', state), patch.object(deploy, 'docker_json', return_value={'State': {'Running': True}}), \
+                patch.object(deploy, 'stop') as stop, patch.object(deploy, 'compose', side_effect=compose), patch.object(deploy, 'health'), patch.object(deploy, 'public_health'):
             deploy.rollback(report)
+            stop.assert_called_once_with(require_graceful=False)
         self.assertEqual(calls, ['old'])
         self.assertEqual(sql.inspect(self.file), baseline)
         self.assertTrue((release / 'failed-startup/backup.sqlite').exists())
@@ -239,7 +240,7 @@ class PipelineTests(unittest.TestCase):
             container.update(Image=image, State={'Running': True, 'ExitCode': 0})
             if image == new_image and damaged:
                 self.db.executescript("CREATE TABLE candidate_migration(id INTEGER); UPDATE lab_projects SET title='damaged';")
-        def stop():
+        def stop(**kwargs):
             container['State']['Running'] = False
         def ingress():
             self.assertFalse(self.db.execute("SELECT 1 FROM meta WHERE key='ai-auto:v14:control'").fetchone())
@@ -277,6 +278,24 @@ class PipelineTests(unittest.TestCase):
 
     def test_unclosed_ingress_prevents_any_database_write_or_container_update(self):
         self.exercise(bad_ingress=True)
+
+
+class RuntimeGuardTests(unittest.TestCase):
+    def test_old_runtime_must_drain_but_failed_candidate_can_be_rolled_back(self):
+        with patch.object(deploy, 'run'), patch.object(deploy, 'docker_json', return_value={'State': {'Running': False, 'ExitCode': 137}}):
+            with self.assertRaisesRegex(RuntimeError, 'drain gracefully'):
+                deploy.stop()
+            deploy.stop(require_graceful=False)
+        with patch.object(deploy, 'run'), patch.object(deploy, 'docker_json', return_value={'State': {'Running': True, 'ExitCode': 137}}):
+            with self.assertRaises(RuntimeError):
+                deploy.stop(require_graceful=False)
+
+    def test_public_health_rejects_another_project_with_status_ok(self):
+        response = io.BytesIO(json.dumps({'status': 'ok', 'service': 'another-project'}).encode())
+        response.status = 200
+        with patch.object(deploy.urllib.request, 'urlopen', return_value=response):
+            with self.assertRaisesRegex(RuntimeError, 'HTTPS API guard'):
+                deploy.public_health()
 
 
 if __name__ == '__main__':
