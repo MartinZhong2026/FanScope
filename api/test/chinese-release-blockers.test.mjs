@@ -1,6 +1,6 @@
 import test,{after} from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import os from 'node:os';import {spawn} from 'node:child_process';import {once} from 'node:events';
 import {pathToFileURL} from 'node:url';
-import {chineseSourceStatus,chineseQualityPanel} from '../../web/chinese-quality.mjs';
+import {chineseSourceStatus,chineseQualityPanel,chineseCollectionSummary} from '../../web/chinese-quality.mjs';
 import {readChineseDiagnostics} from '../../web/chinese-diagnostics.mjs';
 import {verifyPagesRelease} from '../../scripts/verify-pages-release.mjs';
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),'fanscope-release-fix-'));
@@ -8,6 +8,16 @@ Object.assign(process.env,{DATABASE_PATH:path.join(dir,'test.sqlite'),SCAN_ON_ST
 const {db}=await import('../src/db.mjs');const {makeServer}=await import('../src/server.mjs');const {insertArticle}=await import('../src/monitor.mjs');const {sourceSummary}=await import('../src/journal-onboarding.mjs');
 after(()=>{db.close();fs.rmSync(dir,{recursive:true,force:true});});
 const sample={id:'test',title:'测试刊物',market:'chinese',total:0,enabled:false,quality:{},windows:{},connection:null};
+
+test('all-history Chinese totals and collected journals remain distinct from healthy automatic monitoring',()=>{
+ const d={available:true,items:[{...sample,total:200},{...sample,id:'second',total:149},{...sample,id:'empty'}]};
+ const journals=[{market:'chinese',status:'pending'},{market:'chinese',status:'healthy'},{market:'international',status:'healthy'}];
+ const html=chineseCollectionSummary(d,journals);
+ assert.match(html,/全部历史 349 篇/);assert.match(html,/已收录期刊 2 本/);assert.match(html,/有效自动监测期刊 1 本/);assert.match(html,/不受当前时间或其他筛选影响/);assert.match(html,/data-chinese-history/);
+ assert.match(chineseCollectionSummary(d,[]),/有效自动监测期刊 0 本/);
+ assert.match(chineseCollectionSummary(d,undefined),/有效自动监测期刊 暂不可用/);
+ assert.match(chineseCollectionSummary({available:false},journals),/暂不可用/);assert.doesNotMatch(chineseCollectionSummary({available:false},journals),/0 篇/);
+});
 
 test('metadata presence, current automatic verification and monitoring are independent; no identity-specific assertions',()=>{
  const collected={...sample,total:7};assert.equal(chineseSourceStatus(collected).collected,true);assert.equal(chineseSourceStatus(collected).automaticVerified,false);

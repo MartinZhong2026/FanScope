@@ -24,6 +24,6 @@ http.createServer((req,res)=>{
  const url=new URL(req.url,'http://localhost');
  if(url.pathname==='/config.js'){res.setHeader('Content-Type','text/javascript');res.end("window.FANSCOPE_CONFIG={API_BASE_URL:'http://127.0.0.1:8787'};");return;}
  let rel=decodeURIComponent(url.pathname);if(rel.endsWith('/'))rel+='index.html';const f=path.resolve(root+'/web','.'+rel);
- if(path.relative(path.join(root,'web'),f).startsWith('..')){res.writeHead(403);res.end();return;}
+ if(!f.startsWith(root+'/web/')){res.writeHead(403);res.end();return;}
  try{res.setHeader('Content-Type',({'.html':'text/html','.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.svg':'image/svg+xml'})[path.extname(f)]||'application/octet-stream');res.end(fs.readFileSync(f))}catch{res.writeHead(404);res.end('Not found')}
 }).listen(4173,'127.0.0.1',()=>console.log('QA web+API ready, isolated database and mock outbound APIs'));

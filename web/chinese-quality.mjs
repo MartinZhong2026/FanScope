@@ -1,6 +1,15 @@
 // Render the same runtime facts on desktop and mobile. No configured counts.
 const escape=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const rate=(n,d)=>d?`${(100*(n||0)/d).toFixed(1)}%`:'—';
+// Diagnostics cover the whole Chinese corpus; they are deliberately independent
+// of the current publication-window, keyword, journal and article-type filters.
+export function chineseCollectionSummary(d,journals){
+ if(!d)return '';
+ if(d.available===false)return '<section class="card panel cn-collection-summary" role="status"><h2>中文论文总收录</h2><p>收录统计暂不可用，请稍后重试。</p></section>';
+ const items=d.items||[],total=items.reduce((sum,j)=>sum+j.total,0),collected=items.filter(j=>j.total>0).length;
+ const monitored=Array.isArray(journals)?journals.filter(j=>j.market==='chinese'&&j.status==='healthy').length:null;
+ return `<section class="card panel cn-collection-summary"><h2>中文论文总收录</h2><p>全部历史 ${total.toLocaleString('en-US')} 篇 · 已收录期刊 ${collected} 本 · 有效自动监测期刊 ${monitored===null?'暂不可用':monitored+' 本'}</p><p class="meta">总收录不受当前时间或其他筛选影响。有效自动监测指已启用、来源已核验且最近同步成功的期刊；已有论文不代表自动监测已启用。</p><button class="btn" type="button" data-chinese-history>查看中文论文全部历史</button></section>`;
+}
 export function chineseSourceStatus(j){
  const collected=Number(j.total)>0;
  const checked=Date.parse(j.connection?.checkedAt||'')||0,failed=Date.parse(j.lastError?.at||'')||0;

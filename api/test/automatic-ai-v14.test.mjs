@@ -42,6 +42,13 @@ test('restart quarantines only interrupted automatic work, never legacy running 
  add('crashed');changeAutomatic('resume');db.prepare("INSERT INTO analysis_batch_items(batch_id,article_id,status,updated_at) VALUES(?,?,'running',?)").run(automaticBatchId,'crashed',new Date().toISOString());db.prepare("UPDATE articles SET analysis_status='analyzing' WHERE id='crashed'").run();db.prepare("INSERT INTO analysis_usage_log(article_id,batch_id,model,input_tokens,output_tokens,created_at,status) VALUES('crashed',?,'synthetic',0,0,?,'uncertain')").run(automaticBatchId,new Date().toISOString());
  db.prepare("INSERT INTO meta(key,value) VALUES('ai-auto:v14:lease',?)").run(JSON.stringify({owner:'dead',expiresAt:0}));const m=mock();await automaticTick();assert.equal(m.calls(),0);assert.equal(automaticStatus().state,'blocked');assert.equal(automaticStatus().counts.failed,1);assert.equal(db.prepare("SELECT analysis_error FROM articles WHERE id='crashed'").get().analysis_error,'DeepSeek request_uncertain');
 });
+test('restart never changes a historical usage record when no automatic usage record exists',async()=>{
+ add('crashed-legacy');changeAutomatic('resume');
+ db.prepare("INSERT INTO analysis_batch_items(batch_id,article_id,status,updated_at) VALUES(?,'crashed-legacy','running',?)").run(automaticBatchId,new Date().toISOString());
+ db.prepare("UPDATE articles SET analysis_status='analyzing' WHERE id='crashed-legacy'").run();
+ db.prepare("INSERT INTO analysis_usage_log(article_id,batch_id,model,input_tokens,output_tokens,created_at,status,error) VALUES('crashed-legacy','legacy','synthetic',1,2,?,'completed','original')").run(new Date().toISOString());
+ const before=db.prepare("SELECT * FROM analysis_usage_log WHERE batch_id='legacy'").get();mock();await automaticTick();assert.deepEqual(db.prepare("SELECT * FROM analysis_usage_log WHERE batch_id='legacy'").get(),before);
+});
 test('restart before HTTP claim safely resumes; completed result bookkeeping is recovered without resubmit',async()=>{
  add('before-http');changeAutomatic('resume');db.prepare("INSERT INTO analysis_batch_items(batch_id,article_id,status,updated_at) VALUES(?,'before-http','running',?)").run(automaticBatchId,new Date().toISOString());const m=mock();await automaticTick();assert.equal(m.calls(),1);db.prepare("UPDATE analysis_batch_items SET status='running' WHERE batch_id=?").run(automaticBatchId);await automaticTick();assert.equal(m.calls(),1);assert.equal(automaticStatus().counts.completed,1);
 });
