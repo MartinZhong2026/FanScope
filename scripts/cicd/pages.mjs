@@ -33,9 +33,64 @@ export function previewAddress(subdomain,branch){
  return `https://${branch}.${subdomain}`;
 }
 const env=process.env;
-async function cf(endpoint,method='GET'){
- const r=await fetch(`https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/pages/projects/${env.PAGES_PROJECT}${endpoint}`,{method,headers:{Authorization:`Bearer ${env.CLOUDFLARE_API_TOKEN}`},signal:AbortSignal.timeout(30000)});
- const j=await r.json();if(!r.ok||!j.success)throw Error(`Cloudflare request failed: HTTP ${r.status}`);return j.result;
+function safeMessage(value){
+ let text=typeof value==='string'?value:'Unspecified Cloudflare error';
+ // Errors can echo credentials or account identifiers. Never log response bodies,
+ // request/response headers, project environment variables or fetch exceptions.
+ for(const key of ['CLOUDFLARE_API_TOKEN','CLOUDFLARE_ACCOUNT_ID']){
+  const secret=env[key];
+  if(secret)for(const form of [secret,encodeURIComponent(secret),Buffer.from(secret).toString('base64')])text=text.split(form).join('[REDACTED]');
+ }
+ return text.replace(/(?:authorization|cookie|set-cookie)\s*[:=][^\r\n]*/gi,'[REDACTED HEADER]')
+  .replace(/\bBearer\s+[^\s,;]+/gi,'Bearer [REDACTED]')
+  .replace(/\b(?:[\w-]*(?:token|secret|password)|api[-_ ]?key)\b["']?\s*[:=]\s*(?:"[^"]*"|'[^']*'|[^\s,;]+)/gi,'[REDACTED CREDENTIAL]')
+  .replace(/https?:\/\/[^\s<>"']+/gi,'[REDACTED URL]')
+  .replace(/[\w.+-]+@[\w.-]+\.[a-z]{2,}/gi,'[REDACTED EMAIL]')
+  .replace(/[\u0000-\u001f\u007f-\u009f]/g,' ').slice(0,400);
+}
+export async function cf(endpoint,method='GET',{envelope=false}={}){
+ const route=`/accounts/<account_id>/pages/projects/${env.PAGES_PROJECT}${endpoint}`;
+ const fail=(status,reason,body)=>{
+  const errors=Array.isArray(body?.errors)?body.errors.slice(0,5).map(e=>({
+   code:Number.isSafeInteger(e?.code)?e.code:null,message:safeMessage(e?.message)
+  })):[];
+  const diagnostic={method,endpoint:route,status,reason,errors};
+  console.error(`Cloudflare diagnostic: ${JSON.stringify(diagnostic)}`);
+  return Error(`Cloudflare request failed: ${method} ${route}: HTTP ${status}; ${reason}; ${JSON.stringify(errors)}`);
+ };
+ let r;
+ try{r=await fetch(`https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/pages/projects/${env.PAGES_PROJECT}${endpoint}`,{method,headers:{Authorization:`Bearer ${env.CLOUDFLARE_API_TOKEN}`},signal:AbortSignal.timeout(30000),redirect:'error'});}
+ catch{throw fail('unavailable','Network request failed or timed out');}
+ let j;
+ try{j=await r.json();}catch{throw fail(r.status,'Non-JSON Cloudflare response (body omitted)');}
+ if(!r.ok||j?.success!==true)throw fail(r.status,'Cloudflare API rejected request',j);
+ if(!Object.hasOwn(j,'result')||j.result===null)throw fail(r.status,'Invalid Cloudflare result envelope');
+ console.log(`Cloudflare request: ${JSON.stringify({method,endpoint:route,status:r.status})}`);
+ return envelope?j:j.result;
+}
+export async function productionDeployments(){
+ // Avoid the large page size in the failed first publish. Keep pagination
+ // metadata outside result; total_count may describe unfiltered deployments.
+ const perPage=25,deployments=[],seen=new Set();
+ for(let page=1;page<=100;page++){
+  const body=await cf(`/deployments?env=production&per_page=${perPage}&page=${page}`,'GET',{envelope:true});
+  const rows=body.result,info=body.result_info;
+  if(!Array.isArray(rows))throw Error('Invalid Pages deployments result: expected array');
+  const size=info?.per_page??perPage,total=info?.total_pages;
+  if((info!==undefined&&(!info||typeof info!=='object'||Array.isArray(info)))||
+     !Number.isSafeInteger(size)||size<1||size>perPage||rows.length>size||
+     (info?.page!==undefined&&info.page!==page)||
+     (total!==undefined&&(!Number.isSafeInteger(total)||total<0||(total<page&&!(page===1&&total===0&&rows.length===0)))))
+   throw Error('Invalid Pages deployments pagination');
+  for(const d of rows){
+   if(!d||!UUID.test(d.id||'')||d.environment!=='production'||seen.has(d.id))
+    throw Error('Invalid or repeated production deployment in Pages list');
+   seen.add(d.id);deployments.push(d);
+  }
+  if(total!==undefined? page>=total : rows.length<size)return deployments;
+  if(!rows.length)throw Error('Incomplete Pages deployments pagination');
+ }
+ throw Error('Pages deployments pagination limit exceeded; refusing incomplete production history');
 }
 export async function smoke(base,sha,{marker=true}={}){
  const paths=[['/','html'],['/lab/','html'],['/config.js','config'],...(marker?[['/release.json','release']]:[])];
@@ -97,7 +152,7 @@ async function activeProduction(project,deployments){
   const id=env.PAGES_CURRENT_DEPLOYMENT_ID;
   if(!UUID.test(id||''))throw Error('Set pages-production PAGES_CURRENT_DEPLOYMENT_ID to the active deployment UUID after checking the Cloudflare dashboard');
   selected=await cf(`/deployments/${id}`);
-  if(!successfulProduction(selected)||(live&&selected.deployment_trigger?.metadata?.commit_hash!==live))
+  if(selected.id!==id||!successfulProduction(selected)||(live&&selected.deployment_trigger?.metadata?.commit_hash!==live))
    throw Error('Configured current deployment does not match the live release');
  }
  await verifyServedDeployment(selected);
@@ -117,11 +172,15 @@ export async function runPages(action=process.argv[2],{upload=uploadAssets,retry
  const project=await cf('');
  if(project.name!==env.PAGES_PROJECT)throw Error('Pages project identity mismatch');
  assertSingleChannel(project,{requireGitSource:production});
- if(action==='inspect'){console.log(JSON.stringify({name:project.name,gitIntegrated:!!project.source,automaticDeploymentsDisabled:true,mostRecentProductionId:project.canonical_deployment?.id||null}));return;}
  let deployments=[];
- if(production&&action!=='inspect'){
-  deployments=await cf('/deployments?env=production&per_page=100');
+ if(production){
+  deployments=await productionDeployments();
   if(deployments.some(d=>d.environment==='production'&&!['success','failure','canceled','skipped'].includes(d.latest_stage?.status)))throw Error('A production deployment is still pending; wait before publishing or rolling back');
+ }
+ if(action==='inspect'){
+  const active=production?await activeProduction(project,deployments):null;
+  console.log(JSON.stringify({name:project.name,gitIntegrated:!!project.source,automaticDeploymentsDisabled:true,
+   mostRecentProductionId:project.canonical_deployment?.id||null,activeProductionId:active?.id||null,productionDeploymentCount:deployments.length}));return;
  }
  if(action==='rollback'){
   if(!production||!UUID.test(env.DEPLOYMENT_ID||''))throw Error('Reviewed production deployment ID required');
