@@ -34,7 +34,7 @@ export async function scanAll({journalId='',lookbackDays=config.initialLookbackD
       for await(const page of crossrefPages(j,{initial:backfill||!checkpoint,checkpoint,lookbackDays,maxPages:config.maxPages,state,onState})){
         for(const a of page){if(insert(a)){found++;newArticles.push(a.id);}}
       }
-      if(state?.status!=='complete')throw Object.assign(Error('扫描预算已用完，窗口游标已保存，下一轮续跑'),{code:'scan_budget_paused',safeMessage:true});
+      if(state?.status!=='complete')throw Object.assign(Error('扫描预算已用完，窗口游标已保存，下一轮续跑'),{code:'scan_budget_paused'});
     } else if(j.source==='rss'){
       if(!j.rss_url)throw Error('Official RSS URL not configured');
       for(const article of await fetchRSS(j)){const a={...article,scan_mode:checkpoint&&!backfill?'incremental':'backfill'};if(insert(a)){found++;newArticles.push(a.id);}}

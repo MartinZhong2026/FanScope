@@ -10,7 +10,13 @@ export const mailReady=()=>Boolean(config.resendKey&&config.emailFrom&&config.ap
 export async function sendMail(to,subject,html){
  if(!mailReady())throw Error('Email not configured: set RESEND_API_KEY, EMAIL_FROM and HTTPS PUBLIC_API_URL');
  const result=await fetch('https://api.resend.com/emails',{method:'POST',headers:{'Authorization':`Bearer ${config.resendKey}`,'Content-Type':'application/json'},body:JSON.stringify({from:config.emailFrom,to:[to],subject,html}),signal:AbortSignal.timeout(25000)});
- const body=await result.text();if(!result.ok)throw Error(`Email provider HTTP ${result.status}: ${body.slice(0,200)}`);return true;
+ if(!result.ok){
+  let code;try{const body=await result.json();code=body?.name||body?.error?.code;}catch{}
+  // Provider text may echo recipients or private drafts. Carry metadata only.
+  throw Object.assign(Error(`Email provider HTTP ${result.status}`),{status:result.status,
+   upstream:{provider:'resend',host:'api.resend.com',status:result.status,code,request_id:result.headers.get('x-request-id')||undefined}});
+ }
+ return true;
 }
 const getUnsub=s=>`${config.apiUrl}/api/subscriptions/unsubscribe?token=${encodeURIComponent(s.unsub_token||'')}`;
 export function paperMarkup(a){return `<li style="margin:0 0 14px"><a href="${esc(articleLink(a).article_url||'')}" style="font-weight:700;color:#167c83">${esc(a.title)}</a><br><span style="color:#667789;font-size:13px">${esc(a.journal_title||'')} · ${esc(a.publication_date||'日期未知')} · ${esc((JSON.parse(a.topics||'[]')).join(', ')||'待分类')}</span>${a.ai_summary?`<p>${esc(a.ai_summary).slice(0,440)}</p>`:''}</li>`;}
