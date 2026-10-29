@@ -1,0 +1,93 @@
+name: FanScope backend release
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: Full current main SHA (no tags or branch names)
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: fanscope-backend-release
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main' && vars.BACKEND_CD_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Require exact current main and successful main CI
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ inputs.commit }}
+        run: |
+          [[ "$RELEASE_SHA" =~ ^[a-f0-9]{40}$ ]]
+          test "$RELEASE_SHA" = "$GITHUB_SHA"
+          test "$(gh api repos/$GITHUB_REPOSITORY/git/ref/heads/main --jq .object.sha)" = "$RELEASE_SHA"
+          gh api "repos/$GITHUB_REPOSITORY/actions/workflows/test.yml/runs?branch=main&event=push&head_sha=$RELEASE_SHA&per_page=10" > /tmp/ci.json
+          python3 -c 'import json; r=json.load(open("/tmp/ci.json"))["workflow_runs"]; assert r and max(r,key=lambda x:x["id"])["conclusion"]=="success", "main CI must succeed first"'
+      - name: Build immutable image and checksum release files
+        env:
+          RELEASE_SHA: ${{ inputs.commit }}
+        run: |
+          mkdir -p work/backend-release
+          docker build --label "org.opencontainers.image.revision=$RELEASE_SHA" -t "fanscope-api:$RELEASE_SHA" -f api/Dockerfile api
+          IMAGE=$(docker image inspect "fanscope-api:$RELEASE_SHA" --format '{{.Id}}')
+          docker save "fanscope-api:$RELEASE_SHA" -o work/backend-release/image.tar
+          python3 - "$RELEASE_SHA" "$IMAGE" <<'PY'
+          import json,sys
+          with open('work/backend-release/manifest.json','w') as f:
+              json.dump({'commit':sys.argv[1],'image':sys.argv[2],'migrationPolicy':'no-change'},f)
+          PY
+          cd work/backend-release
+          sha256sum image.tar manifest.json > SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        id: release
+        with:
+          name: backend-release
+          path: work/backend-release/*
+          compression-level: 0
+          retention-days: 7
+          if-no-files-found: error
+    outputs:
+      artifact: ${{ steps.release.outputs.artifact-id }}
+      digest: ${{ steps.release.outputs.artifact-digest }}
+  approve:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    environment: production
+    permissions:
+      contents: read
+    steps:
+      - name: Record approval for this exact image artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ inputs.commit }}
+          ARTIFACT_ID: ${{ needs.build.outputs.artifact }}
+          ARTIFACT_DIGEST: ${{ needs.build.outputs.digest }}
+        run: |
+          test "$(gh api repos/$GITHUB_REPOSITORY/git/ref/heads/main --jq .object.sha)" = "$RELEASE_SHA"
+          python3 - <<'PY'
+          import json,os
+          with open('approved.json','w') as f:
+              json.dump({'commit':os.environ['RELEASE_SHA'],'runId':int(os.environ['GITHUB_RUN_ID']),
+                         'artifactId':int(os.environ['ARTIFACT_ID']),'digest':'sha256:'+os.environ['ARTIFACT_DIGEST']},f)
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: production-approval
+          path: approved.json
+          retention-days: 7
+          if-no-files-found: error
+      - name: Explain asynchronous host deployment status
+        run: |
+          echo 'Approved for server pull. Green here means authorization succeeded; it does NOT mean production deployed.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Check journalctl -u fanscope-pull and /var/lib/fanscope-cd/backups/*/result.json on the server.' >> "$GITHUB_STEP_SUMMARY"

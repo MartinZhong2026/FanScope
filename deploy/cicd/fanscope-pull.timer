@@ -1,0 +1,11 @@
+[Unit]
+Description=Check for an approved FanScope release every minute
+
+[Timer]
+OnBootSec=90s
+OnUnitInactiveSec=60s
+RandomizedDelaySec=10s
+Unit=fanscope-pull.service
+
+[Install]
+WantedBy=timers.target

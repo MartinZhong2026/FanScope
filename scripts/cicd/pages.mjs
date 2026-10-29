@@ -1,0 +1,175 @@
+// Trusted default-branch code only. Never execute code from a PR artifact.
+import fs from 'node:fs';
+import {execFileSync} from 'node:child_process';
+import path from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {verifyPagesRelease} from '../verify-pages-release.mjs';
+import {gallery} from './preview-gallery.mjs';
+
+export function assertSingleChannel(project,{requireGitSource=false}={}){
+ if(project.production_branch!=='main')throw Error('Expected main production branch');
+ if(requireGitSource&&(!project.source||project.source.type!=='github'||
+    project.source.config?.owner?.toLowerCase()!=='martinzhong2026'||project.source.config?.repo_name?.toLowerCase()!=='fanscope'))
+  throw Error('Existing fanscope Git source must be identifiable as MartinZhong2026/FanScope');
+ if(project.source){
+  const c=project.source.config;
+  if(!c||c.production_deployments_enabled!==false||c.preview_deployment_setting!=='none')
+   throw Error('Disable BOTH production and preview Git automatic deployments before enabling Actions');
+ }
+}
+export function validateArtifact(dir,sha){
+ const walk=d=>{for(const e of fs.readdirSync(d,{withFileTypes:true})){
+  if(e.isSymbolicLink())throw Error('Artifact symlink rejected');
+  if(e.isDirectory()){if(e.name==='functions')throw Error('Executable Pages artifact rejected');walk(path.join(d,e.name));}
+  else if(!e.isFile()||e.name==='_worker.js'||e.name==='_routes.json'||d.split(path.sep).includes('functions'))throw Error('Executable Pages artifact rejected');
+ }};
+ walk(dir);verifyPagesRelease(dir);
+ const m=JSON.parse(fs.readFileSync(`${dir}/release.json`));
+ if(m.commit!==sha)throw Error('Artifact SHA mismatch');
+}
+export function previewAddress(subdomain,branch){
+ if(!/^pr-[1-9][0-9]*$/.test(branch)||!/^fanscope-preview(?:-[a-z0-9]+)*\.pages\.dev$/.test(subdomain||''))
+  throw Error('Unexpected Pages preview subdomain or branch');
+ return `https://${branch}.${subdomain}`;
+}
+const env=process.env;
+async function cf(endpoint,method='GET'){
+ const r=await fetch(`https://api.cloudflare.com/client/v4/accounts/${env.CLOUDFLARE_ACCOUNT_ID}/pages/projects/${env.PAGES_PROJECT}${endpoint}`,{method,headers:{Authorization:`Bearer ${env.CLOUDFLARE_API_TOKEN}`},signal:AbortSignal.timeout(30000)});
+ const j=await r.json();if(!r.ok||!j.success)throw Error(`Cloudflare request failed: HTTP ${r.status}`);return j.result;
+}
+export async function smoke(base,sha,{marker=true}={}){
+ const paths=[['/','html'],['/lab/','html'],['/config.js','config'],...(marker?[['/release.json','release']]:[])];
+ for(const [p,kind] of paths){
+  const r=await fetch(base+p+`?release=${sha}`,{signal:AbortSignal.timeout(15000),redirect:'error',headers:{'Cache-Control':'no-cache'}});
+  if(!r.ok)throw Error(`Smoke ${p}: HTTP ${r.status}`);
+  const t=await r.text();
+  if(kind==='html'&&!/FanScope/i.test(t))throw Error('Page identity missing');
+  if(kind==='config'&&!t.includes('https://fanscope-api.adapttochina.com'))throw Error('Production API config mismatch');
+  if(kind==='release'&&JSON.parse(t).commit!==sha)throw Error('Stale release served');
+ }
+}
+async function eventually(check){
+ let error;
+ for(let attempt=0;attempt<12;attempt++){
+  try{return await check();}catch(e){error=e;if(attempt<11)await new Promise(resolve=>setTimeout(resolve,5000));}
+ }
+ throw error;
+}
+const UUID=/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
+async function liveRevision(){
+ const r=await fetch('https://fanscope.pages.dev/release.json?verify=current',{
+  signal:AbortSignal.timeout(15000),redirect:'error',headers:{'Cache-Control':'no-cache'}});
+ if(r.status===404)return null; // The pre-V1.6 site had no release marker.
+ if(!r.ok)throw Error(`Current release marker: HTTP ${r.status}`);
+ const body=await r.text();
+ // Pages can serve its SPA fallback with HTTP 200 for a missing legacy marker.
+ if(/^\s*<!doctype html/i.test(body))return null;
+ let marker;try{marker=JSON.parse(body);}catch{throw Error('Current release marker is invalid');}
+ const sha=marker.commit;
+ if(!/^[a-f0-9]{40}$/.test(sha||''))throw Error('Current release marker is invalid');
+ return sha;
+}
+function successfulProduction(d){return d&&UUID.test(d.id||'')&&d.environment==='production'&&d.latest_stage?.status==='success';}
+async function verifyServedDeployment(target){
+ if(!successfulProduction(target))throw Error('Successful production deployment required');
+ const u=new URL(target.url);
+ if(u.protocol!=='https:'||u.username||u.password||u.port||u.pathname!=='/'||u.search||u.hash||!/^[-a-z0-9]+\.fanscope\.pages\.dev$/.test(u.hostname))
+  throw Error('Unexpected immutable production deployment URL');
+ // Compare the public site with the immutable target, including the main JS.
+ // This also supports a pre-V1.6 deployment that has no release marker.
+ for(const p of ['/','/app.js','/config.js','/lab/','/lab/app.js']){
+  const options={signal:AbortSignal.timeout(15000),redirect:'error',headers:{'Cache-Control':'no-cache'}};
+  const [a,b]=await Promise.all([fetch('https://fanscope.pages.dev'+p+'?verify=rollback',options),fetch(u.origin+p+'?verify=rollback',options)]);
+  if(!a.ok||!b.ok)throw Error(`Deployment comparison ${p}: HTTP ${a.status}/${b.status}`);
+  const [left,right]=await Promise.all([a.arrayBuffer(),b.arrayBuffer()]);
+  if(left.byteLength>8*1024*1024||right.byteLength>8*1024*1024||!Buffer.from(left).equals(Buffer.from(right)))
+   throw Error(`Public content differs from reviewed deployment: ${p}`);
+ }
+ await smoke('https://fanscope.pages.dev',target.deployment_trigger?.metadata?.commit_hash||target.id,{marker:false});
+}
+async function activeProduction(project,deployments){
+ const live=await liveRevision();
+ const candidates=[project.canonical_deployment,...deployments].filter(successfulProduction);
+ const unique=[...new Map(candidates.map(d=>[d.id,d])).values()];
+ const matches=live?unique.filter(d=>d.deployment_trigger?.metadata?.commit_hash===live):[];
+ let selected=matches.length===1?matches[0]:null;
+ if(!selected){
+  const id=env.PAGES_CURRENT_DEPLOYMENT_ID;
+  if(!UUID.test(id||''))throw Error('Set pages-production PAGES_CURRENT_DEPLOYMENT_ID to the active deployment UUID after checking the Cloudflare dashboard');
+  selected=await cf(`/deployments/${id}`);
+  if(!successfulProduction(selected)||(live&&selected.deployment_trigger?.metadata?.commit_hash!==live))
+   throw Error('Configured current deployment does not match the live release');
+ }
+ await verifyServedDeployment(selected);
+ return selected;
+}
+async function restoreDeployment(target,retry=eventually){
+ await cf(`/deployments/${target.id}/rollback`,'POST');
+ await retry(()=>verifyServedDeployment(target));
+}
+const uploadAssets=(dir,branch,sha)=>execFileSync(process.execPath,['deploy/pages/node_modules/wrangler/bin/wrangler.js','pages','deploy',dir,'--project-name',env.PAGES_PROJECT,'--branch',branch,'--commit-hash',sha,'--commit-dirty=false'],{stdio:'inherit',env});
+export async function runPages(action=process.argv[2],{upload=uploadAssets,retry=eventually}={}){
+ const sha=env.RELEASE_SHA;
+ if(!/^[a-f0-9]{40}$/.test(sha||''))throw Error('Full SHA required');
+ if(!/^[a-f0-9]{32}$/.test(env.CLOUDFLARE_ACCOUNT_ID||''))throw Error('Account ID required');
+ if(!['fanscope','fanscope-preview'].includes(env.PAGES_PROJECT))throw Error('Unexpected Pages project');
+ const production=env.PAGES_PROJECT==='fanscope';
+ const project=await cf('');
+ if(project.name!==env.PAGES_PROJECT)throw Error('Pages project identity mismatch');
+ assertSingleChannel(project,{requireGitSource:production});
+ if(action==='inspect'){console.log(JSON.stringify({name:project.name,gitIntegrated:!!project.source,automaticDeploymentsDisabled:true,mostRecentProductionId:project.canonical_deployment?.id||null}));return;}
+ let deployments=[];
+ if(production&&action!=='inspect'){
+  deployments=await cf('/deployments?env=production&per_page=100');
+  if(deployments.some(d=>d.environment==='production'&&!['success','failure','canceled','skipped'].includes(d.latest_stage?.status)))throw Error('A production deployment is still pending; wait before publishing or rolling back');
+ }
+ if(action==='rollback'){
+  if(!production||!UUID.test(env.DEPLOYMENT_ID||''))throw Error('Reviewed production deployment ID required');
+  const target=await cf(`/deployments/${env.DEPLOYMENT_ID}`);
+  if(target.environment!=='production'||target.latest_stage?.status!=='success')throw Error('Successful production deployment required');
+  await restoreDeployment(target,retry);return;
+ }
+ if(action!=='deploy')throw Error('Expected inspect, deploy or rollback');
+ const dir=production?'dist/production':'dist/preview';validateArtifact(dir,sha);
+ if(!production){
+  // Replace attacker-controlled policy/config with trusted files after extraction.
+  fs.writeFileSync(`${dir}/config.js`,"window.FANSCOPE_CONFIG={API_BASE_URL:'https://preview-api.invalid'};\n");
+  fs.writeFileSync(`${dir}/_headers`,"/*\n  Content-Security-Policy: default-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; script-src 'none'; form-action 'none'; frame-src 'none'; base-uri 'none'; frame-ancestors 'none'\n  X-Content-Type-Options: nosniff\n  X-Frame-Options: DENY\n  X-Robots-Tag: noindex, nofollow\n");
+  // Pages redirects can escape preview policy; no Functions or redirects allowed.
+  if(fs.existsSync(`${dir}/_redirects`))fs.unlinkSync(`${dir}/_redirects`);
+  gallery('work/preview-evidence',dir,sha);
+ }
+ const previous=production?await activeProduction(project,deployments):null;
+ if(production&&previous.deployment_trigger?.metadata?.commit_hash===sha){
+  // A legacy Git deployment can have the same SHA but no verified V1.6 marker.
+  // Only skip when the actual public artifact also passes the complete smoke.
+  let verified=false;try{await smoke('https://fanscope.pages.dev',sha);verified=true;}
+  catch{console.log('Existing SHA has no verified V1.6 artifact; publishing the checked bundle');}
+  if(verified){console.log(`Production ${sha} is already verified; no duplicate deployment`);return;}
+ }
+ const branch=production?'main':`pr-${env.PR_NUMBER}`;
+ if(!production&&!/^pr-[1-9][0-9]*$/.test(branch))throw Error('PR number required');
+ try{
+  await upload(dir,branch,sha);
+  if(production)await retry(()=>smoke('https://fanscope.pages.dev',sha));
+  else {
+   const url=previewAddress(project.subdomain,branch);
+   await retry(async()=>{const r=await fetch(url+'/?release='+sha,{signal:AbortSignal.timeout(15000)});
+    if(!r.ok||!r.headers.get('content-security-policy')?.includes("connect-src 'none'")||!(await r.text()).includes(sha))throw Error('Preview HTTP/CSP/SHA verification failed');});
+   console.log(`Preview: ${url} (browser acceptance gallery, scripts/API disabled)`);
+   if(env.GITHUB_STEP_SUMMARY)fs.appendFileSync(env.GITHUB_STEP_SUMMARY,`PR visual preview: ${url}\n`);
+  }
+ }catch(error){
+  if(production){
+   // Roll back only if this SHA owns the active deployment; never overwrite another release.
+   let active=null;
+   try{active=await liveRevision();}catch{console.error('Cannot identify the public version; use the reviewed manual rollback after investigation');}
+   if(active===sha){
+    await restoreDeployment(previous,retry);
+    console.error(`Restored deployment ${previous.id}`);
+   }
+  }
+  throw error;
+ }
+}
+if(process.argv[1]&&import.meta.url===pathToFileURL(path.resolve(process.argv[1])).href)await runPages();

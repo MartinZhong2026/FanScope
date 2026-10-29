@@ -1,4 +1,7 @@
 // New isolated browser DB only; real public metadata + labelled synthetic controls.
+// This local workbench fixture must never be mistaken for a production entry.
+if(process.env.NODE_ENV==='production')throw Error('Chinese browser fixture refuses production NODE_ENV');
+process.env.CHINESE_AUTH_IMPORT_ENABLED='false';
 await import('./mobile-browser-server.mjs');
 const fs=await import('node:fs');const {db}=await import('../src/db.mjs');
 const {citationArticle,importChinese}=await import('../src/chinese-ingestion.mjs');

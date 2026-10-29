@@ -1,0 +1,130 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {assertSingleChannel,smoke,validateArtifact,runPages,previewAddress} from '../../scripts/cicd/pages.mjs';
+import {gallery} from '../../scripts/cicd/preview-gallery.mjs';
+import {sourceForRun} from '../../scripts/cicd/pages-source.mjs';
+
+test('Pages refuses ambiguous or enabled Git integration',()=>{
+ assertSingleChannel({production_branch:'main'});
+ assertSingleChannel({production_branch:'main',source:{config:{production_deployments_enabled:false,preview_deployment_setting:'none'}}});
+ for(const config of [{},{production_deployments_enabled:true,preview_deployment_setting:'none'},{production_deployments_enabled:false,preview_deployment_setting:'all'}]){
+  assert.throws(()=>assertSingleChannel({production_branch:'main',source:{config}}));
+ }
+ assert.throws(()=>assertSingleChannel({production_branch:'master'}));
+ const config={production_deployments_enabled:false,preview_deployment_setting:'none',owner:'MartinZhong2026',repo_name:'FanScope'};
+ assertSingleChannel({production_branch:'main',source:{type:'github',config}},{requireGitSource:true});
+ assert.throws(()=>assertSingleChannel({production_branch:'main'},{requireGitSource:true}),/identifiable/);
+ assert.throws(()=>assertSingleChannel({production_branch:'main',source:{type:'github',config:{...config,repo_name:'other'}}},{requireGitSource:true}),/identifiable/);
+});
+test('public smoke rejects wrong revision and non-HTML without any writes',async()=>{
+ const original=globalThis.fetch,sha='a'.repeat(40);let requests=[];
+ try{
+  globalThis.fetch=async(url,options)=>{requests.push({url,options});return new Response(url.includes('release.json')?JSON.stringify({commit:sha}):url.includes('config.js')?'https://fanscope-api.adapttochina.com':'<title>FanScope</title>');};
+  await smoke('https://synthetic.invalid',sha);
+  assert.equal(requests.length,4);assert.ok(requests.every(r=>!r.options.method));
+  await assert.rejects(smoke('https://synthetic.invalid','b'.repeat(40)),/Stale/);
+  requests=[];await smoke('https://synthetic.invalid','legacy',{marker:false});assert.equal(requests.length,3);
+  globalThis.fetch=async()=>new Response('unavailable',{status:503});
+  await assert.rejects(smoke('https://synthetic.invalid',sha),/HTTP 503/);
+ }finally{globalThis.fetch=original;}
+});
+test('privileged Pages publisher rejects Worker artifacts before upload',()=>{
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'fanscope-pages-security-'));
+ try{
+  fs.writeFileSync(path.join(dir,'_worker.js'),'export default {}');
+  assert.throws(()=>validateArtifact(dir,'a'.repeat(40)),/Executable Pages/);
+ }finally{fs.rmSync(dir,{recursive:true,force:true});}
+});
+test('preview gallery accepts only PNG evidence and escapes untrusted labels',()=>{
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'fanscope-preview-gallery-'));
+ try{
+  const source=path.join(dir,'input'),output=path.join(dir,'output');fs.mkdirSync(source);fs.mkdirSync(output);
+  fs.writeFileSync(path.join(source,'screen&.png'),Buffer.from('89504e470d0a1a0a','hex'));
+  fs.writeFileSync(path.join(source,'attack.html'),'<script>fetch("https://invalid.example")</script>');
+  assert.equal(gallery(source,output,'a'.repeat(40)),1);
+  const html=fs.readFileSync(path.join(output,'index.html'),'utf8');assert.ok(html.includes('screen&amp;.png'));assert.ok(!html.includes('<script>'));
+  assert.equal(fs.readdirSync(path.join(output,'evidence')).length,1);
+  fs.writeFileSync(path.join(source,'invalid.png'),'not PNG');
+  assert.throws(()=>gallery(source,output,'a'.repeat(40)),/Invalid/);
+ }finally{fs.rmSync(dir,{recursive:true,force:true});}
+});
+
+test('Pages source gate separates main/PR and rejects stale, cancelled and merge-queue runs',()=>{
+ const sha='a'.repeat(40),base={path:'.github/workflows/test.yml',conclusion:'success',repository:{full_name:'MartinZhong2026/FanScope'},head_sha:sha};
+ assert.equal(sourceForRun({...base,event:'push',head_branch:'main'},sha).mode,'production');
+ const pr={number:3,state:'open',head:{sha},base:{ref:'main'}};
+ assert.equal(sourceForRun({...base,event:'pull_request'},'b'.repeat(40),pr).mode,'preview');
+ for(const run of [{...base,event:'merge_group'},{...base,event:'push',head_branch:'feature'},{...base,event:'push',head_branch:'main',conclusion:'cancelled'},
+  {...base,event:'push',head_branch:'main',head_sha:'b'.repeat(40)}])assert.throws(()=>sourceForRun(run,sha));
+ assert.throws(()=>sourceForRun({...base,event:'pull_request'},sha,{...pr,state:'closed'}));
+ assert.throws(()=>sourceForRun({...base,event:'pull_request'},sha,{...pr,head:{sha:'b'.repeat(40)}}));
+});
+test('preview aliases use the actual Cloudflare subdomain, including collision suffixes',()=>{
+ assert.equal(previewAddress('fanscope-preview.pages.dev','pr-3'),'https://pr-3.fanscope-preview.pages.dev');
+ assert.equal(previewAddress('fanscope-preview-abc123.pages.dev','pr-3'),'https://pr-3.fanscope-preview-abc123.pages.dev');
+ assert.throws(()=>previewAddress('fanscope-preview.attacker.test','pr-3'));
+ assert.throws(()=>previewAddress('fanscope-preview.pages.dev','main'));
+});
+
+async function pagesScenario({sameSha=false,legacy=false,legacySpa=false,badSmoke=false,gitEnabled=false,missingActiveId=false,action='deploy'}={}){
+ const cwd=process.cwd(),dir=fs.mkdtempSync(path.join(os.tmpdir(),'fanscope-pages-flow-')),fetch=globalThis.fetch;
+ const vars={CLOUDFLARE_ACCOUNT_ID:'0'.repeat(32),CLOUDFLARE_API_TOKEN:'synthetic-test-only',PAGES_PROJECT:'fanscope',RELEASE_SHA:'a'.repeat(40),DEPLOYMENT_ID:'11111111-1111-1111-1111-111111111111',PAGES_CURRENT_DEPLOYMENT_ID:missingActiveId?'':'11111111-1111-1111-1111-111111111111'};
+ const previous=Object.fromEntries(Object.keys(vars).map(k=>[k,process.env[k]]));
+ let uploads=0,rollbacks=0,uploaded=false;
+ const old={id:'11111111-1111-1111-1111-111111111111',url:'https://11111111.fanscope.pages.dev',environment:'production',latest_stage:{status:'success'},deployment_trigger:{metadata:{commit_hash:sameSha?vars.RELEASE_SHA:'b'.repeat(40)}}};
+ let active=old,latest=old;
+ try{
+  Object.assign(process.env,vars);process.chdir(dir);
+  const artifact=path.join(dir,'dist/production');fs.mkdirSync(artifact,{recursive:true});
+  for(const f of ['index.html','config.js','chinese-quality.mjs','chinese-diagnostics.mjs','404.html'])fs.writeFileSync(path.join(artifact,f),'safe');
+  fs.writeFileSync(path.join(artifact,'app.js'),'function chinesePanel(edit=false){edit=false;}');
+  fs.writeFileSync(path.join(artifact,'release.json'),JSON.stringify({commit:vars.RELEASE_SHA}));
+  globalThis.fetch=async(url,options={})=>{
+   const u=new URL(url);
+   if(u.hostname==='api.cloudflare.com'){
+    if(u.pathname.endsWith('/rollback')){rollbacks++;active=old;return Response.json({success:true,result:old});}
+    if(u.pathname.endsWith('/deployments'))return Response.json({success:true,result:[old]});
+    if(u.pathname.endsWith('/deployments/'+old.id))return Response.json({success:true,result:old});
+    return Response.json({success:true,result:{name:'fanscope',production_branch:'main',canonical_deployment:latest,
+     source:{type:'github',config:{owner:'MartinZhong2026',repo_name:'FanScope',production_deployments_enabled:gitEnabled,preview_deployment_setting:'none'}}}});
+   }
+   assert.ok(['fanscope.pages.dev','11111111.fanscope.pages.dev'].includes(u.hostname));assert.equal(options.method,undefined);
+   if(badSmoke&&uploaded&&active.id!==old.id&&u.hostname==='fanscope.pages.dev'&&u.pathname==='/')return new Response('unavailable',{status:503});
+   if(u.pathname==='/release.json')return legacy&&!uploaded?(legacySpa?new Response('<!DOCTYPE html><title>FanScope</title>'):new Response('missing',{status:404})):Response.json({commit:(u.hostname==='fanscope.pages.dev'?active:old).deployment_trigger.metadata.commit_hash});
+   return new Response(u.pathname==='/config.js'?'https://fanscope-api.adapttochina.com':'<title>FanScope</title>');
+  };
+  const invoke=()=>runPages(action,{retry:check=>check(),upload:()=>{
+   uploads++;uploaded=true;active={...old,id:'22222222-2222-2222-2222-222222222222',deployment_trigger:{metadata:{commit_hash:vars.RELEASE_SHA}}};latest=active;
+  }});
+  if(gitEnabled||badSmoke||missingActiveId)await assert.rejects(invoke(),gitEnabled?/Disable BOTH/:missingActiveId?/PAGES_CURRENT_DEPLOYMENT_ID/:/HTTP 503/);
+  else await invoke();
+  return {uploads,rollbacks,active:active.id,old:old.id};
+ }finally{
+  globalThis.fetch=fetch;process.chdir(cwd);
+  for(const[k,v]of Object.entries(previous)){if(v===undefined)delete process.env[k];else process.env[k]=v;}
+  fs.rmSync(dir,{recursive:true,force:true});
+ }
+}
+test('repeated successful main CI does not redeploy a verified production SHA',async()=>{
+ assert.equal((await pagesScenario({sameSha:true})).uploads,0);
+ assert.equal((await pagesScenario({sameSha:true,legacy:true})).uploads,1);
+ assert.equal((await pagesScenario({sameSha:true,legacy:true,legacySpa:true})).uploads,1);
+});
+test('legacy production without an identified active deployment fails closed',async()=>{
+ const result=await pagesScenario({legacy:true,missingActiveId:true});
+ assert.equal(result.uploads,0);assert.equal(result.rollbacks,0);
+});
+test('enabled Git integration blocks upload and failed new smoke restores the previous deployment',async()=>{
+ assert.equal((await pagesScenario({gitEnabled:true})).uploads,0);
+ const result=await pagesScenario({badSmoke:true});
+ assert.equal(result.uploads,1);assert.equal(result.rollbacks,1);assert.equal(result.active,result.old);
+});
+test('manual inspection performs no upload/rollback and manual rollback supports legacy artifacts',async()=>{
+ const inspection=await pagesScenario({action:'inspect'});
+ assert.equal(inspection.uploads,0);assert.equal(inspection.rollbacks,0);
+ const rollback=await pagesScenario({action:'rollback',legacy:true});
+ assert.equal(rollback.uploads,0);assert.equal(rollback.rollbacks,1);assert.equal(rollback.active,rollback.old);
+});

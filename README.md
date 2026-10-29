@@ -1,5 +1,7 @@
 # ◢ FanScope v1.2 — Research Intelligence + Lab Workspace
 
+V1.6 CI/CD：[配置、首次启用与回滚手册](docs/CICD_V1_6_ZH.md)。前后端部署默认关闭，启用需完成 Environment、Cloudflare 单渠道和主机维护门禁配置。
+
 v1.2在现有Cloudflare Pages静态前端与曼谷Docker / Node.js 22 / SQLite后端上升级，不替换现有账号和数据。包含固定窗口Crossref恢复、发表日期视图、安全文章外链、独立候选期刊体系、带证据的DeepSeek提取/简报、ECharts趋势、科研项目工作台、共享论文表与人工确认Excel导入、DOCX/PDF/文本更新审批。
 
 - [本版完成/待完成/风险与测试](docs/RELEASE_V1_2.md)

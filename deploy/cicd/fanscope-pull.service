@@ -1,0 +1,21 @@
+[Unit]
+Description=Pull an approved FanScope release (outbound HTTPS only)
+After=docker.service network-online.target
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+User=root
+UMask=0077
+LoadCredential=github-token:/etc/fanscope-cd/github-token
+Environment=FANSCOPE_COMPOSE_FILE=/home/ubuntu/fanscope/deploy/docker-compose.yml
+ExecStart=/usr/bin/python3 /opt/fanscope-cd/scripts/cicd/pull_release.py
+TimeoutStartSec=30min
+Nice=10
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=read-only
+ProtectSystem=full
+# Docker socket access is root-equivalent. This is a reviewed host controller,
+# not a sandbox for PR code. No repository checkout/build occurs on this host.

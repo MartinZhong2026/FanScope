@@ -1,4 +1,4 @@
-import test,{after} from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import os from 'node:os';import {spawn} from 'node:child_process';import {once} from 'node:events';
+import test,{after} from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import os from 'node:os';import {spawn,spawnSync} from 'node:child_process';import {once} from 'node:events';
 import {pathToFileURL} from 'node:url';
 import {chineseSourceStatus,chineseQualityPanel,chineseCollectionSummary} from '../../web/chinese-quality.mjs';
 import {readChineseDiagnostics} from '../../web/chinese-diagnostics.mjs';
@@ -55,6 +55,14 @@ test('production closes every Chinese management route before authentication, in
  }assert.equal(db.prepare('SELECT COUNT(*) n FROM articles').get().n,before);
  }finally{process.env.NODE_ENV=prev||'';process.env.CHINESE_AUTH_IMPORT_ENABLED='false';await new Promise(r=>server.close(r));}
 });
+test('local Chinese browser fixture refuses production before creating any database',()=>{
+ const missing=path.join(dir,'must-not-create-production-fixture.sqlite');
+ const child=spawnSync(process.execPath,[path.join(import.meta.dirname,'chinese-browser-server.mjs')],{
+  env:{...process.env,NODE_ENV:'production',DATABASE_PATH:missing,CHINESE_AUTH_IMPORT_ENABLED:'true',DEEPSEEK_API_KEY:'',RESEND_API_KEY:''},encoding:'utf8'
+ });
+ assert.notEqual(child.status,0);assert.match(child.stderr,/Chinese browser fixture refuses production NODE_ENV/);assert.equal(fs.existsSync(missing),false);
+});
+
 test('public artifact scanner rejects database, hidden env and literal keys and does not treat static code as permission',()=>{
  const folder=path.join(dir,'public');fs.mkdirSync(folder);for(const f of ['index.html','config.js','app.js','chinese-quality.mjs','chinese-diagnostics.mjs','404.html'])fs.writeFileSync(path.join(folder,f),f==='app.js'?'function chinesePanel(edit=false){edit=false;}':'safe');
  assert.equal(verifyPagesRelease(folder).passed,true);
