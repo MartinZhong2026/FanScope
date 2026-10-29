@@ -1,0 +1,654 @@
+{
+ "note": "Read-only probe from a developer workstation network path (not the production server). Statuses only; no page text stored.",
+ "probedAt": "2026-10-29T07:08:38.969Z",
+ "userAgent": "FanScope-SourceProbe/1.0 (academic metadata availability check; read-only)",
+ "results": [
+  {
+   "id": "soc-security-cn",
+   "title": "社会保障评论",
+   "issn": "2096-3211",
+   "homepage": "https://sbpl.cbpt.cnki.net/",
+   "home": {
+    "status": 200,
+    "finalUrl": "https://sbpl.cbpt.cnki.net/EditorH3N/Quit.aspx",
+    "bytes": 164,
+    "platform": "cnki-cbpt",
+    "titleMatch": false,
+    "issnOnPage": false,
+    "jsChallenge": false,
+    "rssLinks": [],
+    "oaiHint": false
+   },
+   "robots": {
+    "status": 200,
+    "disallowAll": false
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "soc-review-cn",
+   "title": "社会学评论",
+   "issn": "2095-5154",
+   "homepage": "https://src.ruc.edu.cn/",
+   "home": {
+    "status": 0,
+    "finalUrl": "https://src.ruc.edu.cn/",
+    "error": "DEPTH_ZERO_SELF_SIGNED_CERT: self-signed certificate; if the root CA is installed locally, try running Node.js with --use-system-ca",
+    "platform": "unknown",
+    "titleMatch": null,
+    "issnOnPage": null,
+    "jsChallenge": null,
+    "rssLinks": [],
+    "oaiHint": null
+   },
+   "robots": {
+    "status": 0,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "public-admin-cn",
+   "title": "公共管理评论",
+   "issn": "2096-7713",
+   "homepage": "https://www.sciopen.com/journal/2096-7713",
+   "home": {
+    "status": 200,
+    "finalUrl": "https://www.sciopen.com/journal/2096-7713",
+    "bytes": 108760,
+    "platform": "cnki-cbpt",
+    "titleMatch": false,
+    "issnOnPage": true,
+    "jsChallenge": false,
+    "rssLinks": [
+     "https://www.linkedin.com/company/91320577/admin/feed/posts/"
+    ],
+    "oaiHint": false
+   },
+   "robots": {
+    "status": 200,
+    "disallowAll": false
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 200,
+    "total": 58,
+    "latest": "2026-6",
+    "withAbstractInLatest5": 5,
+    "sampleDoi": "10.26599/cpar.2026.9680211"
+   }
+  },
+  {
+   "id": "candidate-1",
+   "title": "人口研究",
+   "issn": "1000-6087",
+   "homepage": "https://rkyj.ruc.edu.cn/CN/1000-6087/home.shtml",
+   "home": {
+    "status": 200,
+    "finalUrl": "https://rkyj.ruc.edu.cn/CN/1000-6087/home.shtml",
+    "bytes": 58788,
+    "platform": "magtech",
+    "titleMatch": true,
+    "issnOnPage": true,
+    "jsChallenge": false,
+    "rssLinks": [],
+    "oaiHint": false
+   },
+   "robots": {
+    "status": 200,
+    "disallowAll": false
+   },
+   "articleCandidates": [
+    "https://rkyj.ruc.edu.cn/CN/Y2026/V50/I5/3",
+    "https://rkyj.ruc.edu.cn/CN/Y2026/V50/I5/20",
+    "https://rkyj.ruc.edu.cn/CN/Y2026/V50/I5/38"
+   ],
+   "article": {
+    "url": "https://rkyj.ruc.edu.cn/CN/Y2026/V50/I5/3",
+    "status": 200,
+    "platform": "magtech",
+    "citationTitle": true,
+    "citationIssn": "1000-6087",
+    "citationDate": "2026-09-29",
+    "citationDoi": false,
+    "descriptions": 4,
+    "zhAbstract": true,
+    "enAbstract": true,
+    "dcMeta": true
+   },
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-2",
+   "title": "中国人口科学",
+   "issn": "1000-7881",
+   "homepage": "https://zgrkkx.ajcass.com/",
+   "home": {
+    "status": 200,
+    "finalUrl": "https://zgrkkx.ajcass.com/",
+    "bytes": 75950,
+    "platform": "ajcass",
+    "titleMatch": true,
+    "issnOnPage": false,
+    "jsChallenge": false,
+    "rssLinks": [],
+    "oaiHint": false
+   },
+   "robots": {
+    "status": 404,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-3",
+   "title": "人口与经济",
+   "issn": "1000-4149",
+   "homepage": "https://rkyjj.cueb.edu.cn/",
+   "home": {
+    "status": 200,
+    "finalUrl": "https://rkyjj.cueb.edu.cn/",
+    "bytes": 24169,
+    "platform": "unknown",
+    "titleMatch": true,
+    "issnOnPage": true,
+    "jsChallenge": false,
+    "rssLinks": [
+     "https://rkjj.publish.founderss.cn/homeNav?lang=zh"
+    ],
+    "oaiHint": false
+   },
+   "robots": {
+    "status": 404,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-4",
+   "title": "人口学刊",
+   "issn": "1004-129X",
+   "homepage": "https://rkxk.jlu.edu.cn/",
+   "home": {
+    "status": 0,
+    "finalUrl": "https://rkxk.jlu.edu.cn/",
+    "error": "ECONNRESET: Client network socket disconnected before secure TLS connection was established",
+    "platform": "unknown",
+    "titleMatch": null,
+    "issnOnPage": null,
+    "jsChallenge": null,
+    "rssLinks": [],
+    "oaiHint": null
+   },
+   "robots": {
+    "status": 0,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-5",
+   "title": "人口与发展",
+   "issn": "1674-1668",
+   "homepage": "https://rkyfz.pku.edu.cn/",
+   "home": {
+    "status": 200,
+    "finalUrl": "https://ccj.pku.edu.cn/journal/Info?jid=99049",
+    "bytes": 78614,
+    "platform": "unknown",
+    "titleMatch": true,
+    "issnOnPage": true,
+    "jsChallenge": false,
+    "rssLinks": [],
+    "oaiHint": false
+   },
+   "robots": {
+    "status": 200,
+    "disallowAll": false
+   },
+   "articleCandidates": [
+    "https://nssd.cn/html/1/155/161/index.html?gch=90419A"
+   ],
+   "article": {
+    "url": "https://nssd.cn/html/1/155/161/index.html?gch=90419A",
+    "status": 404,
+    "platform": "unknown",
+    "citationTitle": false,
+    "citationIssn": null,
+    "citationDate": null,
+    "citationDoi": false,
+    "descriptions": 0,
+    "zhAbstract": false,
+    "enAbstract": false,
+    "dcMeta": false
+   },
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-6",
+   "title": "社会学研究",
+   "issn": "1002-5936",
+   "homepage": "https://shxyj.ajcass.com/",
+   "home": {
+    "status": 200,
+    "finalUrl": "https://shxyj.ajcass.com/",
+    "bytes": 108198,
+    "platform": "ajcass",
+    "titleMatch": true,
+    "issnOnPage": true,
+    "jsChallenge": false,
+    "rssLinks": [],
+    "oaiHint": false
+   },
+   "robots": {
+    "status": 404,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-7",
+   "title": "社会",
+   "issn": "1004-8804",
+   "homepage": "https://www.society.shu.edu.cn/CN/1004-8804/home.shtml",
+   "home": {
+    "status": 200,
+    "finalUrl": "https://www.society.shu.edu.cn/CN/1004-8804/home.shtml",
+    "bytes": 32009,
+    "platform": "magtech",
+    "titleMatch": true,
+    "issnOnPage": true,
+    "jsChallenge": false,
+    "rssLinks": [
+     "https://www.society.shu.edu.cn/CN/rss/showRssInfo.do"
+    ],
+    "oaiHint": false
+   },
+   "robots": {
+    "status": 200,
+    "disallowAll": false
+   },
+   "articleCandidates": [
+    "https://www.society.shu.edu.cn/CN/Y2026/V46/I4/1",
+    "https://www.society.shu.edu.cn/CN/Y2026/V46/I4/33",
+    "https://www.society.shu.edu.cn/CN/Y2026/V46/I4/64"
+   ],
+   "article": {
+    "url": "https://www.society.shu.edu.cn/CN/Y2026/V46/I4/1",
+    "status": 200,
+    "platform": "magtech",
+    "citationTitle": true,
+    "citationIssn": "1004-8804",
+    "citationDate": "2026-09-18",
+    "citationDoi": false,
+    "descriptions": 0,
+    "zhAbstract": true,
+    "enAbstract": true,
+    "dcMeta": true
+   },
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-9",
+   "title": "社会发展研究",
+   "issn": "2095-7580",
+   "homepage": "https://shfzyj.ajcass.com/",
+   "home": {
+    "status": 0,
+    "finalUrl": "https://shfzyj.ajcass.com/",
+    "error": "UND_ERR_CONNECT_TIMEOUT: Connect Timeout Error (attempted address: shfzyj.ajcass.com:443, timeout: 10000ms)",
+    "platform": "ajcass",
+    "titleMatch": null,
+    "issnOnPage": null,
+    "jsChallenge": null,
+    "rssLinks": [],
+    "oaiHint": null
+   },
+   "robots": {
+    "status": 404,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-10",
+   "title": "社会建设",
+   "issn": "2095-8641",
+   "homepage": "https://shjs.ruc.edu.cn/",
+   "home": {
+    "status": 200,
+    "finalUrl": "https://shjs.ruc.edu.cn/",
+    "bytes": 389,
+    "platform": "unknown",
+    "titleMatch": false,
+    "issnOnPage": true,
+    "jsChallenge": false,
+    "rssLinks": [],
+    "oaiHint": false
+   },
+   "robots": {
+    "status": 200,
+    "disallowAll": false
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-11",
+   "title": "妇女研究论丛",
+   "issn": "1004-2563",
+   "homepage": "https://fnyj.ajcass.com/",
+   "home": {
+    "status": 0,
+    "finalUrl": "https://fnyj.ajcass.com/",
+    "error": "ECONNRESET: Client network socket disconnected before secure TLS connection was established",
+    "platform": "ajcass",
+    "titleMatch": null,
+    "issnOnPage": null,
+    "jsChallenge": null,
+    "rssLinks": [],
+    "oaiHint": null
+   },
+   "robots": {
+    "status": 0,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-12",
+   "title": "残疾人研究",
+   "issn": "2095-0810",
+   "homepage": "https://cjryj.ajcass.com/",
+   "home": {
+    "status": 0,
+    "finalUrl": "https://cjryj.ajcass.com/",
+    "error": "ECONNRESET: Client network socket disconnected before secure TLS connection was established",
+    "platform": "ajcass",
+    "titleMatch": null,
+    "issnOnPage": null,
+    "jsChallenge": null,
+    "rssLinks": [],
+    "oaiHint": null
+   },
+   "robots": {
+    "status": 0,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-14",
+   "title": "公共管理学报",
+   "issn": "1672-6162",
+   "homepage": "https://gggl.cbpt.cnki.net/",
+   "home": {
+    "status": 200,
+    "finalUrl": "https://gggl.cbpt.cnki.net/EditorAN/Quit.aspx",
+    "bytes": 163,
+    "platform": "cnki-cbpt",
+    "titleMatch": false,
+    "issnOnPage": false,
+    "jsChallenge": false,
+    "rssLinks": [],
+    "oaiHint": false
+   },
+   "robots": {
+    "status": 200,
+    "disallowAll": false
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-16",
+   "title": "公共管理与政策评论",
+   "issn": "2095-4026",
+   "homepage": "https://ggglyzc.ruc.edu.cn/",
+   "home": {
+    "status": 0,
+    "finalUrl": "https://ggglyzc.ruc.edu.cn/",
+    "error": "DEPTH_ZERO_SELF_SIGNED_CERT: self-signed certificate; if the root CA is installed locally, try running Node.js with --use-system-ca",
+    "platform": "unknown",
+    "titleMatch": null,
+    "issnOnPage": null,
+    "jsChallenge": null,
+    "rssLinks": [],
+    "oaiHint": null
+   },
+   "robots": {
+    "status": 0,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-17",
+   "title": "中国行政管理",
+   "issn": "1006-0863",
+   "homepage": "https://www.cpaj.com.cn/",
+   "home": {
+    "status": 0,
+    "finalUrl": "https://www.cpaj.com.cn/",
+    "error": "CERT_HAS_EXPIRED: certificate has expired",
+    "platform": "unknown",
+    "titleMatch": null,
+    "issnOnPage": null,
+    "jsChallenge": null,
+    "rssLinks": [],
+    "oaiHint": null
+   },
+   "robots": {
+    "status": 0,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-18",
+   "title": "治理研究",
+   "issn": "1007-9092",
+   "homepage": "https://zlyj.zjdx.gov.cn/",
+   "home": {
+    "status": 0,
+    "finalUrl": "https://zlyj.zjdx.gov.cn/",
+    "error": "ECONNRESET: Client network socket disconnected before secure TLS connection was established",
+    "platform": "unknown",
+    "titleMatch": null,
+    "issnOnPage": null,
+    "jsChallenge": null,
+    "rssLinks": [],
+    "oaiHint": null
+   },
+   "robots": {
+    "status": 0,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-19",
+   "title": "电子政务",
+   "issn": "1672-7223",
+   "homepage": "https://www.egovernment.com.cn/",
+   "home": {
+    "status": 0,
+    "finalUrl": "https://www.egovernment.com.cn/",
+    "error": "ECONNRESET: Client network socket disconnected before secure TLS connection was established",
+    "platform": "unknown",
+    "titleMatch": null,
+    "issnOnPage": null,
+    "jsChallenge": null,
+    "rssLinks": [],
+    "oaiHint": null
+   },
+   "robots": {
+    "status": 0,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "candidate-20",
+   "title": "中国软科学",
+   "issn": "1002-9753",
+   "homepage": "https://www.cssm.com.cn/zgrkx/home",
+   "home": {
+    "status": 200,
+    "finalUrl": "https://www.cssm.com.cn/zgrkx/home",
+    "bytes": 282775,
+    "platform": "unknown",
+    "titleMatch": true,
+    "issnOnPage": false,
+    "jsChallenge": false,
+    "rssLinks": [],
+    "oaiHint": false
+   },
+   "robots": {
+    "status": 406,
+    "disallowAll": null
+   },
+   "articleCandidates": [
+    "https://www.cssm.com.cn/zgrkx/zgrkx/article/html/20260901",
+    "https://www.cssm.com.cn/zgrkx/zgrkx/article/html/20260902",
+    "https://www.cssm.com.cn/zgrkx/zgrkx/article/html/20260903"
+   ],
+   "article": {
+    "url": "https://www.cssm.com.cn/zgrkx/zgrkx/article/html/20260901",
+    "status": 200,
+    "platform": "unknown",
+    "citationTitle": false,
+    "citationIssn": null,
+    "citationDate": null,
+    "citationDoi": false,
+    "descriptions": 0,
+    "zhAbstract": false,
+    "enAbstract": false,
+    "dcMeta": false
+   },
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "china-social-sciences",
+   "title": "中国社会科学",
+   "issn": "1002-4921",
+   "homepage": "https://sscp.cssn.cn/",
+   "home": {
+    "status": 200,
+    "finalUrl": "https://sscp.cssn.cn/",
+    "bytes": 108963,
+    "platform": "unknown",
+    "titleMatch": true,
+    "issnOnPage": false,
+    "jsChallenge": false,
+    "rssLinks": [],
+    "oaiHint": false
+   },
+   "robots": {
+    "status": 404,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  },
+  {
+   "id": "management-world",
+   "title": "管理世界",
+   "issn": "1002-5502",
+   "homepage": "https://www.mwm.net.cn/",
+   "home": {
+    "status": 0,
+    "finalUrl": "https://www.mwm.net.cn/",
+    "error": "ECONNRESET: Client network socket disconnected before secure TLS connection was established",
+    "platform": "unknown",
+    "titleMatch": null,
+    "issnOnPage": null,
+    "jsChallenge": null,
+    "rssLinks": [],
+    "oaiHint": null
+   },
+   "robots": {
+    "status": 0,
+    "disallowAll": null
+   },
+   "articleCandidates": [],
+   "crossref": {
+    "status": 404,
+    "error": "non-json"
+   }
+  }
+ ]
+}
