@@ -3,6 +3,8 @@
 > 审计基线：`main` @ `12310c85229e5e8f99cb9249d449b6bb4d1481a8`（2026-10-29 fetch 后与 `origin/main` 一致，工作区干净）。
 > 审计分支：`chore/v2-foundation-audit`。本轮只读审计 + 文档，没有修改业务代码、数据库、生产配置或云端设置，没有调用付费 API。
 > 配套文档：[V2_TARGET_ARCHITECTURE.md](V2_TARGET_ARCHITECTURE.md) · [V2_INCREMENTAL_ROADMAP.md](V2_INCREMENTAL_ROADMAP.md)
+>
+> **2026-10-29 评审更新**：[V2_ARCHITECTURE_REVIEW.md](V2_ARCHITECTURE_REVIEW.md) 补充了本审计遗漏的 N1–N5，包括发布回滚丢失日志、启动期禁写约束和会议摘要混入；并按产品决定把 P1-2 从"金额上限"改为"失控防护"。发现编号保持不变，冲突时以评审文档为准。
 
 ## 0. 证据等级与阅读方式
 

@@ -2,6 +2,8 @@
 
 > 依据：[FOUNDATION_AUDIT.md](FOUNDATION_AUDIT.md)（发现编号 P1-x/P2-x）与 [V2_TARGET_ARCHITECTURE.md](V2_TARGET_ARCHITECTURE.md)（设计章节 §x）。
 > 编号 `V2-xx` 是计划中的独立 PR，不是 GitHub PR 号。工作量单位为人日，不含审批与管理员操作等待，不确定性标在括号内。
+>
+> **2026-10-29 评审更新：本路线图已被 [V2_ARCHITECTURE_REVIEW.md](V2_ARCHITECTURE_REVIEW.md) §5–§6 取代。** 原各 PR 的保留、合并、推迟或删除见其中"原 PR 计划的处置"表。本文仅作历史参考。
 
 ## 0. 原则
 

@@ -2,6 +2,8 @@
 
 > 基线：`main` @ `12310c8`。本文是设计提案，**不代表已实现**；三个模块目前都只是待评审的需求。
 > 依据：[FOUNDATION_AUDIT.md](FOUNDATION_AUDIT.md)（文中 P1-x/P2-x 指审计发现）。实施顺序见 [V2_INCREMENTAL_ROADMAP.md](V2_INCREMENTAL_ROADMAP.md)。
+>
+> **2026-10-29 评审更新：本文部分设计已被 [V2_ARCHITECTURE_REVIEW.md](V2_ARCHITECTURE_REVIEW.md) 取代。** 变化包括：删除金额预算（§5.3）；证据层 7 表缩减为 1 张标注表（§4）；不做通用任务队列与 worker（§2、§5.2）；迁移改为启动时追加并由控制器校验；产品顺序改为诊断优先。冲突时以评审文档为准。
 
 ## 0. 设计原则
 
