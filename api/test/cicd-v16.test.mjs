@@ -70,12 +70,18 @@ test('preview aliases use the actual Cloudflare subdomain, including collision s
 });
 
 async function pagesScenario({sameSha=false,legacy=false,legacySpa=false,badSmoke=false,gitEnabled=false,missingActiveId=false,
- history=false,pendingLater=false,listError=false,wrongCurrentId=false,contentMismatch=false,unownedFailure=false,action='deploy'}={}){
+ history=false,pendingLater=false,listError=false,wrongCurrentId=false,contentMismatch=false,unownedFailure=false,
+ historicalIdle=false,unknownState=false,canceled=false,action='deploy'}={}){
  const cwd=process.cwd(),dir=fs.mkdtempSync(path.join(os.tmpdir(),'fanscope-pages-flow-')),fetch=globalThis.fetch;
  const vars={CLOUDFLARE_ACCOUNT_ID:'0'.repeat(32),CLOUDFLARE_API_TOKEN:'synthetic-test-only',PAGES_PROJECT:'fanscope',RELEASE_SHA:'a'.repeat(40),DEPLOYMENT_ID:'11111111-1111-1111-1111-111111111111',PAGES_CURRENT_DEPLOYMENT_ID:missingActiveId?'':'11111111-1111-1111-1111-111111111111'};
  const previous=Object.fromEntries(Object.keys(vars).map(k=>[k,process.env[k]]));
  let uploads=0,rollbacks=0,uploaded=false;
- const old={id:'11111111-1111-1111-1111-111111111111',url:'https://11111111.fanscope.pages.dev',environment:'production',latest_stage:{status:'success'},deployment_trigger:{metadata:{commit_hash:sameSha?vars.RELEASE_SHA:'b'.repeat(40)}}};
+ const old={id:'11111111-1111-1111-1111-111111111111',url:'https://11111111.fanscope.pages.dev',environment:'production',latest_stage:{name:'deploy',status:'success'},deployment_trigger:{metadata:{commit_hash:sameSha?vars.RELEASE_SHA:'b'.repeat(40)}}};
+ const pending={...old,created_on:new Date(Date.now()-120000).toISOString(),modified_on:new Date().toISOString(),is_skipped:false,
+  latest_stage:{name:'build',status:'active',started_on:new Date(Date.now()-60000).toISOString(),ended_on:null}};
+ const extra={...old,id:'55555555-5555-5555-5555-555555555555',is_skipped:historicalIdle,
+  created_on:'2026-01-01T00:00:00Z',modified_on:'2026-01-01T00:00:00Z',
+  latest_stage:{name:'queued',status:canceled?'canceled':unknownState?'unexpected':'idle',started_on:null,ended_on:null}};
  const earlier=Array.from({length:25},(_,i)=>({...old,id:`33333333-3333-3333-3333-${String(i).padStart(12,'0')}`,deployment_trigger:{metadata:{commit_hash:'c'.repeat(40)}}}));
  let active=old,latest=history||pendingLater?earlier[0]:old;
  try{
@@ -92,10 +98,11 @@ async function pagesScenario({sameSha=false,legacy=false,legacySpa=false,badSmok
      assert.equal(u.searchParams.get('env'),'production');assert.equal(u.searchParams.get('per_page'),'25');
      if(listError)return Response.json({success:false,errors:[{code:10000,message:'Authentication error'}]},{status:403});
      const page=Number(u.searchParams.get('page')),multiple=history||pendingLater;
-     return Response.json({success:true,result:multiple?(page===1?earlier:[pendingLater?{...old,latest_stage:{status:'active'}}:old]):[old],
+     return Response.json({success:true,result:multiple?(page===1?earlier:[pendingLater?pending:old]):historicalIdle||unknownState||canceled?[old,extra]:[old],
       result_info:{page,per_page:25,total_pages:multiple?2:1}});
     }
-    if(u.pathname.endsWith('/deployments/'+old.id))return Response.json({success:true,result:wrongCurrentId?{...old,id:'44444444-4444-4444-4444-444444444444'}:old});
+    if(u.pathname.endsWith('/deployments/'+extra.id))return Response.json({success:true,result:extra});
+    if(u.pathname.endsWith('/deployments/'+old.id))return Response.json({success:true,result:pendingLater?pending:wrongCurrentId?{...old,id:'44444444-4444-4444-4444-444444444444'}:old});
     return Response.json({success:true,result:{name:'fanscope',production_branch:'main',canonical_deployment:latest,
      source:{type:'github',config:{owner:'MartinZhong2026',repo_name:'FanScope',production_deployments_enabled:gitEnabled,preview_deployment_setting:'none'}}}});
    }
@@ -109,7 +116,7 @@ async function pagesScenario({sameSha=false,legacy=false,legacySpa=false,badSmok
    uploads++;uploaded=true;active={...old,id:'22222222-2222-2222-2222-222222222222',deployment_trigger:{metadata:{commit_hash:vars.RELEASE_SHA}}};latest=active;
    if(unownedFailure){active=old;throw Error('Upload interrupted before this SHA became active');}
   }});
-  const expected=gitEnabled?/Disable BOTH/:missingActiveId&&legacy?/PAGES_CURRENT_DEPLOYMENT_ID/:pendingLater?/still pending/:
+  const expected=gitEnabled?/Disable BOTH/:missingActiveId&&legacy?/PAGES_CURRENT_DEPLOYMENT_ID/:pendingLater?/running\/active-stage-without-end/:unknownState?/unknown\/missing-or-unrecognized/:
    listError?/HTTP 403/:wrongCurrentId?/does not match/:contentMismatch?/differs from reviewed/:unownedFailure?/Upload interrupted/:badSmoke?/HTTP 503/:null;
   if(expected)await assert.rejects(invoke(),expected);
   else await invoke();
@@ -159,4 +166,22 @@ test('inspection exercises list permissions and current deployment checks withou
 test('an interrupted upload cannot roll back another active production version',async()=>{
  const result=await pagesScenario({unownedFailure:true});
  assert.equal(result.uploads,1);assert.equal(result.rollbacks,0);assert.equal(result.active,result.old);
+});
+
+test('skipped historical idle and canceled deployments do not block inspect, publish or deduplication',async()=>{
+ for(const history of [{historicalIdle:true},{canceled:true}]){
+  const inspected=await pagesScenario({...history,action:'inspect'});
+  assert.equal(inspected.uploads,0);assert.equal(inspected.rollbacks,0);
+  assert.equal((await pagesScenario(history)).uploads,1);
+  assert.equal((await pagesScenario({...history,sameSha:true})).uploads,0);
+  const failed=await pagesScenario({...history,badSmoke:true});
+  assert.equal(failed.rollbacks,1);assert.equal(failed.active,failed.old);
+ }
+});
+
+test('unknown deployment state blocks inspection, deployment and rollback without writes',async()=>{
+ for(const action of ['inspect','deploy','rollback']){
+  const result=await pagesScenario({unknownState:true,action});
+  assert.equal(result.uploads,0);assert.equal(result.rollbacks,0);
+ }
 });

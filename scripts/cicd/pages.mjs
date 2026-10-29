@@ -49,7 +49,8 @@ function safeMessage(value){
   .replace(/[\u0000-\u001f\u007f-\u009f]/g,' ').slice(0,400);
 }
 export async function cf(endpoint,method='GET',{envelope=false}={}){
- const route=`/accounts/<account_id>/pages/projects/${env.PAGES_PROJECT}${endpoint}`;
+ const safeEndpoint=endpoint.replace(/(\/deployments\/)([a-f0-9-]{36})(?=\/|$)/gi,(_,prefix,id)=>prefix+maskedDeploymentId(id));
+ const route=`/accounts/<account_id>/pages/projects/${env.PAGES_PROJECT}${safeEndpoint}`;
  const fail=(status,reason,body)=>{
   const errors=Array.isArray(body?.errors)?body.errors.slice(0,5).map(e=>({
    code:Number.isSafeInteger(e?.code)?e.code:null,message:safeMessage(e?.message)
@@ -91,6 +92,78 @@ export async function productionDeployments(){
   if(!rows.length)throw Error('Incomplete Pages deployments pagination');
  }
  throw Error('Pages deployments pagination limit exceeded; refusing incomplete production history');
+}
+const STAGE_NAMES=new Set(['queued','initialize','clone_repo','build','deploy']);
+const STAGE_STATUSES=new Set(['success','failure','canceled','skipped','idle','active']);
+const TERMINAL_STATUSES=new Set(['failure','canceled','skipped']);
+const timestamp=value=>typeof value==='string'&&/^\d{4}-\d{2}-\d{2}T/.test(value)&&Number.isFinite(Date.parse(value))?Date.parse(value):null;
+const maskedDeploymentId=id=>UUID.test(id||'')?`${id.slice(0,8)}-…-${id.slice(-12)}`:'[invalid UUID]';
+export function deploymentSnapshot(d){
+ // Explicit allowlist: API deployment objects also contain env_vars and source
+ // metadata. Never serialize the deployment object or arbitrary field strings.
+ const date=value=>timestamp(value)===null?null:new Date(timestamp(value)).toISOString();
+ return {id:maskedDeploymentId(d?.id),status:STAGE_STATUSES.has(d?.latest_stage?.status)?d.latest_stage.status:'unknown',
+  stage:STAGE_NAMES.has(d?.latest_stage?.name)?d.latest_stage.name:'unknown',
+  started_on:date(d?.latest_stage?.started_on),ended_on:date(d?.latest_stage?.ended_on),
+  created_on:date(d?.created_on),modified_on:date(d?.modified_on),
+  is_skipped:typeof d?.is_skipped==='boolean'?d.is_skipped:null};
+}
+export function productionDeploymentState(d,{now=Date.now()}={}){
+ const state=(kind,reason)=>({kind,reason});
+ const latest=d?.latest_stage,status=latest?.status;
+ if(!d||!UUID.test(d.id||'')||d.environment!=='production'||!STAGE_NAMES.has(latest?.name)||!STAGE_STATUSES.has(status))
+  return state('unknown','missing-or-unrecognized-deployment-stage');
+ // A successful intermediate stage is not a completed deployment.
+ if(TERMINAL_STATUSES.has(status)||(status==='success'&&latest.name==='deploy'))
+  return state('completed',status==='success'?'deploy-success':`stage-${status}`);
+ const stages=Array.isArray(d.stages)?d.stages:[];
+ const activeStages=[latest,...stages].filter(s=>s?.status==='active');
+ const openActive=activeStages.some(s=>s.ended_on==null);
+ const startedOpenActive=activeStages.some(s=>s.started_on!=null&&s.ended_on==null);
+ if(activeStages.some(s=>s.started_on!=null&&(timestamp(s.started_on)===null||
+    (s.ended_on!=null&&(timestamp(s.ended_on)===null||timestamp(s.ended_on)<timestamp(s.started_on))))))
+  return state('unknown','inconsistent-active-stage-timestamps');
+ if(d.is_skipped===true){
+  if(startedOpenActive)return state('unknown','skipped-deployment-has-open-active-stage');
+  return state('historical','explicitly-skipped-deployment');
+ }
+ // The API can leave unused stages idle. A finished final deploy stage is
+ // positive completion evidence; age or a newer successful deployment is not.
+ const finished=stages.some(s=>STAGE_NAMES.has(s?.name)&&
+  (TERMINAL_STATUSES.has(s.status)||(s.name==='deploy'&&s.status==='success'))&&timestamp(s.ended_on)!==null);
+ if(finished){
+  if(openActive)return state('unknown','terminal-stage-conflicts-with-open-active-stage');
+  return state('historical','finished-stage-with-stale-latest-stage');
+ }
+ const created=timestamp(d.created_on),modified=timestamp(d.modified_on),started=timestamp(latest.started_on);
+ if(created===null||modified===null||modified<created||modified>now||created>now||
+    (latest.started_on!=null&&(started===null||started<created||started>modified))||latest.ended_on!=null)
+  return state('unknown','incomplete-or-inconsistent-stage-timestamps');
+ // This horizon changes only the diagnostic: stale records stay blocked as
+ // unknown and NEVER become safe merely because a timeout elapsed.
+ if(now-modified>60*60*1000)return state('unknown','stale-nonterminal-deployment-needs-investigation');
+ if(d.is_skipped!==false)return state('unknown','missing-deployment-skip-state');
+ if(status==='active'&&started!==null)return state('running','active-stage-without-end');
+ if(status==='idle'&&latest.name==='queued'&&started===null)return state('running','queued-deployment');
+ return state('unknown','nonterminal-stage-without-completion-evidence');
+}
+export async function assertProductionQuiescent(deployments,{now=Date.now()}={}){
+ const blocked=[],checked=[];
+ const log=(source,d,result)=>console.log(`Pages deployment ${source} (${result.kind}/${result.reason}): ${JSON.stringify(deploymentSnapshot(d))}`);
+ for(const listed of deployments){
+  let d=listed,result=productionDeploymentState(d,{now});log('list',d,result);
+  if(result.kind!=='completed'){
+   // Resolve list snapshots against the single-deployment endpoint before
+   // accepting skipped/completed history or diagnosing an apparent active job.
+   d=await cf(`/deployments/${listed.id}`);
+   if(d.id!==listed.id||d.environment!=='production')throw Error(`Production deployment detail identity mismatch: ${maskedDeploymentId(listed.id)}`);
+   result=productionDeploymentState(d,{now});log('detail',d,result);
+  }
+  checked.push(d);
+  if(!['completed','historical'].includes(result.kind))blocked.push(`${maskedDeploymentId(d.id)} (${result.kind}/${result.reason})`);
+ }
+ if(blocked.length)throw Error(`Production deployment preflight blocked: ${blocked.join('; ')}. Running records must finish; unknown records require investigation, not an automatic timeout bypass. Keep both CD switches disabled; match the masked UUID and stage timestamps in Cloudflare Deployments, confirm the final deployment status, then rerun inspect. Do not delete deployment history or bypass the guard.`);
+ return checked;
 }
 export async function smoke(base,sha,{marker=true}={}){
  const paths=[['/','html'],['/lab/','html'],['/config.js','config'],...(marker?[['/release.json','release']]:[])];
@@ -174,8 +247,7 @@ export async function runPages(action=process.argv[2],{upload=uploadAssets,retry
  assertSingleChannel(project,{requireGitSource:production});
  let deployments=[];
  if(production){
-  deployments=await productionDeployments();
-  if(deployments.some(d=>d.environment==='production'&&!['success','failure','canceled','skipped'].includes(d.latest_stage?.status)))throw Error('A production deployment is still pending; wait before publishing or rolling back');
+  deployments=await assertProductionQuiescent(await productionDeployments());
  }
  if(action==='inspect'){
   const active=production?await activeProduction(project,deployments):null;
