@@ -73,7 +73,15 @@ test('preflight rejects running, stale unresolved, conflicting, changed identity
  for(const detail of [active(),idle(),{...active(),modified_on:'2026-10-29T03:00:00Z'},
   {...idle(),is_skipped:true,stages:[stage('build','active',{ended_on:null})]},
   {...deployment(),id:'87654321-1111-2222-3333-123456789012'},{...deployment(),environment:'preview'}])
-  await preflight([active()],detail,async({invoke})=>{await assert.rejects(invoke(),/preflight blocked|identity mismatch/);});
+  await preflight([active()],detail,async({invoke})=>{await assert.rejects(invoke(),error=>{
+   assert.match(error.message,/preflight blocked|identity mismatch/);
+   if(error.message.includes('preflight blocked')){
+    assert.match(error.message,/Keep both CD switches disabled/);
+    assert.match(error.message,/match the masked UUID and stage timestamps/);
+    assert.match(error.message,/rerun inspect/);
+   }
+   return true;
+  });});
  await preflight([active()],null,async({invoke})=>{await assert.rejects(invoke(),/Invalid Cloudflare result/);});
  await preflight([{...idle(),is_skipped:true}],active(),async({invoke})=>{
   await assert.rejects(invoke(),/running\/active-stage-without-end/);
@@ -83,11 +91,14 @@ test('preflight rejects running, stale unresolved, conflicting, changed identity
 test('deployment diagnostics serialize only allowed fields and masked IDs, never raw API metadata',async()=>{
  const dangerous={...idle(),is_skipped:true,env_vars:{PRIVATE:'do-not-log'},source:{config:{password:'do-not-log'}},
   url:'https://private.invalid',deployment_trigger:{metadata:{commit_message:'do-not-log'}}};
- assert.deepEqual(Object.keys(deploymentSnapshot(dangerous)),['id','status','stage','created_on','modified_on','ended_on','is_skipped']);
+ assert.deepEqual(Object.keys(deploymentSnapshot(dangerous)),['id','status','stage','started_on','ended_on','created_on','modified_on','is_skipped']);
+ assert.equal(deploymentSnapshot(active()).started_on,'2026-10-29T04:58:00.000Z');
+ assert.equal(deploymentSnapshot(dangerous).started_on,null);
  await preflight([dangerous],dangerous,async({invoke,logs})=>{
   await invoke();const output=logs.join('\n');
   for(const privateValue of ['do-not-log','private.invalid',dangerous.id,'env_vars','password','commit_message'])assert.ok(!output.includes(privateValue));
   assert.match(output,/12345678-…-123456789012/);assert.match(output,/explicitly-skipped-deployment/);
  });
  assert.equal(deploymentSnapshot({...dangerous,created_on:'do-not-log',latest_stage:{name:'do-not-log',status:'do-not-log'}}).status,'unknown');
+ assert.equal(deploymentSnapshot({...dangerous,latest_stage:{...dangerous.latest_stage,started_on:'do-not-log'}}).started_on,null);
 });

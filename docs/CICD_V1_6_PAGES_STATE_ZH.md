@@ -4,7 +4,7 @@
 
 基线 `533c7c5bdfb4276bfbdbb47a39e3f7a49a4430e2`。[Pages deploy #6](https://github.com/MartinZhong2026/FanScope/actions/runs/40815169701) 的只读 inspect 日志显示项目 GET、生产部署列表 GET（per_page=25）均 HTTP 200，随后 `runPages():178` 的历史列表 `some()` 抛出 pending 错误。旧判断没有输出记录身份，也没有检查阶段名称、结束证据或 `is_skipped`，将任何历史非终态阶段等同于正在部署；另一个问题是把任意阶段的 success 当成部署完成，未区分 build success 与 deploy success。
 
-**该旧日志没有记录触发部署的 UUID 和阶段字段。当前会话没有可用的 Cloudflare API 凭据/连接，未调用真实 Cloudflare API，因此具体线上触发记录尚未确认。** 不把合成测试记录当成真实记录，不声称已在生产复现或通过。新版诊断可在合并后只读 inspect 时定位具体记录；用户也可提供仅含允许字段的脱敏快照，以补充确认。
+**该旧日志没有记录触发部署的 UUID 和阶段字段。当前会话没有可用的 Cloudflare API 凭据/连接，未调用真实 Cloudflare API，因此具体线上触发记录尚未确认。** 不把合成测试记录当成真实记录，不声称已在生产复现或通过。合并后新版只读 inspect 会通过 GitHub Actions 现有 Environment Secret 自动获取并诊断记录；无需用户手动复制部署列表或提供 Token。这不影响先完成代码修复、Mock 测试和 PR CI。
 
 ## 官方语义与判断策略
 
@@ -21,7 +21,7 @@
 
 “近期”采用本地一小时诊断窗口，**不是 Cloudflare 的生命周期保证，也不是超时解锁机制**。超过窗口的未完成记录从 running 改报 unknown，仍然阻断。不会因为记录很旧、有更新的成功部署或单个阶段有 ended_on 就放行；没有结束证据的历史 idle/active 仍须调查。未开始的 active 占位阶段不能推翻明确的 is_skipped=true；已开始且未结束的 active 与跳过/结束证据冲突时仍报 unknown。
 
-`assertProductionQuiescent()` 输出每条列表记录及必要的详情复核结果，返回复核后的记录供原 `activeProduction()` 使用。日志只序列化 `id`（遮蔽 UUID 中段）、`status`、`stage`、`created_on`、`modified_on`、`ended_on`、`is_skipped`；前缀包含固定分类/原因。时间标准化，未知状态/阶段不回显任意字符串。API 请求诊断中的单部署 UUID 同样遮蔽。不会输出 source、commit_message、env_vars、URL、Token、请求头或完整 API 对象。
+`assertProductionQuiescent()` 输出每条列表记录及必要的详情复核结果，返回复核后的记录供原 `activeProduction()` 使用。日志只序列化 `id`（遮蔽 UUID 中段）、`status`、`stage`、`started_on`、`ended_on`、`created_on`、`modified_on`、`is_skipped`；其中 status/stage/started_on/ended_on 来自 latest_stage，前缀包含固定分类/原因。时间标准化，未知状态/阶段不回显任意字符串。API 请求诊断中的单部署 UUID 同样遮蔽。不会输出 source、commit_message、env_vars、URL、Token、请求头或完整 API 对象。阻断错误明确建议保持两个 CD 开关关闭，在 Cloudflare Deployments 中按遮蔽 UUID 和阶段时间核对记录，等待运行任务结束或调查未知状态后再运行 inspect，不删除历史记录或绕过保护。
 
 ## 保留的生产保护
 
@@ -48,4 +48,4 @@ Mock 覆盖正常成功、历史 skipped/idle、有明确结束证据的遗留�
 2. 在合并后的 main 上手动运行 `FanScope Pages deploy`，operation=inspect。检查项目与全部部署列表 GET 均成功，非 completed 记录均有对应详情 GET 与 `Pages deployment detail` 诊断。只读操作不得出现上传或 rollback POST。
 3. 按遮蔽 UUID、状态、阶段和时间，在 Cloudflare 面板核对原阻断记录。如果确认历史跳过/结束，应显示 historical 及其证据，继续执行生产 UUID 和不可变内容校验；不能仅以“旧记录”作为通过理由。
 4. 有真实 active/queued 时应非零退出并列出 running 记录；历史记录仍缺少结束证据或出现冲突时，应非零退出并列出 unknown 及具体原因。不要删除历史记录、取消真实部署或弱化保护来通过验收。
-5. 无 running/unknown 后，只有原生产 UUID、版本及关键文件比较全部通过，inspect 才能成功并输出 `activeProductionId`。成功只证明只读预检通过，不代表生产已经发布。若仍失败，提交允许字段的脱敏诊断调查；无需分享 Token 或完整响应。
+5. 无 running/unknown 后，只有原生产 UUID、版本及关键文件比较全部通过，inspect 才能成功并输出 `activeProductionId`。成功只证明只读预检通过，不代表生产已经发布。若仍失败，依据 Actions 的自动脱敏诊断与 Cloudflare 面板调查；无需手动导出完整响应、提供 Token、修改 Cloudflare 设置或开启 CD。

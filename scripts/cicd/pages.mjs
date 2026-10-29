@@ -104,7 +104,8 @@ export function deploymentSnapshot(d){
  const date=value=>timestamp(value)===null?null:new Date(timestamp(value)).toISOString();
  return {id:maskedDeploymentId(d?.id),status:STAGE_STATUSES.has(d?.latest_stage?.status)?d.latest_stage.status:'unknown',
   stage:STAGE_NAMES.has(d?.latest_stage?.name)?d.latest_stage.name:'unknown',
-  created_on:date(d?.created_on),modified_on:date(d?.modified_on),ended_on:date(d?.latest_stage?.ended_on),
+  started_on:date(d?.latest_stage?.started_on),ended_on:date(d?.latest_stage?.ended_on),
+  created_on:date(d?.created_on),modified_on:date(d?.modified_on),
   is_skipped:typeof d?.is_skipped==='boolean'?d.is_skipped:null};
 }
 export function productionDeploymentState(d,{now=Date.now()}={}){
@@ -161,7 +162,7 @@ export async function assertProductionQuiescent(deployments,{now=Date.now()}={})
   checked.push(d);
   if(!['completed','historical'].includes(result.kind))blocked.push(`${maskedDeploymentId(d.id)} (${result.kind}/${result.reason})`);
  }
- if(blocked.length)throw Error(`Production deployment preflight blocked: ${blocked.join('; ')}. Running records must finish; unknown records require investigation, not an automatic timeout bypass.`);
+ if(blocked.length)throw Error(`Production deployment preflight blocked: ${blocked.join('; ')}. Running records must finish; unknown records require investigation, not an automatic timeout bypass. Keep both CD switches disabled; match the masked UUID and stage timestamps in Cloudflare Deployments, confirm the final deployment status, then rerun inspect. Do not delete deployment history or bypass the guard.`);
  return checked;
 }
 export async function smoke(base,sha,{marker=true}={}){
