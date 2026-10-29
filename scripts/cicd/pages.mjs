@@ -116,9 +116,14 @@ export function productionDeploymentState(d,{now=Date.now()}={}){
  if(TERMINAL_STATUSES.has(status)||(status==='success'&&latest.name==='deploy'))
   return state('completed',status==='success'?'deploy-success':`stage-${status}`);
  const stages=Array.isArray(d.stages)?d.stages:[];
- const openActive=[latest,...stages].some(s=>s?.status==='active'&&s.started_on!=null&&s.ended_on==null);
+ const activeStages=[latest,...stages].filter(s=>s?.status==='active');
+ const openActive=activeStages.some(s=>s.ended_on==null);
+ const startedOpenActive=activeStages.some(s=>s.started_on!=null&&s.ended_on==null);
+ if(activeStages.some(s=>s.started_on!=null&&(timestamp(s.started_on)===null||
+    (s.ended_on!=null&&(timestamp(s.ended_on)===null||timestamp(s.ended_on)<timestamp(s.started_on))))))
+  return state('unknown','inconsistent-active-stage-timestamps');
  if(d.is_skipped===true){
-  if(openActive)return state('unknown','skipped-deployment-has-open-active-stage');
+  if(startedOpenActive)return state('unknown','skipped-deployment-has-open-active-stage');
   return state('historical','explicitly-skipped-deployment');
  }
  // The API can leave unused stages idle. A finished final deploy stage is

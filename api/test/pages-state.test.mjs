@@ -31,6 +31,8 @@ test('fresh active and queued deployments remain blocked; contradictions and inc
  assert.deepEqual(state(idle()),{kind:'running',reason:'queued-deployment'});
  for(const d of [
   {...active(),is_skipped:true},{...active(),stages:[stage()]},{...idle(),latest_stage:null},
+  {...active(),latest_stage:stage('build','active',{started_on:null,ended_on:null}),stages:[stage()]},
+  {...idle(),is_skipped:true,stages:[stage('build','active',{ended_on:'invalid'})]},
   {...idle(),is_skipped:undefined},{...idle(),latest_stage:stage('build','idle',{started_on:null,ended_on:null})},
   {...active(),latest_stage:stage('build','active',{started_on:null,ended_on:null})},
   {...active(),latest_stage:stage('build','active',{started_on:'invalid',ended_on:null})},
