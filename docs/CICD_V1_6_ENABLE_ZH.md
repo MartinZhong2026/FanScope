@@ -1,5 +1,7 @@
 # FanScope V1.6 首次启用：八步清单
 
+首次发布遇到部署列表 HTTP 400 时，先按[修复后的只读检查与重新验收步骤](CICD_V1_6_PAGES_400_FIX_ZH.md)执行；旧版 inspect 未覆盖生产部署列表和当前版本校验，不能作为修复后的验收依据。
+
 以下是未来由管理员执行的操作；本次审查没有更改云端设置或部署生产。先完成审查和主分支保护，再由用户决定是否合并 PR。网页选项名称可能随界面变化；服务器步骤请交给熟悉现有部署的管理员。
 
 1. **关闭重复的 Cloudflare 发布渠道。** 打开 [Cloudflare 控制台](https://dash.cloudflare.com/) → Workers & Pages → `fanscope` → Settings → Builds & deployments。确认 Git 连接 `MartinZhong2026/FanScope`、生产分支 `main`；在 Configure Production deployments 取消 Enable automatic production branch deployments，Preview branch 选 None 并保存。保留项目和现有部署。PR #3 曾由 Git 集成生成预览，生产构建开关实际状态仍需核对。在 Deployments 找到目前正式域名正在使用的成功生产部署，记录其部署详情中的 UUID；“最新部署”不一定是回滚后正在服务的版本。[Cloudflare 操作说明](https://developers.cloudflare.com/pages/configuration/branch-build-controls/)
