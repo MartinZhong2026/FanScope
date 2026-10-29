@@ -3,6 +3,8 @@
 > 日期：2026-10-29。基线 `main` @ `12310c8`，评审对象为同分支上的 [FOUNDATION_AUDIT.md](FOUNDATION_AUDIT.md)、[V2_TARGET_ARCHITECTURE.md](V2_TARGET_ARCHITECTURE.md)、[V2_INCREMENTAL_ROADMAP.md](V2_INCREMENTAL_ROADMAP.md)。
 > **与以上三份文档冲突时，以本文为准。** 本轮只做评审，不改代码、数据库或生产环境，不产生付费调用。
 > 新输入：两项产品决定——① AI 不设应用内金额上限，接受余额耗尽后停止；② 允许第三方模型处理未发表稿件全文。
+>
+> **2026-10-29 更新**：八项正式产品决定与"无人值守文献更新"需求已记入 [V2_DELIVERY_PLAN.md](V2_DELIVERY_PLAN.md)。**本文 §5–§7 的顺序与待决事项由该文取代**；§0–§4 的架构原则继续有效。
 
 ## 0. 结论先行
 
