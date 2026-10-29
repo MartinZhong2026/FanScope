@@ -4,6 +4,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {config} from './config.mjs';
+import {log,errorFields,requestIdFrom,routeTemplate} from './platform/log.mjs';
 
 export function createStagedRecoveryServer(makeServer,{allowAutoControl=false}={}){
  const server=makeServer(),listeners=server.listeners('request');
@@ -16,7 +17,10 @@ export function createStagedRecoveryServer(makeServer,{allowAutoControl=false}={
   const allowedRead=['GET','HEAD','OPTIONS'].includes(req.method);
   const allowedWrite=req.method==='POST'&&(['/api/lab/login','/api/lab/logout','/api/lab/password','/api/subscriptions/unsubscribe'].includes(p)||allowAutoControl&&p==='/api/admin/ai-auto');
   if(allowedRead||allowedWrite)return listeners[0].call(server,req,res);
-  const origin=req.headers.origin;if(origin&&config.origins.includes(origin)){res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');}
+  const origin=req.headers.origin;if(origin&&config.origins.includes(origin)){res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');res.setHeader('Access-Control-Expose-Headers','X-Request-Id');}
+  // Blocked writes never reach the main handler, so record them here.
+  const request_id=requestIdFrom(req.headers['x-request-id']);res.setHeader('X-Request-Id',request_id);
+  log('info','http.request',{request_id,method:req.method,route:routeTemplate(p),status:503,blocked:'staged-recovery'});
   res.writeHead(503,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});
   res.end(JSON.stringify({error:'恢复验证期间此操作暂不可用'}));
  });
@@ -49,11 +53,11 @@ async function start(){
   // No startup scan; historical and paid queues are never recovered or scheduled.
   setInterval(()=>{
    if(active||stopping)return;
-   active=runEnglishMonitor(db,scanAll).then(results=>console.log(JSON.stringify({kind:'english-monitor',journals:results.length,partial:results.filter(x=>x.result.status!=='ok').length})))
-    .catch(e=>console.error('English monitor failed:',e.message)).finally(()=>{active=null;});
+   active=runEnglishMonitor(db,scanAll).then(results=>log('info','ingest.monitor_cycle',{market:'international',journals:results.length,partial:results.filter(x=>x.result.status!=='ok').length}))
+    .catch(e=>log('error','ingest.monitor_cycle_failed',errorFields(e))).finally(()=>{active=null;});
   },config.intervalMinutes*60000).unref();
  }
- server.listen(config.port,'0.0.0.0',()=>console.log(JSON.stringify({mode:'staged-recovery',englishMonitor:process.env.FANSCOPE_ENGLISH_MONITOR==='true',paid:false,mail:false,historyWorkers:false})));
+ server.listen(config.port,'0.0.0.0',()=>log('notice','service.start',{entry:'staged-recovery',englishMonitor:process.env.FANSCOPE_ENGLISH_MONITOR==='true',paid:false,mail:false,historyWorkers:false}));
  for(const signal of ['SIGINT','SIGTERM'])process.once(signal,()=>{stopping=true;server.close(async()=>{if(active)await active;db.close();process.exit(0);});});
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))await start();

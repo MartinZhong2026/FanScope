@@ -9,6 +9,7 @@ import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import {db,now,addColumns} from './db.mjs';
 import {config} from './config.mjs';
+import {log,errorFields} from './platform/log.mjs';
 const runFile=promisify(execFile);
 const id=()=>crypto.randomUUID();
 const isStaff=u=>u&&['mentor','lab_admin'].includes(u.role);
@@ -225,7 +226,7 @@ export async function labRoute(req,res,url){if(!url.pathname.startsWith('/api/la
 function scheduleDocumentProcessing(docId,text){
  if(activeDocumentJobs.has(docId)||activeDocumentJobs.size>=2)return;
  activeDocumentJobs.add(docId);
- setImmediate(()=>{processDocument(docId,text).catch(e=>console.error('Document background extraction failure',e.message)).finally(()=>activeDocumentJobs.delete(docId));});
+ setImmediate(()=>{processDocument(docId,text).catch(e=>log('error','lab.document_failed',{document_id:docId,...errorFields(e)})).finally(()=>activeDocumentJobs.delete(docId));});
 }
 export async function recoverDocumentJobs(){
  const items=db.prepare("SELECT id,mime,file_path FROM lab_documents WHERE extract_status='pending' ORDER BY uploaded_at LIMIT 10").all();
@@ -235,5 +236,5 @@ async function processDocument(docId,text){
  try{const updates=await analyzeDocument(text);db.prepare("DELETE FROM lab_suggestions WHERE document_id=? AND review_state='pending' AND entity_type!='manuscript'").run(docId);
  const stmt=db.prepare('INSERT INTO lab_suggestions(id,document_id,entity_type,entity_id,status,summary,next_step,source_quote,confidence,review_state) VALUES(?,?,?,?,?,?,?,?,?,\'pending\')');for(const s of updates){const existed=db.prepare("SELECT 1 FROM lab_suggestions WHERE document_id=? AND entity_type=? AND entity_id=? AND source_quote=? AND review_state!='pending'").get(docId,s.entity_type,s.entity_id,s.source_quote);if(!existed)stmt.run(id(),docId,s.entity_type,s.entity_id,s.status,s.summary,s.next_step,s.source_quote,s.confidence);}
  db.prepare('UPDATE lab_documents SET extract_status=?,extract_error=? WHERE id=?').run('ready','',docId);return updates.length;
- }catch(e){db.prepare('UPDATE lab_documents SET extract_status=?,extract_error=? WHERE id=?').run('needs_retry',textLimit(e.message,200),docId);return 0;}
+ }catch(e){db.prepare('UPDATE lab_documents SET extract_status=?,extract_error=? WHERE id=?').run('needs_retry',textLimit(e.message,200),docId);log('warn','lab.document_analysis_failed',{document_id:docId,...errorFields(e)});return 0;}
 }

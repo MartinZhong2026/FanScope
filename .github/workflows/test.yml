@@ -30,7 +30,7 @@ jobs:
           RELEASE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
       - run: python3 -m unittest discover -s scripts/cicd/tests -v
       - run: bash -n scripts/ci-fixture-server.sh deploy/cicd/install-host.sh
-      - run: docker build --label org.opencontainers.image.revision=${{ github.sha }} -t fanscope-ci:${{ github.sha }} -f api/Dockerfile api
+      - run: docker build --label org.opencontainers.image.revision=${{ github.sha }} --build-arg FANSCOPE_COMMIT=${{ github.sha }} -t fanscope-ci:${{ github.sha }} -f api/Dockerfile api
       - name: Real Docker release and rollback rehearsal on synthetic data
         run: python3 scripts/cicd/docker_rehearsal.py fanscope-ci:${{ github.sha }}
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

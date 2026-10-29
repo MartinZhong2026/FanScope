@@ -2,6 +2,7 @@ import {articleLink} from './sources.mjs';
 import crypto from 'node:crypto';
 import {config} from './config.mjs';
 import {db,now} from './db.mjs';
+import {log,errorFields} from './platform/log.mjs';
 export const token=()=>crypto.randomBytes(32).toString('base64url');
 export const hash=s=>crypto.createHash('sha256').update(s).digest('hex');
 export const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -36,7 +37,7 @@ export async function urgentDispatch(articleIds){
    await sendMail(s.email,`FanScope · 发现 ${picks.length} 篇重点相关论文`,shell(`<p>以下是监测期刊中新发现、与你订阅领域相关的论文：</p><ol>${picks.map(paperMarkup).join('')}</ol>`,`${config.apiUrl}/api/subscriptions/unsubscribe?token=${encodeURIComponent(unsub)}`));
    const q=db.prepare(`INSERT INTO deliveries(id,subscriber_id,article_id,kind,status,created_at) VALUES(?,?,?,?,?,?) ON CONFLICT(subscriber_id,article_id,kind) DO UPDATE SET status='sent',error=NULL`);
    for(const a of picks)q.run(crypto.randomUUID(),s.id,a.id,'urgent','sent',now());sent++;
-  }catch(e){console.error('Urgent email failed:',String(e.message).slice(0,160));}
+  }catch(e){log('warn','mail.send_failed',{kind:'urgent',subscriber_id:s.id,...errorFields(e)});}
  }
  return {sent};
 }
@@ -52,7 +53,7 @@ export async function scheduledDigest(kind='daily'){
   const html=shell(`<p>过去${days}天，你关注的期刊发现 <b>${picks.length}</b> 篇相关新文章。</p>${picks.length?`<ol>${picks.map(paperMarkup).join('')}</ol>`:'<p>暂无新的相关论文。请查看监测健康页，确认数据源是否运行正常。</p>'}`,`${config.apiUrl}/api/subscriptions/unsubscribe?token=${encodeURIComponent(unsub)}`);
   try{await sendMail(s.email,`FanScope ${col==='daily'?'每日':'每周'}科研简报 · ${today}`,html);
    db.prepare(`UPDATE subscribers SET ${col==='daily'?'last_daily':'last_weekly'}=? WHERE id=?`).run(today,s.id);sent++;
-  }catch(e){console.error(`Digest failed ${kind}`,String(e.message).slice(0,160));}
+  }catch(e){log('warn','mail.send_failed',{kind,subscriber_id:s.id,...errorFields(e)});}
  }
  return {sent};
 }

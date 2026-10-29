@@ -3,6 +3,7 @@ import {config} from './config.mjs';
 import {relevanceScore} from './publication-policy.mjs';
 import {crossrefPages,fetchRSS,canonicalDoi} from './sources.mjs';
 import {urgentDispatch,scheduledDigest} from './mail.mjs';
+import {log,errorFields} from './platform/log.mjs';
 let scanning=false;
 function insert(a,demo=0){
  if(a.url&&db.prepare('SELECT 1 FROM articles WHERE journal_id=? AND (url=? OR publisher_landing_url=?) LIMIT 1').get(a.journal_id,a.url,a.url))return false;
@@ -18,7 +19,7 @@ function insert(a,demo=0){
 export {insert as insertArticle};
 export async function scanAll({journalId='',lookbackDays=config.initialLookbackDays,backfill=false}={}){
  if(scanning)return {status:'busy',message:'Another scan is running'};
- scanning=true;const start=now();const id=sql.logJob.run('scan',start,'running',journalId||'all').lastInsertRowid;
+ scanning=true;const start=now(),startedMs=Date.now();const id=sql.logJob.run('scan',start,'running',journalId||'all').lastInsertRowid;
  let total=0,newArticles=[],errors=[],scanned=0;const previouslyMonitored=new Set();
  try{
   const journals=db.prepare('SELECT * FROM journals WHERE enabled=1 ORDER BY market,id').all().filter(j=>!journalId||j.id===journalId);
@@ -39,11 +40,13 @@ export async function scanAll({journalId='',lookbackDays=config.initialLookbackD
       for(const article of await fetchRSS(j)){const a={...article,scan_mode:checkpoint&&!backfill?'incremental':'backfill'};if(insert(a)){found++;newArticles.push(a.id);}}
     } else {throw Error(`Unsupported source ${j.source}`);}
     db.prepare('UPDATE journals SET last_checked=?,last_success=?,last_error=NULL,last_count=?,checkpoint=? WHERE id=?').run(started,now(),found,(db.prepare('SELECT range_end FROM scan_windows WHERE journal_id=?').get(j.id)?.range_end||now()),j.id);
+    log('info','ingest.source_checked',{job_id:id,journal_id:j.id,market:j.market,source:j.source,new_count:found,duration_ms:Date.now()-Date.parse(started)});
    }catch(e){partial=true;errors.push({journal:j.title,error:String(e.message).slice(0,230)});
     db.prepare('UPDATE journals SET last_checked=?,last_error=? WHERE id=?').run(started,String(e.message).slice(0,230),j.id);
+    // A saved window cursor means the next run resumes; it is still worth a warning.
+    log('warn','ingest.source_failed',{job_id:id,journal_id:j.id,market:j.market,source:j.source,new_count:found,duration_ms:Date.now()-Date.parse(started),...errorFields(e)});
    }
    scanned++;total+=found;
-   if(partial) console.warn('Monitor partial failure',j.title);
   };
   const queue=[...journals];await Promise.all(Array.from({length:Math.min(2,journals.length)},async()=>{while(queue.length)await scanJournal(queue.shift());}));
   const ai={status:'independent_queue'};
@@ -54,8 +57,10 @@ export async function scanAll({journalId='',lookbackDays=config.initialLookbackD
   });
   const mail=await urgentDispatch(eligibleIds);
   const outcome={status:errors.length?'partial':'ok',scanned,newCount:total,errors,ai,mail};
-  sql.finishJob.run(now(),outcome.status,JSON.stringify(outcome),id);return outcome;
- }catch(e){sql.finishJob.run(now(),'failed',String(e.message),id);throw e;}
+  sql.finishJob.run(now(),outcome.status,JSON.stringify(outcome),id);
+  log(errors.length?'warn':'info','ingest.scan_finished',{job_id:id,scope:journalId||'all',backfill,status:outcome.status,scanned,new_count:total,failed:errors.length,duration_ms:Date.now()-startedMs});
+  return outcome;
+ }catch(e){sql.finishJob.run(now(),'failed',String(e.message),id);log('error','ingest.scan_failed',{job_id:id,scope:journalId||'all',duration_ms:Date.now()-startedMs,...errorFields(e)});throw e;}
  finally{scanning=false;}
 }
 export function scanningNow(){return scanning;}
@@ -69,6 +74,6 @@ export async function checkScheduled(){
   const r=await scheduledDigest(kind);
   if(r.reason==='email disabled')continue;
   db.prepare('INSERT INTO meta(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').run(key,day);
-  console.log(`${kind} digest`,r);
+  log('info','mail.digest_finished',{kind,sent:r.sent??0});
  }
 }
