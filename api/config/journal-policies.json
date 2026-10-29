@@ -1,0 +1,11 @@
+{
+  "reviewedAt": "2026-10-29",
+  "note": "Journal-level publication policies used by the document classifier. Each entry needs evidence; absence means no special policy.",
+  "journals": {
+    "candidate-21": {
+      "title": "Innovation in Aging",
+      "supplementPolicy": "meeting_abstracts",
+      "evidence": "Audit snapshot 2026-10-25: 4,422 of 4,681 records are in Supplement issues (GSA Annual Scientific Meeting abstracts); regular issues contain research articles."
+    }
+  }
+}

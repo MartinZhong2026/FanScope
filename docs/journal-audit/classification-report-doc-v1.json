@@ -1,0 +1,468 @@
+{
+  "classifierVersion": "doc-v1",
+  "source": "docs/journal-audit/articles.jsonl.gz",
+  "generatedAt": "2026-10-29T07:16:11.204Z",
+  "totals": {
+    "before": 18216,
+    "after": 6975
+  },
+  "byGroup": {
+    "research": 6004,
+    "unconfirmed": 6419,
+    "review": 971,
+    "non_research": 403,
+    "conference": 4419
+  },
+  "byDocType": {
+    "research_article": 6004,
+    "unknown": 6419,
+    "review": 971,
+    "correction_retraction": 208,
+    "conference_abstract": 4419,
+    "protocol": 67,
+    "book_review": 47,
+    "editorial": 51,
+    "news": 28,
+    "letter_comment": 2
+  },
+  "byPubStatus": {
+    "online_first": 4910,
+    "issue_published": 6344,
+    "supplement": 4485,
+    "unknown": 2477
+  },
+  "byConfidence": {
+    "medium": 6975,
+    "low": 6419,
+    "high": 4822
+  },
+  "byRule": {
+    "H-substantive-abstract-regular-issue": 6004,
+    "S-online-date": 4910,
+    "S-volume-issue": 6344,
+    "U-no-substantive-abstract": 6363,
+    "H-review-title": 971,
+    "T-correction": 208,
+    "J-supplement-meeting-abstracts": 4419,
+    "S-supplement": 4485,
+    "T-protocol": 67,
+    "T-book-review": 47,
+    "S-none": 2477,
+    "T-editorial": 51,
+    "T-news": 28,
+    "U-unconfirmed-supplement": 56,
+    "T-letter": 2
+  },
+  "byJournal": {
+    "ageing-society": {
+      "title": "Ageing & Society",
+      "before": 121,
+      "after": 108,
+      "research": 97,
+      "review": 11,
+      "conference": 0,
+      "unconfirmed": 13,
+      "non_research": 0,
+      "preprint": 0,
+      "withAbstract": 108
+    },
+    "candidate-21": {
+      "title": "Innovation in Aging",
+      "before": 4681,
+      "after": 241,
+      "research": 229,
+      "review": 12,
+      "conference": 4419,
+      "unconfirmed": 16,
+      "non_research": 5,
+      "preprint": 0,
+      "withAbstract": 4651
+    },
+    "candidate-24": {
+      "title": "JMIR Aging",
+      "before": 369,
+      "after": 351,
+      "research": 309,
+      "review": 42,
+      "conference": 0,
+      "unconfirmed": 11,
+      "non_research": 7,
+      "preprint": 0,
+      "withAbstract": 351
+    },
+    "candidate-25": {
+      "title": "BMC Geriatrics",
+      "before": 2849,
+      "after": 741,
+      "research": 676,
+      "review": 65,
+      "conference": 0,
+      "unconfirmed": 2012,
+      "non_research": 96,
+      "preprint": 0,
+      "withAbstract": 764
+    },
+    "candidate-26": {
+      "title": "The Lancet Healthy Longevity",
+      "before": 238,
+      "after": 0,
+      "research": 0,
+      "review": 0,
+      "conference": 0,
+      "unconfirmed": 233,
+      "non_research": 5,
+      "preprint": 0,
+      "withAbstract": 0
+    },
+    "candidate-28": {
+      "title": "SSM - Population Health",
+      "before": 234,
+      "after": 0,
+      "research": 0,
+      "review": 0,
+      "conference": 0,
+      "unconfirmed": 231,
+      "non_research": 3,
+      "preprint": 0,
+      "withAbstract": 0
+    },
+    "candidate-29": {
+      "title": "Health & Place",
+      "before": 336,
+      "after": 0,
+      "research": 0,
+      "review": 0,
+      "conference": 0,
+      "unconfirmed": 328,
+      "non_research": 8,
+      "preprint": 0,
+      "withAbstract": 0
+    },
+    "candidate-30": {
+      "title": "Sociology of Health & Illness",
+      "before": 295,
+      "after": 199,
+      "research": 195,
+      "review": 4,
+      "conference": 0,
+      "unconfirmed": 94,
+      "non_research": 2,
+      "preprint": 0,
+      "withAbstract": 199
+    },
+    "candidate-31": {
+      "title": "International Journal for Equity in Health",
+      "before": 708,
+      "after": 258,
+      "research": 226,
+      "review": 32,
+      "conference": 0,
+      "unconfirmed": 440,
+      "non_research": 10,
+      "preprint": 0,
+      "withAbstract": 258
+    },
+    "candidate-32": {
+      "title": "Journal of Social Policy",
+      "before": 102,
+      "after": 73,
+      "research": 73,
+      "review": 0,
+      "conference": 0,
+      "unconfirmed": 29,
+      "non_research": 0,
+      "preprint": 0,
+      "withAbstract": 73
+    },
+    "candidate-33": {
+      "title": "Social Policy & Administration",
+      "before": 183,
+      "after": 156,
+      "research": 152,
+      "review": 4,
+      "conference": 0,
+      "unconfirmed": 27,
+      "non_research": 0,
+      "preprint": 0,
+      "withAbstract": 156
+    },
+    "candidate-34": {
+      "title": "British Journal of Social Work",
+      "before": 535,
+      "after": 453,
+      "research": 418,
+      "review": 35,
+      "conference": 0,
+      "unconfirmed": 36,
+      "non_research": 46,
+      "preprint": 0,
+      "withAbstract": 453
+    },
+    "candidate-35": {
+      "title": "Social Work",
+      "before": 101,
+      "after": 52,
+      "research": 51,
+      "review": 1,
+      "conference": 0,
+      "unconfirmed": 49,
+      "non_research": 0,
+      "preprint": 0,
+      "withAbstract": 52
+    },
+    "candidate-36": {
+      "title": "Journal of Marriage and Family",
+      "before": 200,
+      "after": 188,
+      "research": 188,
+      "review": 0,
+      "conference": 0,
+      "unconfirmed": 10,
+      "non_research": 2,
+      "preprint": 0,
+      "withAbstract": 188
+    },
+    "candidate-37": {
+      "title": "Disability & Society",
+      "before": 284,
+      "after": 0,
+      "research": 0,
+      "review": 0,
+      "conference": 0,
+      "unconfirmed": 254,
+      "non_research": 30,
+      "preprint": 0,
+      "withAbstract": 0
+    },
+    "candidate-39": {
+      "title": "JMIR AI",
+      "before": 303,
+      "after": 268,
+      "research": 226,
+      "review": 42,
+      "conference": 0,
+      "unconfirmed": 29,
+      "non_research": 6,
+      "preprint": 0,
+      "withAbstract": 268
+    },
+    "candidate-40": {
+      "title": "Health Policy and Planning",
+      "before": 207,
+      "after": 178,
+      "research": 158,
+      "review": 20,
+      "conference": 0,
+      "unconfirmed": 22,
+      "non_research": 7,
+      "preprint": 0,
+      "withAbstract": 192
+    },
+    "candidate-42": {
+      "title": "Aging & Mental Health",
+      "before": 502,
+      "after": 0,
+      "research": 0,
+      "review": 0,
+      "conference": 0,
+      "unconfirmed": 498,
+      "non_research": 4,
+      "preprint": 0,
+      "withAbstract": 0
+    },
+    "geron-b": {
+      "title": "The Journals of Gerontology: Series B",
+      "before": 469,
+      "after": 410,
+      "research": 406,
+      "review": 4,
+      "conference": 0,
+      "unconfirmed": 53,
+      "non_research": 6,
+      "preprint": 0,
+      "withAbstract": 443
+    },
+    "gerontologist": {
+      "title": "The Gerontologist",
+      "before": 560,
+      "after": 512,
+      "research": 433,
+      "review": 79,
+      "conference": 0,
+      "unconfirmed": 43,
+      "non_research": 5,
+      "preprint": 0,
+      "withAbstract": 522
+    },
+    "jmir": {
+      "title": "Journal of Medical Internet Research",
+      "before": 3035,
+      "after": 2787,
+      "research": 2167,
+      "review": 620,
+      "conference": 0,
+      "unconfirmed": 177,
+      "non_research": 71,
+      "preprint": 0,
+      "withAbstract": 2794
+    },
+    "ssm": {
+      "title": "Social Science & Medicine",
+      "before": 1904,
+      "after": 0,
+      "research": 0,
+      "review": 0,
+      "conference": 0,
+      "unconfirmed": 1814,
+      "non_research": 90,
+      "preprint": 0,
+      "withAbstract": 0
+    }
+  },
+  "byMonth": {
+    "2025": {
+      "before": 1,
+      "after": 1,
+      "conference": 0,
+      "unconfirmed": 0
+    },
+    "2025-01": {
+      "before": 574,
+      "after": 302,
+      "conference": 0,
+      "unconfirmed": 261
+    },
+    "2025-02": {
+      "before": 596,
+      "after": 315,
+      "conference": 0,
+      "unconfirmed": 268
+    },
+    "2025-03": {
+      "before": 590,
+      "after": 343,
+      "conference": 0,
+      "unconfirmed": 230
+    },
+    "2025-04": {
+      "before": 512,
+      "after": 301,
+      "conference": 0,
+      "unconfirmed": 196
+    },
+    "2025-05": {
+      "before": 578,
+      "after": 315,
+      "conference": 0,
+      "unconfirmed": 250
+    },
+    "2025-06": {
+      "before": 450,
+      "after": 258,
+      "conference": 0,
+      "unconfirmed": 177
+    },
+    "2025-07": {
+      "before": 582,
+      "after": 302,
+      "conference": 0,
+      "unconfirmed": 258
+    },
+    "2025-08": {
+      "before": 465,
+      "after": 279,
+      "conference": 0,
+      "unconfirmed": 170
+    },
+    "2025-09": {
+      "before": 641,
+      "after": 316,
+      "conference": 3,
+      "unconfirmed": 300
+    },
+    "2025-10": {
+      "before": 653,
+      "after": 301,
+      "conference": 1,
+      "unconfirmed": 335
+    },
+    "2025-11": {
+      "before": 745,
+      "after": 335,
+      "conference": 1,
+      "unconfirmed": 388
+    },
+    "2025-12": {
+      "before": 5089,
+      "after": 300,
+      "conference": 4414,
+      "unconfirmed": 345
+    },
+    "2026-01": {
+      "before": 582,
+      "after": 253,
+      "conference": 0,
+      "unconfirmed": 312
+    },
+    "2026-02": {
+      "before": 551,
+      "after": 230,
+      "conference": 0,
+      "unconfirmed": 295
+    },
+    "2026-03": {
+      "before": 701,
+      "after": 299,
+      "conference": 0,
+      "unconfirmed": 379
+    },
+    "2026-04": {
+      "before": 656,
+      "after": 358,
+      "conference": 0,
+      "unconfirmed": 282
+    },
+    "2026-05": {
+      "before": 647,
+      "after": 381,
+      "conference": 0,
+      "unconfirmed": 244
+    },
+    "2026-06": {
+      "before": 704,
+      "after": 359,
+      "conference": 0,
+      "unconfirmed": 324
+    },
+    "2026-07": {
+      "before": 754,
+      "after": 403,
+      "conference": 0,
+      "unconfirmed": 339
+    },
+    "2026-08": {
+      "before": 698,
+      "after": 366,
+      "conference": 0,
+      "unconfirmed": 316
+    },
+    "2026-09": {
+      "before": 774,
+      "after": 349,
+      "conference": 0,
+      "unconfirmed": 402
+    },
+    "2026-10": {
+      "before": 673,
+      "after": 309,
+      "conference": 0,
+      "unconfirmed": 348
+    }
+  },
+  "byMarket": {
+    "international": {
+      "before": 18216,
+      "after": 6975
+    }
+  }
+}
