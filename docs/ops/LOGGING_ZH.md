@@ -7,7 +7,7 @@
 | 位置 | 内容 | 保留 |
 | --- | --- | --- |
 | 容器 stdout（`docker logs fanscope-api`） | 全部 info 及以上的 JSON 行 | 容器被重建（发布、回滚）后**会丢失** |
-| 数据卷 `logs/fanscope-YYYY-MM-DD.jsonl`（容器内为 `/app/data/logs/`） | 仅 warn/error，**跨容器重建保留** | 按天切分，默认保留 14 天（`FANSCOPE_LOG_RETENTION_DAYS`）；单日文件上限 50 MB，超过后只写一条 `log.file_capped` |
+| 数据卷 `logs/fanscope-YYYY-MM-DD.jsonl`（容器内为 `/app/data/logs/`） | notice/warn/error（含服务启停），**跨容器重建保留** | 按天切分，默认保留 14 天（`FANSCOPE_LOG_RETENTION_DAYS`）；单日文件上限 50 MB，超过后只写一条 `log.file_capped` |
 
 - 生产环境（`NODE_ENV=production`）默认把文件写在数据库所在目录的 `logs/` 下；可用 `FANSCOPE_LOG_DIR` 覆盖。
 - 日志**从不写入 SQLite**。发布控制器会比对启动后的数据库指纹，任何启动期写库都会触发回滚。
@@ -38,7 +38,9 @@
 ## 脱敏规则（代码强制）
 
 - 键名包含 password/secret/token/api_key/authorization/cookie/admin_key/session 的值替换为 `[REDACTED]`。
-- `body/text/content/prompt/messages/abstract/manuscript/transcript/response` 等正文字段只保留长度和哈希前缀。
+- `body/text/content/prompt/messages/abstract/manuscript/transcript/response/quote/note/summary/chat/query/evidence` 等正文字段只保留长度和哈希前缀。
+- **异常消息采用白名单**：只有不含引号、括号和非 ASCII 字符、长度不超过 160 的简短诊断（如 `HTTP 429`、`DeepSeek request_uncertain`），或代码显式标记 `safeMessage:true` 的消息，才会原样记录；其他消息只记录长度与哈希（`message_redacted`）。原因：V8 的 JSON 解析错误会原样引用输入文本，邮件供应商的错误会回显响应正文。
+- 常见失败会自动派生 `error_code`：`http_<状态码>`、`timeout`、`aborted`。`upstream` 只保留 provider/host/status/retry_after/request_id/attempts 六个字段。
 - 字符串中的 Bearer 令牌、`sk-` 密钥、URL 中的 key/token/mailto 参数会被替换，邮箱会被掩码；超长字符串会被截断。
 - 新增代码**不得**把提示词、稿件、摘要正文或供应商原始响应作为普通字符串字段写入日志。
 

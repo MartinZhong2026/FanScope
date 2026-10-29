@@ -15,12 +15,12 @@ const secret='sk-synthetic-only-0123456789';
 
 test('redaction removes credentials and replaces research content with length and hash',()=>{
  const out=logging.redact({apiKey:secret,'X-Admin-Key':'synthetic-admin-only-long-enough',password:'p',input_tokens:12,output_tokens:3,
-  abstract:'Unpublished manuscript text that must never reach a log line.',nested:{authorization:'Bearer abc.def',note:`url https://api.example.org/x?api_key=${secret}&q=1 by someone@example.org`}});
+  abstract:'Unpublished manuscript text that must never reach a log line.',nested:{authorization:'Bearer abc.def',detail:`url https://api.example.org/x?api_key=${secret}&q=1 by someone@example.org`}});
  const text=JSON.stringify(out);
  for(const leaked of [secret,'synthetic-admin-only','abc.def','Unpublished manuscript','someone@'])assert.ok(!text.includes(leaked),leaked);
  assert.equal(out.input_tokens,12);assert.equal(out.output_tokens,3);
  assert.equal(out.abstract.redacted,'content');assert.equal(out.abstract.length,61);assert.match(out.abstract.sha256,/^[0-9a-f]{12}$/);
- assert.match(out.nested.note,/api_key=\[REDACTED\]&q=1/);assert.match(out.nested.note,/s\*\*\*@example\.org/);
+ assert.match(out.nested.detail,/api_key=\[REDACTED\]&q=1/);assert.match(out.nested.detail,/s\*\*\*@example\.org/);
  assert.equal(logging.redactString('x'.repeat(900)).length<=520,true);
 });
 
@@ -29,6 +29,23 @@ test('error fields keep class, code, status and upstream but not secrets',()=>{
  const f=logging.errorFields(e);
  assert.equal(f.error_class,'Error');assert.equal(f.error_code,'http_429');assert.equal(f.status,429);assert.equal(f.upstream.host,'api.crossref.org');
  assert.ok(Array.isArray(f.stack)&&f.stack.length>0);assert.ok(!JSON.stringify(f).includes(secret));
+ assert.equal('token' in f.upstream,false);
+});
+
+test('exception messages that may embed research text or provider bodies are hashed, not logged',()=>{
+ const interview='受访者说：我在村里照顾母亲十年';
+ let parseError;try{JSON.parse(interview)}catch(e){parseError=e}
+ assert.ok(parseError.message.includes(interview),'precondition: V8 echoes the input');
+ const f=logging.errorFields(parseError);
+ assert.equal(f.message,undefined);assert.equal(f.message_redacted.length,parseError.message.length);assert.ok(!JSON.stringify(f).includes('受访者'));
+ const mail=logging.errorFields(new Error('Email provider HTTP 422: {"message":"Draft: Our unpublished finding is that pension reform"}'));
+ assert.equal(mail.message,undefined);assert.ok(!JSON.stringify(mail).includes('unpublished'));
+ assert.equal(logging.errorFields(new Error('HTTP 503')).message,'HTTP 503');
+ assert.equal(logging.errorFields(new Error('DeepSeek request_uncertain')).message,'DeepSeek request_uncertain');
+ assert.equal(logging.errorFields(Object.assign(new Error('期刊身份不匹配'),{safeMessage:true})).message,'期刊身份不匹配');
+ const fields=logging.redact({source_quote:'原文引用：受访者说……',note:'private note',summary:'论文摘要',journal_id:'ssm'});
+ for(const k of ['source_quote','note','summary'])assert.equal(fields[k].redacted,'content',k);
+ assert.equal(fields.journal_id,'ssm');
 });
 
 test('route templates collapse identifiers and request ids are validated',()=>{
@@ -72,10 +89,11 @@ test('health reports runtime versions, is not access-logged when healthy, and re
 
 test('warn and error lines persist to the log directory with redaction; info stays on stdout only',()=>{
  logging.log('info','test.info_only',{marker:'info-marker'});
+ logging.log('notice','service.start',{marker:'notice-marker'});
  logging.log('warn','test.persisted',{marker:'warn-marker',apiKey:secret});
  const file=path.join(logDir,`fanscope-${new Date().toISOString().slice(0,10)}.jsonl`);
  const text=fs.readFileSync(file,'utf8');
- assert.ok(text.includes('warn-marker'));assert.ok(!text.includes('info-marker'));assert.ok(!text.includes(secret));
+ assert.ok(text.includes('warn-marker'));assert.ok(text.includes('notice-marker'));assert.ok(!text.includes('info-marker'));assert.ok(!text.includes(secret));
  if(process.platform!=='win32')assert.equal(fs.statSync(file).mode&0o777,0o600);
 });
 

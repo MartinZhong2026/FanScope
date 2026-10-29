@@ -15,7 +15,11 @@ const levels = {debug: 10, info: 20, notice: 25, warn: 30, error: 40};
 // and "apiKey" are both caught while counters such as input_tokens are not.
 const SENSITIVE_KEY = /(^|_)(pass|password|passwd|secret|token|api_?key|authorization|cookie|credential|admin_?key|session)$/;
 // Free-text research content is replaced by its length and a short hash.
-const CONTENT_KEY = /^(body|text|content|prompt|messages|abstract|manuscript|transcript|html|raw|response|completion)$/;
+const CONTENT_KEY = /^(body|text|content|prompt|messages|abstract|manuscript|transcript|html|raw|response|completion|quote|source_quote|note|summary|chat|comment|reply|answer|question|query|q|evidence)$/;
+// Exception messages can embed input (V8 JSON errors quote the text, providers echo
+// bodies). Only short plain diagnostics or explicitly safe messages are kept verbatim.
+const SAFE_MESSAGE = /^[A-Za-z0-9 _.,:;()\/+#%=-]{1,160}$/;
+const UPSTREAM_KEYS = ['provider', 'host', 'status', 'retry_after', 'request_id', 'attempts'];
 const MAX_FILE_BYTES = 50 * 1024 * 1024;
 const startedAt = new Date().toISOString();
 let sink = line => process.stdout.write(line + '\n');
@@ -38,7 +42,7 @@ export function routeTemplate(pathname) {
     /^\d+$/.test(part) || /^(doi|cn|feed|manual):/i.test(part) ? ':id' : part.slice(0, 60)).join('/').slice(0, 200);
 }
 
-export function redactString(value, max = 500) {
+export function redactString(value, max = 300) {
   let v = String(value);
   v = v.replace(/Bearer\s+[A-Za-z0-9._~+/=-]+/gi, 'Bearer [REDACTED]')
     .replace(/\bsk-[A-Za-z0-9_-]{12,}/g, '[REDACTED]')
@@ -74,10 +78,16 @@ export function redact(value, depth = 0) {
 
 export function errorFields(error) {
   const e = error instanceof Error ? error : Object.assign(new Error(String(error)), {name: 'NonError'});
-  const out = {error_class: e.name || 'Error', message: redactString(e.message || '', 300)};
+  const message = String(e.message || '');
+  const out = {error_class: e.name || 'Error'};
+  if (e.safeMessage === true || SAFE_MESSAGE.test(message)) out.message = redactString(message, 160);
+  else out.message_redacted = {length: message.length, sha256: crypto.createHash('sha256').update(message).digest('hex').slice(0, 12)};
   if (typeof e.code === 'string' && e.code.length <= 60) out.error_code = e.code;
+  else if (Number.isInteger(e.status)) out.error_code = `http_${e.status}`;
+  else if (e.name === 'TimeoutError') out.error_code = 'timeout';
+  else if (e.name === 'AbortError') out.error_code = 'aborted';
   if (Number.isInteger(e.status)) out.status = e.status;
-  if (e.upstream && typeof e.upstream === 'object') out.upstream = redact(e.upstream);
+  if (e.upstream && typeof e.upstream === 'object') out.upstream = redact(Object.fromEntries(UPSTREAM_KEYS.filter(k => e.upstream[k] !== undefined).map(k => [k, e.upstream[k]])));
   if (e.cause?.code && typeof e.cause.code === 'string') out.cause_code = e.cause.code.slice(0, 60);
   if (e.stack) out.stack = String(e.stack).split('\n').filter(l => /^\s+at /.test(l)).slice(0, 6).map(l => redactString(l.trim(), 200));
   return out;
@@ -144,6 +154,7 @@ export function log(level, event, fields = {}) {
     if (request_id) entry.request_id = requestIdFrom(request_id);
     const line = JSON.stringify(entry);
     sink(line);
-    if (levels[level] >= levels.warn) writeFile(line, ts);
+    // notice (service start/stop) is persisted too, so a failed release leaves a trace.
+    if (levels[level] >= levels.notice) writeFile(line, ts);
   } catch {}
 }
