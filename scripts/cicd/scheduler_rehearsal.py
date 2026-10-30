@@ -73,12 +73,13 @@ def main(image):
                 assert denied.returncode != 0, 'Gate directory is writable from the container'
                 # The running process must see an atomic replacement on the next tick.
                 deploy.open_gate('r1', 1)
-                for _ in range(75):
+                for _ in range(140):  # two ticks: at most two jobs run at once
                     if len(jobs(database)) == 3:
                         break
                     time.sleep(1)
                 else:
-                    raise AssertionError('Scheduler did not start after the gate opened')
+                    rows = sqlite3.connect(database).execute('SELECT * FROM scheduled_jobs').fetchall()
+                    raise AssertionError(f'Scheduler did not finish after the gate opened: {rows}')
                 due = jobs(database)
                 deploy.run('docker', 'kill', '--signal', 'KILL', name)
                 remove()

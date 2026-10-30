@@ -33,6 +33,8 @@ jobs:
       - run: docker build --label org.opencontainers.image.revision=${{ github.sha }} --build-arg FANSCOPE_COMMIT=${{ github.sha }} -t fanscope-ci:${{ github.sha }} -f api/Dockerfile api
       - name: Real Docker release and rollback rehearsal on synthetic data
         run: python3 scripts/cicd/docker_rehearsal.py fanscope-ci:${{ github.sha }}
+      - name: Real Docker scheduler and release gate rehearsal
+        run: python3 scripts/cicd/scheduler_rehearsal.py fanscope-ci:${{ github.sha }}
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: pages-production
