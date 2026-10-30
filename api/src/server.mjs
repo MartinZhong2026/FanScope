@@ -15,9 +15,14 @@ import crypto from 'node:crypto';
 import {config,topics} from './config.mjs';
 import {labRoute,recoverDocumentJobs} from './lab.mjs';
 import {db,now} from './db.mjs';
+import {migrationSummary} from './migrations.mjs';
 import {safeArticleUrl} from './sources.mjs';
 import {scanAll,checkScheduled,scanningNow} from './monitor.mjs';
 import {sendVerification,mailReady,hash,token,esc,scheduledDigest} from './mail.mjs';
+import {log,errorFields,requestIdFrom,routeTemplate,withRequestContext,processStartedAt} from './platform/log.mjs';
+const sqliteVersion=db.prepare('SELECT sqlite_version() AS v').get().v;
+// Read-only version facts for operators and agents; never exposes configuration values.
+function runtimeInfo(){const latest=db.prepare('SELECT version,applied_at FROM schema_migrations ORDER BY applied_at DESC,rowid DESC LIMIT 1').get();return {commit:process.env.FANSCOPE_COMMIT||'unknown',startedAt:processStartedAt,node:process.versions.node,sqlite:sqliteVersion,schema:{latest:latest?.version||null,count:db.prepare('SELECT COUNT(*) AS n FROM schema_migrations').get().n},migrations:migrationSummary(db)};}
 const rates=new Map();
 function rateLimit(key,limit=10,windowMs=3600000){const ts=Date.now(),r=rates.get(key)||{start:ts,count:0};if(ts-r.start>windowMs){r.start=ts;r.count=0;}r.count++;rates.set(key,r);return r.count<=limit;}
 const json=(res,code,obj)=>{res.writeHead(code,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(obj));};
@@ -46,7 +51,7 @@ async function handle(req,res){
  const u=parse(req.url),p=u.pathname,method=req.method||'GET';
  if(method==='OPTIONS'){res.writeHead(204);res.end();return;}
  if(p.startsWith('/api/lab/'))return labRoute(req,res,u);
- if(p==='/api/health')return json(res,200,{status:'ok',time:now(),service:'fanscope-api',monitoring:db.prepare('SELECT COUNT(*) AS n FROM journals WHERE enabled=1').get().n,emailConfigured:mailReady(),aiConfigured:!!config.dsKey});
+ if(p==='/api/health')return json(res,200,{status:'ok',time:now(),service:'fanscope-api',monitoring:db.prepare('SELECT COUNT(*) AS n FROM journals WHERE enabled=1').get().n,emailConfigured:mailReady(),aiConfigured:!!config.dsKey,...runtimeInfo()});
  if(p==='/api/chinese-diagnostics'&&method==='GET')return json(res,200,chineseDiagnostics());
  if(p.startsWith('/api/chinese-batches/')&&method==='GET')return json(res,200,chineseBatch(p.slice('/api/chinese-batches/'.length)));
  if(p==='/api/topics')return json(res,200,{items:topics.map(({id,label,short})=>({id,label,short}))});
@@ -75,7 +80,7 @@ async function handle(req,res){
   const verify=token(),unsub=token(),id=crypto.randomUUID();
   const prior=db.prepare('SELECT id,confirmed FROM subscribers WHERE email=?').get(email);
   if(prior?.confirmed)return json(res,200,{ok:true,message:'如果已经订阅，系统会保留原有设置。如需修改请联系管理员。'});
-  try{await sendVerification(email,verify);}catch(e){console.error('Verification failure',e.message);return json(res,502,{error:'验证邮件发送失败，请稍后重试或检查邮件服务配置'});}
+  try{await sendVerification(email,verify);}catch(e){log('warn','mail.verification_failed',errorFields(e));return json(res,502,{error:'验证邮件发送失败，请稍后重试或检查邮件服务配置'});}
   db.prepare(`INSERT INTO subscribers(id,email,topics,markets,urgent,daily,weekly,confirmed,verify_hash,unsubscribe_hash,created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(email) DO UPDATE SET topics=excluded.topics,markets=excluded.markets,urgent=excluded.urgent,daily=excluded.daily,weekly=excluded.weekly,verify_hash=excluded.verify_hash,unsubscribe_hash=excluded.unsubscribe_hash`).run(prior?.id||id,email,JSON.stringify(selected),JSON.stringify(markets),b.urgent?1:0,b.daily?1:0,b.weekly?1:0,0,hash(verify),hash(unsub),now());
   const subscriberId=prior?.id||id;
   db.prepare('INSERT INTO meta(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').run('unsub:'+subscriberId,unsub);
@@ -165,37 +170,50 @@ async function handle(req,res){
   if(p==='/api/admin/scan'&&method==='POST'){
    const b=await body(req);const jr=String(b.journalId||'');if(jr&&!db.prepare('SELECT 1 FROM journals WHERE id=?').get(jr))return json(res,400,{error:'未知期刊 ID'});
    // HTTP scan may take minutes; use CLI for major historical backfills.
-   if(scanningNow())return json(res,409,{error:'已有扫描运行中'});setImmediate(()=>scanAll({journalId:jr,backfill:!!b.backfill,lookbackDays:number(b.days,30,180)}).catch(console.error));return json(res,202,{status:'queued'});
+   if(scanningNow())return json(res,409,{error:'已有扫描运行中'});setImmediate(()=>scanAll({journalId:jr,backfill:!!b.backfill,lookbackDays:number(b.days,30,180)}).catch(e=>log('error','worker.failed',{worker:'admin-scan',...errorFields(e)})));return json(res,202,{status:'queued'});
   }
   if(p==='/api/admin/digest'&&method==='POST'){const b=await body(req);return json(res,200,await scheduledDigest(b.kind==='weekly'?'weekly':'daily'));}
   return json(res,404,{error:'未知管理员接口'});
  }
  return json(res,404,{error:'Not found'});
 }
-export function makeServer({readOnly=false}={}){return http.createServer(async(req,res)=>{
+export function makeServer({readOnly=false}={}){return http.createServer((req,res)=>{
+ const started=process.hrtime.bigint(),request_id=requestIdFrom(req.headers['x-request-id']);
+ let route='/';try{route=routeTemplate(parse(req.url).pathname);}catch{}
+ res.setHeader('X-Request-Id',request_id);
+ // One access line per request; successful health probes are skipped to keep volume low.
+ res.on('finish',()=>{const status=res.statusCode;if(route==='/api/health'&&status<400)return;log(status>=500?'error':'info','http.request',{request_id,method:req.method,route,status,duration_ms:Number(process.hrtime.bigint()-started)/1e6});});
+ return withRequestContext({request_id},async()=>{
  res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','no-referrer');res.setHeader('X-Frame-Options','DENY');
- const origin=req.headers.origin;if(origin&&config.origins.includes(origin)){res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');res.setHeader('Access-Control-Allow-Methods','GET,POST,PATCH,OPTIONS');res.setHeader('Access-Control-Allow-Headers','Content-Type,X-Admin-Key,Authorization,X-File-Name');}
+ const origin=req.headers.origin;if(origin&&config.origins.includes(origin)){res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');res.setHeader('Access-Control-Allow-Methods','GET,POST,PATCH,OPTIONS');res.setHeader('Access-Control-Allow-Headers','Content-Type,X-Admin-Key,Authorization,X-File-Name,X-Request-Id');res.setHeader('Access-Control-Expose-Headers','X-Request-Id');}
  try{
  const requestPath=parse(req.url).pathname;
  if(process.env.NODE_ENV==='production'&&(requestPath.startsWith('/api/admin/chinese-')||requestPath==='/api/admin/import'))return json(res,404,{error:'Not found'});
  if(readOnly&&(!['GET','HEAD','OPTIONS'].includes(req.method)||requestPath==='/api/subscriptions/confirm'))return json(res,503,{error:'发布验收期间仅允许读取'});
- await handle(req,res);}catch(e){console.error('HTTP error:',e.message);if(!res.headersSent)json(res,e.status||500,{error:e.status?e.message:'内部服务错误'});else res.end();}
+ await handle(req,res);}catch(e){
+  const status=Number.isInteger(e.status)?e.status:500;
+  // Expected client errors carry a status; anything else is a server fault with a stack.
+  if(status>=500)log('error','http.error',{request_id,method:req.method,route,status,...errorFields(e)});
+  else log('info','http.client_error',{request_id,method:req.method,route,status,error_class:e.name||'Error'});
+  if(!res.headersSent)json(res,status,{error:e.status?e.message:'内部服务错误',request_id});else res.end();}
+ });
 });}
 if(process.argv[1]&&new URL(`file://${process.argv[1]}`).pathname===new URL(import.meta.url).pathname){
- if(process.env.NODE_ENV==='production'&&config.adminKey.length<24){console.error('ADMIN_KEY must be at least 24 chars');process.exit(1);}
- const server=makeServer();server.listen(config.port,'0.0.0.0',()=>console.log(`FanScope API listening on 0.0.0.0:${config.port}`));
- recoverDocumentJobs().catch(console.error);
- setInterval(()=>recoverDocumentJobs().catch(console.error),15000).unref();
- if(config.scanOnStart)setTimeout(()=>scanAll().then(x=>console.log('Initial scan',x)).catch(console.error),4000).unref();
- setInterval(()=>scanAll().then(x=>console.log('Scheduled scan',x)).catch(console.error),config.intervalMinutes*60000).unref();
+ if(process.env.NODE_ENV==='production'&&config.adminKey.length<24){log('error','service.config_invalid',{reason:'ADMIN_KEY must be at least 24 chars'});process.exit(1);}
+ const server=makeServer();server.listen(config.port,'0.0.0.0',()=>log('notice','service.start',{entry:'server',port:config.port,...runtimeInfo()}));
+ const failed=worker=>e=>log('error','worker.failed',{worker,...errorFields(e)});
+ recoverDocumentJobs().catch(failed('document-recovery'));
+ setInterval(()=>recoverDocumentJobs().catch(failed('document-recovery')),15000).unref();
+ if(config.scanOnStart)setTimeout(()=>scanAll().catch(failed('scan')),4000).unref();
+ setInterval(()=>scanAll().catch(failed('scan')),config.intervalMinutes*60000).unref();
  recoverBatches();
  recoverJournalDiscoveries();
- setInterval(()=>discoveryTick().catch(e=>console.error('Journal discovery:',e.message)),15000).unref();
- setInterval(()=>workBatchTick().catch(e=>console.error('Batch worker:',e.message)),10000).unref();
- setInterval(()=>workBackfillTick().catch(e=>console.error('Backfill worker:',e.message)),15000).unref();
+ setInterval(()=>discoveryTick().catch(failed('journal-discovery')),15000).unref();
+ setInterval(()=>workBatchTick().catch(failed('analysis-batch')),10000).unref();
+ setInterval(()=>workBackfillTick().catch(failed('journal-backfill')),15000).unref();
  // Fresh deployments must not silently spend research funds. Legacy ambient AI
  // analysis is opt-in; scheduled queue batches require explicit admin start.
  // AUTO_AI_ANALYSIS is retired: only administrator-started batches can run.
  // The incremental monitor remains metadata-only in 2027 and later.
- setInterval(()=>checkScheduled().catch(console.error),60000).unref();
+ setInterval(()=>checkScheduled().catch(failed('digest')),60000).unref();
 }

@@ -2,6 +2,7 @@ import {config} from './config.mjs';
 import crypto from 'node:crypto';
 import {db,now} from './db.mjs';
 import {normalizedAnalysisText,currentResearchYear} from './publication-policy.mjs';
+import {log} from './platform/log.mjs';
 const maxOutputTokens=4096;
 const responseError=(code,details={})=>Object.assign(Error(`DeepSeek ${code}`),{code,retryable:false,...details});
 const designs=['cross_sectional','repeated_cross_sectional','panel_longitudinal','cohort','experimental','quasi_experimental','qualitative','mixed_methods','review','other','unknown'];
@@ -80,8 +81,8 @@ export async function analyzePending(limit=config.maxAI,filter={}){
    usageId=db.prepare("INSERT INTO analysis_usage_log(article_id,batch_id,model,input_tokens,output_tokens,cost_cny,created_at,status) VALUES(?,?,?,?,?,?,?,'uncertain')").run(a.id,filter.batchId||null,config.dsModel,0,0,costEstimate(null),now()).lastInsertRowid;
    db.exec('COMMIT');
   }catch(e){db.exec('ROLLBACK');throw e}
-  attempts++;
-  try{const r=await analyzeAbstract(a,{onUsage:usage=>{
+  attempts++;const callStarted=Date.now();let tokens={};
+  try{const r=await analyzeAbstract(a,{onUsage:usage=>{tokens={input_tokens:usage?.prompt_tokens,output_tokens:usage?.completion_tokens};
    const inputKnown=Number.isSafeInteger(usage?.prompt_tokens)&&usage.prompt_tokens>=0,outputKnown=Number.isSafeInteger(usage?.completion_tokens)&&usage.completion_tokens>=0;
    db.prepare('UPDATE analysis_usage_log SET input_tokens=?,output_tokens=?,cost_cny=?,status=? WHERE id=?').run(inputKnown?usage.prompt_tokens:0,outputKnown?usage.completion_tokens:0,costEstimate(usage),inputKnown&&outputKnown?'completed':'uncertain',usageId);
   },onResponse:details=>{
@@ -90,6 +91,7 @@ export async function analyzePending(limit=config.maxAI,filter={}){
    if(r.status!=='analyzed'||!x)throw responseError('missing_analysis');
    db.prepare(`UPDATE articles SET ai_summary=?,design=?,data_origin=?,method=?,sample_n=?,sample_unit=?,evidence=?,analysis_json=?,analysis_status='analyzed',analysis_attempts=analysis_attempts+1,analysis_error='',analysis_retry_at=NULL,analysis_input_hash=?,analysis_normalized_hash=?,analysis_cost_cny=COALESCE(?,0),analysis_model=? WHERE id=?`).run(x.summary_zh,x.study_design,x.data_source_type,x.statistical_methods.join(', '),x.sample_n,x.sample_unit,x.evidence.sample_n?.quote||'',JSON.stringify({...x,usage:r.usage}),analysisFingerprint(a),analysisFingerprint(a),cost,config.dsModel,a.id);
    analyzed++;
+   log('info','llm.call_completed',{provider:'deepseek',model:config.dsModel,purpose:'abstract_extraction',article_id:a.id,batch_id:filter.batchId||null,usage_log_id:usageId,...tokens,duration_ms:Date.now()-callStarted});
   }catch(e){
    failed++;
    // Never persist raw provider bodies, exception messages, prompts or credentials.
@@ -98,6 +100,8 @@ export async function analyzePending(limit=config.maxAI,filter={}){
    const retryable=e.retryable===true&&a.analysis_attempts+1<5;
    const message=`DeepSeek ${code}`;
    db.prepare('UPDATE analysis_usage_log SET error=?,error_code=? WHERE id=?').run(message,code,usageId);
+   // Codes only: provider bodies, prompts and abstracts are never logged.
+   log(code==='request_uncertain'?'error':'warn','llm.call_failed',{provider:'deepseek',model:config.dsModel,purpose:'abstract_extraction',article_id:a.id,batch_id:filter.batchId||null,usage_log_id:usageId,error_code:code,error_class:e.name||'Error',retryable,finish_reason:e.finish_reason??undefined,duration_ms:Date.now()-callStarted});
    db.prepare("UPDATE articles SET analysis_status=?,analysis_attempts=analysis_attempts+1,analysis_error=?,analysis_retry_at=? WHERE id=?").run(retryable?'needs_retry':'failed',message,retryable?new Date(Date.now()+Math.min(24,2**a.analysis_attempts)*3600000).toISOString():null,a.id);
   }
  }

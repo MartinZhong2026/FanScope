@@ -11,6 +11,9 @@ RUN --mount=type=secret,id=proxy_ca \
 COPY config ./config
 COPY src ./src
 COPY migrations ./migrations
+# Release commit for /api/health and logs; set by CI and backend-release builds.
+ARG FANSCOPE_COMMIT=unknown
+ENV FANSCOPE_COMMIT=$FANSCOPE_COMMIT
 RUN mkdir -p /app/data && chown -R node:node /app
 USER node
 EXPOSE 8787

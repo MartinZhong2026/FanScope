@@ -246,14 +246,21 @@ export function planMigrations(db,{migrations=loadMigrations()}={}){
  return {status,ledger:!!rows,applied:(rows||[]).map(r=>({id:r.id,checksum:r.checksum,appliedAt:r.applied_at,appCommit:r.app_commit})),pending,mismatched,unknownApplied,outOfOrder};
 }
 
-// Startup gate. Strictly read-only: only SELECT/PRAGMA reads.
-export function verifyMigrationsAtStartup(db,{dir=migrationsDir(),warn=console.warn}={}){
+// Read-only facts for /api/health and release verification.
+export function migrationSummary(db){
+ const rows=ledgerRows(db)||[];
+ return {runner:RUNNER_VERSION,applied:rows.length,latest:rows.length?rows[rows.length-1].id:null};
+}
+
+// Startup gate. Strictly read-only: only SELECT/PRAGMA reads. `warn` receives
+// structured fields; db.mjs passes the K1 logger.
+export function verifyMigrationsAtStartup(db,{dir=migrationsDir(),warn=fields=>console.warn(JSON.stringify({level:'warn',event:'migrations.database_ahead',...fields}))}={}){
  const plan=planMigrations(db,{migrations:loadMigrations(dir)});
  if(plan.mismatched.length)fail('MIGRATION_CHECKSUM_MISMATCH','An applied migration file was modified; restore the reviewed file and add a new migration instead',{mismatched:plan.mismatched});
  if(plan.pending.length)fail('MIGRATIONS_PENDING','Reviewed migrations must be applied explicitly (migrate-cli.mjs apply) before startup; startup never changes the schema',{pending:plan.pending.map(p=>p.id)});
  // Code-only rollback: an older image may run on a database migrated by a newer
  // one. Additive-only migrations keep that readable, so warn and continue.
- if(plan.unknownApplied.length)warn(JSON.stringify({level:'warn',event:'migrations.database_ahead',unknown_applied:plan.unknownApplied}));
+ if(plan.unknownApplied.length)warn({unknown_applied:plan.unknownApplied});
  return plan;
 }
 

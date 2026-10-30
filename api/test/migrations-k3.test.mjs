@@ -163,7 +163,7 @@ test('older application code still starts, reads and writes after an additive mi
    for(const market of ['international','chinese']){const n=db.prepare('SELECT count(*) n FROM articles a JOIN journals j ON j.id=a.journal_id WHERE a.demo=0 AND a.market=j.market AND a.market=?').get(market).n;
     const s=await fetch(base+'/api/stats?period=all&article_type=all&market='+market);if(!s.ok||(await s.json()).count!==n)throw Error('stats mismatch '+market)}
   }finally{server.close()}`});
- assert.match(r.stderr,/migrations\.database_ahead/);
+ assert.match(r.stdout+r.stderr,/"event":"migrations\.database_ahead"/,'structured K1 warning');
  const db=new DatabaseSync(file);
  try{
   assert.equal(db.prepare("SELECT sample_flag FROM articles WHERE id='after-migration'").get().sample_flag,'','new column default applies to rows written by old code');

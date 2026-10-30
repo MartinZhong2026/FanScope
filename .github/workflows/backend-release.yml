@@ -38,7 +38,7 @@ jobs:
           RELEASE_SHA: ${{ inputs.commit }}
         run: |
           mkdir -p work/backend-release
-          docker build --label "org.opencontainers.image.revision=$RELEASE_SHA" -t "fanscope-api:$RELEASE_SHA" -f api/Dockerfile api
+          docker build --label "org.opencontainers.image.revision=$RELEASE_SHA" --build-arg "FANSCOPE_COMMIT=$RELEASE_SHA" -t "fanscope-api:$RELEASE_SHA" -f api/Dockerfile api
           IMAGE=$(docker image inspect "fanscope-api:$RELEASE_SHA" --format '{{.Id}}')
           docker save "fanscope-api:$RELEASE_SHA" -o work/backend-release/image.tar
           python3 - "$RELEASE_SHA" "$IMAGE" <<'PY'
