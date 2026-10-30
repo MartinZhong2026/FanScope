@@ -21,7 +21,7 @@ from sqlite_release import inspect
 def jobs(database):
     db = sqlite3.connect(f'file:{database}?mode=ro', uri=True)
     try:
-        return {r[0]: r[1] for r in db.execute('SELECT name,next_due_at FROM scheduled_jobs')}
+        return {r[0]: r[1] for r in db.execute("SELECT name,next_due_at FROM scheduled_jobs WHERE last_status='ok' AND lease_owner=''")}
     finally:
         db.close()
 
