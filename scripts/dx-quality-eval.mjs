@@ -11,7 +11,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {parseArgs} from 'node:util';
-import {fileURLToPath} from 'node:url';
+import {fileURLToPath,pathToFileURL} from 'node:url';
 
 const {values}=parseArgs({options:{engine:{type:'string',default:'rules'},'confirm-paid':{type:'boolean',default:false},only:{type:'string'},model:{type:'string'}}});
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
@@ -19,8 +19,12 @@ const fixtures=path.join(root,'api/test/fixtures/dx-eval');
 if(values.engine==='deepseek'&&(!values['confirm-paid']||!process.env.DEEPSEEK_API_KEY)){
  console.error('Refusing: a DeepSeek run is a paid call. Pass --confirm-paid after approval and set DEEPSEEK_API_KEY.');process.exit(2);
 }
-const {providerFor,MAX_INPUT_CHARS,PROMPT_VERSION}=await import(path.join(root,'api/src/diagnostic/providers.mjs').replace(/\\/g,'/').replace(/^([A-Z]:)/i,'file:///$1'));
-const {normalizeReport}=await import(path.join(root,'api/src/diagnostic/report.mjs').replace(/\\/g,'/').replace(/^([A-Z]:)/i,'file:///$1'));
+const load=rel=>import(pathToFileURL(path.join(root,rel)).href);
+const {providerFor,MAX_INPUT_CHARS,PROMPT_VERSION}=await load('api/src/diagnostic/providers.mjs');
+const {memoryLedger}=await load('api/src/platform/llm.mjs');
+const {normalizeReport}=await load('api/src/diagnostic/report.mjs');
+// No database: calls are recorded in memory and counted in the scorecard.
+const ledger=memoryLedger();
 const expected=JSON.parse(fs.readFileSync(path.join(fixtures,'expected.json'),'utf8'));
 const order={critical:0,major:1,minor:2};
 const out=path.join(root,'work/dx-eval',new Date().toISOString().replace(/[:.]/g,'-')+'-'+values.engine);fs.mkdirSync(out,{recursive:true});
@@ -29,7 +33,8 @@ const rows=[];
 for(const [file,spec] of Object.entries(expected)){
  if(file==='note'||(values.only&&!file.includes(values.only)))continue;
  const text=fs.readFileSync(path.join(fixtures,file),'utf8'),input=text.slice(0,MAX_INPUT_CHARS);
- const provider=providerFor(values.engine,values.model?{model:values.model}:undefined);
+ // One attempt per step: the paid run is exactly 2 requests per manuscript.
+ const provider=providerFor(values.engine,{ledger,refId:'eval-'+file.replace(/\W+/g,'-'),maxAttempts:1,...(values.model?{model:values.model}:{})});
  const started=Date.now();let report,error=null;
  try{
   const structure=await provider.structure(input);
@@ -58,6 +63,7 @@ const summary={engine:values.engine,prompt_version:PROMPT_VERSION,manuscripts:ro
  mean_recall:+mean('recall').toFixed(3),mean_severity_ok:+mean('severity_ok').toFixed(3),mean_fact_verification:+mean('fact_verification_rate').toFixed(3),
  paper_type_accuracy:ok.length?ok.filter(r=>r.paper_type_ok).length/ok.length:0,
  tokens:{input:ok.reduce((s,r)=>s+(r.usage?.input_tokens||0),0),output:ok.reduce((s,r)=>s+(r.usage?.output_tokens||0),0)},max_ms:Math.max(0,...rows.map(r=>r.ms))};
+summary.requests=ledger.rows.size;
 fs.writeFileSync(path.join(out,'scorecard.json'),JSON.stringify({summary,rows},null,2));
 const md=[`# Paper Diagnostic 质量评测（${values.engine}，${PROMPT_VERSION}）`,'',`- 稿件 ${summary.manuscripts}，失败 ${summary.failed}`,`- 预埋缺陷召回率 ${summary.mean_recall}，严重度达标 ${summary.mean_severity_ok}`,`- 事实引文核对通过率 ${summary.mean_fact_verification}，论文类型准确率 ${summary.paper_type_accuracy}`,`- tokens 输入 ${summary.tokens.input} / 输出 ${summary.tokens.output}；最长耗时 ${summary.max_ms} ms`,'',
  ...rows.flatMap(r=>[`## ${r.file}`,r.error?`失败：${r.error}`:`类型 ${r.paper_type}（${r.paper_type_ok?'正确':'错误'}）· 问题 ${r.issues} · 剔除引文 ${r.quotes_rejected} · 无证据问题 ${r.issues_without_evidence}`,...(r.flaws||[]).map(f=>`- ${f.found?'✔':'✘'} ${f.id}${f.found?`（${f.severity}${f.severityOk?'':'，严重度偏低'}）：${f.issue}`:''}`),''])].join('\n');

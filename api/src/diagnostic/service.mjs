@@ -17,6 +17,7 @@ import {db} from '../db.mjs';
 import {config} from '../config.mjs';
 import {auth,extractText} from '../lab.mjs';
 import {log,errorFields} from '../platform/log.mjs';
+import {dbLedger} from '../platform/llm-ledger.mjs';
 import {normalizeReport} from './report.mjs';
 import {providerFor,PROMPT_VERSION,MAX_INPUT_CHARS} from './providers.mjs';
 
@@ -181,8 +182,9 @@ export function startRun(user,id,{providerOptions}={}){
   const today=db.prepare("SELECT COUNT(*) n FROM dx_runs WHERE provider='deepseek' AND requested_by=? AND created_at>=?").get(user.id,nowIso().slice(0,10)).n;
   if(today>=limit)throw error(429,`今日诊断次数已达上限（${limit} 次）`,'dx_daily_limit');
  }
- let provider;try{provider=providerFor(engine,providerOptions)}catch(e){throw error(503,'诊断引擎配置不完整','dx_provider_unconfigured')}
- const text=sub.text_content||'',input=text.slice(0,MAX_INPUT_CHARS),runId=crypto.randomUUID(),created=nowIso();
+ const runId=crypto.randomUUID();
+ let provider;try{provider=providerFor(engine,{ledger:dbLedger(),refId:runId,...providerOptions})}catch(e){throw error(503,'诊断引擎配置不完整','dx_provider_unconfigured')}
+ const text=sub.text_content||'',input=text.slice(0,MAX_INPUT_CHARS),created=nowIso();
  db.prepare(`INSERT INTO dx_runs(id,submission_id,requested_by,provider,model,prompt_version,status,input_chars,truncated,created_at,heartbeat_at) VALUES(?,?,?,?,?,?,?,?,?,?,?)`)
   .run(runId,sub.id,user.id,provider.name,provider.model||'',PROMPT_VERSION,'queued',input.length,text.length>input.length?1:0,created,created);
  const job=processRun(runId,provider,input,text.length).finally(()=>workers.delete(job));workers.add(job);

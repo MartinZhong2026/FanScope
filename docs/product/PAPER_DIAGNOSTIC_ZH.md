@@ -16,7 +16,7 @@
 | `FANSCOPE_DIAGNOSTIC_PROVIDER` | 说明 |
 | --- | --- |
 | `rules`（非生产默认） | 关键词规则演示引擎，不调用任何外部服务；报告明确标注“演示模式”，不冒充 AI |
-| `deepseek` | 真实 AI 引擎，分两步（结构识别 → 诊断），稿件全文作为稳定前缀以利用 DeepSeek 上下文缓存。需 `DEEPSEEK_API_KEY`；每人每日上限 `FANSCOPE_DIAGNOSTIC_DAILY_LIMIT`（默认 5） |
+| `deepseek` | 真实 AI 引擎，分两步（结构识别 → 诊断），稿件全文作为稳定前缀以利用 DeepSeek 上下文缓存。所有调用经统一 LLM 客户端 `platform/llm.mjs`（K4 最小版）：先在 `llm_calls` 账本中登记再发送（只记元数据），用幂等键防止同一请求重复发送，最多尝试 2 次且只重试 429/5xx/网络错误，有全局并发上限（`FANSCOPE_LLM_CONCURRENCY`）和熔断机制。需 `DEEPSEEK_API_KEY`；每人每日上限 `FANSCOPE_DIAGNOSTIC_DAILY_LIMIT`（默认 5） |
 | 未设置（生产） | `none`，诊断请求返回 503 |
 
 授权按引擎记录：对规则引擎的同意**不能**用于 DeepSeek，切换引擎后须重新同意。
@@ -75,5 +75,5 @@
 1. K3 合并，并完成 R0 首次后端发布。
 2. K2 控制器支持已有数据库执行追加迁移，R1 发布本迁移（需批准）。
 3. 生产入口 `v14-server.mjs` 的 staged-recovery 写入白名单中加入诊断接口（属于安全配置变更，需批准）。
-4. 使用 DeepSeek：需批准一次真实付费调用，用合成或经授权的稿件评估报告质量；确认 `DEEPSEEK_API_KEY` 的配置与 v14 入口“未启用 AI 时清空 Key”的逻辑一致；K4 统一 LLM 账本完成后改由其计费和限流。
+4. 使用 DeepSeek：先在 GitHub 上运行一次经批准的云端评测 `dx-quality-eval.yml`（只用合成稿件，最多 6 次请求）；确认 `DEEPSEEK_API_KEY` 的配置与 v14 入口“未启用 AI 时清空 Key”的逻辑一致。K4 账本已接入，`llm_calls` 迁移需与本迁移一起经 K2/R1 上线。
 5. K5 调度器接管每小时清理，并与发布门禁协调；确认备份保留期后，更新授权说明中的备份披露。

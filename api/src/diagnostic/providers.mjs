@@ -6,6 +6,7 @@
 //    is labelled in the report as rule-generated, never as AI judgment.
 import {config} from '../config.mjs';
 import {DIMENSIONS,FACT_FIELDS,PAPER_TYPES,SEVERITIES,CHECK_STATUSES,dimensionsFor} from './report.mjs';
+import {chat,LlmError} from '../platform/llm.mjs';
 
 export const PROMPT_VERSION='dx-prompt-v1';
 export const MAX_INPUT_CHARS=60000;
@@ -43,28 +44,29 @@ critical = threatens the main conclusion; major = reviewers will likely require 
 
 class ProviderError extends Error{constructor(code,message,extra={}){super(message);this.name='ProviderError';this.code=code;Object.assign(this,extra)}}
 
-export function deepseekProvider({apiKey=config.dsKey,model=config.dsModel,fetchImpl=globalThis.fetch,timeoutMs=180000}={}){
+// All model traffic goes through platform/llm.mjs (ledger, idempotency,
+// bounded attempts, concurrency cap, circuit breaker). Error codes are mapped
+// from llm_* to dx_provider_* for the diagnostic run record.
+export function deepseekProvider({apiKey=config.dsKey,model=config.dsModel,fetchImpl,timeoutMs=180000,ledger,refId,maxAttempts=2}={}){
  if(!apiKey)throw new ProviderError('dx_provider_unconfigured','DeepSeek is not configured');
- const usage={input_tokens:0,output_tokens:0};
- async function call(text,task,maxTokens){
-  let response;
+ if(!ledger||!refId)throw new ProviderError('dx_provider_unconfigured','Model calls require a ledger and a run id');
+ const usage={input_tokens:0,output_tokens:0,cache_hit_tokens:0};
+ async function call(step,text,task,maxTokens){
   try{
-   response=await fetchImpl('https://api.deepseek.com/chat/completions',{method:'POST',signal:AbortSignal.timeout(timeoutMs),
-    headers:{Authorization:`Bearer ${apiKey}`,'Content-Type':'application/json'},
-    body:JSON.stringify({model,temperature:0.2,max_tokens:maxTokens,response_format:{type:'json_object'},
-     messages:[{role:'system',content:SYSTEM},{role:'user',content:`${manuscriptBlock(text)}\n\n${task}`}]})});
-  }catch(e){throw new ProviderError(e?.name==='TimeoutError'?'dx_provider_timeout':'dx_provider_network','DeepSeek request failed',{upstream:{provider:'deepseek',host:'api.deepseek.com'}})}
-  if(!response.ok)throw new ProviderError(`dx_provider_http_${response.status}`,'DeepSeek HTTP error',{upstream:{provider:'deepseek',host:'api.deepseek.com',status:response.status}});
-  let body;try{body=await response.json()}catch{throw new ProviderError('dx_provider_bad_response','DeepSeek response was not JSON')}
-  usage.input_tokens+=Number(body?.usage?.prompt_tokens||0);usage.output_tokens+=Number(body?.usage?.completion_tokens||0);
-  const choice=body?.choices?.[0];
-  if(choice?.finish_reason==='length')throw new ProviderError('dx_provider_truncated','DeepSeek output was truncated');
-  try{const value=JSON.parse(choice?.message?.content);if(!value||typeof value!=='object')throw 0;return value}
-  catch{throw new ProviderError('dx_provider_invalid_json','DeepSeek output was not a JSON object')}
+   const r=await chat({purpose:`diagnostic.${step}`,idempotencyKey:`dx:${refId}:${step}`,refId,model,maxTokens,temperature:0.2,apiKey,ledger,maxAttempts,timeoutMs,fetchImpl,
+    messages:[{role:'system',content:SYSTEM},{role:'user',content:`${manuscriptBlock(text)}
+
+${task}`}]});
+   for(const k of Object.keys(usage))usage[k]+=r.usage[k]||0;
+   return r.value;
+  }catch(e){
+   if(e instanceof LlmError){for(const k of Object.keys(usage))usage[k]+=e.usage?.[k]||0;throw new ProviderError(e.code.replace(/^llm_/,'dx_provider_'),e.message,{upstream:e.upstream})}
+   throw e;
+  }
  }
  return {name:'deepseek',model,usage,
-  structure:text=>call(text,STRUCTURE_TASK,4000),
-  diagnose:(text,structure)=>call(text,diagnosisTask(structure),7000)};
+  structure:text=>call('structure',text,STRUCTURE_TASK,4000),
+  diagnose:(text,structure)=>call('diagnose',text,diagnosisTask(structure),7000)};
 }
 
 // --- Rule engine --------------------------------------------------------------

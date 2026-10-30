@@ -135,6 +135,9 @@ test('DeepSeek engine (mocked HTTP): fabricated quotes are dropped, failures are
   assert.ok(!r.checks.some(c=>c.dimension==='participants_sampling'),'qualitative check dropped for a quantitative paper');
   assert.equal(r.provenance.ai,true);
   const row=db.prepare('SELECT input_tokens,output_tokens FROM dx_runs WHERE id=?').get(run.id);assert.deepEqual({...row},{input_tokens:1800,output_tokens:600});
+  // Every model call went through the K4 ledger: one row per step, metadata only.
+  const calls=db.prepare('SELECT purpose,status,attempts,input_tokens FROM llm_calls WHERE ref_id=? ORDER BY purpose').all(run.id).map(r=>({...r}));
+  assert.deepEqual(calls,[{purpose:'diagnostic.diagnose',status:'completed',attempts:1,input_tokens:900},{purpose:'diagnostic.structure',status:'completed',attempts:1,input_tokens:900}]);
   // Failures.
   for(const [impl,code] of [[async()=>new Response('{}',{status:500}),'dx_provider_http_500'],
    [async()=>new Response(JSON.stringify({choices:[{finish_reason:'stop',message:{content:'not json'}}]})),'dx_provider_invalid_json'],
