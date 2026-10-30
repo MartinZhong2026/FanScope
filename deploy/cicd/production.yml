@@ -14,6 +14,15 @@ services:
       DEEPSEEK_API_KEY: ''
       OPENALEX_API_KEY: ''
       RESEND_API_KEY: ''
+      # FANSCOPE_DIAGNOSTIC_* come from api/.env. The controller requires the key's
+      # presence to match the release manifest, and this file never sets it.
+      FANSCOPE_RELEASE_GATE_FILE: /run/fanscope-gate/gate.json
+    volumes:
+      # A directory, so an atomically replaced gate.json stays visible.
+      - type: bind
+        source: /var/lib/fanscope-cd/runtime
+        target: /run/fanscope-gate
+        read_only: true
     command: [node, --experimental-sqlite, src/v14-server.mjs]
     stop_grace_period: 3m
 volumes:

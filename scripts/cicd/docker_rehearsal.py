@@ -12,7 +12,7 @@ import tempfile
 import uuid
 from unittest.mock import patch
 import deploy_backend as deploy
-from sqlite_release import backup, inspect, write_json
+from sqlite_release import additive_check, backup, inspect, write_json
 
 
 def main(image):
@@ -114,13 +114,44 @@ def main(image):
                     pass
                 else:
                     raise AssertionError('Schema-changing startup accepted')
+                # Reviewed additive migration on a frozen copy with the real runner
+                # image. The image's own startup sees a newer ledger, exactly as a
+                # rolled-back old image would, and must still make zero writes.
+                copy = directory / 'additive'
+                snapshot = backup(database, copy)
+                sample = copy / 'migrations'
+                sample.mkdir()
+                (sample / '20991231T000000Z_ci_sample.sql').write_text(
+                    'CREATE TABLE ci_sample(id INTEGER PRIMARY KEY, label TEXT NOT NULL);\n'
+                    'CREATE INDEX idx_ci_sample_label ON ci_sample(label);\n'
+                    'ALTER TABLE articles ADD COLUMN ci_sample_note TEXT;\n', newline='\n')
+                extra = ('--dir', '/app/data/migrations')
+                lint = json.loads(deploy.node_on_copy(image, copy, 'src/migrate-cli.mjs', 'lint', *extra))
+                sample_item = next(m for m in lint['migrations'] if m['id'].endswith('ci_sample'))
+                manifest = {'commit': 'a' * 40, 'migrationPolicy': 'additive',
+                            'migrations': [{k: sample_item[k] for k in ('id', 'checksum', 'declared')}]}
+                pending = deploy.rehearse_release(image, image, copy, snapshot, manifest, extra)
+                assert [p['id'] for p in pending] == [sample_item['id']], 'Sample migration not applied'
+                # The controller's independent check rejects what the manifest did not declare.
+                declared = deploy.declared_for(pending, manifest)
+                db = sqlite3.connect(copy / 'restore.sqlite')
+                db.execute("UPDATE lab_projects SET title='rewritten by migration'")
+                db.commit()
+                db.close()
+                try:
+                    additive_check(copy / 'backup.sqlite', copy / 'restore.sqlite', declared)
+                except RuntimeError:
+                    pass
+                else:
+                    raise AssertionError('Rewritten protected data accepted')
         finally:
             # Only this test's uniquely named container, never volumes or other projects.
             subprocess.run(['docker', 'rm', '-f', name], check=True, stdout=subprocess.DEVNULL)
         remaining = deploy.run('docker', 'ps', '--format', '{{.ID}} {{.Names}}').splitlines()
         assert all(cid + ' ' + cname in remaining for cid, cname in identity), 'Unrelated container changed'
         print(json.dumps({'dockerRehearsal': 'PASS', 'onlineBackup': 'PASS', 'dataRestore': 'PASS',
-                          'unhealthyRollback': 'PASS', 'schemaChangeRejected': True, 'unrelatedContainersPreserved': len(identity)}))
+                          'unhealthyRollback': 'PASS', 'schemaChangeRejected': True, 'additiveMigration': 'PASS',
+                          'unrelatedContainersPreserved': len(identity)}))
 
 
 if __name__ == '__main__':

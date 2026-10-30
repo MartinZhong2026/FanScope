@@ -1,7 +1,7 @@
 # K3 版本化追加式数据库迁移（运维与开发说明）
 
 状态：K3 基础设施。`api/migrations/` 当前**没有任何 `.sql` 迁移**；本 PR 不引入业务表、不改 `articles`、不改首页统计。
-**合并 K3 不等于可以发布带迁移的版本**：首个带迁移的后端发布须等待 K2 控制器、生产备份与 R1 审批。
+**合并 K3 不等于可以发布带迁移的版本**：首个带迁移的后端发布须等待 K2 控制器安装到主机、生产备份与 R1 审批。
 
 ## 1. 三条路径严格分离
 
@@ -77,15 +77,30 @@ DATABASE_PATH=... npm run migrate -- apply --expect '<id>:<sha256>,...' --commit
 
 错误码：`MIGRATIONS_PENDING`、`MIGRATION_CHECKSUM_MISMATCH`、`MIGRATION_UNKNOWN_APPLIED`、`MIGRATION_OUT_OF_ORDER`、`MIGRATION_PLAN_MISMATCH`、`MIGRATION_SQL_REJECTED`、`MIGRATION_NOT_ADDITIVE`、`MIGRATION_FAILED`、`MIGRATION_LOCKED`、`MIGRATION_LEDGER_INVALID`、`LEGACY_BASELINE_MISSING`、`MIGRATION_FILE_INVALID`、`MIGRATION_DUPLICATE_TIMESTAMP`、`MIGRATION_DIR_MISSING`、`DATABASE_MISSING`。
 
-## 7. 留给 K2 的接口（待实现，K3 未改控制器）
+## 7. K2 控制器（已实现，尚未在主机安装）
 
-1. 构建：对发布 commit 运行 `migrate lint`；清单为空 → 维持 `migrationPolicy:'no-change'`；非空 → `migrationPolicy:'additive'` 并把 `[{id,checksum}]` 写入 manifest。
-2. 冻结副本（`--network none`）：候选镜像 `status` 的 pending 必须与 manifest 完全相同 → `apply --expect <manifest>` → Python 侧按“既有表原有列 + 白名单新增”比对（不能沿用整库指纹相等）→ 候选镜像启动相对迁移后状态零写入 → **旧镜像**在迁移后副本上启动与 health/统计校验通过。
-3. 生产：维护模式、冻结备份后，容器停止状态下以同一 `--expect` 执行 `apply`，再启动候选；失败按现有流程恢复冻结快照。
-4. `fanscope_migrations` 是 K2 指纹白名单需要识别的新表。
+构建与发布流程：
+
+1. `backend-release.yml` 在镜像内运行 `migrate lint`：无迁移 → `migrationPolicy:'no-change'`；有迁移 → `'additive'`，并把 `[{id,checksum,declared}]` 写入 manifest。手动输入 `diagnostic_ai` 写入 `diagnosticAiEnabled`。
+2. 冻结副本（`--network none`）：`status` 的 pending 必须全部在 manifest 内且校验和一致 → `apply --expect` → 控制器用 `additive_check()` **独立于应用**比对（既有列定义与行内容不变，新增对象必须已声明）→ 候选镜像启动零写入 → **旧镜像**在迁移后副本上启动零写入。
+3. 生产：容器已停止，以同一 `--expect` 执行 `apply`，再次 `additive_check()`，然后启动候选。任一步失败都先保存 `candidate.log`，再恢复冻结快照与旧镜像。
+4. `result.json` 记录 `stage`、`failureType`、脱敏的 `failureMessage`。health 必须满足 `commit` 等于发布 SHA、`diagnostic.aiConfigured` 等于 manifest；`aiConfigured`（批量 AI）仍必须为 false。
+
+**发布门禁**：控制器在接触数据库前把 `/var/lib/fanscope-cd/runtime/gate.json` 原子写为 `blocked`，代次加 1；只有成功或已验证回滚后，用匹配的 release/generation 才能写回 `open`。门禁缺失、损坏或已 blocked 时拒绝发布。`success-gate-blocked` 表示发布成功但门禁未开放，后台任务保持停止。
+
+```bash
+sudo python3 /opt/fanscope-cd/scripts/cicd/deploy_backend.py gate-status      # 只读；超时或异常时退出码 3，供主机告警
+sudo python3 /opt/fanscope-cd/scripts/cicd/deploy_backend.py recover --confirm-sha <完整SHA>           # 有未完成事务
+sudo python3 /opt/fanscope-cd/scripts/cicd/deploy_backend.py recover-gate --confirm-generation <代次>  # 无事务但门禁残留
+```
+
+**安装**：控制器是信任根，须由管理员从已审查的 main 执行 `sudo deploy/cicd/install-host.sh upgrade`（不改配置、Token 与 timer；存在未完成事务时拒绝）。升级后再做一次无结构变化发布，确认门禁路径后再发布带迁移的版本。
+
+**启用诊断 AI**：只在服务器 `api/.env` 配置 `FANSCOPE_DIAGNOSTIC_ENABLED=true`、`FANSCOPE_DIAGNOSTIC_PROVIDER=deepseek`、`FANSCOPE_DIAGNOSTIC_DEEPSEEK_API_KEY`，并在发布时勾选 `diagnostic_ai`。`DEEPSEEK_API_KEY` 保持为空，批量 AI 不会被打开。
 
 ## 8. 尚未验证 / 已知限制
 
-- 未在生产或生产副本上运行；未做真实 K2 发布与回滚（K2 未实现）。
+- 未在生产或生产副本上运行；K2 仅通过 Python 编排测试与（CI 上的）Linux Docker 演练，未做真实发布与回滚。
+- K2 尚无主机侧告警定时器：`gate-status` 已提供，需接入 systemd timer 与告警渠道；交付计划 §9-A 的逐点崩溃矩阵只覆盖了部分阶段。
 - 效果校验对既有表做全量行摘要，执行时间随库大小线性增长，需在 R1 前用生产规模副本测时。
 - 旧版兼容已验证：K3 前的 `main` 代码在迁移后的库上启动零写入、health 与统计正常（手工核验）；当前代码在“数据库领先”状态下读写正常（自动化测试）。更早的镜像未逐一验证。
