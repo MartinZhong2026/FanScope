@@ -91,6 +91,15 @@ test('a job that lost its lease stops at the next checkpoint',async()=>{
  assert.equal(row('a').lease_owner,'other');assert.equal(row('a').last_status,'');
 });
 
+test('stop() ends a running job at its next checkpoint and frees the lease without a failure',async()=>{
+ let release;const wait=new Promise(r=>release=r);
+ const s=scheduler([{name:'a',intervalMs:HOUR,run:async({checkpoint})=>{await wait;checkpoint();assert.fail('must stop')}}]);
+ s.tick();const due=row('a').next_due_at;
+ const stopped=s.stop();release();await stopped;
+ const r=row('a');
+ assert.equal(r.lease_owner,'');assert.equal(r.last_status,'');assert.equal(r.next_due_at,due,'still due after restart');
+});
+
 test('at most two jobs run at once; each job has one row and one lease',async()=>{
  let running=0,peak=0,started=0;const release=[];
  const job=name=>({name,intervalMs:HOUR,run:()=>new Promise(r=>{running++;started++;peak=Math.max(peak,running);release.push(()=>{running--;r()})})});

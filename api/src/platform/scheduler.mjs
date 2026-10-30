@@ -26,7 +26,7 @@ export function readGate(file=process.env.FANSCOPE_RELEASE_GATE_FILE){
 }
 
 export function createScheduler({db,jobs,gate=readGate,now=()=>Date.now(),random=Math.random,maxConcurrent=2,leaseMs=120000,tickMs=60000}){
- const active=new Map(),byName=new Map(jobs.map(j=>[j.name,j]));
+ const active=new Map(),stops=new Set(),byName=new Map(jobs.map(j=>[j.name,j]));
  const iso=ms=>new Date(ms).toISOString();
  let timer=null,stopped=false,holdAlerted=null,lastGate=null;
  const owns=(name,token)=>{const r=db.prepare('SELECT lease_owner,lease_expires_at FROM scheduled_jobs WHERE name=?').get(name);return r?.lease_owner===token&&Date.parse(r.lease_expires_at)>now()};
@@ -41,6 +41,7 @@ export function createScheduler({db,jobs,gate=readGate,now=()=>Date.now(),random
  async function execute(job,token){
   const controller=new AbortController(),{signal}=controller,started=now();
   const abort=reason=>{if(!signal.aborted)controller.abort(new SchedulerHold(reason))};
+  const shutdown=()=>abort('shutdown');stops.add(shutdown);
   const timeout=setTimeout(()=>abort('timeout'),job.timeoutMs||30*60000);timeout.unref?.();
   // A renewal is a write: it happens only with the gate open and the lease held.
   const renew=setInterval(()=>{
@@ -75,7 +76,7 @@ export function createScheduler({db,jobs,gate=readGate,now=()=>Date.now(),random
      iso(t),code,failures,iso(t+delay),job.name,token);
     log('warn','scheduler.job_failed',{job:job.name,failures,retry_in_ms:delay,duration_ms:t-started,...errorFields(e),error_code:code});
    }
-  }finally{clearTimeout(timeout);clearInterval(renew)}
+  }finally{clearTimeout(timeout);clearInterval(renew);stops.delete(shutdown)}
  }
 
  function tick(){
@@ -105,7 +106,8 @@ export function createScheduler({db,jobs,gate=readGate,now=()=>Date.now(),random
   tick:safeTick,
   idle:()=>Promise.allSettled([...active.values()]),
   start(){if(timer)return;setImmediate(safeTick);timer=setInterval(safeTick,tickMs);timer.unref?.()},
-  async stop(){stopped=true;clearInterval(timer);timer=null;await Promise.allSettled([...active.values()])},
+  // Jobs stop at their next checkpoint, so a restart cannot run into the Docker kill timeout.
+  async stop(){stopped=true;clearInterval(timer);timer=null;for(const fn of stops)fn();await Promise.allSettled([...active.values()])},
   status:()=>({running:[...active.keys()],gate:lastGate?.reason??'not_checked'}),
  };
 }

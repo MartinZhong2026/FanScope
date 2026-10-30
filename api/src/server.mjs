@@ -54,7 +54,7 @@ async function handle(req,res){
  if(method==='OPTIONS'){res.writeHead(204);res.end();return;}
  if(p.startsWith('/api/diagnostic/'))return diagnosticRoute(req,res,u);
  if(p.startsWith('/api/lab/'))return labRoute(req,res,u);
- if(p==='/api/health')return json(res,200,{status:'ok',time:now(),service:'fanscope-api',monitoring:db.prepare('SELECT COUNT(*) AS n FROM journals WHERE enabled=1').get().n,emailConfigured:mailReady(),aiConfigured:!!config.dsKey,diagnostic:diagnosticStatus(),...runtimeInfo()});
+ if(p==='/api/health')return json(res,200,{status:'ok',time:now(),service:'fanscope-api',monitoring:db.prepare('SELECT COUNT(*) AS n FROM journals WHERE enabled=1').get().n,emailConfigured:mailReady(),aiConfigured:!!config.dsKey,diagnostic:diagnosticStatus(),scheduler:process.env.FANSCOPE_SCHEDULER==='true',...runtimeInfo()});
  if(p==='/api/chinese-diagnostics'&&method==='GET')return json(res,200,chineseDiagnostics());
  if(p.startsWith('/api/chinese-batches/')&&method==='GET')return json(res,200,chineseBatch(p.slice('/api/chinese-batches/'.length)));
  if(p==='/api/topics')return json(res,200,{items:topics.map(({id,label,short})=>({id,label,short}))});
