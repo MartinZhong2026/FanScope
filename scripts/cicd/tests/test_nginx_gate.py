@@ -1,6 +1,10 @@
 from pathlib import Path
 import sys
+import tempfile
+from types import SimpleNamespace
 import unittest
+from unittest.mock import Mock, patch
+import urllib.error
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import nginx_gate as gate
@@ -60,6 +64,63 @@ server {
         snippet = (Path(__file__).resolve().parents[3] / 'deploy/cicd/nginx-maintenance.conf').read_text()
         self.assertIn(gate.MARKER, snippet)
         self.assertIn(f'if ($host != "{DOMAIN}")', snippet)
+
+
+class InstallRecoveryTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.root = Path(self.temp.name)
+        self.conf = self.root / 'site.conf'
+        self.original = 'server { server_name fanscope-api.adapttochina.com; }\n'
+        self.conf.write_text(self.original)
+        self.snippet = self.root / 'snippet.conf'
+        self.snippet.write_text('x')
+        self.calls = []
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def nginx(self, reload_fails=False):
+        def fake(*args):
+            self.calls.append(args[-1])
+            if args == ('-T',):
+                return SimpleNamespace(returncode=0, stdout=f'# configuration file {self.conf}:\n', stderr='')
+            if args[-1] == 'reload' and reload_fails and self.conf.read_text() == self.original:
+                return SimpleNamespace(returncode=1, stdout='', stderr='reload refused')
+            return SimpleNamespace(returncode=0, stdout='', stderr='')
+        return fake
+
+    def run_install(self, probe, reload_fails=False):
+        with patch.object(gate, 'nginx', self.nginx(reload_fails)), patch.object(gate, 'probe', probe), \
+                patch.object(gate, 'SNIPPET', str(self.snippet)), patch.object(gate.time, 'sleep'):
+            gate.install(DOMAIN, self.root / 'saved')
+
+    def test_probe_network_failures_restore_and_reload(self):
+        for error in (urllib.error.URLError('dns failure'), TimeoutError('timed out'), ConnectionResetError('reset')):
+            with self.subTest(error=error):
+                self.calls.clear()
+                with self.assertRaisesRegex(RuntimeError, 'original files restored'):
+                    self.run_install(Mock(side_effect=error))
+                self.assertEqual(self.conf.read_text(), self.original)
+                self.assertEqual(self.calls.count('reload'), 2, 'applied, then restored')
+
+    def test_original_error_is_chained(self):
+        cause = urllib.error.URLError('dns failure')
+        with self.assertRaises(RuntimeError) as caught:
+            self.run_install(Mock(side_effect=cause))
+        self.assertIs(caught.exception.__cause__, cause)
+
+    def test_failed_recovery_is_not_masked(self):
+        with self.assertRaisesRegex(RuntimeError, 'RECOVERY ALSO FAILED.*reload refused'):
+            self.run_install(Mock(side_effect=TimeoutError('timed out')), reload_fails=True)
+        self.assertEqual(self.conf.read_text(), self.original)
+
+    def test_wrong_status_restores_and_success_keeps_the_gate(self):
+        with self.assertRaisesRegex(RuntimeError, 'stats 200'):
+            self.run_install(Mock(return_value=(200, 200)))
+        self.assertEqual(self.conf.read_text(), self.original)
+        self.run_install(Mock(return_value=(503, 200)))
+        self.assertIn(INCLUDE, self.conf.read_text())
 
 
 if __name__ == '__main__':

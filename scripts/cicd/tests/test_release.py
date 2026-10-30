@@ -210,6 +210,19 @@ class PullRetryTests(unittest.TestCase):
             self.assertEqual(list((state / 'incoming').iterdir()), [])
 
 
+    def test_a_run_that_keeps_failing_before_deploy_is_abandoned(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            state, run = Path(tmp), {'id': 9, 'run_number': 4}
+            cursor = state / 'cursor.json'
+            with patch.object(pull, 'STATE', state):
+                pull.count_failed_attempt(run, cursor)
+                pull.count_failed_attempt(run, cursor)
+                self.assertFalse(cursor.exists(), 'still retrying')
+                pull.count_failed_attempt(run, cursor)
+            self.assertEqual(json.loads(cursor.read_text()), {'run_number': 4, 'run_id': 9, 'status': 'abandoned'})
+            self.assertFalse((state / 'pull-attempts.json').exists())
+
+
 class PipelineTests(unittest.TestCase):
     setUp = DatabaseTests.setUp
     tearDown = DatabaseTests.tearDown

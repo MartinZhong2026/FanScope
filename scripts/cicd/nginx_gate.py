@@ -119,6 +119,31 @@ def probe(domain):
         MAINTENANCE.unlink(missing_ok=True)
 
 
+def restore(originals, reload):
+    for file, content in originals.items():
+        file.write_bytes(content)
+    if originals and reload:
+        result = nginx('-s', 'reload')
+        if result.returncode != 0:
+            raise RuntimeError('reload after restore failed: ' + result.stderr[-300:])
+
+
+def apply_and_verify(originals, patched, domain):
+    for file, text in patched.items():
+        Path(file).resolve().write_text(text, encoding='utf8')
+    if originals:
+        check = nginx('-t')
+        if check.returncode != 0:
+            raise RuntimeError('nginx rejected the gate: ' + check.stderr[-300:])
+        reloaded = nginx('-s', 'reload')
+        if reloaded.returncode != 0:
+            raise RuntimeError('nginx reload failed: ' + reloaded.stderr[-300:])
+    time.sleep(1)
+    stats, health = probe(domain)
+    if (stats, health) != (503, 200):
+        raise RuntimeError(f'Gate test failed (stats {stats}, health {health})')
+
+
 def install(domain, backup_dir):
     result = nginx('-T')
     if result.returncode != 0:
@@ -126,38 +151,28 @@ def install(domain, backup_dir):
     dump = result.stdout + result.stderr
     if not Path(SNIPPET).is_file():
         raise RuntimeError('Controller is not installed: ' + SNIPPET)
+    patched, originals = {}, {}
     if MARKER in dump:
         print('Gate already installed.')
-        originals = {}
     else:
         patched = plan(dump, domain)
         backup_dir.mkdir(parents=True, exist_ok=True)
-        originals = {}
-        for index, (file, text) in enumerate(patched.items()):
+        for index, file in enumerate(patched):
             real = Path(file).resolve()
             originals[real] = real.read_bytes()
             shutil.copy2(real, backup_dir / f'{index}-{real.name}')
-            real.write_text(text, encoding='utf8')
         (backup_dir / 'files.json').write_text(json.dumps([str(f) for f in originals]))
-    def restore(reload):
-        for file, content in originals.items():
-            file.write_bytes(content)
-        if originals and reload:
-            nginx('-s', 'reload')
-    if originals:
-        check = nginx('-t')
-        if check.returncode != 0:
-            restore(False)
-            raise RuntimeError('nginx rejected the gate; original files restored: ' + check.stderr[-300:])
-        reloaded = nginx('-s', 'reload')
-        if reloaded.returncode != 0:
-            restore(True)
-            raise RuntimeError('nginx reload failed; original files restored')
-    time.sleep(1)
-    stats, health = probe(domain)
-    if (stats, health) != (503, 200):
-        restore(True)
-        raise RuntimeError(f'Gate test failed (stats {stats}, health {health}); original files restored')
+    try:
+        apply_and_verify(originals, patched, domain)
+    except BaseException as error:
+        # Includes timeouts, DNS and TLS errors from the probe, and Ctrl-C.
+        try:
+            restore(originals, reload=True)
+        except Exception as recovery:
+            raise RuntimeError(f'{error!r}; RECOVERY ALSO FAILED: {recovery!r}. Saved originals: {backup_dir}') from error
+        if originals:
+            raise RuntimeError(f'{error!r}; original files restored and nginx reloaded') from error
+        raise
     print('Gate test passed: stats 503, health 200. Changed:', [str(f) for f in originals] or 'nothing')
 
 
