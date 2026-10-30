@@ -97,6 +97,11 @@ jobs:
           bash scripts/ci-fixture-server.sh stop quality
           bash scripts/ci-fixture-server.sh start chinese api/test/chinese-browser-server.mjs
           python scripts/chinese-browser-acceptance.py --output work/chinese-browser
+      - name: Paper Diagnostic browser acceptance (rule engine, no AI, isolated)
+        run: |
+          bash scripts/ci-fixture-server.sh stop chinese
+          bash scripts/ci-fixture-server.sh start diagnostic api/test/diagnostic-browser-server.mjs
+          python scripts/diagnostic-browser-acceptance.py --output work/diagnostic-browser
       - name: Fixture server logs on failure
         if: failure()
         run: |
@@ -118,6 +123,8 @@ jobs:
             work/bilingual-browser
             work/chinese-server.log
             work/chinese-browser
+            work/diagnostic-server.log
+            work/diagnostic-browser
   required:
     if: always()
     needs: [api, mobile, build]

@@ -14,6 +14,7 @@ import http from 'node:http';
 import crypto from 'node:crypto';
 import {config,topics} from './config.mjs';
 import {labRoute,recoverDocumentJobs} from './lab.mjs';
+import {diagnosticRoute,startPurgeTimer} from './diagnostic/service.mjs';
 import {db,now} from './db.mjs';
 import {migrationSummary} from './migrations.mjs';
 import {safeArticleUrl} from './sources.mjs';
@@ -50,6 +51,7 @@ function page(res,ok,msg){html(res,ok?200:400,`<!doctype html><html lang="zh"><m
 async function handle(req,res){
  const u=parse(req.url),p=u.pathname,method=req.method||'GET';
  if(method==='OPTIONS'){res.writeHead(204);res.end();return;}
+ if(p.startsWith('/api/diagnostic/'))return diagnosticRoute(req,res,u);
  if(p.startsWith('/api/lab/'))return labRoute(req,res,u);
  if(p==='/api/health')return json(res,200,{status:'ok',time:now(),service:'fanscope-api',monitoring:db.prepare('SELECT COUNT(*) AS n FROM journals WHERE enabled=1').get().n,emailConfigured:mailReady(),aiConfigured:!!config.dsKey,...runtimeInfo()});
  if(p==='/api/chinese-diagnostics'&&method==='GET')return json(res,200,chineseDiagnostics());
@@ -203,6 +205,7 @@ if(process.argv[1]&&new URL(`file://${process.argv[1]}`).pathname===new URL(impo
  const server=makeServer();server.listen(config.port,'0.0.0.0',()=>log('notice','service.start',{entry:'server',port:config.port,...runtimeInfo()}));
  const failed=worker=>e=>log('error','worker.failed',{worker,...errorFields(e)});
  recoverDocumentJobs().catch(failed('document-recovery'));
+ startPurgeTimer();
  setInterval(()=>recoverDocumentJobs().catch(failed('document-recovery')),15000).unref();
  if(config.scanOnStart)setTimeout(()=>scanAll().catch(failed('scan')),4000).unref();
  setInterval(()=>scanAll().catch(failed('scan')),config.intervalMinutes*60000).unref();
