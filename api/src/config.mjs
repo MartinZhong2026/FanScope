@@ -12,7 +12,11 @@ export const config = {
   scanOnStart:env.SCAN_ON_START !== 'false', initialLookbackDays:Math.min(180,Math.max(1,Number(env.INITIAL_LOOKBACK_DAYS||30))),
   maxPages:Math.min(20,Math.max(1,Number(env.MAX_CROSSREF_PAGES||4))),
   maxAI:Math.min(5,Math.max(0,Number(env.MAX_AI_PER_SCAN||2))),
-  dsKey:env.DEEPSEEK_API_KEY||'', dsModel:env.DEEPSEEK_MODEL||'deepseek-flash',
+  dsKey:env.DEEPSEEK_API_KEY||'',
+  // Paper Diagnostic only. Production keeps DEEPSEEK_API_KEY empty so batch AI
+  // stays off; this key is never read by ai.mjs, brief.mjs or lab.mjs.
+  dxKey:env.FANSCOPE_DIAGNOSTIC_DEEPSEEK_API_KEY||env.DEEPSEEK_API_KEY||'',
+  dsModel:env.DEEPSEEK_MODEL||'deepseek-flash',
   resendKey:env.RESEND_API_KEY||'', emailFrom:env.EMAIL_FROM||'',
   tz:env.TIME_ZONE||'Asia/Shanghai', publicSubscriptions:env.ENABLE_PUBLIC_SUBSCRIPTIONS!=='false'
 };

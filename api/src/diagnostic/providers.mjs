@@ -47,7 +47,7 @@ class ProviderError extends Error{constructor(code,message,extra={}){super(messa
 // All model traffic goes through platform/llm.mjs (ledger, idempotency,
 // bounded attempts, concurrency cap, circuit breaker). Error codes are mapped
 // from llm_* to dx_provider_* for the diagnostic run record.
-export function deepseekProvider({apiKey=config.dsKey,model=config.dsModel,fetchImpl,timeoutMs=180000,ledger,refId,maxAttempts=2}={}){
+export function deepseekProvider({apiKey=config.dxKey,model=config.dsModel,fetchImpl,timeoutMs=180000,ledger,refId,maxAttempts=2}={}){
  if(!apiKey)throw new ProviderError('dx_provider_unconfigured','DeepSeek is not configured');
  if(!ledger||!refId)throw new ProviderError('dx_provider_unconfigured','Model calls require a ledger and a run id');
  const usage={input_tokens:0,output_tokens:0,cache_hit_tokens:0};

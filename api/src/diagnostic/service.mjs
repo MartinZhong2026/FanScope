@@ -39,6 +39,7 @@ export function engineName(){
  if(configured)return configured;
  return process.env.NODE_ENV==='production'?'none':'rules';
 }
+export const diagnosticStatus=()=>({enabled:enabled(),engine:engineName(),aiConfigured:enabled()&&engineName()==='deepseek'&&!!config.dxKey});
 const storageDir=()=>path.join(path.dirname(config.dbPath),'diagnostic-uploads');
 const error=(status,message,code)=>Object.assign(new Error(message),{status,code});
 
