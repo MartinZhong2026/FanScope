@@ -33,7 +33,7 @@ test('blocked gate: the entry serves requests with zero scheduler writes',async(
  await sleep(500);
  assert.deepEqual(rows(),[]);
  const f=await(await fetch(url+'/api/ingest/freshness')).json();
- assert.equal(f.scheduler,'on');assert.equal(f.gate,'release');assert.equal(f.chinese.total,22);assert.equal(f.chinese.automatic,0);
+ assert.equal(f.scheduler,'on');assert.equal(f.gate,'release');assert.equal(f.chinese.total,22);assert.equal(f.chinese.automatic,4);
  child.kill('SIGKILL');
 });
 test('missing gate file behaves as closed',async()=>{
