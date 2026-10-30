@@ -1,4 +1,4 @@
-import {chineseQualityPanel,chineseSourceStatus,chineseCollectionSummary} from './chinese-quality.mjs';
+import {chineseQualityPanel,chineseSourceStatus,chineseCollectionSummary,chineseRegistryPanel} from './chinese-quality.mjs';
 import {readChineseDiagnostics} from './chinese-diagnostics.mjs';
 import {translate as t,locale} from './i18n.mjs';
 import {chartColors,designName,methodName as methodText,sourceName as sourceText,unitName as unitText,distributionRows,barOption,distributionOption,temporalOption} from './trend-charts.mjs';
@@ -75,7 +75,7 @@ const workspaceModules=()=>`<div class="workspace-intro"><div class="overline">R
  ].map(([id,ic,name,desc,tone])=>id==='lab'?`<a class="module-card" href="/lab/" data-tone="${tone}"><span class="module-icon">${ic}</span><strong>${name}</strong><small>${desc}</small><span class="arrow">↗</span></a>`:`<button type="button" class="module-card" data-page="${id}" data-tone="${tone}"><span class="module-icon">${ic}</span><strong>${name}</strong><small>${desc}</small><span class="arrow">↗</span></button>`).join('')}
  </div>`;
 const mobileTabs=()=>mobileDock(S.page);
-const chineseOverview=()=>chineseCollectionSummary(S.data.chinese,S.data.journals?.items);
+const chineseOverview=()=>chineseCollectionSummary(S.data.chinese,S.data.journals?.items,S.data.freshness?.scheduler==='on'?S.data.freshness.chinese.automatic:null);
 const windowLabel=()=>periodOptions().find(([value])=>value===S.period)?.[1]||S.period;
 const home=()=>{
  if(isMobile())return mobileHome();
@@ -217,13 +217,14 @@ async function refreshPage({append=false}={}){if(S.status!=='ready')return;const
  if(S.page==='home'){const recent=await get('/api/articles?limit=3&view=publication&period=90d&precise_date=1'+(S.market==='all'?'':'&market='+encodeURIComponent(S.market)));if(version!==refreshVersion)return;S.data.recentPublications=recent;for(const a of recent.items||[])articleCache.set(a.id,a);}
  if(S.page==='health'){S.data.system=await get('/api/system-status');S.data.coverage=await get('/api/analysis-coverage').catch(()=>null);}
  if(['sources','health','trends','feed','journals','home'].includes(S.page))S.data.chinese=await readChineseDiagnostics(get);
+ if(['feed','journals'].includes(S.page)&&S.market==='chinese')S.data.freshness=await get('/api/ingest/freshness').catch(()=>null);
  if(S.page==='sources'){S.data.sources=await get('/api/journal-source-status').catch(()=>null);S.discoveries=(await get('/api/journal-discoveries').catch(()=>({items:[]}))).items||[];}
  if(S.page==='operations'){S.data.coverage=await get('/api/analysis-coverage').catch(()=>null);S.data.backfills=await get('/api/journal-backfill-status').catch(()=>({items:[]}));S.data.autoAI=await get('/api/ai-auto-status').catch(()=>null);}
  }catch(e){if(version!==refreshVersion)return;console.warn('API refresh failed',e.message);S.status='error';}
  if(version!==refreshVersion)return;S.loading=false;render();
 }
 const mainSection=()=>S.page==='me'?myWorkspace():S.page==='article'?articleDetail():S.page==='home'?home():S.page==='feed'?feed():S.page==='journals'?journalsPage():S.page==='trends'?trends():S.page==='alerts'?alerts():S.page==='health'?health():S.page==='sources'?sourcesPage():S.page==='operations'?opsPage():locked();
-const section=()=>mainSection()+(['feed','journals'].includes(S.page)&&S.market==='chinese'?chineseQualityPanel(S.data.chinese):'');
+const section=()=>mainSection()+(['feed','journals'].includes(S.page)&&S.market==='chinese'?chineseQualityPanel(S.data.chinese)+chineseRegistryPanel(S.data.freshness):'');
 const claimLinks=c=>(c.evidence_ids||[]).map(id=>{const a=S.data.research?.generatedBrief?.evidence?.find(a=>a.id===id);return a?`<a href="${esc(a.article_url||'#')}" target="_blank" rel="noopener noreferrer">DOI ${esc(a.doi||id)}</a>`:''}).join(' · ');
 function render(){
  const y=window.scrollY,focus=document.activeElement?.id,selection=document.activeElement?.selectionStart;

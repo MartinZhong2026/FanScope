@@ -31,7 +31,7 @@ test('issue and article links parse from both index layouts',()=>{
 });
 
 function transport(pages){const calls=[];return {calls,read:async url=>{calls.push(url);if(!(url in pages))throw Error('HTTP 404');return pages[url]}}}
-const site={[entry.base+'/CN/article/showOldVolumn.do']:'<a href="../volumn/volumn_1.shtml">',[entry.base+'/CN/volumn/volumn_1.shtml']:`<a href="${URL1}">`,[URL1]:page};
+const site={[entry.home]:'<html></html>',[entry.base+'/CN/article/showOldVolumn.do']:'<a href="../volumn/volumn_1.shtml">',[entry.base+'/CN/volumn/volumn_1.shtml']:`<a href="${URL1}">`,[URL1]:page};
 
 test('collect fills an existing metadata-only row without duplicating it, and repeats safely',async()=>{
  const ev=JSON.stringify({abstract_policy:'not retained: bibliographic metadata scope only'});
@@ -44,6 +44,14 @@ test('collect fills an existing metadata-only row without duplicating it, and re
  assert.equal(JSON.parse(r[0].source_evidence_json).abstract_policy,'publisher public page');
  const t2=transport(site);await cn.collectJournal(entry,{read:t2.read});
  assert.ok(!t2.calls.includes(URL1),'finished articles are not fetched again');
+});
+test('the current issue, listed only on the home page, is collected',async()=>{
+ const current='https://rkyj.ruc.edu.cn/CN/Y2026/V50/I6/1';
+ const fresh=page.replaceAll('再生育计划的双重驱动因素','当前期新论文');
+ const t=transport({...site,[entry.home]:`<a href="${current}">`,[current]:fresh});
+ const r=await cn.collectJournal(entry,{read:t.read});
+ assert.equal(r.added,1);
+ assert.equal(db.prepare('SELECT abstract_status s FROM articles WHERE url=?').get(current).s,'available');
 });
 test('a page without an abstract is recorded as a source gap; a failed fetch is not',async()=>{
  const u2='https://rkyj.ruc.edu.cn/CN/Y2025/V49/I1/3',u3='https://rkyj.ruc.edu.cn/CN/Y2025/V49/I1/9';
@@ -61,8 +69,13 @@ test('articles older than the window are skipped without a request',async()=>{
  const r=await cn.collectJournal(entry,{read:t.read});
  assert.equal(r.skippedOld,1);assert.ok(!t.calls.includes(old));
 });
+test('whole-issue PDF entries are not papers',async()=>{
+ const {chineseNonPaper}=await import('../src/chinese-ingestion.mjs');
+ assert.ok(chineseNonPaper({title:'《社会》2016年第1期整期全文'}));
+ assert.ok(!chineseNonPaper({title:'社会学研究的整期全文分析方法'}));
+});
 test('a changed index layout is a visible failure, not an empty success',async()=>{
- const t=transport({[entry.base+'/CN/article/showOldVolumn.do']:'<html></html>'});
+ const t=transport({[entry.home]:'<html></html>',[entry.base+'/CN/article/showOldVolumn.do']:'<html></html>'});
  await assert.rejects(cn.collectJournal(entry,{read:t.read}),e=>e.code==='ingest_layout_changed');
 });
 test('registry: the four priority journals are scheduled, the other 18 are not',()=>{

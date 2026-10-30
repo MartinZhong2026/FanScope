@@ -74,6 +74,16 @@ ensure_key(){
   fi
 }
 
+ensure_scheduler(){
+  say 'Background updates and source reachability'
+  grep -q '^FANSCOPE_SCHEDULER=' "$ENV_FILE" || printf 'FANSCOPE_SCHEDULER=true\n' >> "$ENV_FILE"
+  grep '^FANSCOPE_SCHEDULER=' "$ENV_FILE"
+  # Information only: a blocked source shows up in /api/ingest/freshness after release.
+  for url in https://rkyj.ruc.edu.cn/robots.txt https://www.society.shu.edu.cn/robots.txt https://shjs.ruc.edu.cn/robots.txt https://www.sciopen.com/robots.txt https://api.crossref.org/journals/2096-7713; do
+    printf '%s %s\n' "$(curl -s -o /dev/null -m 20 -w '%{http_code}' "$url" || true)" "$url"
+  done
+}
+
 verified_backup(){
   say 'Consistent backup and restore verification'
   mkdir -p "$BACKUPS"; chmod 700 "$BACKUPS"
@@ -95,15 +105,16 @@ build_bundle(){
     -t "fanscope-api:$SHA" -f "$SRC/api/Dockerfile" "$SRC/api" >/dev/null
   rm -rf "$BUNDLE"; mkdir -p "$BUNDLE"
   docker run --rm --network none --entrypoint node "fanscope-api:$SHA" --experimental-sqlite src/migrate-cli.mjs lint > "$WORK/lint.json"
-  DIAGNOSTIC=false
+  DIAGNOSTIC=false; SCHEDULER=false
+  if [ -n "${ALPHA_TEST:-}" ] || grep -q '^FANSCOPE_SCHEDULER=true' "$ENV_FILE"; then SCHEDULER=true; fi
   if [ -n "${ALPHA_TEST:-}" ] || grep -Eq "^$KEY_NAME=.+" "$ENV_FILE"; then DIAGNOSTIC=true; fi
-  python3 - "$SHA" "$(docker image inspect "fanscope-api:$SHA" --format '{{.Id}}')" "$DIAGNOSTIC" "$WORK/lint.json" "$BUNDLE/manifest.json" <<'PY'
+  python3 - "$SHA" "$(docker image inspect "fanscope-api:$SHA" --format '{{.Id}}')" "$DIAGNOSTIC" "$SCHEDULER" "$WORK/lint.json" "$BUNDLE/manifest.json" <<'PY'
 import json,sys
-sha,image,diagnostic,lint,out=sys.argv[1:]
+sha,image,diagnostic,scheduler,lint,out=sys.argv[1:]
 data=json.load(open(lint)); assert data['ok'],'migration lint failed'
 items=[{k:m[k] for k in ('id','checksum','declared')} for m in data['migrations']]
 json.dump({'commit':sha,'image':image,'migrationPolicy':'additive' if items else 'no-change','migrations':items,
-           'diagnosticAiEnabled':diagnostic=='true','schedulerEnabled':False},open(out,'w'))
+           'diagnosticAiEnabled':diagnostic=='true','schedulerEnabled':scheduler=='true'},open(out,'w'))
 PY
   docker save "fanscope-api:$SHA" -o "$BUNDLE/image.tar"
   (cd "$BUNDLE" && sha256sum image.tar manifest.json > SHA256SUMS)
@@ -202,6 +213,7 @@ if [ "$ACTION" = plan ]; then
   summary
 else
   ensure_key
+  ensure_scheduler
   install_controller
   ensure_gate
   ensure_token
