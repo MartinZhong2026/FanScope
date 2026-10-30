@@ -44,6 +44,10 @@ Ship reliable research-product changes with the smallest **necessary** GitHub Ac
 - Workflows that receive a secret must execute only reviewed `main` code: no `ref`/SHA inputs that pick other code, `if: github.ref == 'refs/heads/main'`, and store the secret as an environment secret whose deployment branches allow only `main` (an `if:` alone can be removed by a branch's copy of the workflow). A `workflow_dispatch` workflow must exist on the default branch before it can be run from the Actions UI.
 - When one dependent PR needs another (stacked), say so in both PR bodies and merge bottom-up; retarget the upper PR to `main` after the lower merges.
 
+- `pull_request` runs on opened/synchronize/reopened by default: changing a PR's base does NOT start CI. A real push is needed for a result on the exact SHA.
+- A branch with no PR starts no workflow here (`push` is limited to `main`), so unfinished stacked work can be backed up remotely at zero CI cost.
+- Without `gh`, status checks use the unauthenticated API (60 requests/hour per IP). Query by exact SHA, batch calls, and at 0 wait for `X-RateLimit-Reset`.
+
 ## Final report format
 - Scope: which behaviors were optimized, which tests/releases remain intact.
 - Evidence: before/after run counts, jobs, approximate runner-minutes or artifact retention when verifiable.

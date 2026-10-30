@@ -6,6 +6,16 @@ on:
         description: Full current main SHA (no tags or branch names)
         required: true
         type: string
+      diagnostic_ai:
+        description: Server has FANSCOPE_DIAGNOSTIC_DEEPSEEK_API_KEY configured and diagnostic AI is meant to be on
+        required: false
+        type: boolean
+        default: false
+      scheduler:
+        description: Server has FANSCOPE_SCHEDULER=true and the durable scheduler is meant to run
+        required: false
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -36,15 +46,24 @@ jobs:
       - name: Build immutable image and checksum release files
         env:
           RELEASE_SHA: ${{ inputs.commit }}
+          DIAGNOSTIC_AI: ${{ inputs.diagnostic_ai }}
+          SCHEDULER: ${{ inputs.scheduler }}
         run: |
           mkdir -p work/backend-release
           docker build --label "org.opencontainers.image.revision=$RELEASE_SHA" --build-arg "FANSCOPE_COMMIT=$RELEASE_SHA" -t "fanscope-api:$RELEASE_SHA" -f api/Dockerfile api
           IMAGE=$(docker image inspect "fanscope-api:$RELEASE_SHA" --format '{{.Id}}')
           docker save "fanscope-api:$RELEASE_SHA" -o work/backend-release/image.tar
+          # The exact migrations inside this image. lint exits non-zero on any rejected file.
+          docker run --rm --network none --entrypoint node "fanscope-api:$RELEASE_SHA" --experimental-sqlite src/migrate-cli.mjs lint > work/migrations.json
           python3 - "$RELEASE_SHA" "$IMAGE" <<'PY'
-          import json,sys
+          import json,os,sys
+          lint=json.load(open('work/migrations.json'))
+          assert lint['ok'], 'migration lint failed'
+          migrations=[{'id':m['id'],'checksum':m['checksum'],'declared':m['declared']} for m in lint['migrations']]
           with open('work/backend-release/manifest.json','w') as f:
-              json.dump({'commit':sys.argv[1],'image':sys.argv[2],'migrationPolicy':'no-change'},f)
+              json.dump({'commit':sys.argv[1],'image':sys.argv[2],'migrationPolicy':'additive' if migrations else 'no-change',
+                         'migrations':migrations,'diagnosticAiEnabled':os.environ['DIAGNOSTIC_AI']=='true',
+                         'schedulerEnabled':os.environ['SCHEDULER']=='true'},f)
           PY
           cd work/backend-release
           sha256sum image.tar manifest.json > SHA256SUMS
