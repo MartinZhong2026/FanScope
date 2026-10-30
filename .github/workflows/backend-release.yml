@@ -10,7 +10,7 @@ on:
         description: Server has FANSCOPE_DIAGNOSTIC_DEEPSEEK_API_KEY configured and diagnostic AI is meant to be on
         required: false
         type: boolean
-        default: false
+        default: true
       scheduler:
         description: Server has FANSCOPE_SCHEDULER=true and the durable scheduler is meant to run
         required: false

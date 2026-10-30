@@ -63,6 +63,15 @@ def extract_verified(data, artifact, destination, allowed):
 
 
 def main():
+    try:
+        pull()
+    finally:
+        # A failed download retries next minute; nothing here is needed afterwards.
+        for item in (STATE / 'incoming').iterdir():
+            shutil.rmtree(item) if item.is_dir() else item.unlink()
+
+
+def pull():
     config = json.loads(Path('/etc/fanscope-cd/config.json').read_text())
     if config.get('enabled') is not True:
         print('FanScope pull deployment disabled');return

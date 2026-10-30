@@ -198,6 +198,18 @@ class RollbackTests(unittest.TestCase):
         self.assertTrue((state / 'transaction.json').exists())
 
 
+class PullRetryTests(unittest.TestCase):
+    def test_failed_download_leaves_nothing_that_blocks_the_next_poll(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            state = Path(tmp)
+            (state / 'incoming/123/approval').mkdir(parents=True)
+            (state / 'incoming/download-1.zip').write_bytes(b'partial')
+            with patch.object(pull, 'STATE', state), patch.object(pull, 'pull', side_effect=OSError('network')):
+                with self.assertRaises(OSError):
+                    pull.main()
+            self.assertEqual(list((state / 'incoming').iterdir()), [])
+
+
 class PipelineTests(unittest.TestCase):
     setUp = DatabaseTests.setUp
     tearDown = DatabaseTests.tearDown

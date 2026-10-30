@@ -1,5 +1,7 @@
 # FanScope V1.6 首次启用：八步清单
 
+后端主机引导现在由 `sudo bash scripts/ops/alpha-release.sh bootstrap <main 完整 SHA>` 一次完成（控制器、nginx 门禁、只读 Token、配置与 timer），可替代下文第 4、7 步的手工主机操作。
+
 部署列表 HTTP 200 后仍报历史部署 pending 时，使用[生产状态分类与新版 inspect 验收标准](CICD_V1_6_PAGES_STATE_ZH.md)；历史 idle/active 不等于真实运行中，证据不足仍须阻断调查。
 
 首次发布遇到部署列表 HTTP 400 时，先按[修复后的只读检查与重新验收步骤](CICD_V1_6_PAGES_400_FIX_ZH.md)执行；旧版 inspect 未覆盖生产部署列表和当前版本校验，不能作为修复后的验收依据。
