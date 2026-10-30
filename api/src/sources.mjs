@@ -46,8 +46,9 @@ export async function fetchJson(url,timeout=22000){
  for(let attempt=0;attempt<3;attempt++){
    try {const response=await fetch(url,{headers:{'User-Agent':`FanScope/1.0 (mailto:${config.contactEmail||'unconfigured@example.com'})`,'Accept':'application/json'},signal:AbortSignal.timeout(timeout)});
     if((response.status===429||response.status>=500)&&attempt<2){const header=response.headers.get('Retry-After');const seconds=Number(header),retry=header?(Number.isFinite(seconds)?seconds*1000:Date.parse(header)-Date.now()):0;await new Promise(r=>setTimeout(r,Math.min(60000,Math.max(900*2**attempt,retry||0))));continue;}
-    if(!response.ok)throw new Error(`HTTP ${response.status}`);return await response.json();
-   }catch(e){if(attempt===2)throw e;await new Promise(r=>setTimeout(r,700*Math.pow(2,attempt)));}
+    // Message format is relied on by cursor-reset logic; diagnostics ride on extra fields.
+    if(!response.ok)throw Object.assign(new Error(`HTTP ${response.status}`),{status:response.status,upstream:{host:new URL(url).hostname,status:response.status,retry_after:response.headers.get('Retry-After')||undefined,request_id:response.headers.get('x-request-id')||response.headers.get('cf-ray')||undefined}});return await response.json();
+   }catch(e){if(attempt===2){try{if(!e.upstream)e.upstream={host:new URL(url).hostname};e.upstream.attempts=attempt+1;}catch{}throw e;}await new Promise(r=>setTimeout(r,700*Math.pow(2,attempt)));}
  }
 }
 // A bounded invocation yields a resumable state. Cursor is saved only after the

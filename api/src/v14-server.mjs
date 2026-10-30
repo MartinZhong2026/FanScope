@@ -1,6 +1,7 @@
 // V1.4: English metadata monitoring + explicitly enabled continuous English AI.
 // Never recover legacy batches, historical ingestion, document AI or email workers.
 import fs from 'node:fs';
+import {log,errorFields} from './platform/log.mjs';
 if(process.env.NODE_ENV!=='production'||process.env.FANSCOPE_V14_RUNTIME!=='true')throw Error('Explicit V1.4 production runtime required');
 const aiEnabled=process.env.FANSCOPE_AI_AUTO_ENABLED==='true';
 if(!aiEnabled)process.env.DEEPSEEK_API_KEY='';
@@ -15,11 +16,11 @@ const {createStagedRecoveryServer,runEnglishMonitor}=await import('./staged-reco
 const {scanAll}=await import('./monitor.mjs');const {automaticTick}=await import('./automatic-ai.mjs');
 const server=createStagedRecoveryServer(makeServer,{allowAutoControl:true});
 let stopping=false,monitor=null,ai=null;const timers=[];
-if(process.env.FANSCOPE_ENGLISH_MONITOR==='true')timers.push(setInterval(()=>{if(!stopping&&!monitor)monitor=runEnglishMonitor(db,scanAll).then(r=>console.log(JSON.stringify({kind:'english-monitor',journals:r.length,partial:r.filter(x=>x.result.status!=='ok').length}))).catch(e=>console.error('Monitor:',e.message)).finally(()=>{monitor=null;});},config.intervalMinutes*60000));
+if(process.env.FANSCOPE_ENGLISH_MONITOR==='true')timers.push(setInterval(()=>{if(!stopping&&!monitor)monitor=runEnglishMonitor(db,scanAll).then(r=>log('info','ingest.monitor_cycle',{market:'international',journals:r.length,partial:r.filter(x=>x.result.status!=='ok').length})).catch(e=>log('error','ingest.monitor_cycle_failed',errorFields(e))).finally(()=>{monitor=null;});},config.intervalMinutes*60000));
 if(aiEnabled){
  const seconds=Number(process.env.AI_AUTO_INTERVAL_SECONDS||15);if(!Number.isFinite(seconds)||seconds<5||seconds>3600)throw Error('AI interval must be 5–3600 seconds');
- timers.push(setInterval(()=>{if(!stopping&&!ai)ai=automaticTick().catch(e=>console.error('Automatic AI:',e.message)).finally(()=>{ai=null;});},seconds*1000));
+ timers.push(setInterval(()=>{if(!stopping&&!ai)ai=automaticTick().catch(e=>log('error','ai.auto_tick_failed',errorFields(e))).finally(()=>{ai=null;});},seconds*1000));
 }
 for(const timer of timers)timer.unref();
-server.listen(config.port,'0.0.0.0',()=>console.log(JSON.stringify({version:'1.4',aiEnabled,mail:false,legacyWorkers:false,englishMonitor:process.env.FANSCOPE_ENGLISH_MONITOR==='true'})));
-for(const signal of ['SIGINT','SIGTERM'])process.once(signal,()=>{stopping=true;for(const timer of timers)clearInterval(timer);server.close(async()=>{await Promise.allSettled([ai,monitor].filter(Boolean));db.close();process.exit(0);});});
+server.listen(config.port,'0.0.0.0',()=>log('notice','service.start',{entry:'v14',version:'1.4',aiEnabled,mail:false,legacyWorkers:false,englishMonitor:process.env.FANSCOPE_ENGLISH_MONITOR==='true',intervalMinutes:config.intervalMinutes,node:process.versions.node}));
+for(const signal of ['SIGINT','SIGTERM'])process.once(signal,()=>{log('notice','service.stopping',{signal,inFlight:{ai:!!ai,monitor:!!monitor}});stopping=true;for(const timer of timers)clearInterval(timer);server.close(async()=>{await Promise.allSettled([ai,monitor].filter(Boolean));db.close();process.exit(0);});});
