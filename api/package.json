@@ -13,7 +13,8 @@
     "import": "node --experimental-sqlite src/cli.mjs import",
     "test": "node --experimental-sqlite --test test/*.test.mjs",
     "lab:user": "node --experimental-sqlite src/lab-cli.mjs",
-    "analysis:cli": "node --experimental-sqlite src/analysis-cli.mjs"
+    "analysis:cli": "node --experimental-sqlite src/analysis-cli.mjs",
+    "migrate": "node --experimental-sqlite src/migrate-cli.mjs"
   },
   "dependencies": {
     "exceljs": "4.4.0",

@@ -15,13 +15,14 @@ import crypto from 'node:crypto';
 import {config,topics} from './config.mjs';
 import {labRoute,recoverDocumentJobs} from './lab.mjs';
 import {db,now} from './db.mjs';
+import {migrationSummary} from './migrations.mjs';
 import {safeArticleUrl} from './sources.mjs';
 import {scanAll,checkScheduled,scanningNow} from './monitor.mjs';
 import {sendVerification,mailReady,hash,token,esc,scheduledDigest} from './mail.mjs';
 import {log,errorFields,requestIdFrom,routeTemplate,withRequestContext,processStartedAt} from './platform/log.mjs';
 const sqliteVersion=db.prepare('SELECT sqlite_version() AS v').get().v;
 // Read-only version facts for operators and agents; never exposes configuration values.
-function runtimeInfo(){const latest=db.prepare('SELECT version,applied_at FROM schema_migrations ORDER BY applied_at DESC,rowid DESC LIMIT 1').get();return {commit:process.env.FANSCOPE_COMMIT||'unknown',startedAt:processStartedAt,node:process.versions.node,sqlite:sqliteVersion,schema:{latest:latest?.version||null,count:db.prepare('SELECT COUNT(*) AS n FROM schema_migrations').get().n}};}
+function runtimeInfo(){const latest=db.prepare('SELECT version,applied_at FROM schema_migrations ORDER BY applied_at DESC,rowid DESC LIMIT 1').get();return {commit:process.env.FANSCOPE_COMMIT||'unknown',startedAt:processStartedAt,node:process.versions.node,sqlite:sqliteVersion,schema:{latest:latest?.version||null,count:db.prepare('SELECT COUNT(*) AS n FROM schema_migrations').get().n},migrations:migrationSummary(db)};}
 const rates=new Map();
 function rateLimit(key,limit=10,windowMs=3600000){const ts=Date.now(),r=rates.get(key)||{start:ts,count:0};if(ts-r.start>windowMs){r.start=ts;r.count=0;}r.count++;rates.set(key,r);return r.count<=limit;}
 const json=(res,code,obj)=>{res.writeHead(code,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(obj));};

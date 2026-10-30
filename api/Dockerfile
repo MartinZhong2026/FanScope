@@ -10,6 +10,7 @@ RUN --mount=type=secret,id=proxy_ca \
     npm ci --omit=dev --ignore-scripts
 COPY config ./config
 COPY src ./src
+COPY migrations ./migrations
 # Release commit for /api/health and logs; set by CI and backend-release builds.
 ARG FANSCOPE_COMMIT=unknown
 ENV FANSCOPE_COMMIT=$FANSCOPE_COMMIT
