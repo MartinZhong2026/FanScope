@@ -41,6 +41,7 @@ Ship reliable research-product changes with the smallest **necessary** GitHub Ac
 ## Lessons recorded from real runs
 - 2026-10-30: three `Stale/closed PR` failures (runs 40989863391, 40990777560, 40993138789) came from stacked PR #9 while its CI was green — an expected situation reported as a failure. Fixed by the gating above, verified against the real `pull_requests[0].base.ref` of those runs.
 - A `required` failure next to `mobile: cancelled` usually means concurrency cancelled a superseded run; confirm with the newer SHA's run before diagnosing.
+- Workflows that receive a secret must execute only reviewed `main` code: no `ref`/SHA inputs that pick other code, `if: github.ref == 'refs/heads/main'`, and store the secret as an environment secret whose deployment branches allow only `main` (an `if:` alone can be removed by a branch's copy of the workflow). A `workflow_dispatch` workflow must exist on the default branch before it can be run from the Actions UI.
 - When one dependent PR needs another (stacked), say so in both PR bodies and merge bottom-up; retarget the upper PR to `main` after the lower merges.
 
 ## Final report format

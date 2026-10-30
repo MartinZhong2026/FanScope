@@ -1,15 +1,16 @@
 name: Paper Diagnostic quality eval (paid, manual)
-# One bounded, owner-approved DeepSeek run on the SYNTHETIC manuscripts in
-# api/test/fixtures/dx-eval. No database, no production system, no retries.
-# Requires repository secret DX_EVAL_DEEPSEEK_API_KEY and the exact phrase below.
+# One bounded, owner-approved DeepSeek run on the three SYNTHETIC manuscripts
+# in api/test/fixtures/dx-eval: 2 requests each, 6 in total, no retries, no
+# database, no production system.
+#
+# Trusted code only: the job runs solely when dispatched from main and checks
+# out exactly that main commit; there is no input to choose another ref.
+# The key is an ENVIRONMENT secret of `dx-eval`, whose deployment branch rule
+# must allow only `main` — so even a modified copy of this file on another
+# branch cannot obtain it.
 on:
   workflow_dispatch:
     inputs:
-      ref:
-        description: Branch or full SHA that contains scripts/dx-quality-eval.mjs
-        required: true
-        default: main
-        type: string
       confirm:
         description: 'Type exactly: I approve one paid DeepSeek run on synthetic manuscripts'
         required: true
@@ -25,22 +26,27 @@ concurrency:
   cancel-in-progress: false
 jobs:
   eval:
-    if: inputs.confirm == 'I approve one paid DeepSeek run on synthetic manuscripts'
+    if: github.ref == 'refs/heads/main' && inputs.confirm == 'I approve one paid DeepSeek run on synthetic manuscripts'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
+    environment: dx-eval
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          ref: ${{ inputs.ref }}
+          ref: ${{ github.sha }}
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '22'
-      - name: Require the dedicated evaluation key
+      - name: Require merged evaluation code and the dedicated key
         env:
           KEY: ${{ secrets.DX_EVAL_DEEPSEEK_API_KEY }}
-        run: test -n "$KEY" || { echo '::error::Add repository secret DX_EVAL_DEEPSEEK_API_KEY first'; exit 1; }
-      - name: Evaluate diagnosis quality on synthetic manuscripts (single run)
+        run: |
+          test -f scripts/dx-quality-eval.mjs || { echo '::error::Evaluation code is not on main yet (merge the Paper Diagnostic PR first)'; exit 1; }
+          # 2 requests per manuscript, no retries: exactly 3 fixtures keeps the run at 6 paid requests.
+          test "$(ls api/test/fixtures/dx-eval/*.md | wc -l)" -eq 3 || { echo '::error::Expected exactly 3 synthetic manuscripts (6 requests)'; exit 1; }
+          test -n "$KEY" || { echo '::error::Add DX_EVAL_DEEPSEEK_API_KEY as a secret of environment dx-eval (deployment branches: main only)'; exit 1; }
+      - name: Evaluate diagnosis quality on synthetic manuscripts (single run, 6 requests)
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DX_EVAL_DEEPSEEK_API_KEY }}
           MODEL: ${{ inputs.model }}
