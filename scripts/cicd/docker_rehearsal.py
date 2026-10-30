@@ -121,6 +121,9 @@ def main(image):
                 snapshot = backup(database, copy)
                 sample = copy / 'migrations'
                 sample.mkdir()
+                # The ledger already holds the image's own migrations.
+                for file in (root / 'api/migrations').glob('*.sql'):
+                    (sample / file.name).write_bytes(file.read_bytes())
                 (sample / '20991231T000000Z_ci_sample.sql').write_text(
                     'CREATE TABLE ci_sample(id INTEGER PRIMARY KEY, label TEXT NOT NULL);\n'
                     'CREATE INDEX idx_ci_sample_label ON ci_sample(label);\n'

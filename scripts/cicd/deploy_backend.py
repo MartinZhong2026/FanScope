@@ -198,7 +198,7 @@ def rehearsal(image, directory, baseline):
     # All startup DB/lab initialization runs against the restored copy, no keys/network.
     run('docker', 'run', '--rm', '--network', 'none', '--memory', '420m', '--cpus', '1', '--user', '0:0',
         '--mount', f'type=bind,source={directory},target=/app/data',
-        '-e', 'DATABASE_PATH=/app/data/restore.sqlite', '-e', 'DEEPSEEK_API_KEY=', '-e', 'RESEND_API_KEY=',
+        '-e', 'DATABASE_PATH=/app/data/restore.sqlite', '-e', 'DEEPSEEK_API_KEY=', '-e', 'RESEND_API_KEY=', '-e', 'FANSCOPE_LOG_DIR=/tmp/logs',
         '--entrypoint', 'node', image, '--experimental-sqlite', '--input-type=module', '-e',
         "globalThis.fetch=()=>{throw Error('Network forbidden in migration rehearsal')};"
         "await import('./src/server.mjs');const{db}=await import('./src/db.mjs');db.close();")
@@ -209,7 +209,7 @@ def rehearsal(image, directory, baseline):
 def node_on_copy(image, directory, *args):
     return run('docker', 'run', '--rm', '--network', 'none', '--memory', '420m', '--cpus', '1', '--user', '0:0',
         '--mount', f'type=bind,source={directory},target=/app/data',
-        '-e', 'DATABASE_PATH=/app/data/restore.sqlite', '-e', 'DEEPSEEK_API_KEY=', '-e', 'RESEND_API_KEY=',
+        '-e', 'DATABASE_PATH=/app/data/restore.sqlite', '-e', 'DEEPSEEK_API_KEY=', '-e', 'RESEND_API_KEY=', '-e', 'FANSCOPE_LOG_DIR=/tmp/logs',
         '--entrypoint', 'node', image, '--experimental-sqlite', *args)
 
 

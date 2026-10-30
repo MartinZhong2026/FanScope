@@ -357,6 +357,18 @@ class AdditiveTests(unittest.TestCase):
         before, after, _ = self.migrated(self.good + "UPDATE articles SET note='new column may change';")
         sql.additive_check(before, after, self.declared)
 
+    def test_second_migration_release_may_only_append_to_the_ledger(self):
+        self.db.executescript("""CREATE TABLE fanscope_migrations(id TEXT PRIMARY KEY,checksum TEXT);
+            INSERT INTO fanscope_migrations VALUES('1_first','a');""")
+        before, after, _ = self.migrated("CREATE TABLE dx_new(id TEXT PRIMARY KEY); INSERT INTO fanscope_migrations VALUES('2_second','b');")
+        sql.additive_check(before, after, self.declared)
+        db = sqlite3.connect(after)
+        db.execute("UPDATE fanscope_migrations SET checksum='forged' WHERE id='1_first'")
+        db.commit()
+        db.close()
+        with self.assertRaisesRegex(RuntimeError, 'existing rows: fanscope_migrations'):
+            sql.additive_check(before, after, self.declared)
+
     def test_every_violation_is_rejected(self):
         cases = {
             "UPDATE lab_projects SET title='x';": 'existing rows',

@@ -28,6 +28,11 @@ description: Use for FanScope backend releases, database migrations, backups/res
 3. Health baseline captured (`/api/health`, `/api/stats` counts) for comparison.
 4. Paid workers off (`FANSCOPE_AI_AUTO_ENABLED=false`) unless separately approved.
 
+## Release ordering
+- `backend-release.yml` only ships the exact current `main`. Once a PR with migrations merges, the old controller cannot release anything, so a no-change release must happen before that merge.
+- Keep paid features behind their own key (`FANSCOPE_DIAGNOSTIC_DEEPSEEK_API_KEY`) so `DEEPSEEK_API_KEY` stays empty and batch AI stays off.
+- Rehearse upgrades with two real images: seed with the old image, migrate, then start both candidate and old image. Windows-only or Mock runs miss root-owned files and ledger state.
+
 ## Verify, don't assume
 - Pages: `https://fanscope.pages.dev/release.json` commit == main SHA; `/`, `/lab/`, `/config.js`, `/app.js` return 200; API health ok.
 - Backend: controller `result.json` status `success`, health `commit` == released SHA, `migrations` field matches the expected ledger.

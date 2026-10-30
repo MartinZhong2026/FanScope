@@ -94,6 +94,12 @@ def additive_check(before, after, declared):
                 if f'{name}.{extra[0]}'.lower() not in columns:
                     raise RuntimeError(f'Undeclared new column: {name}.{extra[0]}')
             names = [c[0] for c in original]
+            if name == LEDGER:
+                # Each applied migration appends one row; history must stay as it was.
+                selected = 'SELECT ' + ','.join(quote(c) for c in names) + ' FROM ' + quote(name)
+                if not set(old.execute(selected).fetchall()) <= set(new.execute(selected).fetchall()):
+                    raise RuntimeError('Migration changed existing rows: ' + name)
+                continue
             if table_digest(old, name, names) != table_digest(new, name, names):
                 raise RuntimeError(f'Migration changed existing rows: {name}')
         if ('table', 'sqlite_sequence') in was:
