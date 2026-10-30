@@ -85,6 +85,21 @@ test('fresh database with no migration files: startup, lint, status and apply ma
  assert.equal(r.code,2);assert.equal(r.json.error.code,'DATABASE_MISSING');assert.ok(!fs.existsSync(missing));
 });
 
+test('a database file created by the starting process gets the full schema; an existing database is never migrated by startup',()=>{
+ const dir=write(tmp('fresh-m'),{[`${SAMPLE_ID}.sql`]:SAMPLE.replace(/INSERT INTO paper_notes_sample[^\n]*\n/,'')});
+ const file=path.join(tmp('fresh-init'),'fanscope.sqlite');
+ bootOk(file,{dir});
+ const db=new DatabaseSync(file);
+ try{assert.deepEqual(db.prepare(`SELECT id FROM ${LEDGER}`).all().map(x=>x.id),[SAMPLE_ID]);assert.ok(db.prepare("SELECT 1 FROM pragma_table_info('articles') WHERE name='sample_flag'").get())}finally{db.close()}
+ const after=fingerprint(file);
+ bootOk(file,{dir});
+ assert.equal(fingerprint(file),after,'second start on the now-existing database is read-only');
+ // Same files against a pre-existing database: refused, untouched.
+ const existing=copy(legacyBooted,'existing'),before=fingerprint(existing);
+ const refused=boot(existing,{dir});assert.notEqual(refused.status,0);assert.match(refused.stderr,/MIGRATIONS_PENDING/);
+ assert.equal(fingerprint(existing),before);
+});
+
 test('legacy v1.2 database: first start runs the pre-existing legacy bootstrap; K3 adds no write of its own',()=>{
  // Pre-existing behaviour (not introduced by K3): the legacy bootstrap upgrades
  // a v1.2 database on first start. Recorded here so it is not mistaken for K3.

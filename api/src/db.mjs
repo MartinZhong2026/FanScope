@@ -4,7 +4,7 @@ import path from 'node:path';
 import {DatabaseSync} from 'node:sqlite';
 import {config,journals} from './config.mjs';
 import {normalizedAnalysisText,relevanceScore,classifyArticleType} from './publication-policy.mjs';
-import {verifyMigrationsAtStartup} from './migrations.mjs';
+import {verifyMigrationsAtStartup,initializeFreshDatabase} from './migrations.mjs';
 import {log} from './platform/log.mjs';
 fs.mkdirSync(path.dirname(config.dbPath),{recursive:true});
 const existed=fs.existsSync(config.dbPath)&&fs.statSync(config.dbPath).size>0;
@@ -149,9 +149,11 @@ for(const j of journals){
 for(const j of journals)if(j.rss_url)db.prepare("UPDATE journals SET rss_url=? WHERE id=? AND rss_url='' AND NOT EXISTS(SELECT 1 FROM schema_migrations WHERE version='rss-url')").run(j.rss_url,j.id);
 db.exec("INSERT OR IGNORE INTO schema_migrations VALUES('rss-url',datetime('now'))");
 db.exec('CREATE INDEX IF NOT EXISTS idx_articles_doi_v14 ON articles(doi); CREATE INDEX IF NOT EXISTS idx_articles_url_v14 ON articles(url)');
-// K3: versioned migrations (api/migrations) are applied only by migrate-cli.mjs.
-// Startup is read-only here: it refuses pending or edited migrations.
-verifyMigrationsAtStartup(db,{warn:fields=>log('warn','migrations.database_ahead',fields)});
+// K3: an existing database is never migrated by startup; this check is read-only
+// and refuses pending or edited migrations (apply them with migrate-cli.mjs).
+// A database file this process just created has no data and gets the full schema.
+if(existed)verifyMigrationsAtStartup(db,{warn:fields=>log('warn','migrations.database_ahead',fields)});
+else initializeFreshDatabase(db);// recorded in the ledger; never a production path
 }
 export const now=()=>new Date().toISOString();
 export const sql={

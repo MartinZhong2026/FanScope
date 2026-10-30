@@ -1,9 +1,10 @@
 // K3: versioned, additive-only SQLite migrations.
 //
 // Three separate paths, never mixed:
-//  - verifyMigrationsAtStartup(): read-only. Normal app startup never applies
-//    migrations; it refuses to start when reviewed migrations are pending or an
-//    applied file was edited, so an unapproved schema change cannot slip in.
+//  - verifyMigrationsAtStartup(): read-only. Starting on an existing database
+//    never applies migrations; it refuses to start when reviewed migrations are
+//    pending or an applied file was edited. Only a database file created by the
+//    starting process itself (no data) is initialized via initializeFreshDatabase().
 //  - planMigrations()/lint: read-only preflight for operators and the release
 //    controller (K2). applyMigrations({dryRun:true}) executes and rolls back.
 //  - applyMigrations(): explicit, one IMMEDIATE transaction per migration,
@@ -244,6 +245,15 @@ export function planMigrations(db,{migrations=loadMigrations()}={}){
  const outOfOrder=lastApplied?pending.filter(p=>p.id<lastApplied).map(p=>p.id):[];
  const status=mismatched.length?'checksum-mismatch':pending.length?'pending':unknownApplied.length?'ahead':'up-to-date';
  return {status,ledger:!!rows,applied:(rows||[]).map(r=>({id:r.id,checksum:r.checksum,appliedAt:r.applied_at,appCommit:r.app_commit})),pending,mismatched,unknownApplied,outOfOrder};
+}
+
+// A database file created by this very process holds no data yet, so it is
+// brought to the full current schema (as the legacy bootstrap always did).
+// Existing databases are never migrated by startup; db.mjs decides freshness.
+export function initializeFreshDatabase(db,{dir=migrationsDir(),appCommit=process.env.FANSCOPE_COMMIT||''}={}){
+ const migrations=loadMigrations(dir),plan=planMigrations(db,{migrations});
+ if(plan.ledger)fail('MIGRATION_LEDGER_INVALID','A database treated as new already has a migration ledger');
+ return applyMigrations(db,{migrations,expect:plan.pending,appCommit});
 }
 
 // Read-only facts for /api/health and release verification.

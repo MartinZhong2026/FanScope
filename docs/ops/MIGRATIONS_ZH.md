@@ -7,11 +7,13 @@
 
 | 路径 | 入口 | 是否写库 |
 | --- | --- | --- |
-| 应用正常启动 | `db.mjs` 末尾 `verifyMigrationsAtStartup()` | **只读**。有待执行迁移 → `MIGRATIONS_PENDING` 拒绝启动；已应用文件被修改 → `MIGRATION_CHECKSUM_MISMATCH` 拒绝启动；数据库含本版本不认识的已应用迁移（代码回滚）→ 记录 `migrations.database_ahead` 警告后继续 |
+| 应用在已有数据库上启动 | `db.mjs` 末尾 `verifyMigrationsAtStartup()` | **只读**。有待执行迁移 → `MIGRATIONS_PENDING` 拒绝启动；已应用文件被修改 → `MIGRATION_CHECKSUM_MISMATCH` 拒绝启动；数据库含本版本不认识的已应用迁移（代码回滚）→ 记录 `migrations.database_ahead` 警告后继续 |
 | 预检 | `migrate-cli.mjs lint` / `status` / `apply --dry-run` | `lint` 不开库；`status` 只读打开；`--dry-run` 在事务内完整执行与校验后 ROLLBACK |
 | 实际迁移 | `migrate-cli.mjs apply --expect …` | 是。仅执行与 `--expect` 完全一致的已审核清单 |
 
-启动**从不**执行迁移。这样现有发布控制器（`deploy_backend.py`，`migrationPolicy:'no-change'` + 冻结副本启动指纹比对）保持原样有效：
+| 进程自己新建的空数据库 | `initializeFreshDatabase()` | 是。启动前文件不存在或为 0 字节、尚无任何数据时，直接建到完整的当前 schema（与 K3 之前“新库一次建全”的行为一致），记入账本。测试、CI 夹具、Docker 演练和首次开发启动依赖这一点；生产控制器只在已有数据库上发布，且拒绝重建缺失的生产库 |
+
+对**已有数据库**，启动**从不**执行迁移。这样现有发布控制器（`deploy_backend.py`，`migrationPolicy:'no-change'` + 冻结副本启动指纹比对）保持原样有效：
 - 迁移目录为空时，K3 启动零写入，现有控制器照常发布（CI Docker 演练已验证）。
 - 镜像一旦包含待执行迁移，候选启动在冻结副本上直接失败，现有控制器回滚，冻结副本指纹不变（本地已用真实 `rehearsal()` 验证）。不存在“新镜像启动时悄悄改结构”的路径。
 
@@ -56,6 +58,8 @@
 - 这些既有行为在 v1.2 旧库**首次**启动时会改变 schema/数据（测试中明确记录为既有行为，非 K3 引入）；对已升级的库重启为零写入。
 - K3 使用独立账本 `fanscope_migrations`，不向 legacy `schema_migrations` 加列（该表被位置式 INSERT 写入，加列会破坏旧代码）。
 - `apply` 要求 legacy 基线（`1.2 … rss-url`）全部存在，否则 `LEGACY_BASELINE_MISSING`。迁移只应作用于**完整启动过一次**的数据库：若库从未完整启动，其他模块的 import 时建表尚未执行。
+- 加入首个真实迁移后，以旧库夹具升级的测试（如 `migration-v12/v13`）需要在首次启动后显式 `migrate apply`，与生产流程一致；首次启动会在 `db.mjs` 处因 `MIGRATIONS_PENDING` 停止，其他模块的 import 建表要在 apply 后再次启动时完成。
+- `/api/health` 增加只读字段 `migrations: {runner, applied, latest}`；“数据库领先”警告经 K1 结构化日志输出（`migrations.database_ahead`）。
 - 离线中文导入模式（`FANSCOPE_OFFLINE_CHINESE_IMPORT`）沿用原逻辑跳过整个启动初始化，也跳过 K3 校验。
 
 ## 6. 命令

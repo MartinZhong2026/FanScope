@@ -155,7 +155,8 @@ test('health reports runtime versions, is not access-logged when healthy, and re
  for(const p of ['/api/topics','/api/journals','/api/stats?period=all','/api/research?period=90d'])assert.equal((await fetch(base+p)).status,200,p);
  assert.equal(h.status,'ok');assert.equal(h.commit,process.env.FANSCOPE_COMMIT);assert.equal(h.node,process.versions.node);
  assert.match(h.sqlite,/^\d+\.\d+\.\d+$/);assert.ok(h.schema.count>0&&typeof h.schema.latest==='string');assert.ok(h.startedAt);
- assert.deepEqual(h.migrations,{runner:1,applied:0,latest:null},'no versioned migrations shipped yet');
+ const ledger=db.prepare("SELECT 1 FROM sqlite_master WHERE name='fanscope_migrations'").get()?db.prepare('SELECT id FROM fanscope_migrations ORDER BY id').all().map(r=>r.id):[];
+ assert.deepEqual(h.migrations,{runner:1,applied:ledger.length,latest:ledger.at(-1)??null});
  assert.equal(h.aiConfigured,false);assert.equal(h.emailConfigured,false);
  await new Promise(r=>setImmediate(r));
  assert.ok(!lines.some(l=>l.route==='/api/health'));
