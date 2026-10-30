@@ -52,15 +52,25 @@ test('preview gallery accepts only PNG evidence and escapes untrusted labels',()
  }finally{fs.rmSync(dir,{recursive:true,force:true});}
 });
 
-test('Pages source gate separates main/PR and rejects stale, cancelled and merge-queue runs',()=>{
- const sha='a'.repeat(40),base={path:'.github/workflows/test.yml',conclusion:'success',repository:{full_name:'MartinZhong2026/FanScope'},head_sha:sha};
+test('Pages source gate: deploys main and frontend PRs to main, skips harmless cases, fails untrusted sources',()=>{
+ const sha='a'.repeat(40),other='b'.repeat(40),base={path:'.github/workflows/test.yml',conclusion:'success',repository:{full_name:'MartinZhong2026/FanScope'},head_sha:sha};
+ const web=['web/lab/app.js'],api=['api/src/db.mjs','docs/x.md'];
  assert.equal(sourceForRun({...base,event:'push',head_branch:'main'},sha).mode,'production');
  const pr={number:3,state:'open',head:{sha},base:{ref:'main'}};
- assert.equal(sourceForRun({...base,event:'pull_request'},'b'.repeat(40),pr).mode,'preview');
+ assert.deepEqual(sourceForRun({...base,event:'pull_request'},other,pr,web),{mode:'preview',project:'fanscope-preview',sha,artifact:'pages-preview',pr:'3'});
+ assert.equal(sourceForRun({...base,event:'pull_request'},other,pr,null).mode,'preview','unknown/oversized file list counts as a site change');
+ assert.equal(sourceForRun({...base,event:'pull_request'},other,pr,['scripts/cicd/build-pages.mjs']).mode,'preview');
+ // Expected, harmless situations end green without deploying.
+ const skipped=(run,p,files)=>{const v=sourceForRun(run,sha,p,files);assert.equal(v.mode,'skip');assert.equal(v.sha,'');return v.reason};
+ assert.equal(skipped({...base,event:'pull_request'},{...pr,base:{ref:'feat/versioned-additive-migrations'}},web),'stacked-pr-base-feat/versioned-additive-migrations');
+ assert.equal(skipped({...base,event:'pull_request'},{...pr,state:'closed'},web),'pr-closed');
+ assert.equal(skipped({...base,event:'pull_request'},{...pr,head:{sha:other}},web),'pr-superseded');
+ assert.equal(skipped({...base,event:'pull_request'},pr,api),'no-frontend-change');
+ assert.equal(skipped({...base,event:'push',head_branch:'main',head_sha:other}),'superseded-main');
+ // Untrusted or unsupported sources are still real failures.
  for(const run of [{...base,event:'merge_group'},{...base,event:'push',head_branch:'feature'},{...base,event:'push',head_branch:'main',conclusion:'cancelled'},
-  {...base,event:'push',head_branch:'main',head_sha:'b'.repeat(40)}])assert.throws(()=>sourceForRun(run,sha));
- assert.throws(()=>sourceForRun({...base,event:'pull_request'},sha,{...pr,state:'closed'}));
- assert.throws(()=>sourceForRun({...base,event:'pull_request'},sha,{...pr,head:{sha:'b'.repeat(40)}}));
+  {...base,event:'push',head_branch:'main',path:'.github/workflows/other.yml'},{...base,event:'push',head_branch:'main',repository:{full_name:'fork/FanScope'}}])assert.throws(()=>sourceForRun(run,sha));
+ assert.throws(()=>sourceForRun({...base,event:'pull_request'},sha,undefined,web),/Associated PR required/);
 });
 test('preview aliases use the actual Cloudflare subdomain, including collision suffixes',()=>{
  assert.equal(previewAddress('fanscope-preview.pages.dev','pr-3'),'https://pr-3.fanscope-preview.pages.dev');
