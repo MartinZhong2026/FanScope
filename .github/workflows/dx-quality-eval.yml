@@ -1,0 +1,56 @@
+name: Paper Diagnostic quality eval (paid, manual)
+# One bounded, owner-approved DeepSeek run on the SYNTHETIC manuscripts in
+# api/test/fixtures/dx-eval. No database, no production system, no retries.
+# Requires repository secret DX_EVAL_DEEPSEEK_API_KEY and the exact phrase below.
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch or full SHA that contains scripts/dx-quality-eval.mjs
+        required: true
+        default: main
+        type: string
+      confirm:
+        description: 'Type exactly: I approve one paid DeepSeek run on synthetic manuscripts'
+        required: true
+        type: string
+      model:
+        description: Optional DeepSeek model override (empty = application default)
+        required: false
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: dx-quality-eval
+  cancel-in-progress: false
+jobs:
+  eval:
+    if: inputs.confirm == 'I approve one paid DeepSeek run on synthetic manuscripts'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ inputs.ref }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Require the dedicated evaluation key
+        env:
+          KEY: ${{ secrets.DX_EVAL_DEEPSEEK_API_KEY }}
+        run: test -n "$KEY" || { echo '::error::Add repository secret DX_EVAL_DEEPSEEK_API_KEY first'; exit 1; }
+      - name: Evaluate diagnosis quality on synthetic manuscripts (single run)
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DX_EVAL_DEEPSEEK_API_KEY }}
+          MODEL: ${{ inputs.model }}
+        run: |
+          node --experimental-sqlite scripts/dx-quality-eval.mjs --engine deepseek --confirm-paid ${MODEL:+--model "$MODEL"}
+          cat work/dx-eval/*/scorecard.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: dx-quality-eval
+          path: work/dx-eval
+          retention-days: 14
+          if-no-files-found: warn

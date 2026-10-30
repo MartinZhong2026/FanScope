@@ -68,3 +68,20 @@
 - 多代理并行时，同一时刻只允许一个代理修改热点文件（`db.mjs`/`api/migrations/`、`server.mjs`、`v14-server.mjs`、`staged-recovery-server.mjs`、`scripts/cicd/`、`deploy/cicd/`、`.github/workflows/`、`AGENTS.md`），详见 [交付计划 §10](docs/architecture/V2_DELIVERY_PLAN.md)。
 - 日志记录 `request_id`/`job_id`、阶段、错误码、上游状态与耗时；不得记录密钥、Token、上传全文、私人稿件、对话正文或完整提示词。
 - 外部 API（Cloudflare、Crossref、DeepSeek、Europe PMC 等）的失败须保留脱敏后的状态码与供应商错误码；报告中区分 Mock、合约夹具和真实只读验证。
+
+## 8. 可复用工作流程（Skills）与持续改进
+
+专项流程放在 `.claude/skills/`。Claude Code 会自动发现这些文件，其他代理也应按需阅读：
+
+- `ci-resource-governance`：Commit、Push 与 PR 的节奏；CI 失败如何诊断；嵌套 PR；Pages 预览门禁；减少无效 Actions。
+- `safe-deployment`：前端与后端发布的边界、迁移契约、备份与隔离恢复、回滚，以及必须停止并报告的情形。
+- `product-delivery`：“完成”的分级定义、真实浏览器端到端测试、AI 质量评测、稿件隐私默认规则。
+
+核心规则：
+
+- 本地先验证；同一里程碑合并为一次 Push，每个任务只维护一个 PR。CI 失败时先看失败的具体步骤并在本地复现，不连续重试，不用空提交触发 CI。
+- `workflow_run` 类工作流（如 Pages 部署）总是使用 `main` 上的文件，对它的修复必须合并进 `main` 才会生效。
+- 嵌套 PR 要在两个 PR 中都写明依赖关系，并按自下而上的顺序合并。
+- 交付报告必须区分四个层级：Mock 或单元测试、浏览器端到端、真实 AI 质量、生产验证。不得把较低层级的结果说成较高层级的结论。
+
+每次任务结束时自问：本次是否得到了可复用的经验、失败模式或风险规则？如有，把它提炼为一条简短规则，写入对应的 Skill（必要时同步本节），并随本次功能一起提交。不要为了更新一条规则单独 Push，也不要把一次性 Bug 写进长期规范。
