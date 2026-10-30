@@ -6,7 +6,7 @@ import {fileURLToPath} from 'node:url';
 import {config} from './config.mjs';
 import {log,errorFields,requestIdFrom,routeTemplate} from './platform/log.mjs';
 
-export function createStagedRecoveryServer(makeServer,{allowAutoControl=false}={}){
+export function createStagedRecoveryServer(makeServer,{allowAutoControl=false,allowDiagnostic=false}={}){
  const server=makeServer(),listeners=server.listeners('request');
  if(listeners.length!==1)throw Error('Unexpected API request handler');
  server.removeAllListeners('request');
@@ -15,7 +15,7 @@ export function createStagedRecoveryServer(makeServer,{allowAutoControl=false}={
   // Delegate these paths to the existing production hard-404 guard for all methods.
   if(p.startsWith('/api/admin/chinese-')||p==='/api/admin/import')return listeners[0].call(server,req,res);
   const allowedRead=['GET','HEAD','OPTIONS'].includes(req.method);
-  const allowedWrite=req.method==='POST'&&(['/api/lab/login','/api/lab/logout','/api/lab/password','/api/subscriptions/unsubscribe'].includes(p)||allowAutoControl&&p==='/api/admin/ai-auto');
+  const allowedWrite=req.method==='POST'&&(['/api/lab/login','/api/lab/logout','/api/lab/password','/api/subscriptions/unsubscribe'].includes(p)||allowAutoControl&&p==='/api/admin/ai-auto'||allowDiagnostic&&p.startsWith('/api/diagnostic/'));
   if(allowedRead||allowedWrite)return listeners[0].call(server,req,res);
   const origin=req.headers.origin;if(origin&&config.origins.includes(origin)){res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');res.setHeader('Access-Control-Expose-Headers','X-Request-Id');}
   // Blocked writes never reach the main handler, so record them here.

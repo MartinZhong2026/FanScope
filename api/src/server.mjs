@@ -14,6 +14,8 @@ import http from 'node:http';
 import crypto from 'node:crypto';
 import {config,topics} from './config.mjs';
 import {labRoute,recoverDocumentJobs} from './lab.mjs';
+import {diagnosticRoute,diagnosticStatus,startPurgeTimer} from './diagnostic/service.mjs';
+import {ingestFreshness} from './ingest/jobs.mjs';
 import {db,now} from './db.mjs';
 import {migrationSummary} from './migrations.mjs';
 import {safeArticleUrl} from './sources.mjs';
@@ -50,8 +52,9 @@ function page(res,ok,msg){html(res,ok?200:400,`<!doctype html><html lang="zh"><m
 async function handle(req,res){
  const u=parse(req.url),p=u.pathname,method=req.method||'GET';
  if(method==='OPTIONS'){res.writeHead(204);res.end();return;}
+ if(p.startsWith('/api/diagnostic/'))return diagnosticRoute(req,res,u);
  if(p.startsWith('/api/lab/'))return labRoute(req,res,u);
- if(p==='/api/health')return json(res,200,{status:'ok',time:now(),service:'fanscope-api',monitoring:db.prepare('SELECT COUNT(*) AS n FROM journals WHERE enabled=1').get().n,emailConfigured:mailReady(),aiConfigured:!!config.dsKey,...runtimeInfo()});
+ if(p==='/api/health')return json(res,200,{status:'ok',time:now(),service:'fanscope-api',monitoring:db.prepare('SELECT COUNT(*) AS n FROM journals WHERE enabled=1').get().n,emailConfigured:mailReady(),aiConfigured:!!config.dsKey,diagnostic:diagnosticStatus(),scheduler:process.env.FANSCOPE_SCHEDULER==='true',...runtimeInfo()});
  if(p==='/api/chinese-diagnostics'&&method==='GET')return json(res,200,chineseDiagnostics());
  if(p.startsWith('/api/chinese-batches/')&&method==='GET')return json(res,200,chineseBatch(p.slice('/api/chinese-batches/'.length)));
  if(p==='/api/topics')return json(res,200,{items:topics.map(({id,label,short})=>({id,label,short}))});
@@ -59,6 +62,7 @@ async function handle(req,res){
  if(p==='/api/articles'&&method==='GET')return json(res,200,articleList(Object.fromEntries(u.searchParams)));
  if(p==='/api/research-comparison'&&method==='GET')return json(res,200,comparableYearToDate(Object.fromEntries(u.searchParams)));
  if(p==='/api/research'&&method==='GET'){const q=Object.fromEntries(u.searchParams);return json(res,200,{...researchReport(q),generatedBrief:cachedBrief(q)});}
+ if(p==='/api/ingest/freshness'&&method==='GET')return json(res,200,ingestFreshness());
  if(p==='/api/stats'&&method==='GET')return json(res,200,stats(Object.fromEntries(u.searchParams)));
  if(p==='/api/analysis-coverage'&&method==='GET')return json(res,200,coverage({...Object.fromEntries(u.searchParams),period:u.searchParams.get('period')||'ytd'}));
  if(p==='/api/ai-auto-status'&&method==='GET')return json(res,200,automaticStatus());
@@ -203,6 +207,7 @@ if(process.argv[1]&&new URL(`file://${process.argv[1]}`).pathname===new URL(impo
  const server=makeServer();server.listen(config.port,'0.0.0.0',()=>log('notice','service.start',{entry:'server',port:config.port,...runtimeInfo()}));
  const failed=worker=>e=>log('error','worker.failed',{worker,...errorFields(e)});
  recoverDocumentJobs().catch(failed('document-recovery'));
+ startPurgeTimer();
  setInterval(()=>recoverDocumentJobs().catch(failed('document-recovery')),15000).unref();
  if(config.scanOnStart)setTimeout(()=>scanAll().catch(failed('scan')),4000).unref();
  setInterval(()=>scanAll().catch(failed('scan')),config.intervalMinutes*60000).unref();

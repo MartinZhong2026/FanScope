@@ -21,23 +21,94 @@ def quote(name):
     return '"' + name.replace('"', '""') + '"'
 
 
+def table_digest(db, name, columns):
+    # Stream in a deterministic total order, also supporting WITHOUT ROWID.
+    # typeof breaks numeric int/real ties without loading the corpus into RAM.
+    selected = ','.join(quote(c) for c in columns)
+    order = ','.join([quote(c) for c in columns] + ['typeof(' + quote(c) + ')' for c in columns])
+    digest, count = hashlib.sha256(), 0
+    for row in db.execute('SELECT ' + selected + ' FROM ' + quote(name) + ' ORDER BY ' + order):
+        encoded = json.dumps([('blob', v.hex()) if isinstance(v, bytes) else (type(v).__name__, v)
+                              for v in row], ensure_ascii=True, separators=(',', ':'))
+        digest.update(encoded.encode() + b'\n')
+        count += 1
+    return {'count': count, 'sha256': digest.hexdigest(), 'columns': columns}
+
+
 def fingerprint(db):
     schema = db.execute("SELECT type,name,tbl_name,sql FROM sqlite_master ORDER BY type,name").fetchall()
     tables = {}
     for (name,) in db.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"):
-        info = db.execute('PRAGMA table_info(' + quote(name) + ')').fetchall()
-        # Stream in a deterministic total order, also supporting WITHOUT ROWID.
-        # typeof breaks numeric int/real ties without loading the corpus into RAM.
-        columns = [c[1] for c in info]
-        order = ','.join([quote(c) for c in columns] + ['typeof(' + quote(c) + ')' for c in columns])
-        digest, count = hashlib.sha256(), 0
-        for row in db.execute('SELECT * FROM ' + quote(name) + ' ORDER BY ' + order):
-            encoded = json.dumps([('blob', v.hex()) if isinstance(v, bytes) else (type(v).__name__, v)
-                                  for v in row], ensure_ascii=True, separators=(',', ':'))
-            digest.update(encoded.encode() + b'\n')
-            count += 1
-        tables[name] = {'count': count, 'sha256': digest.hexdigest(), 'columns': columns}
+        columns = [c[1] for c in db.execute('PRAGMA table_info(' + quote(name) + ')').fetchall()]
+        tables[name] = table_digest(db, name, columns)
     return {'schema': hashlib.sha256(json.dumps(schema).encode()).hexdigest(), 'tables': tables}
+
+
+LEDGER = 'fanscope_migrations'
+
+
+def additive_check(before, after, declared):
+    """Controller-side proof that `after` only adds the reviewed objects to `before`.
+
+    Independent of the application's own migration runner: every original column
+    of every existing table keeps its definition and row contents; anything new
+    must be declared by the reviewed migrations in the release manifest.
+    """
+    tables = {t.lower() for t in declared.get('tables', [])}
+    virtual = {t.lower() for t in declared.get('virtualTables', [])}
+    indexes = {i.lower() for i in declared.get('indexes', [])}
+    columns = {c.lower() for c in declared.get('columns', [])}
+    old, new = ro(before), ro(after)
+    try:
+        old.execute('BEGIN')
+        new.execute('BEGIN')
+        if new.execute('PRAGMA integrity_check').fetchall() != [('ok',)]:
+            raise RuntimeError('SQLite integrity check failed after migration')
+        if new.execute('PRAGMA foreign_key_check').fetchone():
+            raise RuntimeError('SQLite foreign key check failed after migration')
+        objects = lambda db: {(r[0], r[1]): r[2:] for r in db.execute('SELECT type,name,tbl_name,sql FROM sqlite_master')}
+        was, now = objects(old), objects(new)
+        for (kind, name), (table, text) in was.items():
+            if (kind, name) not in now:
+                raise RuntimeError(f'Migration removed existing {kind}: {name}')
+            if kind != 'table' and now[(kind, name)] != (table, text):
+                raise RuntimeError(f'Migration changed existing {kind}: {name}')
+        shadow = lambda name: any(name.startswith(t + '_') for t in virtual)
+        for (kind, name), (table, _) in now.items():
+            if (kind, name) in was:
+                continue
+            lower, owner = name.lower(), table.lower()
+            if kind == 'table' and (lower in tables or lower == LEDGER or lower == 'sqlite_sequence' or shadow(lower)):
+                continue
+            if kind == 'index' and (lower in indexes or shadow(owner) or (lower.startswith('sqlite_autoindex_') and (owner in tables or owner == LEDGER))):
+                continue
+            raise RuntimeError(f'Undeclared new {kind}: {name}')
+        for (kind, name) in was:
+            if kind != 'table' or name.startswith('sqlite_'):
+                continue
+            info = lambda db: [c[1:] for c in db.execute('PRAGMA table_info(' + quote(name) + ')').fetchall()]
+            original, current = info(old), info(new)
+            if current[:len(original)] != original:
+                raise RuntimeError(f'Migration changed existing columns: {name}')
+            for extra in current[len(original):]:
+                if f'{name}.{extra[0]}'.lower() not in columns:
+                    raise RuntimeError(f'Undeclared new column: {name}.{extra[0]}')
+            names = [c[0] for c in original]
+            if name == LEDGER:
+                # Each applied migration appends one row; history must stay as it was.
+                selected = 'SELECT ' + ','.join(quote(c) for c in names) + ' FROM ' + quote(name)
+                if not set(old.execute(selected).fetchall()) <= set(new.execute(selected).fetchall()):
+                    raise RuntimeError('Migration changed existing rows: ' + name)
+                continue
+            if table_digest(old, name, names) != table_digest(new, name, names):
+                raise RuntimeError(f'Migration changed existing rows: {name}')
+        if ('table', 'sqlite_sequence') in was:
+            kept = set(new.execute('SELECT name,seq FROM sqlite_sequence').fetchall())
+            if not set(old.execute('SELECT name,seq FROM sqlite_sequence').fetchall()) <= kept:
+                raise RuntimeError('Migration changed existing AUTOINCREMENT state')
+    finally:
+        old.close()
+        new.close()
 
 
 def inspect(file):
@@ -132,6 +203,13 @@ def assert_idle(file):
                 if 'status' in columns and db.execute('SELECT 1 FROM ' + quote(table) +
                         " WHERE status IN ('running','analyzing','processing') LIMIT 1").fetchone():
                     raise RuntimeError('Unfinished work requires review: ' + table)
+        # Paid diagnostic work. Rows with a stale heartbeat belong to a dead worker
+        # and are shown to users as interrupted; they must not block every release.
+        recent = "strftime('%Y-%m-%dT%H:%M:%fZ','now','-15 minutes')"
+        for table, condition in [('dx_runs', f"status IN ('queued','structuring','diagnosing') AND heartbeat_at>{recent}"),
+                                 ('llm_calls', f"status='reserved' AND created_at>{recent}")]:
+            if table in tables and db.execute('SELECT 1 FROM ' + table + ' WHERE ' + condition + ' LIMIT 1').fetchone():
+                raise RuntimeError('In-flight or uncertain work requires operator review: ' + table)
     finally:
         db.close()
 

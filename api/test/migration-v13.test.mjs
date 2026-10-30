@@ -1,4 +1,4 @@
-import test from 'node:test';import path from 'node:path';import os from 'node:os';import fs from 'node:fs';import {DatabaseSync} from 'node:sqlite';import {execFileSync} from 'node:child_process';import assert from 'node:assert/strict';
+import test from 'node:test';import path from 'node:path';import os from 'node:os';import fs from 'node:fs';import {DatabaseSync} from 'node:sqlite';import {execFileSync} from 'node:child_process';import assert from 'node:assert/strict';import {startThenApplyReviewed} from './helpers/legacy-upgrade.mjs';
 test('v1.2 fixture migrates twice without changing original papers, journal configuration or Lab records',()=>{
 const root=path.resolve(import.meta.dirname,'../..'),dir=fs.mkdtempSync(path.join(os.tmpdir(),'fanscope-v13-migration-')),file=path.join(dir,'qa.sqlite');
 try{
@@ -17,7 +17,7 @@ const exists=t=>d.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND na
 const counts=()=>Object.fromEntries(tables.map(t=>[t,exists(t)?d.prepare(`SELECT COUNT(*) n FROM ${t}`).get().n:null]));
 const retained=tables.slice(0,5),snap=Object.fromEntries(retained.map(t=>[t,d.prepare(`SELECT * FROM ${t} ORDER BY id`).all()]));const before=counts();
 d.prepare('VACUUM INTO ?').run(path.join(dir,'pre-v13.sqlite'));d.close();
-for(let i=0;i<2;i++)boot();
+startThenApplyReviewed(boot,env);for(let i=0;i<2;i++)boot();
 d=new DatabaseSync(file);const after=counts();
 for(const t of retained){const keys=Object.keys(snap[t][0]);assert.deepEqual(d.prepare(`SELECT ${keys.join(',')} FROM ${t} ORDER BY id`).all().filter(r=>t!=='journals'||snap[t].some(old=>old.id===r.id)),snap[t],t+' preserves every v1.2 field');}
 assert.equal(d.prepare("SELECT COUNT(*) n FROM articles WHERE analysis_status='analyzed' AND length(analysis_input_hash)=64").get().n,40);

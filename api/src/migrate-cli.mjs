@@ -33,7 +33,7 @@ function parseExpect(text){
 try{
  const dir=values.dir||migrationsDir(),migrations=loadMigrations(dir);
  if(command==='lint'){
-  const results=migrations.map(m=>({id:m.id,checksum:m.checksum,...lintMigration(m.sql)})).map(({declared,...r})=>r);
+  const results=migrations.map(m=>({id:m.id,checksum:m.checksum,...lintMigration(m.sql)})).map(({declared,...r})=>({...r,declared:Object.fromEntries(Object.entries(declared).map(([k,v])=>[k,[...v]]))}));
   print({ok:results.every(r=>r.ok),runnerVersion:RUNNER_VERSION,dir,migrations:results},results.every(r=>r.ok)?0:2);
  }else if(command==='status'){
   const db=openDatabase(true);

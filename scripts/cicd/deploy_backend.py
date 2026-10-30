@@ -2,6 +2,8 @@
 
 No SSH, runner, volume creation, Compose down, pruning, or unrelated container changes.
 Schema OR data transformations on startup are rejected on an isolated copy.
+Reviewed additive migrations run only here: first on the frozen copy, then on the
+stopped production database, each verified independently of the application.
 """
 import argparse
 import datetime
@@ -14,13 +16,22 @@ import shutil
 import time
 import urllib.request
 import urllib.error
-from sqlite_release import assert_idle, backup, inspect, pause_ai, restore, sha256, write_json
+from sqlite_release import additive_check, assert_idle, backup, inspect, pause_ai, restore, sha256, write_json
 
 STATE = Path('/var/lib/fanscope-cd')
 ROOT = Path('/opt/fanscope-cd')
 CONTAINER = 'fanscope-api'
 SERVICE = 'fanscope-api'
 VOLUME = 'fanscope_data'
+
+
+GATE_ALERT_SECONDS = 2 * 3600
+SECRET_TEXT = re.compile(r'(?i)(bearer\s+|sk-|(?:key|token|password|secret)["\']?\s*[=:]\s*["\']?)\S+')
+
+
+def safe_text(value, limit=400):
+    text = SECRET_TEXT.sub(lambda m: m.group(1) + '[redacted]', str(value))
+    return text[-limit:]
 
 
 def run(*args, env=None):
@@ -38,7 +49,70 @@ def compose(image, *args):
                '-f', str(ROOT / 'deploy/cicd/production.yml'), *args, env=env)
 
 
-def health(image):
+def gate_file():
+    return STATE / 'runtime' / 'gate.json'
+
+
+def read_gate():
+    # Anything unreadable or unknown is treated as "not open" by every caller.
+    try:
+        gate = json.loads(gate_file().read_text())
+    except (OSError, ValueError):
+        return None
+    if not isinstance(gate, dict) or gate.get('state') not in ('open', 'blocked') or not isinstance(gate.get('generation'), int):
+        return None
+    return gate
+
+
+def write_gate(state, release_id, generation, reason):
+    now = datetime.datetime.now(datetime.timezone.utc)
+    alert = now + datetime.timedelta(seconds=GATE_ALERT_SECONDS)
+    gate = {'state': state, 'release_id': str(release_id), 'generation': generation, 'reason_code': reason,
+            'blocked_at': now.isoformat() if state == 'blocked' else None,
+            'alert_after': alert.isoformat() if state == 'blocked' else None}
+    target = gate_file()
+    temp = target.with_suffix('.tmp')
+    with temp.open('w', encoding='utf8') as stream:
+        json.dump(gate, stream)
+        stream.flush()
+        os.fsync(stream.fileno())
+    # The application reads this through a read-only directory mount as another user.
+    os.chmod(temp, 0o644)
+    os.replace(temp, target)
+    if os.name == 'posix':
+        directory = os.open(target.parent, os.O_RDONLY)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
+    if read_gate() != gate:
+        raise RuntimeError('Release gate write could not be verified')
+    return gate
+
+
+def block_gate(release_id):
+    gate = read_gate()
+    if gate is None or gate['state'] != 'open':
+        raise RuntimeError('Release gate is missing, unreadable or blocked; explicit recovery required')
+    return write_gate('blocked', release_id, gate['generation'] + 1, 'release')
+
+
+def open_gate(release_id, generation, reason='released'):
+    gate = read_gate()
+    if gate is None or gate['state'] != 'blocked' or gate['generation'] != generation or gate['release_id'] != str(release_id):
+        raise RuntimeError('Release gate identity mismatch; gate stays blocked')
+    return write_gate('open', release_id, generation, reason)
+
+
+def finish(report):
+    # Opening the gate is last: any earlier failure leaves background work stopped.
+    (STATE / 'maintenance').unlink()
+    (STATE / 'transaction.json').rename(Path(report['backup']) / 'transaction.json')
+    if report.get('gateGeneration') is not None:
+        open_gate(Path(report['backup']).name, report['gateGeneration'])
+
+
+def health(image, manifest=None):
     for _ in range(48):
         c = docker_json('inspect', CONTAINER)
         if c['Image'] != image or not c['State']['Running']:
@@ -55,6 +129,13 @@ def health(image):
                 "console.log(JSON.stringify(h))"))
             if report.get('status') != 'ok' or report.get('service') != 'fanscope-api' or report.get('aiConfigured') or report.get('emailConfigured'):
                 raise RuntimeError('API health/paid-worker guards failed')
+            if manifest is not None:
+                if report.get('commit') != manifest['commit']:
+                    raise RuntimeError('Running commit does not match the release')
+                if bool((report.get('diagnostic') or {}).get('aiConfigured')) != bool(manifest.get('diagnosticAiEnabled')):
+                    raise RuntimeError('Diagnostic AI state does not match the release manifest')
+                if bool(report.get('scheduler')) != bool(manifest.get('schedulerEnabled')):
+                    raise RuntimeError('Scheduler state does not match the release manifest')
             return
         if status == 'unhealthy':
             raise RuntimeError('Docker health check failed')
@@ -104,8 +185,14 @@ def verify_bundle(bundle, sha):
     if set(checks) != {'image.tar', 'manifest.json'} or any(sha256(bundle / n) != d for n, d in checks.items()):
         raise RuntimeError('Release checksum mismatch')
     m = json.loads((bundle / 'manifest.json').read_text())
-    if m.get('commit') != sha or m.get('migrationPolicy') != 'no-change' or not re.fullmatch('sha256:[a-f0-9]{64}', m.get('image', '')):
+    policy, migrations = m.get('migrationPolicy'), m.get('migrations', [])
+    if m.get('commit') != sha or not re.fullmatch('sha256:[a-f0-9]{64}', m.get('image', '')) or \
+            not isinstance(m.get('diagnosticAiEnabled', False), bool) or not isinstance(m.get('schedulerEnabled', False), bool):
         raise RuntimeError('Release manifest mismatch')
+    if (policy, bool(migrations)) not in (('no-change', False), ('additive', True)) or not all(
+            isinstance(x, dict) and isinstance(x.get('declared'), dict) and re.fullmatch('[0-9TZ]+_[a-z0-9_]+', str(x.get('id')))
+            and re.fullmatch('[a-f0-9]{64}', str(x.get('checksum'))) for x in migrations):
+        raise RuntimeError('Release manifest mismatch: invalid migration policy')
     return m
 
 
@@ -113,12 +200,82 @@ def rehearsal(image, directory, baseline):
     # All startup DB/lab initialization runs against the restored copy, no keys/network.
     run('docker', 'run', '--rm', '--network', 'none', '--memory', '420m', '--cpus', '1', '--user', '0:0',
         '--mount', f'type=bind,source={directory},target=/app/data',
-        '-e', 'DATABASE_PATH=/app/data/restore.sqlite', '-e', 'DEEPSEEK_API_KEY=', '-e', 'RESEND_API_KEY=',
+        '-e', 'DATABASE_PATH=/app/data/restore.sqlite', '-e', 'DEEPSEEK_API_KEY=', '-e', 'RESEND_API_KEY=', '-e', 'FANSCOPE_LOG_DIR=/tmp/logs',
         '--entrypoint', 'node', image, '--experimental-sqlite', '--input-type=module', '-e',
         "globalThis.fetch=()=>{throw Error('Network forbidden in migration rehearsal')};"
         "await import('./src/server.mjs');const{db}=await import('./src/db.mjs');db.close();")
     if inspect(directory / 'restore.sqlite') != baseline:
         raise RuntimeError('Startup changes schema/data; automatic migration is prohibited, separate reviewed migration needed')
+
+
+def node_on_copy(image, directory, *args):
+    return run('docker', 'run', '--rm', '--network', 'none', '--memory', '420m', '--cpus', '1', '--user', '0:0',
+        '--mount', f'type=bind,source={directory},target=/app/data',
+        '-e', 'DATABASE_PATH=/app/data/restore.sqlite', '-e', 'DEEPSEEK_API_KEY=', '-e', 'RESEND_API_KEY=', '-e', 'FANSCOPE_LOG_DIR=/tmp/logs',
+        '--entrypoint', 'node', image, '--experimental-sqlite', *args)
+
+
+def expect_argument(pending):
+    return ','.join(f"{p['id']}:{p['checksum']}" for p in pending)
+
+
+def declared_for(pending, manifest):
+    reviewed = {x['id']: x for x in manifest.get('migrations', [])}
+    merged = {}
+    for item in pending:
+        for key, values in reviewed[item['id']]['declared'].items():
+            merged.setdefault(key, []).extend(values)
+    return merged
+
+
+def migration_plan(image, directory, manifest, extra=()):
+    # Applied rows must match the image; everything pending must be in the reviewed manifest.
+    status = json.loads(node_on_copy(image, directory, 'src/migrate-cli.mjs', 'status', *extra))
+    if status.get('status') not in ('up-to-date', 'pending'):
+        raise RuntimeError('Database migration state is not releasable: ' + str(status.get('status')))
+    reviewed = {x['id']: x['checksum'] for x in manifest.get('migrations', [])}
+    for item in status['pending']:
+        if reviewed.get(item['id']) != item['checksum']:
+            raise RuntimeError('Pending migration is not in the reviewed manifest: ' + item['id'])
+    return status['pending']
+
+
+def rehearse_release(image, old_image, directory, frozen, manifest, extra=()):
+    """Everything happens on the frozen copy. Returns the migrations to apply to production."""
+    if manifest.get('migrationPolicy') != 'additive':
+        rehearsal(image, directory, frozen['manifest'])
+        return []
+    pending = migration_plan(image, directory, manifest, extra)
+    if not pending:
+        rehearsal(image, directory, frozen['manifest'])
+        return []
+    node_on_copy(image, directory, 'src/migrate-cli.mjs', 'apply', *extra, '--expect', expect_argument(pending), '--commit', manifest['commit'])
+    additive_check(directory / 'backup.sqlite', directory / 'restore.sqlite', declared_for(pending, manifest))
+    migrated = inspect(directory / 'restore.sqlite')
+    rehearsal(image, directory, migrated)
+    # Code rollback must stay possible without touching the database.
+    rehearsal(old_image, directory, migrated)
+    return pending
+
+
+def apply_production(image, user, pending, sha):
+    # Same image and exact list as the rehearsal; the API container is stopped.
+    run('docker', 'run', '--rm', '--network', 'none', '--memory', '420m', '--cpus', '1', '--user', user,
+        '--mount', f'type=volume,source={VOLUME},target=/app/data',
+        '-e', 'DATABASE_PATH=/app/data/fanscope.sqlite', '-e', 'DEEPSEEK_API_KEY=', '-e', 'RESEND_API_KEY=',
+        '--entrypoint', 'node', image, '--experimental-sqlite', 'src/migrate-cli.mjs', 'apply',
+        '--expect', expect_argument(pending), '--commit', sha)
+
+
+def save_candidate_log(release):
+    # Evidence for the next attempt: the rollback replaces this container.
+    try:
+        done = subprocess.run(['docker', 'logs', '--timestamps', '--tail', '500', CONTAINER],
+                              capture_output=True, text=True, encoding='utf8', errors='replace', timeout=30)
+        text = '\n'.join(SECRET_TEXT.sub(lambda m: m.group(1) + '[redacted]', line) for line in (done.stdout + done.stderr).splitlines())
+        (release / 'candidate.log').write_text(text + '\n', encoding='utf8')
+    except Exception as error:
+        print('Candidate log unavailable: ' + type(error).__name__)
 
 
 def deploy(bundle, sha, run_id):
@@ -162,16 +319,24 @@ def deploy(bundle, sha, run_id):
     if service['environment'].get('FANSCOPE_AI_AUTO_ENABLED') != 'false' or any(
             service['environment'].get(k) for k in ['DEEPSEEK_API_KEY', 'RESEND_API_KEY', 'OPENALEX_API_KEY']):
         raise RuntimeError('Paid worker/environment guard failed')
+    if bool(service['environment'].get('FANSCOPE_DIAGNOSTIC_DEEPSEEK_API_KEY')) != m.get('diagnosticAiEnabled', False):
+        raise RuntimeError('Diagnostic key presence does not match the release manifest')
+    if (service['environment'].get('FANSCOPE_SCHEDULER') == 'true') != m.get('schedulerEnabled', False):
+        raise RuntimeError('Scheduler flag does not match the release manifest')
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     release = STATE / 'backups' / f'{stamp}-{run_id}'
     release.mkdir(mode=0o700)
     report = {'commit': sha, 'image': m['image'], 'buildImage': build_image, 'previousImage': old['Image'], 'runId': run_id,
-              'time': stamp, 'backup': str(release), 'status': 'maintenance', 'database': str(database)}
+              'time': stamp, 'backup': str(release), 'status': 'maintenance', 'database': str(database), 'stage': 'gate'}
+    # Before anything touches the database. A failed gate write ends the release here.
+    report['gateGeneration'] = block_gate(release.name)['generation']
     write_json(STATE / 'transaction.json', report)
     (STATE / 'maintenance').touch(exist_ok=False)
     # Fail closed until frozen final snapshot exists; never resume paid work on failure.
     try:
+        report['stage'] = 'ingress'
         verify_ingress_closed()
+        report['stage'] = 'drain'
         pause_ai(database)
         for _ in range(36):
             try:
@@ -190,26 +355,39 @@ def deploy(bundle, sha, run_id):
         report['status'] = 'frozen'
         write_json(STATE / 'transaction.json', report)
         try:
-            rehearsal(m['image'], release / 'frozen', baseline)
+            report['stage'] = 'rehearsal'
+            pending = rehearse_release(m['image'], old['Image'], release / 'frozen', final, m)
+            report['migrations'] = [p['id'] for p in pending]
+            if pending:
+                report['stage'] = 'migration'
+                apply_production(m['image'], old['Config'].get('User') or 'node', pending, sha)
+                additive_check(release / 'frozen/backup.sqlite', database, declared_for(pending, m))
+                baseline = inspect(database)
+            report['stage'] = 'startup'
             compose(m['image'], 'up', '-d', '--no-build', '--no-deps', '--pull', 'never', SERVICE)
-            health(m['image'])
+            health(m['image'], m)
             if inspect(database) != baseline:
                 raise RuntimeError('Production data changed during startup')
+            report['stage'] = 'public-health'
             public_health()
             report['status'] = 'success'
         except Exception:
+            save_candidate_log(release)
             rollback(report)
             report['status'] = 'rolled-back'
             raise
         finally:
             write_json(release / 'result.json', report)
-        (STATE / 'maintenance').unlink()
-        (STATE / 'transaction.json').rename(release / 'transaction.json')
+        report['stage'] = 'finish'
+        finish(report)
     except Exception as error:
         # A successful rollback removes the gate itself. Otherwise leave it closed.
-        if report['status'] != 'rolled-back':
+        if report['status'] == 'success':
+            report['status'] = 'success-gate-blocked'
+        elif report['status'] != 'rolled-back':
             report['status'] = 'failed-maintenance'
         report['failureType'] = type(error).__name__
+        report['failureMessage'] = safe_text(f"{error} {getattr(error, 'stderr', '') or ''}")
         write_json(release / 'result.json', report)
         if (STATE / 'transaction.json').exists():
             write_json(STATE / 'transaction.json', report)
@@ -242,8 +420,7 @@ def rollback(report):
     public_health()
     report['status'] = 'rolled-back'
     write_json(release / 'result.json', report)
-    (STATE / 'maintenance').unlink()
-    (STATE / 'transaction.json').rename(release / 'transaction.json')
+    finish(report)
 
 
 def recover(report):
@@ -265,15 +442,43 @@ def recover(report):
     rollback(report)
 
 
+def recover_gate(generation):
+    # A gate left blocked with no transaction: crash before the transaction was
+    # written, or after it was archived. Proves the live state, then opens.
+    gate = read_gate()
+    if gate is None or gate['state'] != 'blocked' or gate['generation'] != generation:
+        raise RuntimeError('Confirm the exact generation of a blocked gate')
+    if (STATE / 'maintenance').exists() or (STATE / 'transaction.json').exists():
+        raise RuntimeError('Unfinished transaction: use recover --confirm-sha instead')
+    container = docker_json('inspect', CONTAINER)
+    health(container['Image'])
+    volume = docker_json('volume', 'inspect', VOLUME)
+    inspect(Path(volume['Mountpoint']) / 'fanscope.sqlite')
+    public_health()
+    return write_gate('open', gate['release_id'], generation, 'operator-recovered')
+
+
+def gate_status():
+    # For a host watchdog: alerts only, never changes the gate.
+    gate = read_gate()
+    overdue = gate is None or (gate['state'] == 'blocked' and
+        datetime.datetime.now(datetime.timezone.utc) >= datetime.datetime.fromisoformat(gate['alert_after']))
+    print(json.dumps({'gate': gate, 'overdue': overdue}))
+    return 3 if overdue else 0
+
+
 if __name__ == '__main__':
     os.umask(0o077)
     parser = argparse.ArgumentParser()
-    parser.add_argument('action', choices=['deploy', 'recover'])
+    parser.add_argument('action', choices=['deploy', 'recover', 'recover-gate', 'gate-status'])
     parser.add_argument('--bundle', type=Path)
     parser.add_argument('--sha')
     parser.add_argument('--run-id', type=int)
     parser.add_argument('--confirm-sha')
+    parser.add_argument('--confirm-generation', type=int)
     args = parser.parse_args()
+    if args.action == 'gate-status':
+        raise SystemExit(gate_status())
     # Same host lock for manual recovery and poller deployment.
     import fcntl
     with (STATE / 'host.lock').open('w') as lock:
@@ -283,5 +488,7 @@ if __name__ == '__main__':
             if args.confirm_sha != record['commit']:
                 raise RuntimeError('Confirm exact transaction SHA before recovery')
             recover(record)
+        elif args.action == 'recover-gate':
+            recover_gate(args.confirm_generation)
         else:
             deploy(args.bundle.resolve(strict=True), args.sha, args.run_id)
