@@ -55,3 +55,16 @@
 6. 尚存风险、待用户批准的操作。
 
 本规范描述代理行为，不会自动安排定时同步或备份；每次仍需由本地代理实际执行 Commit/Push，GitHub 认证和网络也必须可用。
+
+## 7. FanScope 项目特定约束
+
+以下各条来自 [V2 底座审计](docs/architecture/FOUNDATION_AUDIT.md) 与 [架构评审](docs/architecture/V2_ARCHITECTURE_REVIEW.md)。当前方案、实施顺序与验收标准以评审文档为准。
+
+- 唯一代码基线是本仓库 `main`。`FanScope-Dev` 等其他本地副本只作历史参考，不得整目录同步覆盖（曾导致 CI 修复丢失，见提交 `64157ef`）。
+- 数据库只新增表或列，不改变既有表语义；不要把新的 AI 结果写回 `articles` 的字段。版本化追加迁移与控制器校验（评审文档 K3/K2）落地前，新增表的 PR 不得声称可经后端 CD 发布。
+- 除迁移外，应用启动路径不得写数据库（发布控制器会把启动期写入判为失败并回滚）；中断恢复采用读取时惰性判定。
+- 新代码不得直接调用模型 API，一律经统一 LLM 客户端（评审文档 K4）：调用记录、有限重试、并发上限、幂等与去重、熔断。按产品决定，不设应用内金额上限。测试一律使用 Mock 或合约夹具。
+- 数据库事务内不得 `await` 网络调用；同一任务的多个步骤必须先持久化结果，再进入下一步。
+- 多代理并行时，同一时刻只允许一个代理修改热点文件（`db.mjs`/`api/migrations/`、`server.mjs`、`v14-server.mjs`、`staged-recovery-server.mjs`、`scripts/cicd/`、`deploy/cicd/`、`.github/workflows/`、`AGENTS.md`），详见 [交付计划 §10](docs/architecture/V2_DELIVERY_PLAN.md)。
+- 日志记录 `request_id`/`job_id`、阶段、错误码、上游状态与耗时；不得记录密钥、Token、上传全文、私人稿件、对话正文或完整提示词。
+- 外部 API（Cloudflare、Crossref、DeepSeek、Europe PMC 等）的失败须保留脱敏后的状态码与供应商错误码；报告中区分 Mock、合约夹具和真实只读验证。
