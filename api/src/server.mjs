@@ -15,6 +15,7 @@ import crypto from 'node:crypto';
 import {config,topics} from './config.mjs';
 import {labRoute,recoverDocumentJobs} from './lab.mjs';
 import {diagnosticRoute,diagnosticStatus,startPurgeTimer} from './diagnostic/service.mjs';
+import {ingestFreshness} from './ingest/jobs.mjs';
 import {db,now} from './db.mjs';
 import {migrationSummary} from './migrations.mjs';
 import {safeArticleUrl} from './sources.mjs';
@@ -61,6 +62,7 @@ async function handle(req,res){
  if(p==='/api/articles'&&method==='GET')return json(res,200,articleList(Object.fromEntries(u.searchParams)));
  if(p==='/api/research-comparison'&&method==='GET')return json(res,200,comparableYearToDate(Object.fromEntries(u.searchParams)));
  if(p==='/api/research'&&method==='GET'){const q=Object.fromEntries(u.searchParams);return json(res,200,{...researchReport(q),generatedBrief:cachedBrief(q)});}
+ if(p==='/api/ingest/freshness'&&method==='GET')return json(res,200,ingestFreshness());
  if(p==='/api/stats'&&method==='GET')return json(res,200,stats(Object.fromEntries(u.searchParams)));
  if(p==='/api/analysis-coverage'&&method==='GET')return json(res,200,coverage({...Object.fromEntries(u.searchParams),period:u.searchParams.get('period')||'ytd'}));
  if(p==='/api/ai-auto-status'&&method==='GET')return json(res,200,automaticStatus());

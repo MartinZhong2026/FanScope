@@ -1,0 +1,160 @@
+{
+ "note": "Reviewed per-journal status from docs/architecture/CN_JOURNALS_22_MATRIX.md. Only A/B may be scheduled; change a status only with evidence in the matrix.",
+ "reviewedAt": "2026-10-29",
+ "journals": [
+  {
+   "title": "人口研究",
+   "issn": "1000-6087",
+   "status": "E",
+   "source": "期刊官网 /CN/ 平台（rkyj.ruc.edu.cn）",
+   "next": "接入官网平台适配器 + 调度"
+  },
+  {
+   "title": "社会",
+   "issn": "1004-8804",
+   "status": "E",
+   "source": "同上（society.shu.edu.cn）；有 RSS /CN/rss/showRssInfo.do",
+   "next": "同上；RSS 用于增量发现"
+  },
+  {
+   "title": "社会建设",
+   "issn": "2095-8641",
+   "status": "E",
+   "source": "同上（shjs.ruc.edu.cn，经 JS 跳转到 /CN/2095-8641/home.shtml）",
+   "next": "从已核验期目录补日期；URL 的 Y/V/I 仅作辅助，保留年月精度，不能造日；证据不足仍标缺失"
+  },
+  {
+   "title": "公共管理评论",
+   "issn": "2096-7713",
+   "status": "E",
+   "source": "Crossref（58 条，最新 2026-06，最近 5 条都有摘要）+ SciOpen",
+   "next": "用现有 Crossref 适配器，按 ISSN 增量；中文题名的来源单独核实"
+  },
+  {
+   "title": "中国人口科学",
+   "issn": "1000-7881",
+   "status": "E-",
+   "source": "ajcass 平台（zgrkkx.ajcass.com）",
+   "next": "写 ajcass 适配器取题录；摘要接口单独研究，不可得时标注缺失原因"
+  },
+  {
+   "title": "中国社会科学",
+   "issn": "1002-4921",
+   "status": "E-",
+   "source": "中国社会科学杂志社官网（sscp.cssn.cn）静态文章页",
+   "next": "专用解析器；此前目录页曾返回 403，需确认可采集范围"
+  },
+  {
+   "title": "社会保障评论",
+   "issn": "2096-3211",
+   "status": "C",
+   "source": "CNKI 期刊采编平台门户（sbpl.cbpt.cnki.net/portal）",
+   "next": "确认 CNKI 平台条款与授权方式；替代来源为国家哲学社会科学文献中心（NSSD）或授权数据库"
+  },
+  {
+   "title": "公共管理学报",
+   "issn": "1672-6162",
+   "status": "C",
+   "source": "CNKI 采编平台（gggl.cbpt.cnki.net）",
+   "next": "同上"
+  },
+  {
+   "title": "社会学研究",
+   "issn": "1002-5936",
+   "status": "C",
+   "source": "ajcass（shxyj.ajcass.com）",
+   "next": "**不绕过验证**；需要刊方或数据库的授权渠道"
+  },
+  {
+   "title": "人口与经济",
+   "issn": "1000-4149",
+   "status": "C",
+   "source": "方正出版平台（rkjj.publish.founderss.cn），JS 应用",
+   "next": "分析公开接口并确认条款；不可行时改用授权渠道"
+  },
+  {
+   "title": "人口与发展",
+   "issn": "1674-1668",
+   "status": "C",
+   "source": "北大期刊平台（ccj.pku.edu.cn），JS 应用；页面链接到 NSSD",
+   "next": "同上"
+  },
+  {
+   "title": "社会学评论",
+   "issn": "2095-5154",
+   "status": "D",
+   "source": "期刊官网 /CN/ 平台（src.ruc.edu.cn）",
+   "next": "不降低 TLS 要求；请刊方修复证书，或改用授权渠道"
+  },
+  {
+   "title": "公共管理与政策评论",
+   "issn": "2095-4026",
+   "status": "D",
+   "source": "期刊官网 /CN/ 平台（ggglyzc.ruc.edu.cn）",
+   "next": "同上"
+  },
+  {
+   "title": "中国行政管理",
+   "issn": "1006-0863",
+   "status": "D",
+   "source": "cpaj.com.cn",
+   "next": "同上"
+  },
+  {
+   "title": "人口学刊",
+   "issn": "1004-129X",
+   "status": "D",
+   "source": "rkxk.jlu.edu.cn",
+   "next": "从生产主机复测"
+  },
+  {
+   "title": "妇女研究论丛",
+   "issn": "1004-2563",
+   "status": "D",
+   "source": "fnyj.ajcass.com",
+   "next": "生产主机复测；可复用 ajcass 适配器"
+  },
+  {
+   "title": "残疾人研究",
+   "issn": "2095-0810",
+   "status": "D",
+   "source": "cjryj.ajcass.com",
+   "next": "先核身份，再复测"
+  },
+  {
+   "title": "社会发展研究",
+   "issn": "2095-7580",
+   "status": "D",
+   "source": "shfzyj.ajcass.com",
+   "next": "连接不稳定；生产主机复测后决定是否用 ajcass 适配器"
+  },
+  {
+   "title": "治理研究",
+   "issn": "1007-9092",
+   "status": "D",
+   "source": "zlyj.zjdx.gov.cn",
+   "next": "生产主机复测；刊方确认"
+  },
+  {
+   "title": "电子政务",
+   "issn": "1672-7223",
+   "status": "D",
+   "source": "egovernment.com.cn",
+   "next": "生产主机复测"
+  },
+  {
+   "title": "管理世界",
+   "issn": "1002-5502",
+   "status": "D",
+   "source": "mwm.net.cn",
+   "next": "生产主机复测"
+  },
+  {
+   "title": "中国软科学",
+   "issn": "1002-9753",
+   "status": "D",
+   "source": "cssm.com.cn",
+   "next": "**身份冲突需要人工处理**（见身份证据）；解决前不采集"
+  }
+ ]
+}
