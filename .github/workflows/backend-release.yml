@@ -11,6 +11,11 @@ on:
         required: false
         type: boolean
         default: false
+      scheduler:
+        description: Server has FANSCOPE_SCHEDULER=true and the durable scheduler is meant to run
+        required: false
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -42,6 +47,7 @@ jobs:
         env:
           RELEASE_SHA: ${{ inputs.commit }}
           DIAGNOSTIC_AI: ${{ inputs.diagnostic_ai }}
+          SCHEDULER: ${{ inputs.scheduler }}
         run: |
           mkdir -p work/backend-release
           docker build --label "org.opencontainers.image.revision=$RELEASE_SHA" --build-arg "FANSCOPE_COMMIT=$RELEASE_SHA" -t "fanscope-api:$RELEASE_SHA" -f api/Dockerfile api
@@ -56,7 +62,8 @@ jobs:
           migrations=[{'id':m['id'],'checksum':m['checksum'],'declared':m['declared']} for m in lint['migrations']]
           with open('work/backend-release/manifest.json','w') as f:
               json.dump({'commit':sys.argv[1],'image':sys.argv[2],'migrationPolicy':'additive' if migrations else 'no-change',
-                         'migrations':migrations,'diagnosticAiEnabled':os.environ['DIAGNOSTIC_AI']=='true'},f)
+                         'migrations':migrations,'diagnosticAiEnabled':os.environ['DIAGNOSTIC_AI']=='true',
+                         'schedulerEnabled':os.environ['SCHEDULER']=='true'},f)
           PY
           cd work/backend-release
           sha256sum image.tar manifest.json > SHA256SUMS

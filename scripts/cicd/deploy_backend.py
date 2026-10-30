@@ -134,6 +134,8 @@ def health(image, manifest=None):
                     raise RuntimeError('Running commit does not match the release')
                 if bool((report.get('diagnostic') or {}).get('aiConfigured')) != bool(manifest.get('diagnosticAiEnabled')):
                     raise RuntimeError('Diagnostic AI state does not match the release manifest')
+                if bool(report.get('scheduler')) != bool(manifest.get('schedulerEnabled')):
+                    raise RuntimeError('Scheduler state does not match the release manifest')
             return
         if status == 'unhealthy':
             raise RuntimeError('Docker health check failed')
@@ -185,7 +187,7 @@ def verify_bundle(bundle, sha):
     m = json.loads((bundle / 'manifest.json').read_text())
     policy, migrations = m.get('migrationPolicy'), m.get('migrations', [])
     if m.get('commit') != sha or not re.fullmatch('sha256:[a-f0-9]{64}', m.get('image', '')) or \
-            not isinstance(m.get('diagnosticAiEnabled', False), bool):
+            not isinstance(m.get('diagnosticAiEnabled', False), bool) or not isinstance(m.get('schedulerEnabled', False), bool):
         raise RuntimeError('Release manifest mismatch')
     if (policy, bool(migrations)) not in (('no-change', False), ('additive', True)) or not all(
             isinstance(x, dict) and isinstance(x.get('declared'), dict) and re.fullmatch('[0-9TZ]+_[a-z0-9_]+', str(x.get('id')))
@@ -319,6 +321,8 @@ def deploy(bundle, sha, run_id):
         raise RuntimeError('Paid worker/environment guard failed')
     if bool(service['environment'].get('FANSCOPE_DIAGNOSTIC_DEEPSEEK_API_KEY')) != m.get('diagnosticAiEnabled', False):
         raise RuntimeError('Diagnostic key presence does not match the release manifest')
+    if (service['environment'].get('FANSCOPE_SCHEDULER') == 'true') != m.get('schedulerEnabled', False):
+        raise RuntimeError('Scheduler flag does not match the release manifest')
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     release = STATE / 'backups' / f'{stamp}-{run_id}'
     release.mkdir(mode=0o700)

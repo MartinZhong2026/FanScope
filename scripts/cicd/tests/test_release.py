@@ -411,6 +411,22 @@ class AdditiveTests(unittest.TestCase):
             self.assertEqual(deploy.rehearse_release('new', 'old', after.parent, frozen, manifest), pending)
         self.assertEqual(calls, ['new', 'old'])
 
+    def test_health_must_match_manifest_features(self):
+        image = 'sha256:' + 'a' * 64
+        base = {'status': 'ok', 'service': 'fanscope-api', 'commit': 'c' * 40}
+        container = {'Image': image, 'State': {'Running': True, 'Health': {'Status': 'healthy'}}}
+        for report, manifest, ok in [(base, {'commit': 'c' * 40}, True),
+                                     ({**base, 'commit': 'd' * 40}, {'commit': 'c' * 40}, False),
+                                     ({**base, 'scheduler': True}, {'commit': 'c' * 40}, False),
+                                     ({**base, 'scheduler': True}, {'commit': 'c' * 40, 'schedulerEnabled': True}, True),
+                                     ({**base, 'diagnostic': {'aiConfigured': True}}, {'commit': 'c' * 40}, False)]:
+            with self.subTest(report=report), patch.object(deploy, 'docker_json', return_value=container),                     patch.object(deploy, 'run', return_value=json.dumps(report)):
+                if ok:
+                    deploy.health(image, manifest)
+                else:
+                    with self.assertRaisesRegex(RuntimeError, 'does not match'):
+                        deploy.health(image, manifest)
+
     def test_manifest_policy_requires_a_matching_migration_list(self):
         item = {'id': '20261030T060000Z_a', 'checksum': 'b' * 64, 'declared': {}}
         for manifest, ok in [({'migrationPolicy': 'additive', 'migrations': [item]}, True),
