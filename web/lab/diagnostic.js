@@ -3,7 +3,7 @@
 const API=(window.FANSCOPE_CONFIG?.API_BASE_URL||'').replace(/\/$/,'');
 const token=sessionStorage.getItem('fanscope_lab_token')||'';
 const app=document.getElementById('app');
-const S={config:null,items:[],selected:null,run:null,members:[],links:[],notice:'',error:false,busy:false,disabled:false};
+const S={config:null,items:[],selected:null,run:null,members:[],notice:'',error:false,busy:false,disabled:false};
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const day=s=>s?new Date(s).toLocaleDateString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit'}):'—';
 const time=s=>s?new Date(s).toLocaleString('zh-CN',{hour12:false}):'—';
@@ -56,7 +56,7 @@ function header(){
 }
 function uploadBox(){
  return `<section class="box"><h2>上传论文</h2><form id="dx-upload"><div class="formrow"><label for="dx-file">PDF / Word (.docx) / Markdown / TXT，不超过 10MB；扫描版 PDF 无法识别</label><input id="dx-file" name="file" type="file" accept=".pdf,.docx,.md,.txt" required></div>
- <button class="btn primary" type="submit" ${S.busy?'disabled':''}>上传并提取文字</button></form><p class="subtle">上传后需单独确认授权，确认前不会进行任何诊断。原稿保留 ${S.config.consent.originalDays} 天，报告保留 ${S.config.consent.reportDays} 天，可随时删除。</p></section>`;
+ <button class="btn primary" type="submit" ${S.busy?'disabled':''}>上传并提取文字</button></form><p class="dx-visibility">${esc(S.config.consent.visibility)}</p><p class="subtle">上传后需单独确认授权，确认前不会进行任何诊断。原稿保留 ${S.config.consent.originalDays} 天，报告保留 ${S.config.consent.reportDays} 天，可随时删除。</p></section>`;
 }
 function historyBox(){
  return `<section class="box"><h2>我的诊断记录</h2>${S.items.length?S.items.map(s=>{const last=s.runs?.[0];return `<button class="dx-row ${S.selected?.id===s.id?'active':''}" data-open="${esc(s.id)}"><strong>${esc(s.title||s.filename)}</strong>
@@ -83,7 +83,7 @@ function detail(){
 }
 function shareBox(s){
  const others=S.members.filter(m=>m.id!==S.config.user.id&&!s.shares?.some(x=>x.user_id===m.id));
- return `<details class="dx-share"><summary>共享（${s.shares?.length||0}）</summary><p class="subtle">默认只有你本人和已建立指导关系的导师可见。共享后对方可阅读报告，但不能诊断、共享或删除。</p>
+ return `<details class="dx-share"><summary>共享（${s.shares?.length||0}）</summary><p class="subtle">默认只有你本人${S.config.consent.mentor?`和课题组导师（${esc(S.config.consent.mentor.name)}）`:''}可见。共享后对方可阅读报告，但不能诊断、共享或删除。</p>
  ${(s.shares||[]).map(x=>`<div class="dx-shared">${esc(x.name||x.user_id)} <button class="btn" data-unshare="${esc(x.user_id)}">撤销</button></div>`).join('')}
  ${others.length?`<div class="dx-inline"><select id="dx-share-user">${others.map(m=>`<option value="${esc(m.id)}">${esc(m.name)}</option>`).join('')}</select><button class="btn" data-share="${esc(s.id)}">共享</button></div>`:''}</details>`;
 }
@@ -104,18 +104,18 @@ function report(run){
  ${checks?`<h3 class="dx-section">三、分维度检查</h3><div class="dx-table"><table><thead><tr><th>维度</th><th>结论</th><th>说明</th></tr></thead><tbody>${checks}</tbody></table></div>`:''}
  ${r.strengths?.length?`<h3 class="dx-section">四、优点</h3>${r.strengths.map(s=>`<p>${esc(s.text)}</p>${s.evidence.map(e=>quote(e.quote)).join('')}`).join('')}`:''}</section>`;
 }
-function advisorBox(){
- if(!['mentor','lab_admin'].includes(S.config.user.role))return '';
- const mentors=S.members.filter(m=>m.role==='mentor'),students=S.members;
- return `<details class="box dx-share"><summary>导师指导关系（${S.links.length}）</summary><p class="subtle">建立关系后，导师可以查看该学生的诊断稿件与报告。</p>
- ${S.links.map(l=>`<div class="dx-shared">${esc(l.mentor_name)} → ${esc(l.student_name)} <button class="btn" data-unlink="${esc(l.mentor_id)}|${esc(l.student_id)}">解除</button></div>`).join('')}
- <div class="dx-inline"><select id="dx-mentor">${mentors.map(m=>`<option value="${esc(m.id)}">${esc(m.name)}</option>`).join('')}</select><span>指导</span><select id="dx-student">${students.map(m=>`<option value="${esc(m.id)}">${esc(m.name)}</option>`).join('')}</select><button class="btn" data-link>建立</button></div></details>`;
+function mentorBox(){
+ if(S.config.user.role!=='lab_admin')return '';
+ const mentors=S.members.filter(m=>m.role==='mentor'),current=S.config.consent.mentor;
+ return `<details class="box dx-share"><summary>可查看全组诊断稿件的导师</summary><p class="subtle">课题组只指定一位导师。被指定的导师可以查看所有成员上传的诊断稿件与报告，上传和授权页面会向成员明确说明。</p>
+ <p>当前：<strong>${current?esc(current.name):'未指定'}</strong></p>
+ <div class="dx-inline"><select id="dx-mentor"><option value="">不指定</option>${mentors.map(m=>`<option value="${esc(m.id)}" ${current?.id===m.id?'selected':''}>${esc(m.name)}</option>`).join('')}</select><button class="btn" data-mentor>保存</button></div></details>`;
 }
 function render(){
  if(!token){app.innerHTML=`${header()}<section class="box"><h2>请先登录</h2><p>论文诊断仅对课题组成员开放。</p><a class="btn primary" href="/lab/">前往登录</a></section>`;return}
  if(S.disabled){app.innerHTML=`${header()}<section class="box"><h2>论文诊断尚未开放</h2><p class="subtle">功能正在验收中，开放后会在课题组工作台通知。</p></section>`;return}
  if(!S.config){app.innerHTML=`${header()}<p class="subtle">正在加载…</p>`;return}
- app.innerHTML=`${header()}<div class="dx-grid"><div class="dx-side">${uploadBox()}${historyBox()}${advisorBox()}</div><div class="dx-main">${detail()}</div></div>`;
+ app.innerHTML=`${header()}<div class="dx-grid"><div class="dx-side">${uploadBox()}${historyBox()}${mentorBox()}</div><div class="dx-main">${detail()}</div></div>`;
 }
 
 // --- Events -----------------------------------------------------------------
@@ -131,12 +131,12 @@ app.addEventListener('submit',e=>{
  });
 });
 app.addEventListener('click',e=>{
- const t=e.target.closest('[data-open],[data-consent],[data-run],[data-delete],[data-share],[data-unshare],[data-dismiss],[data-link],[data-unlink]');if(!t)return;
+ const t=e.target.closest('[data-open],[data-consent],[data-run],[data-delete],[data-share],[data-unshare],[data-dismiss],[data-mentor]');if(!t)return;
  if(t.dataset.dismiss!==undefined){S.notice='';render();return}
  if(t.dataset.open)return guard(()=>refresh(t.dataset.open));
  // Read form controls before guard() re-renders the page.
  const checked=!!document.getElementById('dx-consent-check')?.checked,shareTo=document.getElementById('dx-share-user')?.value,
-  mentorId=document.getElementById('dx-mentor')?.value,studentId=document.getElementById('dx-student')?.value;
+  mentorId=document.getElementById('dx-mentor')?.value;
  if(t.dataset.consent)return guard(async()=>{
   if(!checked)throw Error('请先勾选同意授权说明');
   const c=S.config.consent;await api(`/api/diagnostic/submissions/${t.dataset.consent}/consent`,{method:'POST',body:{accept:true,version:c.version,engine:c.engine}});
@@ -149,15 +149,14 @@ app.addEventListener('click',e=>{
  });
  if(t.dataset.share)return guard(async()=>{await api(`/api/diagnostic/submissions/${t.dataset.share}/shares`,{method:'POST',body:{user_id:shareTo}});await refresh();});
  if(t.dataset.unshare)return guard(async()=>{await api(`/api/diagnostic/submissions/${S.selected.id}/shares`,{method:'POST',body:{user_id:t.dataset.unshare,grant:false}});await refresh();});
- if(t.dataset.link!==undefined)return guard(async()=>{S.links=(await api('/api/diagnostic/advisor-links',{method:'POST',body:{mentor_id:mentorId,student_id:studentId}})).items;});
- if(t.dataset.unlink)return guard(async()=>{const [mentor_id,student_id]=t.dataset.unlink.split('|');S.links=(await api('/api/diagnostic/advisor-links',{method:'POST',body:{mentor_id,student_id,linked:false}})).items;});
+ if(t.dataset.mentor!==undefined)return guard(async()=>{await api('/api/diagnostic/trusted-mentor',{method:'POST',body:{user_id:mentorId||null}});S.config=await api('/api/diagnostic/config');S.notice='已更新课题组导师设置。';S.error=false});
 });
 
 async function start(){
  render();if(!token)return;
  try{
   S.config=await api('/api/diagnostic/config');
-  [S.members,S.links]=await Promise.all([api('/api/diagnostic/members').then(x=>x.items),api('/api/diagnostic/advisor-links').then(x=>x.items)]);
+  S.members=(await api('/api/diagnostic/members')).items;
   await refresh(new URLSearchParams(location.search).get('id'));
  }catch(e){if(e.status===404)S.disabled=true;else if(e.status===401){sessionStorage.removeItem('fanscope_lab_token');location.href='/lab/'}else{S.notice=e.message;S.error=true}}
  render();

@@ -19,6 +19,8 @@
 .dx-share summary{cursor:pointer;font-weight:700}
 .dx-shared,.dx-inline{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
 .dx-inline select{border:1px solid #d4e0e9;border-radius:8px;padding:7px 10px;max-width:220px}
+.dx-visibility{border-left:3px solid #f2a33a;background:#fff9ee;padding:6px 10px;border-radius:6px;font-size:13px}
+html[data-theme="dark"] .dx-visibility{background:#2e2615}
 .dx-banner{border-radius:10px;padding:10px 14px;background:#e9f3fb;color:#1d4466;margin:10px 0;font-size:13px}
 .dx-banner.demo{background:#fff3dc;color:#6b4700}
 .dx-summary{background:#f6f9fb;border-radius:10px;padding:10px 14px}

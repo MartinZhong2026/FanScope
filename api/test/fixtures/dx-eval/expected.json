@@ -1,0 +1,31 @@
+{
+  "note": "Planted flaws in synthetic manuscripts. A flaw counts as found when an issue (any severity) matches one of its dimensions AND its title/problem/suggestion matches one of its keywords.",
+  "cn-quant-pension.md": {
+    "paper_type": "quantitative",
+    "flaws": [
+      {"id": "causal_overclaim", "severity_at_least": "major", "dimensions": ["causal_claims", "statistical_inference", "theory_design_fit"], "keywords": ["因果", "内生", "识别", "横截面", "选择"]},
+      {"id": "weak_controls", "dimensions": ["variables_measurement", "model_specification", "causal_claims"], "keywords": ["控制变量", "遗漏", "收入", "健康", "混杂"]},
+      {"id": "sample_attrition", "dimensions": ["sample_data", "statistical_inference"], "keywords": ["缺失", "删除", "样本", "选择偏差", "4310", "9214"]},
+      {"id": "overgeneralized_policy", "dimensions": ["contribution", "argument_logic", "evidence_support", "causal_claims"], "keywords": ["决定性", "政策", "大幅提高", "过度"]},
+      {"id": "no_robustness", "dimensions": ["robustness", "model_specification"], "keywords": ["稳健", "敏感性", "替代"]}
+    ]
+  },
+  "cn-qual-caregiving.md": {
+    "paper_type": "qualitative",
+    "flaws": [
+      {"id": "convenience_sample", "severity_at_least": "major", "dimensions": ["participants_sampling", "reflexivity_ethics"], "keywords": ["同事", "朋友", "便利", "抽样", "6位", "样本"]},
+      {"id": "overgeneralization", "severity_at_least": "major", "dimensions": ["interpretation_claims", "argument_logic", "evidence_support"], "keywords": ["普遍", "推广", "整体", "代表"]},
+      {"id": "no_analysis_procedure", "dimensions": ["analysis_procedure", "data_collection"], "keywords": ["编码", "分析过程", "分析方法", "整理"]},
+      {"id": "no_ethics_reflexivity", "dimensions": ["reflexivity_ethics"], "keywords": ["伦理", "知情同意", "反身", "关系"]}
+    ]
+  },
+  "en-quant-social-media.md": {
+    "paper_type": "quantitative",
+    "flaws": [
+      {"id": "multiple_testing", "severity_at_least": "major", "dimensions": ["statistical_inference"], "keywords": ["多重", "24", "multiple", "校正", "假阳性"]},
+      {"id": "causal_overclaim", "severity_at_least": "major", "dimensions": ["causal_claims", "statistical_inference"], "keywords": ["因果", "横截面", "causal", "cross-sectional"]},
+      {"id": "selection_bias", "dimensions": ["sample_data"], "keywords": ["社交媒体", "招募", "选择", "代表性", "online", "recruit"]},
+      {"id": "overreaching_policy", "dimensions": ["contribution", "argument_logic", "evidence_support", "causal_claims"], "keywords": ["政策", "补贴", "subsid"]}
+    ]
+  }
+}

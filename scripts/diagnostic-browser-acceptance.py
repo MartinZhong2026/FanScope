@@ -61,12 +61,20 @@ with sync_playwright() as pw:
         page.wait_for_selector('h1:has-text("论文诊断")')
         return ctx, page
 
+    # The lab_admin designates the group's single trusted mentor in the UI.
+    actx, admin = session('admin@dx.test')
+    admin.click('details.dx-share summary'); admin.select_option('#dx-mentor', label='验收导师'); admin.click('[data-mentor]')
+    expect(admin.locator('details.dx-share')).to_contain_text('当前：验收导师')
+    actx.close()
+
     ctx, page = session('student@dx.test')
+    check('mentor visibility disclosed before upload', '验收导师' in page.locator('.dx-visibility').inner_text())
     page.set_input_files('#dx-file', str(manuscript))
     page.click('#dx-upload [type=submit]')
     expect(page.locator('.dx-consent')).to_be_visible(timeout=30000)
     check('consent required before any diagnosis', page.locator('[data-run]').count() == 0)
     check('consent names the engine and retention', '14' in page.locator('.dx-consent').inner_text() and '90' in page.locator('.dx-consent').inner_text())
+    check('consent text states the mentor can read it', '验收导师' in page.locator('.dx-consent').inner_text())
     page.click('[data-consent]')
     expect(page.locator('.notice.error')).to_contain_text('勾选')
     page.check('#dx-consent-check'); page.click('[data-consent]')
@@ -79,6 +87,15 @@ with sync_playwright() as pw:
     check('causal over-claim flagged with evidence', '因果表述' in report and '养老金导致了老年人抑郁水平下降' in report)
     check('issues ordered by severity', page.locator('.dx-issue').count() >= 1)
     page.screenshot(path=str(out / 'report-desktop.png'), full_page=True)
+
+    # Designated mentor reads it; another mentor account does not.
+    mctx0, mentor = session('mentor@dx.test')
+    mentor.wait_for_selector('.dx-row'); mentor.click('.dx-row')
+    expect(mentor.locator('.dx-report')).to_be_visible(timeout=15000)
+    check('designated mentor cannot delete or re-run', mentor.locator('[data-delete]').count() == 0 and mentor.locator('[data-run]').count() == 0)
+    m2ctx, mentor2 = session('mentor2@dx.test')
+    check('non-designated mentor account sees nothing', mentor2.locator('.dx-row').count() == 0)
+    m2ctx.close(); mctx0.close()
 
     # Peer cannot see it before sharing.
     pctx, peer = session('peer@dx.test')

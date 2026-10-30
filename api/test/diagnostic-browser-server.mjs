@@ -11,7 +11,7 @@ globalThis.fetch=async url=>{throw Error('Diagnostic acceptance blocks outbound 
 const root=path.resolve(import.meta.dirname,'../..'),webRoot=path.join(root,'web');
 const {createUser}=await import('../src/lab.mjs');const {makeServer}=await import('../src/server.mjs');
 const password='Diagnostic-acceptance-only';
-for(const [name,email,role] of [['验收学生','student@dx.test','member'],['验收同学','peer@dx.test','member'],['验收导师','mentor@dx.test','mentor']])createUser({name,email,role,password});
+for(const [name,email,role] of [['验收学生','student@dx.test','member'],['验收同学','peer@dx.test','member'],['验收导师','mentor@dx.test','mentor'],['另一导师账号','mentor2@dx.test','mentor'],['验收管理员','admin@dx.test','lab_admin']])createUser({name,email,role,password});
 // Pages _headers rules, with the production API origin swapped for the local fixture.
 const rules=[];let current=null;
 for(const line of fs.readFileSync(path.join(webRoot,'_headers'),'utf8').split(/\r?\n/)){

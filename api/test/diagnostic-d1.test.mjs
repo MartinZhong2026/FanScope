@@ -78,7 +78,7 @@ test('full flow: upload, explicit consent, rule-engine diagnosis, report with ve
  assert.equal(list[0].id,id);assert.equal(list[0].runs[0].status,'done');
 });
 
-test('access: owner, explicit share and linked mentor only; other members/mentors get 403; owner-only actions',async()=>{
+test('access: owner, explicit share and the one designated mentor only; designation by lab_admin only; disclosed to students',async()=>{
  const id=(await upload('student')).body.id;await consent('student',id);
  const runId=(await call('student',`/api/diagnostic/submissions/${id}/runs`,{method:'POST'})).body.id;await dx.idle();
  for(const who of ['peer','mentor','otherMentor','admin']){
@@ -86,19 +86,26 @@ test('access: owner, explicit share and linked mentor only; other members/mentor
   assert.equal((await call(who,`/api/diagnostic/runs/${runId}`)).status,403,who);
   assert.ok(!(await call(who,'/api/diagnostic/submissions')).body.items.some(x=>x.id===id),who);
  }
- // Members cannot create advisor links; staff can.
- assert.equal((await call('student','/api/diagnostic/advisor-links',{method:'POST',body:{mentor_id:users.mentor.id,student_id:users.student.id}})).status,403);
- assert.equal((await call('admin','/api/diagnostic/advisor-links',{method:'POST',body:{mentor_id:users.mentor.id,student_id:users.student.id}})).status,200);
- assert.equal((await call('mentor',`/api/diagnostic/runs/${runId}`)).status,200,'linked mentor reads the report');
- assert.equal((await call('otherMentor',`/api/diagnostic/runs/${runId}`)).status,403,'unlinked mentor still blocked');
+ // Only a lab_admin designates; mentors cannot designate themselves, members cannot at all.
+ for(const who of ['student','mentor','otherMentor'])assert.equal((await call(who,'/api/diagnostic/trusted-mentor',{method:'POST',body:{user_id:users.mentor.id}})).status,403,who);
+ assert.equal((await call('admin','/api/diagnostic/trusted-mentor',{method:'POST',body:{user_id:users.peer.id}})).status,400,'a member account cannot be designated');
+ assert.equal((await call('admin','/api/diagnostic/trusted-mentor',{method:'POST',body:{user_id:users.mentor.id}})).body.mentor.id,users.mentor.id);
+ const terms=(await call('student','/api/diagnostic/config')).body.consent;
+ assert.match(terms.visibility,/mentor/);assert.ok(terms.text.includes(terms.visibility),'mentor visibility is part of the consent text');
+ assert.equal((await call('mentor',`/api/diagnostic/runs/${runId}`)).status,200,'designated mentor reads the report');
+ assert.ok((await call('mentor','/api/diagnostic/submissions')).body.items.some(x=>x.id===id));
+ for(const who of ['otherMentor','admin','peer'])assert.equal((await call(who,`/api/diagnostic/runs/${runId}`)).status,403,`${who} still blocked`);
  // Explicit share.
  assert.equal((await call('student',`/api/diagnostic/submissions/${id}/shares`,{method:'POST',body:{user_id:users.peer.id}})).status,200);
  assert.equal((await call('peer',`/api/diagnostic/runs/${runId}`)).status,200);
- for(const [who,action] of [['peer','runs'],['peer','delete'],['mentor','consent'],['mentor','delete']])
+ for(const [who,action] of [['peer','runs'],['peer','delete'],['mentor','consent'],['mentor','delete'],['mentor','runs']])
   assert.equal((await call(who,`/api/diagnostic/submissions/${id}/${action}`,{method:'POST',body:{}})).status,403,`${who} ${action}`);
  assert.equal((await call('peer',`/api/diagnostic/submissions/${id}/shares`,{method:'POST',body:{user_id:users.admin.id}})).status,403,'only the owner shares');
  await call('student',`/api/diagnostic/submissions/${id}/shares`,{method:'POST',body:{user_id:users.peer.id,grant:false}});
  assert.equal((await call('peer',`/api/diagnostic/runs/${runId}`)).status,403,'revoked');
+ // Clearing the designation removes mentor access.
+ await call('admin','/api/diagnostic/trusted-mentor',{method:'POST',body:{user_id:null}});
+ assert.equal((await call('mentor',`/api/diagnostic/runs/${runId}`)).status,403);
 });
 
 test('DeepSeek engine (mocked HTTP): fabricated quotes are dropped, failures are recorded with safe codes, text stays out of logs',async()=>{

@@ -1,6 +1,6 @@
--- Paper Diagnostic (D1): private manuscript submissions, explicit shares,
--- mentor-student links and diagnostic runs. Additive only; no existing table
--- is touched. Access rules live in api/src/diagnostic/access.mjs.
+-- Paper Diagnostic (D1): private manuscript submissions, explicit shares and
+-- diagnostic runs. The single trusted mentor is a setting (meta), not a table.
+-- Additive only; no existing table is touched. Access rules: diagnostic/service.mjs.
 CREATE TABLE dx_submissions(
  id TEXT PRIMARY KEY,
  owner_id TEXT NOT NULL,
@@ -32,14 +32,6 @@ CREATE TABLE dx_shares(
  PRIMARY KEY(submission_id,user_id)
 );
 CREATE INDEX idx_dx_shares_user ON dx_shares(user_id);
-CREATE TABLE dx_advisor_links(
- mentor_id TEXT NOT NULL,
- student_id TEXT NOT NULL,
- created_by TEXT NOT NULL,
- created_at TEXT NOT NULL,
- PRIMARY KEY(mentor_id,student_id)
-);
-CREATE INDEX idx_dx_advisor_student ON dx_advisor_links(student_id);
 CREATE TABLE dx_runs(
  id TEXT PRIMARY KEY,
  submission_id TEXT NOT NULL REFERENCES dx_submissions(id),

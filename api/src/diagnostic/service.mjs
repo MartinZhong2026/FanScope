@@ -2,8 +2,9 @@
 // reports, sharing, retention and deletion. Off unless FANSCOPE_DIAGNOSTIC_ENABLED.
 //
 // Privacy rules enforced here (not in the browser):
-//  - Access: canAccess() only — owner, explicit share, or a mentor linked to the
-//    owner in dx_advisor_links. Everyone else gets 403.
+//  - Access: canAccess() only — owner, explicit share, or the group's single
+//    trusted mentor (designated by a lab_admin, disclosed at upload/consent).
+//    Everyone else, including other mentor accounts, gets 403.
 //  - Retention: original file + extracted text 14 days, reports 90 days from
 //    upload. Expiry is enforced on every read (410) even if purge lags;
 //    purgeDue() then removes files/text/report bodies idempotently.
@@ -41,12 +42,33 @@ const storageDir=()=>path.join(path.dirname(config.dbPath),'diagnostic-uploads')
 const error=(status,message,code)=>Object.assign(new Error(message),{status,code});
 
 export function consentTerms(engine=engineName()){
- const external=engine==='deepseek';
- return {version:CONSENT_VERSION,engine,external,originalDays:ORIGINAL_DAYS,reportDays:REPORT_DAYS,
+ const external=engine==='deepseek',mentor=trustedMentor();
+ const visibility=mentor?`课题组导师（${mentor.name}）可以查看你上传的稿件信息和诊断报告；其他成员只有在你主动共享后才能查看。`:'目前未指定可查看稿件的导师；其他成员只有在你主动共享后才能查看。';
+ return {version:CONSENT_VERSION,engine,external,originalDays:ORIGINAL_DAYS,reportDays:REPORT_DAYS,visibility,mentor,
   backupNote:process.env.FANSCOPE_DIAGNOSTIC_BACKUP_NOTE||'删除后，数据仍可能保留在服务器加密备份中，直至备份按运维策略轮换（计划不超过 35 天）。',
   text:external
-   ?`我确认上传的是我本人有权处理的稿件，并同意将稿件全文发送给 DeepSeek（深度求索）的模型接口以生成诊断报告。原稿与提取文本保留 ${ORIGINAL_DAYS} 天，诊断报告保留 ${REPORT_DAYS} 天，我可随时删除。`
-   :`我确认上传的是我本人有权处理的稿件。当前诊断引擎为“${engine==='rules'?'规则演示引擎（不调用任何外部 AI）':engine}”。原稿与提取文本保留 ${ORIGINAL_DAYS} 天，诊断报告保留 ${REPORT_DAYS} 天，我可随时删除。`};
+   ?`我确认上传的是我本人有权处理的稿件，并同意将稿件全文发送给 DeepSeek（深度求索）的模型接口以生成诊断报告。原稿与提取文本保留 ${ORIGINAL_DAYS} 天，诊断报告保留 ${REPORT_DAYS} 天，我可随时删除。${visibility}`
+   :`我确认上传的是我本人有权处理的稿件。当前诊断引擎为“${engine==='rules'?'规则演示引擎（不调用任何外部 AI）':engine}”。原稿与提取文本保留 ${ORIGINAL_DAYS} 天，诊断报告保留 ${REPORT_DAYS} 天，我可随时删除。${visibility}`};
+}
+
+// --- Trusted mentor -------------------------------------------------------------
+// The group has one supervising mentor. A lab_admin designates that account;
+// mentors cannot designate themselves or others, members cannot at all.
+const MENTOR_KEY='diagnostic:trusted-mentor';
+export function trustedMentor(){
+ let id;try{id=JSON.parse(db.prepare('SELECT value FROM meta WHERE key=?').get(MENTOR_KEY)?.value||'{}').user_id}catch{return null}
+ return id?db.prepare("SELECT id,name FROM lab_users WHERE id=? AND role='mentor' AND active=1").get(id)||null:null;
+}
+export function setTrustedMentor(user,{user_id}){
+ if(user.role!=='lab_admin')throw error(403,'仅课题组管理员可以指定导师','dx_admin_only');
+ if(user_id===null||user_id===''){db.prepare('DELETE FROM meta WHERE key=?').run(MENTOR_KEY)}
+ else{
+  const mentor=db.prepare("SELECT id FROM lab_users WHERE id=? AND role='mentor' AND active=1").get(String(user_id||''));
+  if(!mentor)throw error(400,'请选择一个有效的导师账号','dx_bad_member');
+  db.prepare('INSERT INTO meta(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value').run(MENTOR_KEY,JSON.stringify({user_id:mentor.id,set_by:user.id,set_at:nowIso()}));
+ }
+ log('notice','diagnostic.trusted_mentor_changed',{mentor_id:user_id||null,actor_id:user.id});
+ return trustedMentor();
 }
 
 // --- Access -------------------------------------------------------------------
@@ -54,7 +76,7 @@ export function canAccess(user,sub){
  if(!user||!sub)return false;
  if(sub.owner_id===user.id)return true;
  if(db.prepare('SELECT 1 FROM dx_shares WHERE submission_id=? AND user_id=?').get(sub.id,user.id))return true;
- return user.role==='mentor'&&!!db.prepare('SELECT 1 FROM dx_advisor_links WHERE mentor_id=? AND student_id=?').get(user.id,sub.owner_id);
+ return trustedMentor()?.id===user.id;
 }
 function submissionFor(user,id){
  const sub=db.prepare('SELECT * FROM dx_submissions WHERE id=?').get(String(id||''));
@@ -110,8 +132,8 @@ function submissionView(user,sub,{runs=true}={}){
 export function listSubmissions(user){
  const rows=db.prepare(`SELECT * FROM dx_submissions s WHERE s.deleted_at IS NULL AND (s.owner_id=?
   OR EXISTS(SELECT 1 FROM dx_shares x WHERE x.submission_id=s.id AND x.user_id=?)
-  OR (?='mentor' AND EXISTS(SELECT 1 FROM dx_advisor_links a WHERE a.mentor_id=? AND a.student_id=s.owner_id)))
-  ORDER BY s.created_at DESC LIMIT 200`).all(user.id,user.id,user.role,user.id);
+  OR ?=1)
+  ORDER BY s.created_at DESC LIMIT 200`).all(user.id,user.id,trustedMentor()?.id===user.id?1:0);
  return rows.filter(s=>canAccess(user,s)&&reportsAvailable(s)).map(s=>submissionView(user,s));
 }
 
@@ -217,22 +239,6 @@ export function share(user,id,targetId,grant){
  return submissionView(user,db.prepare('SELECT * FROM dx_submissions WHERE id=?').get(sub.id),{runs:false});
 }
 
-const isStaff=u=>['mentor','lab_admin'].includes(u.role);
-export function advisorLinks(user){
- const rows=db.prepare('SELECT a.mentor_id,m.name mentor_name,a.student_id,s.name student_name,a.created_at FROM dx_advisor_links a LEFT JOIN lab_users m ON m.id=a.mentor_id LEFT JOIN lab_users s ON s.id=a.student_id ORDER BY m.name,s.name').all();
- return isStaff(user)?rows:rows.filter(r=>r.student_id===user.id);
-}
-export function setAdvisorLink(user,{mentor_id,student_id,linked}){
- if(!isStaff(user))throw error(403,'仅导师或课题组管理员可维护导师关系','dx_staff_only');
- const mentor=db.prepare("SELECT id FROM lab_users WHERE id=? AND role='mentor' AND active=1").get(String(mentor_id||''));
- const student=db.prepare('SELECT id FROM lab_users WHERE id=? AND active=1').get(String(student_id||''));
- if(!mentor||!student||mentor.id===student.id)throw error(400,'请选择有效的导师与学生','dx_bad_member');
- if(linked===false)db.prepare('DELETE FROM dx_advisor_links WHERE mentor_id=? AND student_id=?').run(mentor.id,student.id);
- else db.prepare('INSERT OR IGNORE INTO dx_advisor_links(mentor_id,student_id,created_by,created_at) VALUES(?,?,?,?)').run(mentor.id,student.id,user.id,nowIso());
- log('info','diagnostic.advisor_link',{mentor_id:mentor.id,student_id:student.id,linked:linked!==false,actor_id:user.id});
- return advisorLinks(user);
-}
-
 // --- HTTP -----------------------------------------------------------------------
 const respond=(res,status,value)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(value))};
 async function body(req,limit){const parts=[];let n=0;for await(const c of req){n+=c.length;if(n>limit)throw error(413,limit>100000?'文件不得超过 10MB':'请求过大','dx_too_large');parts.push(c)}return Buffer.concat(parts)}
@@ -246,8 +252,7 @@ export async function diagnosticRoute(req,res,url){
  const [a,id,b,c]=parts;
  if(a==='config'&&method==='GET')return respond(res,200,{engine:engineName(),consent:consentTerms(),maxInputChars:MAX_INPUT_CHARS,user}),true;
  if(a==='members'&&method==='GET')return respond(res,200,{items:db.prepare('SELECT id,name,role FROM lab_users WHERE active=1 ORDER BY name').all()}),true;
- if(a==='advisor-links'&&!id&&method==='GET')return respond(res,200,{items:advisorLinks(user)}),true;
- if(a==='advisor-links'&&!id&&method==='POST')return respond(res,200,{items:setAdvisorLink(user,await json(req))}),true;
+ if(a==='trusted-mentor'&&!id&&method==='POST')return respond(res,200,{mentor:setTrustedMentor(user,await json(req))}),true;
  if(a==='submissions'&&!id&&method==='GET')return respond(res,200,{items:listSubmissions(user)}),true;
  if(a==='submissions'&&!id&&method==='POST'){
   let filename;try{filename=decodeURIComponent(String(req.headers['x-file-name']||'').slice(0,180))}catch{throw error(400,'文件名编码无效','dx_bad_name')}
