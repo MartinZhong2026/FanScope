@@ -4,6 +4,7 @@ import path from 'node:path';
 import {DatabaseSync} from 'node:sqlite';
 import {config,journals} from './config.mjs';
 import {normalizedAnalysisText,relevanceScore,classifyArticleType} from './publication-policy.mjs';
+import {verifyMigrationsAtStartup} from './migrations.mjs';
 fs.mkdirSync(path.dirname(config.dbPath),{recursive:true});
 const existed=fs.existsSync(config.dbPath)&&fs.statSync(config.dbPath).size>0;
 export const db=new DatabaseSync(config.dbPath);
@@ -147,6 +148,9 @@ for(const j of journals){
 for(const j of journals)if(j.rss_url)db.prepare("UPDATE journals SET rss_url=? WHERE id=? AND rss_url='' AND NOT EXISTS(SELECT 1 FROM schema_migrations WHERE version='rss-url')").run(j.rss_url,j.id);
 db.exec("INSERT OR IGNORE INTO schema_migrations VALUES('rss-url',datetime('now'))");
 db.exec('CREATE INDEX IF NOT EXISTS idx_articles_doi_v14 ON articles(doi); CREATE INDEX IF NOT EXISTS idx_articles_url_v14 ON articles(url)');
+// K3: versioned migrations (api/migrations) are applied only by migrate-cli.mjs.
+// Startup is read-only here: it refuses pending or edited migrations.
+verifyMigrationsAtStartup(db);
 }
 export const now=()=>new Date().toISOString();
 export const sql={

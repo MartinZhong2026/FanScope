@@ -10,6 +10,7 @@ RUN --mount=type=secret,id=proxy_ca \
     npm ci --omit=dev --ignore-scripts
 COPY config ./config
 COPY src ./src
+COPY migrations ./migrations
 RUN mkdir -p /app/data && chown -R node:node /app
 USER node
 EXPOSE 8787
