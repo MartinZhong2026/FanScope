@@ -133,6 +133,9 @@ test('Chinese registry: all 22 listed, only journals with a reviewed adapter are
  const f=ingestFreshness();
  assert.equal(f.chinese.total,22);assert.equal(f.chinese.automatic,4);
  assert.equal(Object.values(f.chinese.byStatus).reduce((a,b)=>a+b),22);
+ assert.deepEqual(Object.keys(f.chinese.journals[0]).filter(k=>['articles','abstracts','latest','last_run'].includes(k)).sort(),['abstracts','articles','last_run','latest']);
+ assert.equal(f.chinese.journals.filter(j=>j.articles).length,f.chinese.withArticles);
+ assert.ok(!('home' in f.chinese.journals[0]));
  app.close();
 });
 

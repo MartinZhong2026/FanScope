@@ -42,13 +42,15 @@
    "title": "公共管理评论",
    "issn": "2096-7713",
    "status": "B",
-   "source": "Crossref（58 条，最新 2026-06，最近 5 条都有摘要）+ SciOpen",
+   "source": "SciOpen 官方期次（清华大学出版社）；Crossref 仅作摘要后备",
    "next": "适配器已用真实页面验证；需在生产运行 7 天并抽样对账后升为 A",
    "journal_id": "public-admin-cn",
-   "adapter": "crossref-sciopen",
+   "adapter": "sciopen",
    "base": "https://www.sciopen.com",
    "home": "https://www.sciopen.com/journal/2096-7713",
-   "since": 2015
+   "since": 2015,
+   "journal_key": "2041419622998675457",
+   "doi_prefix": "10.26599/cpar"
   },
   {
    "title": "中国人口科学",

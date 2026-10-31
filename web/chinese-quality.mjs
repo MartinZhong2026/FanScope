@@ -26,9 +26,13 @@ export function chineseQualityPanel(d){
 }
 // Per-journal truth from the reviewed registry: being listed never implies being collected.
 const SOURCE_STATE={A:'自动更新已验证',B:'官网适配已接入，观察中',E:'来源可行，尚未接入','E-':'来源可访问，需新适配器',C:'来源受限或需授权',D:'来源暂不可达或待确认'};
+// Keeps three different absences apart: source state, abstract gap, collection failure.
+const runState=j=>j.last_run?.status==='failed'?`最近采集失败（${escape(j.last_run.code||'未知')}）`:j.last_run?.status==='continuing'?'回填进行中':j.last_run?.status==='partial'?'部分文章待重试':'';
 export function chineseRegistryPanel(f){
  const list=f?.chinese?.journals;
  if(!list?.length)return '';
- const rows=list.map(j=>`<tr><td>${escape(j.title)}</td><td>${escape(SOURCE_STATE[j.status]||j.status)}</td><td>${j.automatic&&f.scheduler==='on'?'是':'否'}</td></tr>`).join('');
- return `<section class="card panel cn-registry"><h2>中文期刊来源状态</h2><p>共 ${list.length} 本 · ${f.scheduler==='on'?'已开启自动更新':'适配器已就绪、调度尚未开启'} ${f.chinese.automatic} 本。未接入不等于没有论文，也不代表采集失败。</p><details><summary>查看逐刊状态</summary><table><thead><tr><th>期刊</th><th>来源状态</th><th>自动更新</th></tr></thead><tbody>${rows}</tbody></table></details></section>`;
+ const rows=[...list].sort((a,b)=>b.articles-a.articles).map(j=>{
+  const on=j.automatic&&f.scheduler==='on',state=SOURCE_STATE[j.status]||j.status,run=runState(j);
+  return `<tr><td>${escape(j.title)}</td><td>${j.articles.toLocaleString('en-US')}</td><td>${j.articles?`${j.abstracts.toLocaleString('en-US')}${j.no_source_abstract?`（来源无摘要 ${j.no_source_abstract}）`:''}`:'—'}</td><td>${escape(j.latest||'—')}</td><td>${escape(state)}${run?` · ${run}`:''}</td><td>${on?'是':'否'}</td></tr>`;}).join('');
+ return `<section class="card panel cn-registry"><h2>中文期刊覆盖</h2><p>共 ${list.length} 本 · 已收录 ${f.chinese.withArticles} 本 · ${f.chinese.articles.toLocaleString('en-US')} 篇 · 有摘要 ${f.chinese.abstracts.toLocaleString('en-US')} 篇 · ${f.scheduler==='on'?'已开启自动更新':'适配器已就绪、调度尚未开启'} ${f.chinese.automatic} 本。未接入不等于没有论文，也不代表采集失败。</p><details><summary>查看 22 本逐刊状态</summary><div class="table-scroll"><table><thead><tr><th>期刊</th><th>收录</th><th>摘要</th><th>最新发表</th><th>采集状态</th><th>自动更新</th></tr></thead><tbody>${rows}</tbody></table></div></details></section>`;
 }

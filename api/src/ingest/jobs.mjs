@@ -34,6 +34,11 @@ export async function runEnglishJob({checkpoint}){
  return {journals:ids.length,failed,added};
 }
 
+// Last outcome per journal, so a collection failure is never shown as "no data".
+const recordRun=(entry,value)=>db.prepare('INSERT INTO meta(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value')
+ .run('cn-run:'+entry.issn,JSON.stringify({...value,at:new Date().toISOString()}));
+const lastRun=issn=>{try{return JSON.parse(db.prepare('SELECT value FROM meta WHERE key=?').get('cn-run:'+issn)?.value||'null')}catch{return null}};
+
 export async function runChineseJob({checkpoint}){
  const entries=automaticChinese();
  if(!entries.length)return {journals:0,reason:'no_verified_sources'};
@@ -47,9 +52,11 @@ export async function runChineseJob({checkpoint}){
   try{
    const r=await collectJournal(entry,{read:transport.read,json:transport.json,checkpoint});
    added+=r.added;abstracts+=r.abstracts;
+   recordRun(entry,{status:r.failed?'partial':'ok',failed:r.failed});
   }catch(e){
    if(e?.code==='scheduler_hold')throw e;
-   if(/budget exhausted/.test(e?.message))continue;
+   if(/budget exhausted/.test(e?.message)){recordRun(entry,{status:'continuing'});continue}
+   recordRun(entry,{status:'failed',code:/^[a-z0-9_]{1,60}$/.test(e?.code||'')?e.code:'source_unreachable'});
    failed++;log('warn','ingest.source_failed',{market:'chinese',journal_id:entry.journal_id,...errorFields(e)});
   }
  }
@@ -75,8 +82,15 @@ export function ingestFreshness(){
  const jobs=hasJobs?db.prepare('SELECT name,next_due_at,last_started_at,last_finished_at,last_status,last_error_code,consecutive_failures FROM scheduled_jobs ORDER BY name').all():[];
  const english=db.prepare("SELECT COUNT(*) journals,MAX(last_success) last_success,SUM(COALESCE(last_error,'')<>'') failing FROM journals WHERE market='international' AND enabled=1").get();
  const eligible=new Set(eligibleChineseJournals());
- const journals=CHINESE_STATUS.journals.map(({home,base,...j})=>({...j,automatic:eligible.has(j.journal_id)}));
+ // Real counts per journal, whatever the source state. Titles are the stable join:
+ // most journal rows have no ISSN until an adapter has confirmed one.
+ const counts=new Map(db.prepare(`SELECT j.title,COUNT(a.id) articles,SUM(length(trim(a.abstract))>=55) abstracts,
+  MAX(COALESCE(NULLIF(a.publication_date,''),a.publication_date_partial)) latest,
+  SUM(json_extract(a.source_evidence_json,'$.abstract_gap') IS NOT NULL) no_source_abstract
+  FROM journals j LEFT JOIN articles a ON a.journal_id=j.id AND a.demo=0 WHERE j.market='chinese' GROUP BY j.id`).all().map(r=>[r.title,r]));
+ const journals=CHINESE_STATUS.journals.map(({home,base,journal_key,doi_prefix,...j})=>{const c=counts.get(j.title);
+  return {...j,automatic:eligible.has(j.journal_id),articles:c?.articles||0,abstracts:c?.abstracts||0,no_source_abstract:c?.no_source_abstract||0,latest:c?.latest||null,last_run:lastRun(j.issn)}});
  const summary={};for(const j of journals)summary[j.status]=(summary[j.status]||0)+1;
  return {scheduler:process.env.FANSCOPE_SCHEDULER==='true'?'on':'off',gate:readGate().reason,jobs,english,
-  chinese:{total:journals.length,automatic:journals.filter(j=>j.automatic).length,byStatus:summary,reviewedAt:CHINESE_STATUS.reviewedAt,journals}};
+  chinese:{total:journals.length,automatic:journals.filter(j=>j.automatic).length,withArticles:journals.filter(j=>j.articles).length,articles:journals.reduce((n,j)=>n+j.articles,0),abstracts:journals.reduce((n,j)=>n+j.abstracts,0),byStatus:summary,reviewedAt:CHINESE_STATUS.reviewedAt,journals}};
 }

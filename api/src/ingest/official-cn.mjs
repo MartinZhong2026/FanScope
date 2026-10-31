@@ -1,11 +1,11 @@
 // Chinese journal collection from publisher pages that are public and allowed by
-// robots.txt. One adapter serves every journal on the "/CN/" platform; SciOpen plus
-// Crossref serves 公共管理评论. Abstracts are the publisher's own text, stored with
+// robots.txt. One adapter serves every journal on the "/CN/" platform; SciOpen, the
+// publisher's platform, serves 公共管理评论. Abstracts are the publisher's own text, stored with
 // their source. Nothing is generated; a missing abstract stays missing, with a reason.
 // Re-running is safe: finished articles and issues are skipped, existing rows are
 // filled in rather than duplicated.
 import {db} from '../db.mjs';
-import {classify,crossrefToArticle} from '../sources.mjs';
+import {classify} from '../sources.mjs';
 import {relevanceScore} from '../publication-policy.mjs';
 import {citationArticle,importChinese} from '../chinese-ingestion.mjs';
 import {log} from '../platform/log.mjs';
@@ -112,42 +112,64 @@ export async function collectOfficial(entry,{read,checkpoint=()=>{},since=entry.
  return totals;
 }
 
-// 公共管理评论: Crossref lists the articles; SciOpen, the publisher's platform, shows abstracts.
-export async function collectCrossrefSciopen(entry,{read,json,checkpoint=()=>{}}){
- const j=journalRow(entry),totals={issues:0,articles:0,added:0,abstracts:0,noAbstract:0,rejected:0,failed:0,skippedOld:0};
- let cursor='*';
- for(;;){
+// 公共管理评论: the SciOpen archive is the list of record. Crossref lacks whole issues
+// (those DOIs return 404), so it is only a fallback for a missing abstract.
+export const sciopenYears=html=>[...new Set([...html.matchAll(/volume=(\d{4})/g)].map(m=>m[1]))];
+export const sciopenIssues=html=>[...new Set([...html.matchAll(/issueIndex=(\d+)/g)].map(m=>m[1]))];
+export const sciopenDois=(html,prefix)=>[...new Set([...html.matchAll(/10\.\d{4,9}\/[A-Za-z]+\.\d{4}\.\d+/g)].map(m=>m[0].toLowerCase()))].filter(d=>d.startsWith(prefix));
+const metaValues=(html,name)=>[...html.matchAll(new RegExp(`<meta\\s+name="${name}"\\s+content="([^"]*)"`,'g'))].map(m=>cleanText(m[1]));
+export function sciopenArticle(html,doi){
+ const one=name=>metaValues(html,name)[0]||'';
+ if(one('citation_doi').toLowerCase()!==doi)throw Object.assign(Error('SciOpen page does not match the DOI'),{code:'ingest_identity_mismatch'});
+ const date=one('citation_publication_date').match(/^(\d{4})\/(\d{1,2})/);
+ const abstract=one('Description');
+ return {title:one('citation_title'),authors:metaValues(html,'citation_author').join(', '),volume:one('citation_volume'),issue:one('citation_issue'),
+  publication_date_partial:date?`${date[1]}-${date[2].padStart(2,'0')}`:'',date_precision:'month',doi,abstract:usable(abstract)?abstract:''};
+}
+
+export async function collectSciopen(entry,{read,json,checkpoint=()=>{},recent=2}){
+ const j=journalRow(entry),hosts=['www.sciopen.com'],state=getState(entry),finished=new Set(state.issues||[]);
+ const totals={issues:0,articles:0,added:0,abstracts:0,noAbstract:0,rejected:0,failed:0,skippedOld:0};
+ const archive=`${entry.base}/journal/join_journal/archive?journalId=${entry.journal_key}&issn=${entry.issn}`;
+ const years=sciopenYears(await read(archive,hosts));
+ if(!years.length)throw Object.assign(Error('Archive layout changed'),{code:'ingest_layout_changed'});
+ const issues=[];
+ for(const year of years){checkpoint();issues.push(...sciopenIssues(await read(`${archive}&volume=${year}`,hosts)))}
+ for(const [index,issue] of issues.entries()){
+  if(index>=recent&&finished.has(issue))continue;
   checkpoint();
-  const page=await json(`https://api.crossref.org/journals/${entry.issn}/works?rows=100&cursor=${encodeURIComponent(cursor)}&select=DOI,title,abstract,author,issued,published,published-online,published-print,container-title,volume,issue,ISSN,type,publisher,resource`);
-  const items=page.message?.items||[];
-  if(!items.length)break;
-  for(const item of items){
-   const article=crossrefToArticle(item,j);
-   if(!article)continue;
-   const row=db.prepare('SELECT id,abstract,title,source_evidence_json e FROM articles WHERE journal_id=? AND doi=? LIMIT 1').get(j.id,article.doi);
+  const dois=sciopenDois(await read(`${entry.base}/journal/join_journal/stage_page?stage=5&id=${entry.journal_key}&issn=${entry.issn}&issueIndex=${issue}`,hosts),entry.doi_prefix);
+  totals.issues++;
+  let complete=dois.length>0;
+  for(const doi of dois){
+   const row=db.prepare('SELECT id,abstract,source_evidence_json e FROM articles WHERE journal_id=? AND lower(doi)=? LIMIT 1').get(j.id,doi);
    if(row&&(row.abstract||JSON.parse(row.e||'{}').abstract_gap))continue;
    checkpoint();
-   const sciopen=`https://www.sciopen.com/article/${article.doi.toUpperCase()}`;
-   let abstract=cleanText(item.abstract||''),sourceUrl=`https://doi.org/${article.doi}`,source='crossref';
+   const page=`${entry.base}/article/${doi.toUpperCase()}`;
    try{
-    const html=await read(sciopen,['www.sciopen.com']);
-    const title=cleanText(html.match(/<meta name="citation_title" content="([^"]*)"/)?.[1]||'');
-    const page=cleanText(html.match(/<meta name="Description" content="([^"]*)"/)?.[1]||'');
-    if(title&&title.toLowerCase()===cleanText(article.title).toLowerCase()&&usable(page)&&page.length>abstract.length){abstract=page;sourceUrl=sciopen;source='sciopen'}
-   }catch(e){if(e?.code==='scheduler_hold'||/budget exhausted/.test(e?.message))throw e;totals.failed++;log('warn','ingest.source_failed',{market:'chinese',journal_id:j.id,doi:article.doi,error:String(e?.message).slice(0,160)})}
-   if(!usable(abstract))abstract='';
-   article.abstract=abstract;article.source=article.source||'crossref';
-   const id=row?.id||store(j,entry,article,totals);
-   if(!id)continue;
-   if(row&&abstract)db.prepare("UPDATE articles SET abstract=?,abstract_status=CASE WHEN length(trim(?))>=55 THEN 'available' ELSE 'missing' END,analysis_status=CASE WHEN analysis_status='insufficient_abstract' THEN 'pending' ELSE analysis_status END WHERE id=?").run(abstract,abstract,id);
-   totals.articles++;
-   if(abstract)totals.abstracts++;else totals.noAbstract++;
-   annotate(id,{abstract,title:article.title,sourceUrl,source,gap:'no_abstract_in_crossref_or_sciopen'});
+    const article=sciopenArticle(await read(page,hosts),doi);
+    let sourceUrl=page,source='sciopen';
+    if(!article.abstract){
+     try{
+      const fallback=cleanText((await json(`https://api.crossref.org/works/${doi}`)).message?.abstract||'');
+      if(usable(fallback)){article.abstract=fallback;sourceUrl=`https://doi.org/${doi}`;source='crossref'}
+     }catch(e){if(e?.code==='scheduler_hold'||/budget exhausted/.test(e?.message))throw e}
+    }
+    Object.assign(article,{url:`https://doi.org/${doi}`,publisher_landing_url:page,source:'official_catalog',issn:entry.issn,market:'chinese',journal_id:j.id,link_provenance:'official_citation_metadata'});
+    const id=row?.id||store(j,entry,article,totals);
+    if(!id)continue;
+    if(row&&article.abstract)db.prepare("UPDATE articles SET abstract=?,abstract_status=CASE WHEN length(trim(?))>=55 THEN 'available' ELSE 'missing' END,analysis_status=CASE WHEN analysis_status='insufficient_abstract' THEN 'pending' ELSE analysis_status END WHERE id=?").run(article.abstract,article.abstract,id);
+    totals.articles++;
+    if(article.abstract)totals.abstracts++;else totals.noAbstract++;
+    annotate(id,{abstract:article.abstract,title:article.title,sourceUrl,source,gap:'no_abstract_in_sciopen_or_crossref'});
+   }catch(e){
+    if(e?.code==='scheduler_hold'||/budget exhausted/.test(e?.message))throw e;
+    complete=false;totals.failed++;log('warn','ingest.source_failed',{market:'chinese',journal_id:j.id,doi,error:String(e?.message).slice(0,160)});
+   }
   }
-  cursor=page.message['next-cursor'];
-  totals.issues++;
+  if(complete){finished.add(issue);setState(entry,{issues:[...finished]})}
  }
  return totals;
 }
 
-export const collectJournal=(entry,options)=>entry.adapter==='crossref-sciopen'?collectCrossrefSciopen(entry,options):collectOfficial(entry,options);
+export const collectJournal=(entry,options)=>entry.adapter==='sciopen'?collectSciopen(entry,options):collectOfficial(entry,options);

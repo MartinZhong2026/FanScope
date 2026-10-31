@@ -78,6 +78,23 @@ test('a changed index layout is a visible failure, not an empty success',async()
  const t=transport({[entry.home]:'<html></html>',[entry.base+'/CN/article/showOldVolumn.do']:'<html></html>'});
  await assert.rejects(cn.collectJournal(entry,{read:t.read}),e=>e.code==='ingest_layout_changed');
 });
+test('SciOpen: the official archive finds articles Crossref does not have, without duplicates',async()=>{
+ const e={title:'公共管理评论',issn:'2096-7713',journal_id:'public-admin-cn',adapter:'sciopen',base:'https://www.sciopen.com',home:'https://www.sciopen.com/journal/2096-7713',journal_key:'9',doi_prefix:'10.26599/cpar'};
+ const doi='10.26599/cpar.2025.9680201',page=`https://www.sciopen.com/article/${doi.toUpperCase()}`,archive='https://www.sciopen.com/journal/join_journal/archive?journalId=9&issn=2096-7713';
+ const abstract='&lt;p&gt;'+'Hierarchical escalation is a recurrent organizational phenomenon in public administration. '.repeat(2)+'&lt;/p&gt;';
+ const article=`<meta name="citation_doi" content="${doi.toUpperCase()}"/><meta name="citation_title" content="Hierarchical Escalation"/><meta name="citation_volume" content="7"/><meta name="citation_issue" content="2"/><meta name="citation_publication_date" content="2025/6/1"/><meta name="citation_author" content="Zhichao LI"/><meta name="citation_author" content="Xiang YU"/><meta name="Description" content="${abstract}"/>`;
+ const t=transport({[archive]:'<a href="x?volume=2025&amp;issn=1">',[archive+'&volume=2025']:'<a href="y?issueIndex=77">',['https://www.sciopen.com/journal/join_journal/stage_page?stage=5&id=9&issn=2096-7713&issueIndex=77']:`${doi.toUpperCase()} 10.26599/OTHER.2025.9680201`,[page]:article});
+ const r=await cn.collectJournal(e,{read:t.read,json:async()=>{throw Error('HTTP 404')}});
+ assert.equal(r.added,1);assert.equal(r.abstracts,1);
+ const row=db.prepare('SELECT * FROM articles WHERE journal_id=? AND lower(doi)=?').get('public-admin-cn',doi);
+ assert.equal(row.authors,'Zhichao LI, Xiang YU');assert.equal(row.publication_date_partial,'2025-06');assert.equal(row.abstract_source,'sciopen');assert.ok(!/<|&lt;/.test(row.abstract));
+ const again=await cn.collectJournal(e,{read:t.read,json:async()=>{throw Error('HTTP 404')}});
+ assert.equal(again.added,0);
+ assert.equal(db.prepare('SELECT COUNT(*) n FROM articles WHERE journal_id=?').get('public-admin-cn').n,1);
+});
+test('SciOpen: a page for another article is refused',()=>{
+ assert.throws(()=>cn.sciopenArticle('<meta name="citation_doi" content="10.26599/CPAR.2025.1"/>','10.26599/cpar.2025.2'),e=>e.code==='ingest_identity_mismatch');
+});
 test('registry: the four priority journals are scheduled, the other 18 are not',()=>{
  assert.equal(CHINESE_STATUS.journals.length,22);
  assert.deepEqual(eligibleChineseJournals().sort(),['candidate-1','candidate-10','candidate-7','public-admin-cn']);

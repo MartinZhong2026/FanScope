@@ -26,6 +26,10 @@ A feature is delivered only when a real user can complete the task on the deploy
 ## Test through the production entry
 - Production runs `src/v14-server.mjs` behind the staged server, not `server.mjs`: it blocks most writes, clears `DEEPSEEK_API_KEY`, and starts only its own timers. A feature can pass every `makeServer()` test and still be dead in production. Add at least one test that spawns the real entry and hits the feature's write path.
 
+## Chinese coverage is measured per journal
+- Compare the publisher's issue pages with the database, issue by issue. A metadata aggregator's count is not the truth: Crossref lacked whole issues of 公共管理评论, and OpenAlex returned foreign papers under a Chinese ISSN.
+- Publisher indexes can omit the current issue; read the home page too. Report local and production counts separately.
+
 ## AI quality
 - Separate verifiable facts (verbatim quotes checked server-side against the source) from AI judgments; drop unverifiable quotes and count them.
 - Measure with planted-flaw synthetic documents (`api/test/fixtures/dx-eval`, `scripts/dx-quality-eval.mjs`): recall of planted flaws, severity, fact-verification rate, type accuracy, tokens. Compare against the free rule baseline. Only after an approved paid run on GitHub-hosted runners (`dx-quality-eval.yml`), never from the user's Windows machine.
