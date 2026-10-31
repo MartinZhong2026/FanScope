@@ -55,13 +55,15 @@ jobs:
           docker save "fanscope-api:$RELEASE_SHA" -o work/backend-release/image.tar
           # The exact migrations inside this image. lint exits non-zero on any rejected file.
           docker run --rm --network none --entrypoint node "fanscope-api:$RELEASE_SHA" --experimental-sqlite src/migrate-cli.mjs lint > work/migrations.json
-          python3 - "$RELEASE_SHA" "$IMAGE" <<'PY'
+          PYTHONPATH=scripts/cicd python3 - "$RELEASE_SHA" "$IMAGE" <<'PY'
           import json,os,sys
+          from deploy_backend import tar_image_identity
+          identity=tar_image_identity('work/backend-release/image.tar')
           lint=json.load(open('work/migrations.json'))
           assert lint['ok'], 'migration lint failed'
           migrations=[{'id':m['id'],'checksum':m['checksum'],'declared':m['declared']} for m in lint['migrations']]
           with open('work/backend-release/manifest.json','w') as f:
-              json.dump({'commit':sys.argv[1],'image':sys.argv[2],'migrationPolicy':'additive' if migrations else 'no-change',
+              json.dump({'commit':sys.argv[1],'image':sys.argv[2],'configDigest':identity['configDigest'],'imageTag':f'fanscope-api:{sys.argv[1]}','migrationPolicy':'additive' if migrations else 'no-change',
                          'migrations':migrations,'diagnosticAiEnabled':os.environ['DIAGNOSTIC_AI']=='true',
                          'schedulerEnabled':os.environ['SCHEDULER']=='true'},f)
           PY

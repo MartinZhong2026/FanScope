@@ -7,12 +7,14 @@ stopped production database, each verified independently of the application.
 """
 import argparse
 import datetime
+import hashlib
 import json
 import os
 from pathlib import Path
 import re
 import subprocess
 import shutil
+import tarfile
 import time
 import urllib.request
 import urllib.error
@@ -170,6 +172,47 @@ def stop(*, require_graceful=True):
         raise RuntimeError('API did not drain gracefully; retain maintenance, inspect uncertain work')
 
 
+def tar_image_identity(archive):
+    """Engine-independent identity of a `docker save` archive: config digest, tags, layers, labels.
+
+    The image ID printed by `docker image inspect` differs between engines (the containerd
+    image store reports an index digest, the classic store the config digest), so it cannot
+    identify an image across a build host and a server. The config blob can.
+    """
+    with tarfile.open(archive) as tar:
+        manifest = json.load(tar.extractfile('manifest.json'))
+        if not isinstance(manifest, list) or len(manifest) != 1:
+            raise RuntimeError('Image archive must contain exactly one image')
+        name = manifest[0]['Config']
+        data = tar.extractfile(name).read()
+    digest = hashlib.sha256(data).hexdigest()
+    named = re.search(r'([a-f0-9]{64})(?:\.json)?$', name)
+    if not named or named.group(1) != digest:
+        raise RuntimeError('Image config blob does not match its digest')
+    config = json.loads(data)
+    return {'configDigest': 'sha256:' + digest, 'tags': manifest[0].get('RepoTags') or [],
+            'diffIds': (config.get('rootfs') or {}).get('diff_ids') or [],
+            'labels': (config.get('config') or {}).get('Labels') or {}}
+
+
+def load_release_image(archive, sha, manifest):
+    identity = tar_image_identity(archive)
+    tag = manifest['imageTag']
+    if identity['configDigest'] != manifest['configDigest'] or tag not in identity['tags']:
+        raise RuntimeError('Image archive does not match the release manifest')
+    run('docker', 'load', '--input', str(archive))
+    image = docker_json('image', 'inspect', tag)
+    labels = (image.get('Config') or {}).get('Labels') or {}
+    if labels.get('org.opencontainers.image.revision') != sha:
+        raise RuntimeError('Image revision label mismatch')
+    if image['Id'] != identity['configDigest']:
+        # Another engine reports a manifest or index digest as the ID. Prove the loaded
+        # content is the archived image by its layers and labels instead.
+        if (image.get('RootFS') or {}).get('Layers') != identity['diffIds'] or labels != identity['labels']:
+            raise RuntimeError('Loaded image content differs from the release archive')
+    return image
+
+
 def verify_bundle(bundle, sha):
     if not re.fullmatch('[a-f0-9]{40}', sha):
         raise RuntimeError('Full SHA required')
@@ -187,6 +230,7 @@ def verify_bundle(bundle, sha):
     m = json.loads((bundle / 'manifest.json').read_text())
     policy, migrations = m.get('migrationPolicy'), m.get('migrations', [])
     if m.get('commit') != sha or not re.fullmatch('sha256:[a-f0-9]{64}', m.get('image', '')) or \
+            not re.fullmatch('sha256:[a-f0-9]{64}', m.get('configDigest', '')) or m.get('imageTag') != f'fanscope-api:{sha}' or \
             not isinstance(m.get('diagnosticAiEnabled', False), bool) or not isinstance(m.get('schedulerEnabled', False), bool):
         raise RuntimeError('Release manifest mismatch')
     if (policy, bool(migrations)) not in (('no-change', False), ('additive', True)) or not all(
@@ -301,11 +345,8 @@ def deploy(bundle, sha, run_id):
         raise RuntimeError('FanScope nginx maintenance gate has not been installed')
     if shutil.disk_usage(STATE).free < max((bundle / 'image.tar').stat().st_size * 2 + database.stat().st_size * 4, 1024**3):
         raise RuntimeError('Insufficient image-load and database-restore free space')
-    run('docker', 'load', '--input', str(bundle / 'image.tar'))
-    image = docker_json('image', 'inspect', m['image'])
-    if image['Config'].get('Labels', {}).get('org.opencontainers.image.revision') != sha:
-        raise RuntimeError('Image revision label mismatch')
-    # Docker may resolve a config digest to a local manifest ID on another engine.
+    image = load_release_image(bundle / 'image.tar', sha, m)
+    # The build host's ID is informational: engines disagree on what an image ID is.
     build_image = m['image']
     m['image'] = image['Id']
     # Validate resolved Compose without printing env/secret values.
