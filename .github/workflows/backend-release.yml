@@ -12,10 +12,10 @@ on:
         type: boolean
         default: true
       scheduler:
-        description: Server has FANSCOPE_SCHEDULER=true and the durable scheduler is meant to run (off for the first release)
+        description: Server has FANSCOPE_SCHEDULER=true and the durable scheduler is meant to run
         required: false
         type: boolean
-        default: false
+        default: true
 permissions:
   contents: read
 concurrency:

@@ -1,5 +1,5 @@
-// Chinese publisher abstracts are kept in the database but withheld from public output
-// unless the owner enables them. English articles are unaffected.
+// Chinese publisher abstracts are shown by default (owner-confirmed). FANSCOPE_CN_ABSTRACTS_PUBLIC=false
+// is a kill switch that withholds the text. English articles are never affected.
 import test,{after} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';
@@ -16,20 +16,23 @@ const insert=(id,market,journal)=>db.prepare("INSERT INTO articles(id,journal_id
 insert('cn1','chinese','candidate-1');insert('en1','international','jmir');
 const list=async q=>(await(await fetch(`${base}/api/articles?period=all&limit=50${q}`)).json()).items;
 
-test('default: Chinese abstract is withheld in the list, with title, authors, date and link kept',async()=>{
- const [a]=(await list('&market=chinese')).filter(x=>x.id==='cn1');
- assert.equal(a.abstract,'');assert.equal(a.abstract_status,'withheld');assert.equal(a.ai_summary??null,null);
- assert.equal(a.title,'标题 cn1');assert.equal(a.authors,'甲');assert.equal(a.publication_date,'2026-01-01');assert.ok(a.url);
- assert.ok(!JSON.stringify(a).includes('出版社网站上的完整摘要'),'no abstract text anywhere in the payload');
+test('default: Chinese abstracts are shown with their source and link',async()=>{
+ const a=(await list('&market=chinese')).find(x=>x.id==='cn1');
+ assert.equal(a.abstract,ABS);assert.equal(a.abstract_status,'available');assert.ok(a.url);
 });
-test('English abstracts are unchanged',async()=>{
- const a=(await list('&market=international')).find(x=>x.id==='en1');
- assert.equal(a.abstract,ABS);assert.equal(a.abstract_status,'available');
+test('kill switch: false withholds the text but keeps title, authors, date and link',async()=>{
+ process.env.FANSCOPE_CN_ABSTRACTS_PUBLIC='false';
+ try{
+  const a=(await list('&market=chinese')).find(x=>x.id==='cn1');
+  assert.equal(a.abstract,'');assert.equal(a.abstract_status,'withheld');assert.equal(a.ai_summary??null,null);
+  assert.equal(a.title,'标题 cn1');assert.equal(a.authors,'甲');assert.equal(a.publication_date,'2026-01-01');assert.ok(a.url);
+  assert.ok(!JSON.stringify(a).includes('出版社网站上的完整摘要'));
+ }finally{delete process.env.FANSCOPE_CN_ABSTRACTS_PUBLIC}
 });
-test('the stored abstract is kept in the database',()=>{
+test('English abstracts are never affected',async()=>{
+ process.env.FANSCOPE_CN_ABSTRACTS_PUBLIC='false';
+ try{const a=(await list('&market=international')).find(x=>x.id==='en1');assert.equal(a.abstract,ABS);assert.equal(a.abstract_status,'available')}finally{delete process.env.FANSCOPE_CN_ABSTRACTS_PUBLIC}
+});
+test('the stored abstract is always kept in the database',()=>{
  assert.equal(db.prepare("SELECT abstract FROM articles WHERE id='cn1'").get().abstract,ABS);
-});
-test('owner switch shows Chinese abstracts again',async()=>{
- process.env.FANSCOPE_CN_ABSTRACTS_PUBLIC='true';
- try{assert.equal((await list('&market=chinese')).find(x=>x.id==='cn1').abstract,ABS)}finally{delete process.env.FANSCOPE_CN_ABSTRACTS_PUBLIC}
 });

@@ -21,10 +21,10 @@ export function researchWhere(q={}){
  return {where:' WHERE '+conditions.join(' AND '),params,window};
 }
 const parse=(s,fallback)=>{try{return JSON.parse(s)||fallback}catch{return fallback}};
-// Publisher abstracts of Chinese journals are copyrighted and their reuse is not confirmed.
-// They are stored with their source, and shown only when the owner sets
-// FANSCOPE_CN_ABSTRACTS_PUBLIC=true. Title, authors, date, citation and link stay public.
-export const chineseAbstractsPublic=()=>process.env.FANSCOPE_CN_ABSTRACTS_PUBLIC==='true';
+// The owner has confirmed the right to show Chinese publisher abstracts, so they are shown
+// with their source and link. FANSCOPE_CN_ABSTRACTS_PUBLIC=false is a kill switch that
+// withholds the text again (e.g. after a rights objection); everything else stays public.
+export const chineseAbstractsPublic=()=>process.env.FANSCOPE_CN_ABSTRACTS_PUBLIC!=='false';
 export function articleJSON(r){
  if(r.market==='chinese'&&!chineseAbstractsPublic()&&(r.abstract||'').trim()){
   // Only the publisher's text is withheld; structured fields derived from it (method, design, confidence) stay.
