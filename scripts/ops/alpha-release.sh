@@ -76,8 +76,13 @@ ensure_key(){
 
 ensure_scheduler(){
   say 'Background updates and source reachability'
-  grep -q '^FANSCOPE_SCHEDULER=' "$ENV_FILE" || printf 'FANSCOPE_SCHEDULER=true\n' >> "$ENV_FILE"
+  # First release: scheduler off. Turn it on later by editing this line and releasing with scheduler=true.
+  if [ -z "${SCHEDULER_ON:-}" ]; then
+    sed -i '/^FANSCOPE_SCHEDULER=/d' "$ENV_FILE"; printf 'FANSCOPE_SCHEDULER=false\n' >> "$ENV_FILE"
+  fi
   grep '^FANSCOPE_SCHEDULER=' "$ENV_FILE"
+  # Chinese publisher abstracts stay hidden until the owner confirms publication rights.
+  sed -i '/^FANSCOPE_CN_ABSTRACTS_PUBLIC=/d' "$ENV_FILE"; printf 'FANSCOPE_CN_ABSTRACTS_PUBLIC=false\n' >> "$ENV_FILE"
   # Information only: a blocked source shows up in /api/ingest/freshness after release.
   for url in https://rkyj.ruc.edu.cn/robots.txt https://www.society.shu.edu.cn/robots.txt https://shjs.ruc.edu.cn/robots.txt https://www.sciopen.com/robots.txt https://api.crossref.org/journals/2096-7713; do
     printf '%s %s\n' "$(curl -s -o /dev/null -m 20 -w '%{http_code}' "$url" || true)" "$url"

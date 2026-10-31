@@ -21,7 +21,17 @@ export function researchWhere(q={}){
  return {where:' WHERE '+conditions.join(' AND '),params,window};
 }
 const parse=(s,fallback)=>{try{return JSON.parse(s)||fallback}catch{return fallback}};
-export function articleJSON(r){return {...r,topics:parse(r.topics,[]),issns:parse(r.issns_json,[]),source_evidence:parse(r.source_evidence_json,null),article_type:r.article_type||'unknown',article_type_label:typeLabels[r.article_type||'unknown'],article_type_evidence:parse(r.article_type_evidence_json,{}),abstract_status:(r.abstract||'').trim().length>=55?'available':r.abstract_status||'missing',missing_fields:parse(r.missing_fields_json,{}),analysis:parse(r.analysis_json,null),...articleLink(r),matched:!!r.matched,demo:!!r.demo};}
+// Publisher abstracts of Chinese journals are copyrighted and their reuse is not confirmed.
+// They are stored with their source, and shown only when the owner sets
+// FANSCOPE_CN_ABSTRACTS_PUBLIC=true. Title, authors, date, citation and link stay public.
+export const chineseAbstractsPublic=()=>process.env.FANSCOPE_CN_ABSTRACTS_PUBLIC==='true';
+export function articleJSON(r){
+ if(r.market==='chinese'&&!chineseAbstractsPublic()&&(r.abstract||'').trim()){
+  const {abstract,ai_summary,evidence,analysis_json,...rest}=r;
+  return {...articleJSON({...rest,abstract:'',ai_summary:null,evidence:null,analysis_json:null,abstract_status:'withheld'}),abstract_status:'withheld'};
+ }
+ return {...r,topics:parse(r.topics,[]),issns:parse(r.issns_json,[]),source_evidence:parse(r.source_evidence_json,null),article_type:r.article_type||'unknown',article_type_label:typeLabels[r.article_type||'unknown'],article_type_evidence:parse(r.article_type_evidence_json,{}),abstract_status:(r.abstract||'').trim().length>=55?'available':r.abstract_status||'missing',missing_fields:parse(r.missing_fields_json,{}),analysis:parse(r.analysis_json,null),...articleLink(r),matched:!!r.matched,demo:!!r.demo};
+}
 export function validatedAnalysis(a){
  if(!analysisIsCurrent(a))return null;
  const raw=parse(a.analysis_json,null),validated=validateResearch(raw,a.abstract||'');

@@ -90,6 +90,7 @@ const home=()=>{
 const researchYear=()=>Math.max(2026,Number(new Intl.DateTimeFormat('en',{timeZone:'Asia/Taipei',year:'numeric'}).format(new Date())));
 // Separates "the source has none" from "we have not collected it yet".
 const abstractState=a=>{
+ if(a.abstract_status==='withheld')return '摘要暂不公开，请查看原文';
  if(a.abstract_status==='available')return '摘要可用';
  let e={};try{e=JSON.parse(a.source_evidence_json||'{}')}catch{}
  if(e.abstract_gap)return '来源未提供摘要';

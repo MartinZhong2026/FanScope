@@ -37,7 +37,7 @@ description: Use for FanScope backend releases, database migrations, backups/res
 Treat this sentence as a request to start a release, not as production approval. The human approval in the `production` environment stays with the user.
 1. Needs `gh` logged in with Actions write. If it is missing, stop and give the web steps: Actions → FanScope backend release → Run workflow.
 2. Read the current `main` SHA and require a successful `push` run of `FanScope checks` on that exact SHA. Never release a branch or an older SHA.
-3. `gh workflow run backend-release.yml --ref main -f commit=<sha>`. Defaults match the server: `diagnostic_ai` and `scheduler` on.
+3. `gh workflow run backend-release.yml --ref main -f commit=<sha>`. Defaults match the server: `diagnostic_ai` on, `scheduler` off until the owner enables it.
 4. Wait for the `build` job, then ask the user to approve the `production` environment. Say which SHA and whether it contains migrations.
 5. After approval the host polls every minute. Check `/api/health`: `commit` must equal the SHA. Green Actions alone proves nothing. If `commit` does not change within 15 minutes, report it and ask for `journalctl -u fanscope-pull.service -n 50`.
 A failed run needs a new `Run workflow`; the host ignores re-runs.

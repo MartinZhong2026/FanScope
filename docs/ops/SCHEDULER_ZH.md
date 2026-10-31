@@ -24,6 +24,12 @@
 
 `api/config/chinese-source-status.json` 由 [22 本矩阵](../architecture/CN_JOURNALS_22_MATRIX.md) 整理，变更状态必须先在矩阵留下证据。
 
+## 首次上线默认关闭
+
+`alpha-release.sh bootstrap` 会把 `FANSCOPE_SCHEDULER=false` 写入服务器 `.env`，`backend-release.yml` 的 `scheduler` 参数默认也是 false，控制器会核对两者一致。开启时：把 `.env` 改成 `true`，再以 `scheduler=true` 发布。
+
+中文期刊论文摘要默认不公开展示（`FANSCOPE_CN_ABSTRACTS_PUBLIC=false`）：库内保留摘要及出处，页面只显示题录、作者、日期与原文链接。确认版权许可后改为 `true` 并发布。
+
 ## 已知限制
 
 - 英文单刊扫描内部不检查门禁，只在刊与刊之间检查。发布时依赖控制器 drain 与 SIGTERM 优雅停止，再取冻结快照。
