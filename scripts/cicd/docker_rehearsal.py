@@ -114,6 +114,30 @@ def main(image):
                     pass
                 else:
                     raise AssertionError('Schema-changing startup accepted')
+                # Export and import through the same code the controller uses. The copy has its own
+                # tag, so dropping it removes only that tag and never the CI image itself.
+                sha = 'e' * 40
+                copy_tag = f'fanscope-api:{sha}'
+                deploy.run('docker', 'build', '-q', '--label', f'org.opencontainers.image.revision={sha}',
+                           '-t', copy_tag, '-f', str(root / 'api/Dockerfile'), str(root / 'api'))
+                try:
+                    archive = directory / 'release-image.tar'
+                    deploy.run('docker', 'save', copy_tag, '-o', str(archive))
+                    archived = deploy.tar_image_identity(archive)
+                    built_id = deploy.docker_json('image', 'inspect', copy_tag)['Id']
+                    deploy.run('docker', 'rmi', copy_tag)
+                    loaded = deploy.load_release_image(archive, sha, {'configDigest': archived['configDigest'], 'imageTag': copy_tag})
+                    # Whatever ID this engine uses, the loaded image is the archived one.
+                    assert loaded['Config']['Labels']['org.opencontainers.image.revision'] == sha
+                    assert loaded['Id'] in (built_id, archived['configDigest']), 'Unexpected image ID after load'
+                    try:
+                        deploy.load_release_image(archive, sha, {'configDigest': 'sha256:' + '0' * 64, 'imageTag': copy_tag})
+                    except RuntimeError:
+                        pass
+                    else:
+                        raise AssertionError('Archive with a different config digest was accepted')
+                finally:
+                    subprocess.run(['docker', 'rmi', copy_tag], check=False, capture_output=True)
                 # Reviewed additive migration on a frozen copy with the real runner
                 # image. The image's own startup sees a newer ledger, exactly as a
                 # rolled-back old image would, and must still make zero writes.
@@ -153,7 +177,7 @@ def main(image):
         remaining = deploy.run('docker', 'ps', '--format', '{{.ID}} {{.Names}}').splitlines()
         assert all(cid + ' ' + cname in remaining for cid, cname in identity), 'Unrelated container changed'
         print(json.dumps({'dockerRehearsal': 'PASS', 'onlineBackup': 'PASS', 'dataRestore': 'PASS',
-                          'unhealthyRollback': 'PASS', 'schemaChangeRejected': True, 'additiveMigration': 'PASS',
+                          'unhealthyRollback': 'PASS', 'schemaChangeRejected': True, 'additiveMigration': 'PASS', 'imageExportImport': 'PASS',
                           'unrelatedContainersPreserved': len(identity)}))
 
 

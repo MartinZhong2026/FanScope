@@ -107,19 +107,21 @@ build_bundle(){
   docker build -q --label "org.opencontainers.image.revision=$SHA" --build-arg "FANSCOPE_COMMIT=$SHA" \
     -t "fanscope-api:$SHA" -f "$SRC/api/Dockerfile" "$SRC/api" >/dev/null
   rm -rf "$BUNDLE"; mkdir -p "$BUNDLE"
+  docker save "fanscope-api:$SHA" -o "$BUNDLE/image.tar"
   docker run --rm --network none --entrypoint node "fanscope-api:$SHA" --experimental-sqlite src/migrate-cli.mjs lint > "$WORK/lint.json"
   DIAGNOSTIC=false; SCHEDULER=false
   if [ -n "${ALPHA_TEST:-}" ] || grep -q '^FANSCOPE_SCHEDULER=true' "$ENV_FILE"; then SCHEDULER=true; fi
   if [ -n "${ALPHA_TEST:-}" ] || grep -Eq "^$KEY_NAME=.+" "$ENV_FILE"; then DIAGNOSTIC=true; fi
-  python3 - "$SHA" "$(docker image inspect "fanscope-api:$SHA" --format '{{.Id}}')" "$DIAGNOSTIC" "$SCHEDULER" "$WORK/lint.json" "$BUNDLE/manifest.json" <<'PY'
+  PYTHONPATH=$SRC/scripts/cicd python3 - "$SHA" "$(docker image inspect "fanscope-api:$SHA" --format '{{.Id}}')" "$DIAGNOSTIC" "$SCHEDULER" "$WORK/lint.json" "$BUNDLE/manifest.json" "$BUNDLE/image.tar" <<'PY'
 import json,sys
-sha,image,diagnostic,scheduler,lint,out=sys.argv[1:]
+from deploy_backend import tar_image_identity
+sha,image,diagnostic,scheduler,lint,out,archive=sys.argv[1:]
+identity=tar_image_identity(archive)
 data=json.load(open(lint)); assert data['ok'],'migration lint failed'
 items=[{k:m[k] for k in ('id','checksum','declared')} for m in data['migrations']]
-json.dump({'commit':sha,'image':image,'migrationPolicy':'additive' if items else 'no-change','migrations':items,
+json.dump({'commit':sha,'image':image,'configDigest':identity['configDigest'],'imageTag':f'fanscope-api:{sha}','migrationPolicy':'additive' if items else 'no-change','migrations':items,
            'diagnosticAiEnabled':diagnostic=='true','schedulerEnabled':scheduler=='true'},open(out,'w'))
 PY
-  docker save "fanscope-api:$SHA" -o "$BUNDLE/image.tar"
   (cd "$BUNDLE" && sha256sum image.tar manifest.json > SHA256SUMS)
   PYTHONPATH=$SRC/scripts/cicd python3 -c "
 import sys;from pathlib import Path;import deploy_backend as d

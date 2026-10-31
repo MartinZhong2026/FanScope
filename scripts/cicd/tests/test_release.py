@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import sqlite3
 import sys
+import tarfile
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -13,6 +14,28 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import sqlite_release as sql
 import deploy_backend as deploy
 import pull_release as pull
+
+
+SHA40 = 'a' * 40
+CONFIG_DIGEST = 'sha256:' + 'c' * 64
+
+
+def release_fields(sha=SHA40):
+    return {'configDigest': CONFIG_DIGEST, 'imageTag': f'fanscope-api:{sha}'}
+
+
+def make_image_archive(path, sha=SHA40, layers=('sha256:' + '1' * 64,), labels=None, tag=None):
+    """A docker-save style archive (OCI layout as written by the containerd image store)."""
+    config = json.dumps({'config': {'Labels': labels if labels is not None else {'org.opencontainers.image.revision': sha}},
+                         'rootfs': {'type': 'layers', 'diff_ids': list(layers)}}).encode()
+    digest = hashlib.sha256(config).hexdigest()
+    manifest = json.dumps([{'Config': f'blobs/sha256/{digest}', 'RepoTags': [tag or f'fanscope-api:{sha}'], 'Layers': []}]).encode()
+    with tarfile.open(path, 'w') as tar:
+        for name, data in (('manifest.json', manifest), (f'blobs/sha256/{digest}', config)):
+            info = tarfile.TarInfo(name)
+            info.size = len(data)
+            tar.addfile(info, io.BytesIO(data))
+    return 'sha256:' + digest
 
 
 class DatabaseTests(unittest.TestCase):
@@ -142,7 +165,7 @@ class ArtifactTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             p = Path(tmp)
             (p / 'image.tar').write_bytes(b'synthetic image')
-            m = {'commit': 'a' * 40, 'image': 'sha256:' + 'b' * 64, 'migrationPolicy': 'no-change'}
+            m = {'commit': 'a' * 40, 'image': 'sha256:' + 'b' * 64, 'migrationPolicy': 'no-change', **release_fields()}
             (p / 'manifest.json').write_text(json.dumps(m))
             (p / 'SHA256SUMS').write_text(''.join(sql.sha256(p / n) + '  ' + n + '\n'
                                                   for n in ['image.tar', 'manifest.json']))
@@ -198,6 +221,92 @@ class RollbackTests(unittest.TestCase):
         self.assertTrue((state / 'transaction.json').exists())
 
 
+class ImageLoadTests(unittest.TestCase):
+    """The first production release failed because the build host (containerd image store) and
+    the server (classic store) report different image IDs for the same image."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.archive = Path(self.temp.name) / 'image.tar'
+        self.config_digest = make_image_archive(self.archive)
+        self.manifest = {'configDigest': self.config_digest, 'imageTag': f'fanscope-api:{SHA40}'}
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def engine(self, image_id, layers=('sha256:' + '1' * 64,), labels=None, calls=None):
+        inspected = {'Id': image_id, 'RootFS': {'Layers': list(layers)},
+                     'Config': {'Labels': labels if labels is not None else {'org.opencontainers.image.revision': SHA40}}}
+        def docker_json(*args):
+            if calls is not None:
+                calls.append(args)
+            return inspected
+        return patch.object(deploy, 'run'), patch.object(deploy, 'docker_json', side_effect=docker_json)
+
+    def load(self, **kw):
+        load, inspect = self.engine(**kw)
+        with load, inspect:
+            return deploy.load_release_image(self.archive, SHA40, self.manifest)
+
+    def test_identity_comes_from_the_archive_not_from_an_engine(self):
+        identity = deploy.tar_image_identity(self.archive)
+        self.assertEqual(identity['configDigest'], self.config_digest)
+        self.assertEqual(identity['tags'], [f'fanscope-api:{SHA40}'])
+        self.assertEqual(identity['diffIds'], ['sha256:' + '1' * 64])
+
+    def test_classic_store_reports_the_config_digest(self):
+        self.assertEqual(self.load(image_id=self.config_digest)['Id'], self.config_digest)
+
+    def test_containerd_store_reports_an_index_digest_and_is_accepted_by_content(self):
+        # Exactly the production failure: the ID never equals the config digest.
+        self.assertEqual(self.load(image_id='sha256:' + '9' * 64)['Id'], 'sha256:' + '9' * 64)
+
+    def test_image_is_looked_up_by_its_release_tag(self):
+        calls = []
+        self.load(image_id=self.config_digest, calls=calls)
+        self.assertEqual(calls, [('image', 'inspect', f'fanscope-api:{SHA40}')])
+
+    def test_wrong_content_is_still_rejected(self):
+        other = 'sha256:' + '9' * 64
+        for case, kw in {'revision label': {'labels': {'org.opencontainers.image.revision': 'b' * 40}},
+                         'layers': {'layers': ('sha256:' + '2' * 64,)},
+                         'labels': {'labels': {'org.opencontainers.image.revision': SHA40, 'extra': 'x'}}}.items():
+            with self.subTest(case):
+                with self.assertRaises(RuntimeError):
+                    self.load(image_id=other, **kw)
+
+    def test_archive_that_does_not_match_the_manifest_is_never_loaded(self):
+        for bad in ({'configDigest': 'sha256:' + 'd' * 64}, {'imageTag': 'fanscope-api:' + 'b' * 40}):
+            with self.subTest(bad), patch.object(deploy, 'run') as run:
+                with self.assertRaisesRegex(RuntimeError, 'does not match the release manifest'):
+                    deploy.load_release_image(self.archive, SHA40, {**self.manifest, **bad})
+                run.assert_not_called()
+
+    def test_tampered_config_blob_is_rejected(self):
+        tampered = Path(self.temp.name) / 'tampered.tar'
+        with tarfile.open(self.archive) as src, tarfile.open(tampered, 'w') as dst:
+            for member in src.getmembers():
+                data = src.extractfile(member).read()
+                if member.name.startswith('blobs/'):
+                    data = data.replace(b'diff_ids', b'diff_idz')
+                member.size = len(data)
+                dst.addfile(member, io.BytesIO(data))
+        with self.assertRaisesRegex(RuntimeError, 'does not match its digest'):
+            deploy.tar_image_identity(tampered)
+
+    def test_manifest_requires_the_new_identity_fields(self):
+        for missing in ('configDigest', 'imageTag'):
+            with self.subTest(missing), tempfile.TemporaryDirectory() as tmp:
+                p = Path(tmp)
+                (p / 'image.tar').write_bytes(b'image')
+                fields = {**release_fields()}
+                del fields[missing]
+                (p / 'manifest.json').write_text(json.dumps({'commit': SHA40, 'image': 'sha256:' + 'b' * 64, 'migrationPolicy': 'no-change', **fields}))
+                (p / 'SHA256SUMS').write_text(''.join(sql.sha256(p / n) + '  ' + n + '\n' for n in ['image.tar', 'manifest.json']))
+                with self.assertRaisesRegex(RuntimeError, 'manifest'):
+                    deploy.verify_bundle(p, SHA40)
+
+
 class PullRetryTests(unittest.TestCase):
     def test_failed_download_leaves_nothing_that_blocks_the_next_poll(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -241,7 +350,7 @@ class PipelineTests(unittest.TestCase):
         (bundle / 'image.tar').write_bytes(b'synthetic image')
         declared = {'tables': ['dx_new'], 'indexes': [], 'columns': [], 'virtualTables': []}
         pending = [{'id': '20261030T060000Z_new', 'checksum': 'c' * 64}]
-        (bundle / 'manifest.json').write_text(json.dumps({'commit': sha, 'image': new_image, 'migrationPolicy': 'additive' if migration else 'no-change',
+        (bundle / 'manifest.json').write_text(json.dumps({'commit': sha, 'image': new_image, **release_fields(), 'migrationPolicy': 'additive' if migration else 'no-change',
             'migrations': [{**pending[0], 'declared': declared}] if migration else []}))
         (bundle / 'SHA256SUMS').write_text(''.join(sql.sha256(bundle / n) + '  ' + n + '\n' for n in ['image.tar', 'manifest.json']))
         container = {'Image': old_image, 'State': {'Running': True, 'ExitCode': 0},
@@ -290,6 +399,7 @@ class PipelineTests(unittest.TestCase):
                 raise OSError('disk full')
             return real_open(*args)
         with patch.object(deploy, 'STATE', state), patch.object(deploy, 'apply_production', side_effect=apply_production), \
+                patch.object(deploy, 'load_release_image', return_value={'Id': new_image, 'Config': {'Labels': {'org.opencontainers.image.revision': sha}}}), \
                 patch.object(deploy, 'rehearse_release', return_value=pending if migration else []), patch.object(deploy, 'open_gate', side_effect=open_gate), \
                 patch.object(deploy, 'save_candidate_log'), patch.object(deploy, 'docker_json', side_effect=docker_json), \
                 patch.object(deploy, 'compose', side_effect=compose), patch.object(deploy, 'stop', side_effect=stop), \
@@ -463,7 +573,7 @@ class AdditiveTests(unittest.TestCase):
             with self.subTest(manifest=manifest), tempfile.TemporaryDirectory() as tmp:
                 p = Path(tmp)
                 (p / 'image.tar').write_bytes(b'image')
-                (p / 'manifest.json').write_text(json.dumps({'commit': 'a' * 40, 'image': 'sha256:' + 'b' * 64, **manifest}))
+                (p / 'manifest.json').write_text(json.dumps({'commit': 'a' * 40, 'image': 'sha256:' + 'b' * 64, **release_fields(), **manifest}))
                 (p / 'SHA256SUMS').write_text(''.join(sql.sha256(p / n) + '  ' + n + '\n' for n in ['image.tar', 'manifest.json']))
                 if ok:
                     deploy.verify_bundle(p, 'a' * 40)
