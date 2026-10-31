@@ -27,8 +27,9 @@ const parse=(s,fallback)=>{try{return JSON.parse(s)||fallback}catch{return fallb
 export const chineseAbstractsPublic=()=>process.env.FANSCOPE_CN_ABSTRACTS_PUBLIC==='true';
 export function articleJSON(r){
  if(r.market==='chinese'&&!chineseAbstractsPublic()&&(r.abstract||'').trim()){
-  const {abstract,ai_summary,evidence,analysis_json,...rest}=r;
-  return {...articleJSON({...rest,abstract:'',ai_summary:null,evidence:null,analysis_json:null,abstract_status:'withheld'}),abstract_status:'withheld'};
+  // Only the publisher's text is withheld; structured fields derived from it (method, design, confidence) stay.
+  const {abstract,ai_summary,...rest}=r;
+  return {...articleJSON({...rest,abstract:'',ai_summary:null,abstract_status:'withheld'}),abstract_status:'withheld'};
  }
  return {...r,topics:parse(r.topics,[]),issns:parse(r.issns_json,[]),source_evidence:parse(r.source_evidence_json,null),article_type:r.article_type||'unknown',article_type_label:typeLabels[r.article_type||'unknown'],article_type_evidence:parse(r.article_type_evidence_json,{}),abstract_status:(r.abstract||'').trim().length>=55?'available':r.abstract_status||'missing',missing_fields:parse(r.missing_fields_json,{}),analysis:parse(r.analysis_json,null),...articleLink(r),matched:!!r.matched,demo:!!r.demo};
 }
