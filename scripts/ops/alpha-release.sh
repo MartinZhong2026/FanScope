@@ -1,18 +1,17 @@
 #!/usr/bin/env bash
-# FanScope Alpha release from the server console. Builds the exact commit here
-# and hands it to the reviewed controller (deploy_backend.py), which keeps its
-# frozen backup, rehearsal, migration checks and automatic rollback.
+# FanScope host setup from the server console. Releases then run from GitHub Actions
+# (backend-release.yml) and fanscope-pull.timer; this file never releases anything.
 #
-#   sudo bash alpha-release.sh plan <full-sha>                  no production change
-#   sudo bash alpha-release.sh deploy <full-sha> <full-sha>     real release, needs approval
+#   sudo bash alpha-release.sh plan <full-sha>        verified backup, image build and
+#                                                     migration dry run; no production change
+#   sudo bash alpha-release.sh bootstrap <full-sha>   one-time: controller, nginx gate, GitHub
+#                                                     read token, timer
 #
-# plan: stores the DeepSeek key if missing (prompted, never echoed), makes a verified
-# SQLite backup and restore, builds the image, dry-runs the migrations on the copy.
-# deploy: installs the controller, the nginx gate if absent, then releases.
-# Touches only fanscope-api, its volume and the FanScope nginx server block.
+# bootstrap does not touch the database or any container. nginx is reloaded gracefully,
+# and the gate test closes FanScope's API (not /api/health) for under a second.
 set -euo pipefail
 
-ACTION=${1:-}; SHA=${2:-}; CONFIRM=${3:-}
+ACTION=${1:-}; SHA=${2:-}
 REPO=https://github.com/MartinZhong2026/FanScope.git
 API=https://fanscope-api.adapttochina.com
 DOMAIN=fanscope-api.adapttochina.com
@@ -23,11 +22,11 @@ ENV_FILE=$DEPLOY_DIR/api/.env
 BACKUPS=${ALPHA_BACKUPS:-/var/backups/fanscope-alpha}
 BUNDLE=$WORK/bundle-$SHA
 KEY_NAME=FANSCOPE_DIAGNOSTIC_DEEPSEEK_API_KEY
-GATE_MARKER='if (-f /var/lib/fanscope-cd/maintenance)'
+WORKFLOW=backend-release.yml
 
 say(){ printf '\n== %s\n' "$*"; }
 die(){ printf '\nSTOP: %s\n' "$*" >&2; exit 1; }
-[[ $ACTION =~ ^(plan|deploy)$ ]] || die 'Usage: alpha-release.sh plan|deploy <full-sha> [<full-sha>]'
+[[ $ACTION =~ ^(plan|bootstrap)$ ]] || die 'Usage: alpha-release.sh plan|bootstrap <full-sha>'
 [[ $SHA =~ ^[a-f0-9]{40}$ ]] || die 'A full 40-character commit SHA is required'
 [ -n "${ALPHA_TEST:-}" ] || [ "$(id -u)" -eq 0 ] || die 'Run with sudo'
 
@@ -75,6 +74,19 @@ ensure_key(){
   fi
 }
 
+ensure_scheduler(){
+  say 'Background updates and source reachability'
+  # Must match the workflow's scheduler parameter (default true); the controller checks both.
+  sed -i '/^FANSCOPE_SCHEDULER=/d' "$ENV_FILE"; printf 'FANSCOPE_SCHEDULER=true\n' >> "$ENV_FILE"
+  grep '^FANSCOPE_SCHEDULER=' "$ENV_FILE"
+  # Chinese abstracts are shown by default; remove any earlier kill-switch line.
+  sed -i '/^FANSCOPE_CN_ABSTRACTS_PUBLIC=/d' "$ENV_FILE"
+  # Information only: a blocked source shows up in /api/ingest/freshness after release.
+  for url in https://rkyj.ruc.edu.cn/robots.txt https://www.society.shu.edu.cn/robots.txt https://shjs.ruc.edu.cn/robots.txt https://www.sciopen.com/robots.txt https://api.crossref.org/journals/2096-7713; do
+    printf '%s %s\n' "$(curl -s -o /dev/null -m 20 -w '%{http_code}' "$url" || true)" "$url"
+  done
+}
+
 verified_backup(){
   say 'Consistent backup and restore verification'
   mkdir -p "$BACKUPS"; chmod 700 "$BACKUPS"
@@ -96,15 +108,16 @@ build_bundle(){
     -t "fanscope-api:$SHA" -f "$SRC/api/Dockerfile" "$SRC/api" >/dev/null
   rm -rf "$BUNDLE"; mkdir -p "$BUNDLE"
   docker run --rm --network none --entrypoint node "fanscope-api:$SHA" --experimental-sqlite src/migrate-cli.mjs lint > "$WORK/lint.json"
-  DIAGNOSTIC=false
+  DIAGNOSTIC=false; SCHEDULER=false
+  if [ -n "${ALPHA_TEST:-}" ] || grep -q '^FANSCOPE_SCHEDULER=true' "$ENV_FILE"; then SCHEDULER=true; fi
   if [ -n "${ALPHA_TEST:-}" ] || grep -Eq "^$KEY_NAME=.+" "$ENV_FILE"; then DIAGNOSTIC=true; fi
-  python3 - "$SHA" "$(docker image inspect "fanscope-api:$SHA" --format '{{.Id}}')" "$DIAGNOSTIC" "$WORK/lint.json" "$BUNDLE/manifest.json" <<'PY'
+  python3 - "$SHA" "$(docker image inspect "fanscope-api:$SHA" --format '{{.Id}}')" "$DIAGNOSTIC" "$SCHEDULER" "$WORK/lint.json" "$BUNDLE/manifest.json" <<'PY'
 import json,sys
-sha,image,diagnostic,lint,out=sys.argv[1:]
+sha,image,diagnostic,scheduler,lint,out=sys.argv[1:]
 data=json.load(open(lint)); assert data['ok'],'migration lint failed'
 items=[{k:m[k] for k in ('id','checksum','declared')} for m in data['migrations']]
 json.dump({'commit':sha,'image':image,'migrationPolicy':'additive' if items else 'no-change','migrations':items,
-           'diagnosticAiEnabled':diagnostic=='true','schedulerEnabled':False},open(out,'w'))
+           'diagnosticAiEnabled':diagnostic=='true','schedulerEnabled':scheduler=='true'},open(out,'w'))
 PY
   docker save "fanscope-api:$SHA" -o "$BUNDLE/image.tar"
   (cd "$BUNDLE" && sha256sum image.tar manifest.json > SHA256SUMS)
@@ -132,55 +145,65 @@ Release:   $SHA
 Backup:    $(cat "$WORK/last-backup.txt")/backup.sqlite
 Image:     fanscope-api:$SHA
 Previous:  $(docker inspect fanscope-api --format '{{.Image}}' 2>/dev/null || echo unknown)
-No production change has been made. Send this output to the engineer.
+No production change has been made.
 EOF
 }
 
 install_controller(){
-  say 'Install controller (timer stays off)'
+  say 'Install controller'
   MODE=install; [ -d /opt/fanscope-cd ] && MODE=upgrade
   bash "$SRC/deploy/cicd/install-host.sh" "$MODE" >/dev/null
   echo "Controller $MODE done."
 }
 
-ensure_nginx_gate(){
+ensure_gate(){
   say 'nginx maintenance gate'
-  if nginx -T 2>/dev/null | grep -qF "$GATE_MARKER"; then echo 'Already installed.'; else
-    mapfile -t FILES < <(grep -rlE "server_name[^;]*$DOMAIN" /etc/nginx/sites-enabled /etc/nginx/conf.d 2>/dev/null | xargs -r -n1 realpath | sort -u)
-    [ "${#FILES[@]}" -eq 1 ] || die "Expected one nginx file for $DOMAIN, found ${#FILES[@]}: ${FILES[*]:-none}"
-    CONF=${FILES[0]}; SAVED=$WORK/nginx-before-$(date -u +%Y%m%dT%H%M%SZ).conf
-    cp -p "$CONF" "$SAVED"
-    install -m 0644 "$SRC/deploy/cicd/nginx-maintenance.conf" /etc/nginx/fanscope-maintenance.conf
-    sed -i -E "/server_name[^;]*$DOMAIN/a\\    include /etc/nginx/fanscope-maintenance.conf;" "$CONF"
-    if ! nginx -t >/dev/null 2>&1; then cp -p "$SAVED" "$CONF"; die 'nginx rejected the gate; original restored'; fi
-    systemctl reload nginx
-    echo "Gate added to $CONF (saved copy: $SAVED)."
-  fi
-  touch /var/lib/fanscope-cd/maintenance
-  STATS=$(curl -s -o /dev/null -w '%{http_code}' -H 'Cache-Control: no-cache' "$API/api/stats?cicd=maintenance" || true)
-  HEALTH=$(curl -s -o /dev/null -w '%{http_code}' "$API/api/health" || true)
-  rm -f /var/lib/fanscope-cd/maintenance
-  [ "$STATS" = 503 ] && [ "$HEALTH" = 200 ] || die "Gate test failed (stats $STATS, health $HEALTH); nothing released"
-  echo 'Gate test passed: stats 503, health 200.'
+  python3 /opt/fanscope-cd/scripts/cicd/nginx_gate.py --backup-dir "$WORK/nginx-before-$(date -u +%Y%m%dT%H%M%SZ)"
 }
 
-release(){
-  say "Release $SHA"
-  [ -f "$BUNDLE/manifest.json" ] || die 'Run plan first'
-  [ "$CONFIRM" = "$SHA" ] || die 'Repeat the full SHA as the third argument to confirm'
-  set +e
-  python3 /opt/fanscope-cd/scripts/cicd/deploy_backend.py deploy --bundle "$BUNDLE" --sha "$SHA" --run-id "$(date +%s)"
-  CODE=$?
-  set -e
-  LATEST=$(ls -1dt /var/lib/fanscope-cd/backups/* | head -1)
-  python3 -c "import json,sys;r=json.load(open(sys.argv[1]));print({k:r.get(k) for k in ('status','stage','migrations','failureType','failureMessage','previousImage','backup')})" "$LATEST/result.json"
-  [ "$CODE" -eq 0 ] || die "Release did not succeed. Controller result above; rollback runs automatically. Logs: $LATEST/candidate.log"
-  say 'Live check'
-  curl -s "$API/api/health" | python3 -c "
-import json,sys
-h=json.load(sys.stdin);print({k:h.get(k) for k in ('status','commit','aiConfigured','diagnostic','migrations')})
-assert h['commit']==sys.argv[1],'commit mismatch'" "$SHA"
-  docker ps --format '{{.Names}}' | sort | diff "$WORK/containers-before.txt" - && echo 'Container list unchanged.'
+ensure_token(){
+  say 'GitHub read token'
+  TOKEN_FILE=/etc/fanscope-cd/github-token
+  if [ ! -s "$TOKEN_FILE" ]; then
+    [ -t 0 ] || die 'Run from an interactive console to enter the token'
+    read -rsp 'Paste the fine-grained token (Actions read, Contents read; input hidden): ' TOKEN; echo
+    (umask 077; printf '%s' "$TOKEN" > "$TOKEN_FILE.new")
+    unset TOKEN
+  else
+    cp -p "$TOKEN_FILE" "$TOKEN_FILE.new"
+  fi
+  # Pins the workflow and the next run number; never prints the token.
+  python3 - "$TOKEN_FILE.new" "$WORKFLOW" <<'PY' || { rm -f "$TOKEN_FILE.new"; die 'GitHub rejected the token; nothing was saved'; }
+import json,sys,urllib.request
+token=open(sys.argv[1]).read().strip()
+def api(path):
+    request=urllib.request.Request('https://api.github.com/repos/MartinZhong2026/FanScope'+path,
+        headers={'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'})
+    with urllib.request.urlopen(request,timeout=30) as response:
+        return json.load(response)
+workflow=api('/actions/workflows/'+sys.argv[2])
+runs=api(f"/actions/workflows/{workflow['id']}/runs?per_page=1")['workflow_runs']
+config={'enabled':True,'workflow_id':workflow['id'],'first_run_number':(runs[0]['run_number'] if runs else 0)+1}
+json.dump(config,open('/etc/fanscope-cd/config.json','w'))
+print('Config:',config)
+PY
+  mv "$TOKEN_FILE.new" "$TOKEN_FILE"
+  chmod 600 "$TOKEN_FILE" /etc/fanscope-cd/config.json
+}
+
+start_timer(){
+  say 'Pull timer'
+  systemctl daemon-reload
+  systemctl enable --now fanscope-pull.timer >/dev/null
+  # One real poll with the production service sandbox; finds nothing to release yet.
+  systemctl start fanscope-pull.service || { journalctl -u fanscope-pull.service -n 20 --no-pager; die 'Pull service failed'; }
+  # Same sandbox for the Compose call a release will make.
+  systemd-run --quiet --wait --collect -p ProtectHome=read-only -p ProtectSystem=full -p NoNewPrivileges=true \
+    --setenv=FANSCOPE_RELEASE_IMAGE=sha256:check docker compose -p deploy -f "$DEPLOY_DIR/deploy/docker-compose.yml" \
+    -f /opt/fanscope-cd/deploy/cicd/production.yml config -q || die 'Compose check failed under the service sandbox'
+  systemctl is-active fanscope-pull.timer
+  rm -rf "$WORK"/bundle-*
+  echo 'Host is ready. Releases now start from GitHub Actions.'
 }
 
 fetch_source
@@ -192,8 +215,10 @@ if [ "$ACTION" = plan ]; then
   dry_run_migrations
   summary
 else
-  [ "$CONFIRM" = "$SHA" ] || die 'Repeat the full SHA as the third argument to confirm'
+  ensure_key
+  ensure_scheduler
   install_controller
-  ensure_nginx_gate
-  release
+  ensure_gate
+  ensure_token
+  start_timer
 fi

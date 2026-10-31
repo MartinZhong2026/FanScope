@@ -21,7 +21,7 @@ from sqlite_release import inspect
 def jobs(database):
     db = sqlite3.connect(f'file:{database}?mode=ro', uri=True)
     try:
-        return {r[0]: r[1] for r in db.execute("SELECT name,next_due_at FROM scheduled_jobs WHERE last_status='ok' AND lease_owner=''")}
+        return {r[0]: r[1] for r in db.execute("SELECT name,next_due_at FROM scheduled_jobs WHERE last_finished_at IS NOT NULL AND lease_owner=''")}
     finally:
         db.close()
 
@@ -73,7 +73,7 @@ def main(image):
                 assert denied.returncode != 0, 'Gate directory is writable from the container'
                 # The running process must see an atomic replacement on the next tick.
                 deploy.open_gate('r1', 1)
-                for _ in range(140):  # two ticks: at most two jobs run at once
+                for _ in range(200):  # two ticks, plus the retries of four unreachable sources
                     if len(jobs(database)) == 3:
                         break
                     time.sleep(1)
@@ -81,6 +81,12 @@ def main(image):
                     rows = sqlite3.connect(database).execute('SELECT * FROM scheduled_jobs').fetchall()
                     raise AssertionError(f'Scheduler did not finish after the gate opened: {rows}')
                 due = jobs(database)
+                # With no network the Chinese sources must fail visibly, never report success.
+                db = sqlite3.connect(f'file:{database}?mode=ro', uri=True)
+                status = dict(db.execute('SELECT name,last_status FROM scheduled_jobs').fetchall())
+                code = db.execute("SELECT last_error_code FROM scheduled_jobs WHERE name='ingest:chinese'").fetchone()[0]
+                db.close()
+                assert status['ingest:chinese'] == 'failed' and code == 'ingest_all_failed', f'Unexpected Chinese job state: {status} {code}'
                 deploy.run('docker', 'kill', '--signal', 'KILL', name)
                 remove()
                 start()

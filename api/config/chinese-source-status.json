@@ -1,34 +1,56 @@
 {
- "note": "Reviewed per-journal status from docs/architecture/CN_JOURNALS_22_MATRIX.md. Only A/B may be scheduled; change a status only with evidence in the matrix.",
- "reviewedAt": "2026-10-29",
+ "note": "Reviewed per-journal status from docs/architecture/CN_JOURNALS_22_MATRIX.md. Only journals with a reviewed adapter are scheduled; change a status only with evidence in the matrix.",
+ "reviewedAt": "2026-10-30",
  "journals": [
   {
    "title": "人口研究",
    "issn": "1000-6087",
-   "status": "E",
+   "status": "B",
    "source": "期刊官网 /CN/ 平台（rkyj.ruc.edu.cn）",
-   "next": "接入官网平台适配器 + 调度"
+   "next": "适配器已用真实页面验证；需在生产运行 7 天并抽样对账后升为 A",
+   "journal_id": "candidate-1",
+   "adapter": "official-cn",
+   "base": "https://rkyj.ruc.edu.cn",
+   "home": "https://rkyj.ruc.edu.cn/CN/1000-6087/home.shtml",
+   "since": 2015
   },
   {
    "title": "社会",
    "issn": "1004-8804",
-   "status": "E",
+   "status": "B",
    "source": "同上（society.shu.edu.cn）；有 RSS /CN/rss/showRssInfo.do",
-   "next": "同上；RSS 用于增量发现"
+   "next": "适配器已用真实页面验证；需在生产运行 7 天并抽样对账后升为 A",
+   "journal_id": "candidate-7",
+   "adapter": "official-cn",
+   "base": "https://www.society.shu.edu.cn",
+   "home": "https://www.society.shu.edu.cn/CN/1004-8804/home.shtml",
+   "since": 2015
   },
   {
    "title": "社会建设",
    "issn": "2095-8641",
-   "status": "E",
+   "status": "B",
    "source": "同上（shjs.ruc.edu.cn，经 JS 跳转到 /CN/2095-8641/home.shtml）",
-   "next": "从已核验期目录补日期；URL 的 Y/V/I 仅作辅助，保留年月精度，不能造日；证据不足仍标缺失"
+   "next": "适配器已用真实页面验证；需在生产运行 7 天并抽样对账后升为 A",
+   "journal_id": "candidate-10",
+   "adapter": "official-cn",
+   "base": "https://shjs.ruc.edu.cn",
+   "home": "https://shjs.ruc.edu.cn/CN/2095-8641/home.shtml",
+   "since": 2015
   },
   {
    "title": "公共管理评论",
    "issn": "2096-7713",
-   "status": "E",
-   "source": "Crossref（58 条，最新 2026-06，最近 5 条都有摘要）+ SciOpen",
-   "next": "用现有 Crossref 适配器，按 ISSN 增量；中文题名的来源单独核实"
+   "status": "B",
+   "source": "SciOpen 官方期次（清华大学出版社）；Crossref 仅作摘要后备",
+   "next": "适配器已用真实页面验证；需在生产运行 7 天并抽样对账后升为 A",
+   "journal_id": "public-admin-cn",
+   "adapter": "sciopen",
+   "base": "https://www.sciopen.com",
+   "home": "https://www.sciopen.com/journal/2096-7713",
+   "since": 2015,
+   "journal_key": "2041419622998675457",
+   "doi_prefix": "10.26599/cpar"
   },
   {
    "title": "中国人口科学",

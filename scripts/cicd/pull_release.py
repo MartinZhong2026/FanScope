@@ -18,6 +18,7 @@ from sqlite_release import write_json
 
 STATE = Path('/var/lib/fanscope-cd')
 REPO = 'MartinZhong2026/FanScope'
+MAX_PULL_ATTEMPTS = 3
 
 
 class SafeRedirect(urllib.request.HTTPRedirectHandler):
@@ -62,7 +63,30 @@ def extract_verified(data, artifact, destination, allowed):
                 shutil.copyfileobj(src, dst)
 
 
+def count_failed_attempt(run, cursor_file):
+    # Failures before the deploy starts retry a few times, then the run is skipped
+    # so a bad artifact is not downloaded every minute forever.
+    file = STATE / 'pull-attempts.json'
+    state = json.loads(file.read_text()) if file.exists() else {}
+    count = state.get('attempts', 0) + 1 if state.get('run_id') == run['id'] else 1
+    if count >= MAX_PULL_ATTEMPTS:
+        write_json(cursor_file, {'run_number': run['run_number'], 'run_id': run['id'], 'status': 'abandoned'})
+        file.unlink(missing_ok=True)
+        print(f"Run {run['id']} abandoned after {count} failed downloads; start a new release")
+    else:
+        write_json(file, {'run_id': run['id'], 'attempts': count})
+
+
 def main():
+    try:
+        pull()
+    finally:
+        # A failed download retries next minute; nothing here is needed afterwards.
+        for item in (STATE / 'incoming').iterdir():
+            shutil.rmtree(item) if item.is_dir() else item.unlink()
+
+
+def pull():
     config = json.loads(Path('/etc/fanscope-cd/config.json').read_text())
     if config.get('enabled') is not True:
         print('FanScope pull deployment disabled');return
@@ -116,16 +140,20 @@ def main():
         raise RuntimeError('Insufficient release download/extraction space')
     directory = STATE / 'incoming' / str(run['id'])
     directory.mkdir(mode=0o700)
-    extract_verified(api(f"/actions/artifacts/{approval['id']}/zip", True), approval,
-                     directory / 'approval', {'approved.json'})
-    receipt = json.loads((directory / 'approval/approved.json').read_text())
-    if receipt != {'commit': head, 'runId': run['id'], 'artifactId': bundle['id'], 'digest': bundle['digest']}:
-        raise RuntimeError('Production approval receipt mismatch')
-    extract_verified(api(f"/actions/artifacts/{bundle['id']}/zip", True), bundle,
-                     directory / 'bundle', {'image.tar', 'manifest.json', 'SHA256SUMS'})
-    # Recheck main after downloading. Host-side deploy also holds the same lock.
-    if api('/git/ref/heads/main')['object']['sha'] != head:
-        raise RuntimeError('main advanced during download; request a fresh release')
+    try:
+        extract_verified(api(f"/actions/artifacts/{approval['id']}/zip", True), approval,
+                         directory / 'approval', {'approved.json'})
+        receipt = json.loads((directory / 'approval/approved.json').read_text())
+        if receipt != {'commit': head, 'runId': run['id'], 'artifactId': bundle['id'], 'digest': bundle['digest']}:
+            raise RuntimeError('Production approval receipt mismatch')
+        extract_verified(api(f"/actions/artifacts/{bundle['id']}/zip", True), bundle,
+                         directory / 'bundle', {'image.tar', 'manifest.json', 'SHA256SUMS'})
+        # Recheck main after downloading. Host-side deploy also holds the same lock.
+        if api('/git/ref/heads/main')['object']['sha'] != head:
+            raise RuntimeError('main advanced during download; request a fresh release')
+    except Exception:
+        count_failed_attempt(run, cursor_file)
+        raise
     write_json(cursor_file, {'run_number': run['run_number'], 'run_id': run['id'], 'status': 'attempted'})
     subprocess.run(['python3', '/opt/fanscope-cd/scripts/cicd/deploy_backend.py', 'deploy',
                     '--bundle', str(directory / 'bundle'), '--sha', head, '--run-id', str(run['id'])], check=True)

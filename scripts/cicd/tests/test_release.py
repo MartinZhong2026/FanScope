@@ -198,6 +198,31 @@ class RollbackTests(unittest.TestCase):
         self.assertTrue((state / 'transaction.json').exists())
 
 
+class PullRetryTests(unittest.TestCase):
+    def test_failed_download_leaves_nothing_that_blocks_the_next_poll(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            state = Path(tmp)
+            (state / 'incoming/123/approval').mkdir(parents=True)
+            (state / 'incoming/download-1.zip').write_bytes(b'partial')
+            with patch.object(pull, 'STATE', state), patch.object(pull, 'pull', side_effect=OSError('network')):
+                with self.assertRaises(OSError):
+                    pull.main()
+            self.assertEqual(list((state / 'incoming').iterdir()), [])
+
+
+    def test_a_run_that_keeps_failing_before_deploy_is_abandoned(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            state, run = Path(tmp), {'id': 9, 'run_number': 4}
+            cursor = state / 'cursor.json'
+            with patch.object(pull, 'STATE', state):
+                pull.count_failed_attempt(run, cursor)
+                pull.count_failed_attempt(run, cursor)
+                self.assertFalse(cursor.exists(), 'still retrying')
+                pull.count_failed_attempt(run, cursor)
+            self.assertEqual(json.loads(cursor.read_text()), {'run_number': 4, 'run_id': 9, 'status': 'abandoned'})
+            self.assertFalse((state / 'pull-attempts.json').exists())
+
+
 class PipelineTests(unittest.TestCase):
     setUp = DatabaseTests.setUp
     tearDown = DatabaseTests.tearDown

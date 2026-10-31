@@ -12,14 +12,10 @@ const MINUTE=60000,HOUR=60*MINUTE;
 export const CHINESE_STATUS=JSON.parse(fs.readFileSync(new URL('../../config/chinese-source-status.json',import.meta.url),'utf8'));
 const AUTOMATIC=new Set(['A','B']);
 
-// A journal counts as automatic only with a reviewed A/B status AND a verified
-// source for the journal row with the same ISSN. Nothing is inferred from
-// reachability or from existing rows.
-export function eligibleChineseJournals(){
- const verified=new Map(db.prepare("SELECT key,value FROM meta WHERE key LIKE 'cn-source:%'").all().map(r=>{try{return [r.key.slice(10),JSON.parse(r.value)]}catch{return [r.key.slice(10),null]}}));
- const byIssn=new Map(db.prepare("SELECT id,issn FROM journals WHERE market='chinese' AND enabled=1").all().map(j=>[j.issn,j.id]));
- return CHINESE_STATUS.journals.filter(j=>AUTOMATIC.has(j.status)&&verified.get(byIssn.get(j.issn))?.verified).map(j=>byIssn.get(j.issn));
-}
+// A journal runs automatically only with a reviewed adapter and an A/B status.
+// Reachability or existing rows never count.
+export const automaticChinese=()=>CHINESE_STATUS.journals.filter(j=>j.adapter&&AUTOMATIC.has(j.status));
+export const eligibleChineseJournals=()=>automaticChinese().map(j=>j.journal_id);
 
 export async function runEnglishJob({checkpoint}){
  const {scanAll}=await import('../monitor.mjs');
@@ -38,33 +34,40 @@ export async function runEnglishJob({checkpoint}){
  return {journals:ids.length,failed,added};
 }
 
-const MAX_STEPS=200;
+// Last outcome per journal, so a collection failure is never shown as "no data".
+const recordRun=(entry,value)=>db.prepare('INSERT INTO meta(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value')
+ .run('cn-run:'+entry.issn,JSON.stringify({...value,at:new Date().toISOString()}));
+const lastRun=issn=>{try{return JSON.parse(db.prepare('SELECT value FROM meta WHERE key=?').get('cn-run:'+issn)?.value||'null')}catch{return null}};
+
 export async function runChineseJob({checkpoint}){
- const ids=eligibleChineseJournals();
- if(!ids.length)return {journals:0,reason:'no_verified_sources'};
- const {createChineseJob,stepChineseJob}=await import('../chinese-ingestion.mjs');
- let failed=0,added=0;
- for(const journalId of ids){
+ const entries=automaticChinese();
+ if(!entries.length)return {journals:0,reason:'no_verified_sources'};
+ const {chineseTransport}=await import('../chinese-transport.mjs');
+ const {collectJournal}=await import('./official-cn.mjs');
+ let failed=0,added=0,abstracts=0;
+ for(const entry of entries){
   checkpoint();
+  // One budget per journal per run: a long backfill resumes from its saved issue list.
+  const transport=chineseTransport({maxRequests:300,minIntervalMs:1500});
   try{
-   // A previous paused job keeps its cursor and resumes after a restart.
-   const open=db.prepare("SELECT value FROM meta WHERE key LIKE 'cn-job:%'").all().map(r=>JSON.parse(r.value)).find(j=>j.journalId===journalId&&['paused','running'].includes(j.status));
-   let job=open||createChineseJob({journalId,incremental:true});
-   for(let i=0;i<MAX_STEPS&&['paused','running'].includes(job.status);i++){checkpoint();job=await stepChineseJob(job.id)}
-   added+=job.added||0;
+   const r=await collectJournal(entry,{read:transport.read,json:transport.json,checkpoint});
+   added+=r.added;abstracts+=r.abstracts;
+   recordRun(entry,{status:r.failed?'partial':'ok',failed:r.failed});
   }catch(e){
    if(e?.code==='scheduler_hold')throw e;
-   failed++;log('warn','ingest.source_failed',{market:'chinese',journal_id:journalId,...errorFields(e)});
+   if(/budget exhausted/.test(e?.message)){recordRun(entry,{status:'continuing'});continue}
+   recordRun(entry,{status:'failed',code:/^[a-z0-9_]{1,60}$/.test(e?.code||'')?e.code:'source_unreachable'});
+   failed++;log('warn','ingest.source_failed',{market:'chinese',journal_id:entry.journal_id,...errorFields(e)});
   }
  }
- if(failed===ids.length)throw Object.assign(Error('Every journal failed this cycle'),{code:'ingest_all_failed'});
- return {journals:ids.length,failed,added};
+ if(failed===entries.length)throw Object.assign(Error('Every journal failed this cycle'),{code:'ingest_all_failed'});
+ return {journals:entries.length,failed,added,abstracts};
 }
 
 export function schedulerJobs(){
  return [
   {name:'ingest:english',intervalMs:config.intervalMinutes*MINUTE,jitterMs:5*MINUTE,timeoutMs:60*MINUTE,run:runEnglishJob},
-  {name:'ingest:chinese',intervalMs:24*HOUR,jitterMs:30*MINUTE,timeoutMs:60*MINUTE,run:runChineseJob},
+  {name:'ingest:chinese',intervalMs:6*HOUR,jitterMs:30*MINUTE,timeoutMs:60*MINUTE,run:runChineseJob},
   {name:'lifecycle:dx-purge',intervalMs:HOUR,jitterMs:5*MINUTE,timeoutMs:10*MINUTE,run:async()=>{
    const {enabled,purgeDue}=await import('../diagnostic/service.mjs');
    return enabled()?purgeDue():{skipped:'diagnostic_disabled'};
@@ -79,9 +82,15 @@ export function ingestFreshness(){
  const jobs=hasJobs?db.prepare('SELECT name,next_due_at,last_started_at,last_finished_at,last_status,last_error_code,consecutive_failures FROM scheduled_jobs ORDER BY name').all():[];
  const english=db.prepare("SELECT COUNT(*) journals,MAX(last_success) last_success,SUM(COALESCE(last_error,'')<>'') failing FROM journals WHERE market='international' AND enabled=1").get();
  const eligible=new Set(eligibleChineseJournals());
- const ids=new Map(db.prepare("SELECT id,issn FROM journals WHERE market='chinese'").all().map(j=>[j.issn,j.id]));
- const journals=CHINESE_STATUS.journals.map(j=>({...j,automatic:eligible.has(ids.get(j.issn))}));
+ // Real counts per journal, whatever the source state. Titles are the stable join:
+ // most journal rows have no ISSN until an adapter has confirmed one.
+ const counts=new Map(db.prepare(`SELECT j.title,COUNT(a.id) articles,SUM(length(trim(a.abstract))>=55) abstracts,
+  MAX(COALESCE(NULLIF(a.publication_date,''),a.publication_date_partial)) latest,
+  SUM(json_extract(a.source_evidence_json,'$.abstract_gap') IS NOT NULL) no_source_abstract
+  FROM journals j LEFT JOIN articles a ON a.journal_id=j.id AND a.demo=0 WHERE j.market='chinese' GROUP BY j.id`).all().map(r=>[r.title,r]));
+ const journals=CHINESE_STATUS.journals.map(({home,base,journal_key,doi_prefix,...j})=>{const c=counts.get(j.title);
+  return {...j,automatic:eligible.has(j.journal_id),articles:c?.articles||0,abstracts:c?.abstracts||0,no_source_abstract:c?.no_source_abstract||0,latest:c?.latest||null,last_run:lastRun(j.issn)}});
  const summary={};for(const j of journals)summary[j.status]=(summary[j.status]||0)+1;
  return {scheduler:process.env.FANSCOPE_SCHEDULER==='true'?'on':'off',gate:readGate().reason,jobs,english,
-  chinese:{total:journals.length,automatic:journals.filter(j=>j.automatic).length,byStatus:summary,reviewedAt:CHINESE_STATUS.reviewedAt,journals}};
+  chinese:{total:journals.length,automatic:journals.filter(j=>j.automatic).length,withArticles:journals.filter(j=>j.articles).length,articles:journals.reduce((n,j)=>n+j.articles,0),abstracts:journals.reduce((n,j)=>n+j.abstracts,0),byStatus:summary,reviewedAt:CHINESE_STATUS.reviewedAt,journals}};
 }

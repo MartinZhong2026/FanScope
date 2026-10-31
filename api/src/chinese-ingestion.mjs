@@ -28,7 +28,7 @@ export function citationArticle(html,j,url){
 }
 // Exact normalized composite; similar titles never trigger an automatic merge.
 export const chineseIdentity=a=>crypto.createHash('sha256').update(JSON.stringify([normalize(a.title),normalize(a.authors||''),String(a.volume||'').trim(),String(a.issue||'').trim(),a.publication_date_partial||a.publication_date||''])).digest('hex');
-export const chineseNonPaper=a=>/^(?:《[^》]+》)?\s*\d{4}年总目录$|^(?:英文目录|目录|征稿启事|编辑部公告|table of contents)$/i.test(String(a.title||'').trim());
+export const chineseNonPaper=a=>/^(?:《[^》]+》)?\s*\d{4}年总目录$|^(?:《[^》]+》)?\s*\d{4}\s*年第?\s*\d+\s*期整期全文$|^(?:英文目录|目录|征稿启事|编辑部公告|table of contents)$/i.test(String(a.title||'').trim());
 const partialValid=d=>/^\d{4}(?:-(?:0[1-9]|1[0-2]))?$/.test(d)&&d<=publicationToday().slice(0,d.length);
 export function validateChineseItem(j,a){
  if(chineseNonPaper(a))return '非论文目录或公告记录，不纳入论文库';

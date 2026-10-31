@@ -16,10 +16,11 @@ else
   test ! -e /opt/fanscope-cd
 fi
 install -d -m 0755 /opt/fanscope-cd/scripts/cicd /opt/fanscope-cd/deploy/cicd
-for file in sqlite_release.py deploy_backend.py pull_release.py; do
+for file in sqlite_release.py deploy_backend.py pull_release.py nginx_gate.py; do
   install -m 0644 "$SOURCE/scripts/cicd/$file" "/opt/fanscope-cd/scripts/cicd/$file"
 done
 install -m 0644 "$SOURCE/deploy/cicd/production.yml" /opt/fanscope-cd/deploy/cicd/production.yml
+install -m 0644 "$SOURCE/deploy/cicd/nginx-maintenance.conf" /opt/fanscope-cd/deploy/cicd/nginx-maintenance.conf
 # nginx needs directory traversal to stat the marker, but private data stays 0700.
 install -d -m 0711 /var/lib/fanscope-cd
 install -d -m 0700 /var/lib/fanscope-cd/backups /var/lib/fanscope-cd/incoming /etc/fanscope-cd

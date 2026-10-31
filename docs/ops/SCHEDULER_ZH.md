@@ -24,6 +24,14 @@
 
 `api/config/chinese-source-status.json` 由 [22 本矩阵](../architecture/CN_JOURNALS_22_MATRIX.md) 整理，变更状态必须先在矩阵留下证据。
 
+## 首次上线即开启
+
+`alpha-release.sh bootstrap` 会把 `FANSCOPE_SCHEDULER=true` 写入服务器 `.env`，`backend-release.yml` 的 `scheduler` 参数默认也是 true，控制器核对两者一致。关闭时：`.env` 改为 `false`，并以 `scheduler=false` 发布。
+
+四本重点中文期刊由 `ingest:chinese` 每 6 小时采集：每刊每轮最多 300 个请求，已完成的期次会记住，所以历史回填会在数轮内完成并可随时中断恢复。已有的 349 条记录按网址和题名去重、补全，不会覆盖。
+
+中文摘要默认公开展示（已确认授权），保留来源与原文链接。`FANSCOPE_CN_ABSTRACTS_PUBLIC=false` 是撤回开关：收到版权异议时设置并重新发布，即可只隐藏摘要文本。
+
 ## 已知限制
 
 - 英文单刊扫描内部不检查门禁，只在刊与刊之间检查。发布时依赖控制器 drain 与 SIGTERM 优雅停止，再取冻结快照。

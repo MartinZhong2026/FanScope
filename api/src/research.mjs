@@ -21,7 +21,18 @@ export function researchWhere(q={}){
  return {where:' WHERE '+conditions.join(' AND '),params,window};
 }
 const parse=(s,fallback)=>{try{return JSON.parse(s)||fallback}catch{return fallback}};
-export function articleJSON(r){return {...r,topics:parse(r.topics,[]),issns:parse(r.issns_json,[]),source_evidence:parse(r.source_evidence_json,null),article_type:r.article_type||'unknown',article_type_label:typeLabels[r.article_type||'unknown'],article_type_evidence:parse(r.article_type_evidence_json,{}),abstract_status:(r.abstract||'').trim().length>=55?'available':r.abstract_status||'missing',missing_fields:parse(r.missing_fields_json,{}),analysis:parse(r.analysis_json,null),...articleLink(r),matched:!!r.matched,demo:!!r.demo};}
+// The owner has confirmed the right to show Chinese publisher abstracts, so they are shown
+// with their source and link. FANSCOPE_CN_ABSTRACTS_PUBLIC=false is a kill switch that
+// withholds the text again (e.g. after a rights objection); everything else stays public.
+export const chineseAbstractsPublic=()=>process.env.FANSCOPE_CN_ABSTRACTS_PUBLIC!=='false';
+export function articleJSON(r){
+ if(r.market==='chinese'&&!chineseAbstractsPublic()&&(r.abstract||'').trim()){
+  // Only the publisher's text is withheld; structured fields derived from it (method, design, confidence) stay.
+  const {abstract,ai_summary,...rest}=r;
+  return {...articleJSON({...rest,abstract:'',ai_summary:null,abstract_status:'withheld'}),abstract_status:'withheld'};
+ }
+ return {...r,topics:parse(r.topics,[]),issns:parse(r.issns_json,[]),source_evidence:parse(r.source_evidence_json,null),article_type:r.article_type||'unknown',article_type_label:typeLabels[r.article_type||'unknown'],article_type_evidence:parse(r.article_type_evidence_json,{}),abstract_status:(r.abstract||'').trim().length>=55?'available':r.abstract_status||'missing',missing_fields:parse(r.missing_fields_json,{}),analysis:parse(r.analysis_json,null),...articleLink(r),matched:!!r.matched,demo:!!r.demo};
+}
 export function validatedAnalysis(a){
  if(!analysisIsCurrent(a))return null;
  const raw=parse(a.analysis_json,null),validated=validateResearch(raw,a.abstract||'');

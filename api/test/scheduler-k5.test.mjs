@@ -123,19 +123,19 @@ test('gate file: missing, corrupt, unknown and blocked are all closed; productio
  try{assert.equal(readGate('').open,false,'production without a configured gate stays closed')}finally{process.env.NODE_ENV=env}
 });
 
-test('Chinese registry: all 22 listed, unverified journals are never automatic',async()=>{
+test('Chinese registry: all 22 listed, only journals with a reviewed adapter are automatic',async()=>{
  const {db:app}=await import('../src/db.mjs');
  const {CHINESE_STATUS,eligibleChineseJournals,ingestFreshness}=await import('../src/ingest/jobs.mjs');
  assert.equal(CHINESE_STATUS.journals.length,22);
  assert.equal(new Set(CHINESE_STATUS.journals.map(j=>j.issn)).size,22);
- assert.equal(CHINESE_STATUS.journals.filter(j=>['A','B'].includes(j.status)).length,0,'the matrix has no A/B journal yet');
- assert.deepEqual(eligibleChineseJournals(),[]);
+ assert.equal(CHINESE_STATUS.journals.filter(j=>!j.adapter&&['A','B'].includes(j.status)).length,0,'no journal is automatic without an adapter');
+ assert.equal(eligibleChineseJournals().length,4);
  const f=ingestFreshness();
- assert.equal(f.chinese.total,22);assert.equal(f.chinese.automatic,0);
+ assert.equal(f.chinese.total,22);assert.equal(f.chinese.automatic,4);
  assert.equal(Object.values(f.chinese.byStatus).reduce((a,b)=>a+b),22);
- // A verified source alone is not enough while the reviewed status is not A/B.
- const j=app.prepare("SELECT id FROM journals WHERE market='chinese' AND issn=?").get(CHINESE_STATUS.journals[0].issn);
- if(j){app.prepare("INSERT OR REPLACE INTO meta(key,value) VALUES(?,?)").run('cn-source:'+j.id,'{"verified":true}');assert.deepEqual(eligibleChineseJournals(),[]);app.prepare('DELETE FROM meta WHERE key=?').run('cn-source:'+j.id)}
+ assert.deepEqual(Object.keys(f.chinese.journals[0]).filter(k=>['articles','abstracts','latest','last_run'].includes(k)).sort(),['abstracts','articles','last_run','latest']);
+ assert.equal(f.chinese.journals.filter(j=>j.articles).length,f.chinese.withArticles);
+ assert.ok(!('home' in f.chinese.journals[0]));
  app.close();
 });
 
